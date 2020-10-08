@@ -1,18 +1,18 @@
 package outerhaven;
 
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import static javafx.application.Application.launch;
 
-public class App  {
+public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    public void start(Stage primaryStage) {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("test");
         FlowPane root = new FlowPane();
         Scene test = new Scene(root,1258,750, Color.color(0,0,0));
