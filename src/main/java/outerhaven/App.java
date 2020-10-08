@@ -1,6 +1,6 @@
 package outerhaven;
 
-import javafx.application.Application;
+/*import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
@@ -19,4 +19,10 @@ public class App extends Application {
         primaryStage.setScene(test);
         primaryStage.show();
     }
+}*/
+public class App {
+    public static void main(String[] args) {
+        System.out.println("test");
+    }
 }
+
