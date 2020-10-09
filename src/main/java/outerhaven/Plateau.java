@@ -2,10 +2,13 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javax.swing.text.html.ImageView;
+
+import javax.swing.text.Element;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -22,8 +25,8 @@ public class Plateau {
         this.primary=primary;
     }
     public void lancerScenePlateu(){
-        ImageView hexagone_img = new ImageView(new Image(Plateau.class.getResourceAsStream("./Image/Hexagone.png")));
-        hexagone_img.setSize(1,2);
+        ImageView hexagone_img = new ImageView(new Image(App.class.getResourceAsStream("image/Hexagone.png")));
+
 
         HBox hexagone = new HBox();
 
