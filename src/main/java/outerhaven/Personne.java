@@ -83,10 +83,7 @@ public abstract class Personne {
         listName.add("Jérôme");
         listName.add("Erwan");
         listName.add("Gaël");
-        String randName = listName.get(new Random().nextInt(listName.size()));
-        /*listName.remove(randName);
-        System.out.println(listName.size());*/
-        return randName;
+        return listName.get(new Random().nextInt(listName.size()));
 
         /*String name = "Alex" "Ilyes", "Pierre-Antoine", "Julien", "Hamza" , "Jérôme" , "Erwan" , "Gaël";
         int r = (int) (Math.random()*5);

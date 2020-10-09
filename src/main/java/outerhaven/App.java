@@ -48,11 +48,5 @@ public class App extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
-
 }
-/*public class App {
-    public static void main(String[] args) {
-        System.out.println("test");
-    }
-}*/
 
