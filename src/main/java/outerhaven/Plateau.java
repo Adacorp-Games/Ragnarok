@@ -52,7 +52,7 @@ public class Plateau {
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
-                    Case hexago = new Case(j+i, false);
+                    Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     i++;
                 }
