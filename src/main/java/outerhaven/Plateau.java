@@ -2,13 +2,10 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javax.swing.text.Element;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -25,16 +22,46 @@ public class Plateau {
         this.primary=primary;
     }
     public void lancerScenePlateu(){
-        ImageView hexagone_img = new ImageView(new Image(App.class.getResourceAsStream("image/Hexagone.png")));
-
-
-        HBox hexagone = new HBox();
 
         Group group = new Group();
-        //group.getChildren().add(hexagone);
+        Scene scene = new Scene(group);
 
-        Scene scene = new Scene(group,1280 , 720, Color.WHITE);
+        Double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+        Double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+
+        Double taille =1000/Math.sqrt(aire);
+
+        boolean decalage = false;
+        int i =0;
+        int ligne = 0;
+
+        while(i < aire){
+            if(!decalage) {
+                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
+                decalage=true;
+                for (int j = 0; j < Math.sqrt(aire) ; j++) {
+                    Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
+                    Case hexago = new Case(i, false);
+                    group.getChildren().add(hexago.afficherCase(posX,posY,taille));
+                    i++;
+                }
+                ligne++;
+            }
+            else{
+                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
+                decalage = false;
+                for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
+                    Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
+                    Case hexago = new Case(i, false);
+                    group.getChildren().add(hexago.afficherCase(posX,posY,taille));
+                    i++;
+                }
+                ligne++;
+            }
+        }
+
         primary.setScene(scene);
+
         primary.show();
 
     }

@@ -59,7 +59,7 @@ public abstract class Personne {
         }
     }
 
-    public void déplacer(ArrayList<Case> c) {
+    public void déplacer(Case[] c) {
         //this.position = c;
     }
 
