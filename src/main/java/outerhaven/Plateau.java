@@ -2,11 +2,8 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Plateau {
@@ -15,13 +12,12 @@ public class Plateau {
     ArrayList<Personne> morts;
     private static Stage primary;
 
-
-
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
         this.primary=primary;
     }
-    public void lancerScenePlateu(){
+
+    public void lancerScenePlateau() {
 
         Group group = new Group();
         Scene scene = new Scene(group);
@@ -35,8 +31,8 @@ public class Plateau {
         int i =0;
         int ligne = 0;
 
-        while(i < aire){
-            if(!decalage) {
+        while (i < aire) {
+            if (!decalage) {
                 Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
                 decalage=true;
                 for (int j = 0; j < Math.sqrt(aire) ; j++) {
@@ -47,7 +43,7 @@ public class Plateau {
                 }
                 ligne++;
             }
-            else{
+            else {
                 Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
@@ -59,10 +55,7 @@ public class Plateau {
                 ligne++;
             }
         }
-
         primary.setScene(scene);
-
         primary.show();
-
     }
 }

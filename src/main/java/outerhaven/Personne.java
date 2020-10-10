@@ -72,6 +72,7 @@ public abstract class Personne {
             déplacer(c.getCaseVoisines());
         }
     }
+
     public static String getRandomName() {
         // Cela pourrait être mis dans une classe séparée.
         ArrayList<String> listName = new ArrayList<>();
@@ -90,5 +91,4 @@ public abstract class Personne {
         String rand = new String [] {"Alex", "Ilyes", "Pierre-Antoine", "Julien", "Hamza" , "Matthieu", "Jérôme" , "Erwan" , "Gaël"}[r];
         return rand;*/
     }
-
 }

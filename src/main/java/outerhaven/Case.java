@@ -17,7 +17,7 @@ public class Case {
         this.status = false;
     }
 
-    public ImageView afficherCase(double X, double Y , Double taille){
+    public ImageView afficherCase(double X, double Y , Double taille) {
         if(!status) {
             Image hexagone_img1 = new Image("https://media.discordapp.net/attachments/653028105870639109/764437469944348702/hexagon-png-transparent-images-171300-9880327.png?width=417&height=468");
             ImageView hexagone = new ImageView(hexagone_img1);
@@ -35,7 +35,7 @@ public class Case {
             arriveCase(hexagone);
             return hexagone;
         }
-        else{
+        else {
             return null;
         }
     }
