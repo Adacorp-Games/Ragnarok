@@ -9,7 +9,7 @@ public class App extends Application {
     public void start(Stage stage) {
     stage.setTitle("test");
     stage.setFullScreen(true);
-    Plateau test = new Plateau(100,stage);
+    Plateau test = new Plateau(10,stage);
     test.lancerScenePlateau();
     }
     public static void main(String[] args) {

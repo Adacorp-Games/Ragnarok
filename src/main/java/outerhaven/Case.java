@@ -10,8 +10,8 @@ public class Case {
     int id;
     boolean status;
     Case[] caseVoisines = new Case[6];
-    public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764528653961920542/hexagon.png");
-    public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764528656085155920/hexagon2.png");
+    public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
+    public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
 
     public Case(int id, boolean status) {
         this.id = id;

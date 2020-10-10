@@ -33,7 +33,7 @@ public class Plateau {
 
         while (i < aire) {
             if (!decalage) {
-                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
+                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     Double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
@@ -44,7 +44,7 @@ public class Plateau {
                 ligne++;
             }
             else {
-                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
+                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
