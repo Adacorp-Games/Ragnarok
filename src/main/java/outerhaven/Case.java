@@ -1,21 +1,17 @@
 package outerhaven;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 
 public class Case {
     int id;
     boolean status;
     Case[] caseVoisines = new Case[6];
-    public static Image hexagone_img1 = new Image("https://media.discordapp.net/attachments/653028105870639109/764437469944348702/hexagon-png-transparent-images-171300-9880327.png?width=417&height=468");
-    public static Image hexagone_img2 = new Image("https://media.discordapp.net/attachments/653028105870639109/764415718308970516/hexa.png?width=407&height=468");
-
-
+    public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764528653961920542/hexagon.png");
+    public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764528653961920542/hexagon2.png");
 
     public Case(int id, boolean status) {
         this.id = id;
@@ -44,7 +40,6 @@ public class Case {
         }
     }
 
-
     private void arriveCase(ImageView image){
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), ev -> {
             mouvementY(5,image);
@@ -56,7 +51,6 @@ public class Case {
     private void mouvementY(int pixel, ImageView image) {
         image.setY(image.getY()-pixel);
     }
-
 
     public int getId() {
         return id;

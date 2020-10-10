@@ -25,18 +25,18 @@ public class Plateau {
         Double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
         Double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
-        Double taille =1000/Math.sqrt(aire);
+        Double taille = 1000/Math.sqrt(aire);
 
         boolean decalage = false;
-        int i =0;
+        int i = 0;
         int ligne = 0;
 
         while (i < aire) {
             if (!decalage) {
                 Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille -taille*ligne/4.2;
-                decalage=true;
-                for (int j = 0; j < Math.sqrt(aire) ; j++) {
-                    Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
+                decalage = true;
+                for (int j = 0; j < Math.sqrt(aire); j++) {
+                    Double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     i++;
@@ -53,9 +53,7 @@ public class Plateau {
                     i++;
                 }
                 ligne++;
-
             }
-
         }
         primary.setScene(scene);
         primary.show();
