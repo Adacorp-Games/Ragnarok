@@ -22,6 +22,8 @@ public abstract class Personne {
     int range; // Portée d'attaque en nombre de case.
     int speed; // Nombre de case qu'il parcourt chaque tour.
     Case position;
+    /*double positionX = position.getPosX();
+    double positionY = position.getPosY();*/
 
     public Personne(String name, double health, double armor, double cost, int damage, int range, int speed) {
         this.name = name;
@@ -32,7 +34,12 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
+    }
+
+    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Case position) {
+        this(name, health, armor, cost, damage, range, speed);
         this.position = position;
+        this.position.setStatus(true);
     }
 
     public String getName() {
@@ -97,8 +104,8 @@ public abstract class Personne {
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
 
-        barre.setX(300);
-        barre.setY(200);
+        barre.setX(getPosition().posX);
+        barre.setY(getPosition().posY);
 
         vie.setY(barre.getY()+2);
         vie.setX(barre.getX()+2);

@@ -30,6 +30,8 @@ public class Case {
             hexagone.setFitWidth(taille);
             hexagone.setX(X);
             hexagone.setY(Y+2000);
+            this.posX = X;
+            this.posY = Y+20;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
             });
@@ -62,6 +64,10 @@ public class Case {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public double getPosX() {

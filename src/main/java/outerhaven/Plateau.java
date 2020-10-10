@@ -15,6 +15,7 @@ public class Plateau {
     int aire;
     ArrayList<Personne> personnages;
     ArrayList<Personne> morts;
+    ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
 
     public Plateau(int aire ,Stage primary) {
@@ -44,6 +45,7 @@ public class Plateau {
                     Double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
+                    listeCase.add(hexago);
                     i++;
                 }
                 ligne++;
@@ -55,6 +57,7 @@ public class Plateau {
                     Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
+                    listeCase.add(hexago);
                     i++;
                 }
                 ligne++;
@@ -62,16 +65,20 @@ public class Plateau {
         }
 
         // Tests : Barre de vie
-        /*Guerrier alex = new Guerrier();
-        Archer medhy = new Archer();
+        Guerrier alex = new Guerrier(listeCase.get(5));
+        Archer medhy = new Archer(listeCase.get(10));
+
         medhy.subirDegats(alex);
         alex.subirDegats(medhy);
         System.out.println("Vie alex : " + alex.getHealth());
         System.out.println("Vie medhy : " + medhy.getHealth());
+
         Group sante = medhy.afficherSante();
+        System.out.println(medhy.afficherSante().getChildren());
         sante.setTranslateY(50);
         group.getChildren().add(alex.afficherSante());
-        group.getChildren().add(sante);*/
+        group.getChildren().add(sante);
+        System.out.println(listeCase.size());
 
         primary.setScene(scene);
         primary.show();
