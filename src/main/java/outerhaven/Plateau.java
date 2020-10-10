@@ -1,7 +1,12 @@
 package outerhaven;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -55,6 +60,19 @@ public class Plateau {
                 ligne++;
             }
         }
+
+        // Tests : Barre de vie
+        /*Guerrier alex = new Guerrier();
+        Archer medhy = new Archer();
+        medhy.subirDegats(alex);
+        alex.subirDegats(medhy);
+        System.out.println("Vie alex : " + alex.getHealth());
+        System.out.println("Vie medhy : " + medhy.getHealth());
+        Group sante = medhy.afficherSante();
+        sante.setTranslateY(50);
+        group.getChildren().add(alex.afficherSante());
+        group.getChildren().add(sante);*/
+
         primary.setScene(scene);
         primary.show();
     }

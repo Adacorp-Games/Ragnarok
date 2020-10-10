@@ -9,13 +9,17 @@ import javafx.util.Duration;
 public class Case {
     int id;
     boolean status;
+    double posX;
+    double posY;
     Case[] caseVoisines = new Case[6];
     public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
     public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
 
     public Case(int id, boolean status) {
         this.id = id;
-        this.status = false;
+        this.status = status;
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public ImageView afficherCase(double X, double Y , Double taille) {
@@ -58,6 +62,22 @@ public class Case {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(double posX) {
+        this.posX = posX;
+    }
+
+    public double getPosY() {
+        return posY;
+    }
+
+    public void setPosY(double posY) {
+        this.posY = posY;
     }
 
     public Case[] getCaseVoisines() {
