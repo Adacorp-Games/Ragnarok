@@ -20,6 +20,7 @@ public class Case {
     public ImageView afficherCase(double X, double Y , Double taille) {
         if(!status) {
             Image hexagone_img1 = new Image("https://media.discordapp.net/attachments/653028105870639109/764437469944348702/hexagon-png-transparent-images-171300-9880327.png?width=417&height=468");
+            //Image hexagone_img1 = new Image(Case.class.getResourceAsStream("Images/hexagon.png"));
             ImageView hexagone = new ImageView(hexagone_img1);
             Image hexagone_img2 = new Image("https://media.discordapp.net/attachments/653028105870639109/764415718308970516/hexa.png?width=407&height=468");
             hexagone.setFitHeight(taille);
