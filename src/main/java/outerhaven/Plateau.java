@@ -53,7 +53,9 @@ public class Plateau {
                     i++;
                 }
                 ligne++;
+
             }
+
         }
         primary.setScene(scene);
         primary.show();
