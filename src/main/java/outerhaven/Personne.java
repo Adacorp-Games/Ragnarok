@@ -1,27 +1,45 @@
 package outerhaven;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Personne {
     String name; // Stocké dans un tableau.
     double health;
+    double maxHealth;
     double armor;
     double cost;
     int damage;
     int range; // Portée d'attaque en nombre de case.
     int speed; // Nombre de case qu'il parcourt chaque tour.
     Case position;
+    /*double positionX = position.getPosX();
+    double positionY = position.getPosY();*/
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed /*, Case position*/) {
+    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed) {
         this.name = name;
         this.health = health;
+        this.maxHealth = health;
         this.armor = armor;
         this.cost = cost;
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        //this.position = position;
+    }
+
+    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Case position) {
+        this(name, health, armor, cost, damage, range, speed);
+        this.position = position;
+        this.position.setStatus(true);
     }
 
     public String getName() {
@@ -48,6 +66,14 @@ public abstract class Personne {
         this.health = health;
     }
 
+    public Case getPosition() {
+        return position;
+    }
+
+    public void setPosition(Case position) {
+        this.position = position;
+    }
+
     public void subirDegats(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);
         double totalDamage = damage * damageMultiplier;
@@ -72,6 +98,32 @@ public abstract class Personne {
             déplacer(c.getCaseVoisines());
         }
     }
+
+    public Group afficherSante() {
+        double taille = 100;
+        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
+        Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
+
+        barre.setX(getPosition().posX);
+        barre.setY(getPosition().posY);
+
+        vie.setY(barre.getY()+2);
+        vie.setX(barre.getX()+2);
+
+        DoubleProperty healthPercentage = new SimpleDoubleProperty(1.0);
+        DoubleBinding b = vie.widthProperty().multiply(healthPercentage);
+
+        double percentage = (this.getHealth() / maxHealth);
+        double width = (percentage * (taille-4));
+        vie.widthProperty().setValue(width);
+
+        Group group = new Group();
+        group.getChildren().add(barre);
+        group.getChildren().add(vie);
+
+        return group;
+    }
+
     public static String getRandomName() {
         // Cela pourrait être mis dans une classe séparée.
         ArrayList<String> listName = new ArrayList<>();
@@ -90,5 +142,4 @@ public abstract class Personne {
         String rand = new String [] {"Alex", "Ilyes", "Pierre-Antoine", "Julien", "Hamza" , "Matthieu", "Jérôme" , "Erwan" , "Gaël"}[r];
         return rand;*/
     }
-
 }
