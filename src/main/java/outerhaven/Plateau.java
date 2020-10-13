@@ -1,12 +1,7 @@
 package outerhaven;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -17,10 +12,11 @@ public class Plateau {
     ArrayList<Personne> morts;
     ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
+    public static Double taille;
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
-        this.primary=primary;
+        this.primary = primary;
     }
 
     public void lancerScenePlateau() {
@@ -31,8 +27,7 @@ public class Plateau {
         Double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
         Double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
-        Double taille = 1000/Math.sqrt(aire);
-
+        taille = 1000/Math.sqrt(aire);
         boolean decalage = false;
         int i = 0;
         int ligne = 0;

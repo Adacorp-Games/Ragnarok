@@ -4,13 +4,13 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static outerhaven.Plateau.taille;
 
 public abstract class Personne {
     String name; // Stocké dans un tableau.
@@ -100,7 +100,6 @@ public abstract class Personne {
     }
 
     public Group afficherSante() {
-        double taille = 100;
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
 
