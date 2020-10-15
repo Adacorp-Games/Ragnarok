@@ -4,11 +4,14 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import static outerhaven.Plateau.taille;
 
@@ -22,6 +25,8 @@ public abstract class Personne {
     int range; // Portée d'attaque en nombre de case.
     int speed; // Nombre de case qu'il parcourt chaque tour.
     Case position;
+    public static Image person_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
+    ImageView person = new ImageView(person_img1);
     /*double positionX = position.getPosX();
     double positionY = position.getPosY();*/
 
@@ -85,9 +90,19 @@ public abstract class Personne {
         }
     }
 
-    public void déplacer(Case[] c) {
-        //this.position = c;
+    public void inter() {
+        person.setOnMouseClicked((mouseEvent) -> {
+
+        });
     }
+
+    public void déplacer(Case c) {
+        this.position = c;
+    }
+
+    /*public void déplacer(Case[] c) {
+        //this.position = c;
+    }*/
 
     public void action(String a) {
         if (a == "attaquer") {
@@ -95,7 +110,7 @@ public abstract class Personne {
         }
         if (a == "déplacer") {
             Case c = position;
-            déplacer(c.getCaseVoisines());
+            //déplacer(c.getCaseVoisines());
         }
     }
 
