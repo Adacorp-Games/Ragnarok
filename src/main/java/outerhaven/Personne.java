@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static outerhaven.Plateau.taille;
+import static outerhaven.Plateau.personnages;
 
 public abstract class Personne {
     String name; // Stocké dans un tableau.
@@ -39,6 +40,7 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
+        //personnages.add(this);
     }
 
     public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Case position) {
@@ -112,6 +114,25 @@ public abstract class Personne {
             Case c = position;
             //déplacer(c.getCaseVoisines());
         }
+    }
+
+    public Group affichagePersonnage() {
+        Group group = new Group();
+        group.getChildren().add(afficherSante());
+        group.getChildren().add(afficherImage());
+        return group;
+    }
+
+    public Group afficherImage() {
+        ImageView person = new ImageView(person_img1);
+        person.setFitHeight(taille/3);
+        person.setFitWidth(taille/2);
+        person.setX(position.getPosX());
+        person.setY(position.getPosY());
+
+        Group group = new Group();
+        group.getChildren().add(person);
+        return group;
     }
 
     public Group afficherSante() {

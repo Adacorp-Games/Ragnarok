@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Plateau {
     int aire;
-    ArrayList<Personne> personnages;
+    public static ArrayList<Personne> personnages;
     ArrayList<Personne> morts;
     ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
@@ -62,6 +62,9 @@ public class Plateau {
         // Tests : Barre de vie
         Guerrier alex = new Guerrier(listeCase.get(5));
         Archer medhy = new Archer(listeCase.get(10));
+        /*personnages.add(alex);
+        personnages.add(medhy);*/
+        //System.out.println(personnages.size());
 
         medhy.subirDegats(alex);
         alex.subirDegats(medhy);
@@ -69,11 +72,13 @@ public class Plateau {
         System.out.println("Vie medhy : " + medhy.getHealth());
 
         Group sante = medhy.afficherSante();
-        System.out.println(medhy.afficherSante().getChildren());
         sante.setTranslateY(50);
         group.getChildren().add(alex.afficherSante());
         group.getChildren().add(sante);
-        System.out.println(listeCase.size());
+
+        /*for (Personne p : personnages) {
+            group.getChildren().add(p.affichagePersonnage());
+        }*/
 
         primary.setScene(scene);
         primary.show();
