@@ -71,6 +71,8 @@ public class Plateau {
         /*System.out.println("Vie alex : " + alex.getHealth());
         System.out.println("Vie medhy : " + medhy.getHealth());*/
 
+        //alex.déplacer(listeCase.get(6));
+
         for (Personne p : personnages) {
             group.getChildren().add(p.affichagePersonnage());
         }
