@@ -2,12 +2,12 @@ package outerhaven;
 
 public class Archer extends Personne{
 
-    public Archer() {
-        super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1);
+    public Archer(Equipe team) {
+        super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team);
     }
 
-    public Archer(Case position) {
-        super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, position);
+    public Archer(Equipe team, Case position) {
+        super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team, position);
         this.position.setStatus(true);
     }
 }

@@ -27,12 +27,13 @@ public abstract class Personne {
     int range; // Portée d'attaque en nombre de case.
     int speed; // Nombre de case qu'il parcourt chaque tour.
     Case position;
+    Equipe team;
     public static Image person_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
     ImageView person = new ImageView(person_img1);
     /*double positionX = position.getPosX();
     double positionY = position.getPosY();*/
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed) {
+    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Equipe team) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
@@ -44,10 +45,11 @@ public abstract class Personne {
         personnages.add(this);
     }
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Case position) {
-        this(name, health, armor, cost, damage, range, speed);
+    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
+        this(name, health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setStatus(true);
+        this.position.setCouleur(this.team.getCouleur());
     }
 
     public String getName() {
@@ -85,7 +87,9 @@ public abstract class Personne {
     public void subirDegats(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);
         double totalDamage = damage * damageMultiplier;
-        p.setHealth(p.getHealth() - totalDamage);
+        if (this.team != p.team) {
+            p.setHealth(p.getHealth() - totalDamage);
+        }
         if (p.getHealth() <= 0) {
             System.out.println(p.getName() + " est mort !");
 

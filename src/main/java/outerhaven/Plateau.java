@@ -60,8 +60,10 @@ public class Plateau {
         }
 
         // Tests : Barre de vie
-        Guerrier alex = new Guerrier(listeCase.get(5));
-        Archer medhy = new Archer(listeCase.get(10));
+        Equipe team1 = new Equipe();
+        Equipe team2 = new Equipe();
+        Guerrier alex = new Guerrier(team1, listeCase.get(5));
+        Archer medhy = new Archer(team2, listeCase.get(10));
         //System.out.println(personnages.size());
 
         medhy.subirDegats(alex);
