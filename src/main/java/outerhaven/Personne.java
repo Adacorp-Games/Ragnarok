@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,7 +41,7 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        //personnages.add(this);
+        personnages.add(this);
     }
 
     public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Case position) {
@@ -117,21 +118,36 @@ public abstract class Personne {
     }
 
     public Group affichagePersonnage() {
+        Text name = new Text();
+        name.setText(this.getName());
+        name.setX(position.getPosX());
+        name.setY(position.getPosY());
+
         Group group = new Group();
-        group.getChildren().add(afficherSante());
         group.getChildren().add(afficherImage());
+        group.getChildren().add(name);
         return group;
     }
 
     public Group afficherImage() {
         ImageView person = new ImageView(person_img1);
-        person.setFitHeight(taille/3);
-        person.setFitWidth(taille/2);
-        person.setX(position.getPosX());
+        person.setFitHeight(taille/2);
+        person.setFitWidth(taille/3);
+        person.setX(position.getPosX() + taille/3);
         person.setY(position.getPosY());
 
         Group group = new Group();
+        Group sante = afficherSante();
         group.getChildren().add(person);
+
+        person.setOnMouseClicked((mouseEvent) -> {
+            if (!group.getChildren().contains(sante)) {
+                group.getChildren().add(sante);
+            } else {
+                group.getChildren().remove(sante);
+            }
+        });
+
         return group;
     }
 
@@ -140,7 +156,7 @@ public abstract class Personne {
         Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
 
         barre.setX(getPosition().posX);
-        barre.setY(getPosition().posY);
+        barre.setY(getPosition().posY + taille/2.2);
 
         vie.setY(barre.getY()+2);
         vie.setX(barre.getX()+2);
