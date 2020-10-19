@@ -1,26 +1,22 @@
 package outerhaven;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Plateau {
     int aire;
-    ArrayList<Personne> personnages;
-    ArrayList<Personne> morts;
-    ArrayList<Case> listeCase = new ArrayList<>();
+    public static ArrayList<Personne> personnages = new ArrayList<>();
+    public static ArrayList<Personne> morts = new ArrayList<>();
+    public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
+    public static Double taille;
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
-        this.primary=primary;
+        this.primary = primary;
     }
 
     public void lancerScenePlateau() {
@@ -31,8 +27,7 @@ public class Plateau {
         Double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
         Double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
-        Double taille = 1000/Math.sqrt(aire);
-
+        taille = 1000/Math.sqrt(aire);
         boolean decalage = false;
         int i = 0;
         int ligne = 0;
@@ -65,20 +60,22 @@ public class Plateau {
         }
 
         // Tests : Barre de vie
-        Guerrier alex = new Guerrier(listeCase.get(5));
-        Archer medhy = new Archer(listeCase.get(10));
+        Equipe team1 = new Equipe();
+        Equipe team2 = new Equipe();
+        Guerrier alex = new Guerrier(team1, listeCase.get(5));
+        Archer medhy = new Archer(team2, listeCase.get(10));
+        //System.out.println(personnages.size());
 
         medhy.subirDegats(alex);
         alex.subirDegats(medhy);
-        System.out.println("Vie alex : " + alex.getHealth());
-        System.out.println("Vie medhy : " + medhy.getHealth());
+        /*System.out.println("Vie alex : " + alex.getHealth());
+        System.out.println("Vie medhy : " + medhy.getHealth());*/
 
-        Group sante = medhy.afficherSante();
-        System.out.println(medhy.afficherSante().getChildren());
-        sante.setTranslateY(50);
-        group.getChildren().add(alex.afficherSante());
-        group.getChildren().add(sante);
-        System.out.println(listeCase.size());
+        //alex.déplacer(listeCase.get(6));
+
+        for (Personne p : personnages) {
+            group.getChildren().add(p.affichagePersonnage());
+        }
 
         primary.setScene(scene);
         primary.show();

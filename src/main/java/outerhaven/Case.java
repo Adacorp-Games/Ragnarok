@@ -2,8 +2,10 @@ package outerhaven;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Case {
@@ -11,6 +13,7 @@ public class Case {
     boolean status;
     double posX;
     double posY;
+    private Color couleur;
     Case[] caseVoisines = new Case[6];
     public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
     public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
@@ -38,6 +41,7 @@ public class Case {
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
+            //hexagone.setEffect();
             arriveCase(hexagone);
             return hexagone;
         }
@@ -88,5 +92,9 @@ public class Case {
 
     public Case[] getCaseVoisines() {
         return caseVoisines;
+    }
+
+    public void setCouleur(Color couleur) {
+        this.couleur = couleur;
     }
 }
