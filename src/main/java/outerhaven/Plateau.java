@@ -16,7 +16,7 @@ public class Plateau {
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
-        this.primary = primary;
+        Plateau.primary = primary;
     }
 
     public void lancerScenePlateau() {
@@ -24,8 +24,8 @@ public class Plateau {
         Group group = new Group();
         Scene scene = new Scene(group);
 
-        Double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-        Double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+        double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
         taille = 1000/Math.sqrt(aire);
         boolean decalage = false;
@@ -34,10 +34,10 @@ public class Plateau {
 
         while (i < aire) {
             if (!decalage) {
-                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
-                    Double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
+                    double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
@@ -46,10 +46,10 @@ public class Plateau {
                 ligne++;
             }
             else {
-                Double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
-                    Double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
+                    double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
@@ -58,6 +58,11 @@ public class Plateau {
                 ligne++;
             }
         }
+
+        //creation et incorporation d'une slide barre
+        BarrePersonnage barre = new BarrePersonnage(longeurMax);
+        group.getChildren().add(barre.returnBarre());
+
 
         // Tests : Barre de vie
         Equipe team1 = new Equipe();
