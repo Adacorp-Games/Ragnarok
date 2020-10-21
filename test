@@ -1,0 +1,4 @@
+
+ export PATH_TO_FX=~/IdeaProjects/Ragnarok/ressources/JDK/javafx-sdk-15/lib
+
+javac --module-path $PATH_TO_FX --add-modules javafx.controls $(find . -name "*.java")
