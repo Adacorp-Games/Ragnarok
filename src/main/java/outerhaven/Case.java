@@ -26,7 +26,7 @@ public class Case {
         this.posY = posY;
     }
 
-    public ImageView afficherCase(double X, double Y , Double taille) {
+    public ImageView afficherCase(double X, double Y , double taille) {
         if(!status) {
             //Image hexagone_img1 = new Image(Case.class.getResourceAsStream("Images/hexagon.png"));
             ImageView hexagone = new ImageView(hexagone_img1);

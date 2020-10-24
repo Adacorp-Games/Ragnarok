@@ -11,5 +11,16 @@
 
 ### Partie conception (UML)
 
+### Lancement du jeu
+Pour lancer le jeu, il faut compiler le .sh qui se trouve dans le dossier "Lancement".
+
 ### Phase 1 : Analyse
- 
+
+EN COURS ...
+
+### Phase 2 : Conception
+
+- Diagramme de classe : Fait
+- Diagramme USE-CASE : Fait
+- Diagramme de séquence d'un tour : Pas encore fait
+- Diagramme d'états-transition d'une personne : Fait

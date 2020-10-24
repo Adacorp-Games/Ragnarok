@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="140.93750000000003" y="1597.0">outerhaven.Plateau</node>
+    <node x="303.3073508522728" y="1477.0">outerhaven.Archer</node>
+    <node x="181.43750000000003" y="1834.0">outerhaven.App</node>
+    <node x="100.59385991612561" y="1284.0">outerhaven.Equipe</node>
+    <node x="83.7448508522728" y="0.0">outerhaven.Case</node>
+    <node x="36.5" y="1477.0">outerhaven.Guerrier</node>
+    <node x="185.5607751623377" y="533.0">outerhaven.Personne</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="outerhaven.Archer" target="outerhaven.Case">
+      <point x="36.0" y="-15.0" />
+      <point x="387.3073508522728" y="1452.0" />
+      <point x="400.0607751623377" y="1452.0" />
+      <point x="400.0607751623377" y="503.0" />
+      <point x="324.9591365665586" y="503.0" />
+      <point x="87.71428571428578" y="236.5" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Archer">
+      <point x="9.583333333333314" y="-93.5" />
+      <point x="265.52083333333337" y="1527.0" />
+      <point x="327.3073508522728" y="1527.0" />
+      <point x="-24.0" y="15.0" />
+    </edge>
+    <edge source="outerhaven.Archer" target="outerhaven.Personne">
+      <point x="-12.0" y="-15.0" />
+      <point x="339.3073508522728" y="1452.0" />
+      <point x="342.45112114448057" y="1452.0" />
+      <point x="342.45112114448057" y="1264.0" />
+      <point x="306.1062297077923" y="1264.0" />
+      <point x="18.54545454545456" y="335.5" />
+    </edge>
+    <edge source="outerhaven.Personne" target="outerhaven.Plateau">
+      <point x="74.18181818181824" y="335.5" />
+      <point x="361.7425933441559" y="1234.0" />
+      <point x="430.73590537067105" y="1234.0" />
+      <point x="430.73590537067105" y="1557.0" />
+      <point x="323.02083333333337" y="1557.0" />
+      <point x="67.08333333333331" y="-93.5" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Guerrier">
+      <point x="-67.08333333333337" y="-93.5" />
+      <point x="188.85416666666666" y="1557.0" />
+      <point x="64.5" y="1557.0" />
+      <point x="-28.0" y="15.0" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Case">
+      <point x="-86.25000000000006" y="-93.5" />
+      <point x="169.68749999999997" y="1567.0" />
+      <point x="26.0" y="1567.0" />
+      <point x="26.0" y="503.0" />
+      <point x="149.53056513798714" y="503.0" />
+      <point x="-87.71428571428567" y="236.5" />
+    </edge>
+    <edge source="outerhaven.Personne" target="outerhaven.Equipe">
+      <point x="-18.545454545454533" y="335.5" />
+      <point x="269.0153206168832" y="1264.0" />
+      <point x="236.2188599161256" y="1264.0" />
+      <point x="27.125" y="-71.5" />
+    </edge>
+    <edge source="outerhaven.Guerrier" target="outerhaven.Personne">
+      <point x="14.0" y="-15.0" />
+      <point x="106.5" y="1452.0" />
+      <point x="90.09385991612561" y="1452.0" />
+      <point x="90.09385991612561" y="1234.0" />
+      <point x="213.37895698051952" y="1234.0" />
+      <point x="-74.18181818181819" y="335.5" />
+    </edge>
+    <edge source="outerhaven.Guerrier" target="outerhaven.Case">
+      <point x="-42.0" y="-15.0" />
+      <point x="50.5" y="1452.0" />
+      <point x="60.75" y="1452.0" />
+      <point x="60.75" y="513.0" />
+      <point x="193.38770799512997" y="513.0" />
+      <point x="-43.85714285714283" y="236.5" />
+    </edge>
+    <edge source="outerhaven.Equipe" target="outerhaven.Personne">
+      <point x="-81.375" y="-71.5" />
+      <point x="127.71885991612561" y="1244.0" />
+      <point x="231.92441152597408" y="1244.0" />
+      <point x="-55.636363636363626" y="335.5" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Equipe">
+      <point x="-28.75000000000003" y="-93.5" />
+      <point x="227.1875" y="1537.0" />
+      <point x="209.2759909361472" y="1537.0" />
+      <point x="209.2759909361472" y="1452.0" />
+      <point x="181.9688599161256" y="1452.0" />
+      <point x="-27.125" y="71.5" />
+    </edge>
+    <edge source="outerhaven.Personne" target="outerhaven.Case">
+      <point x="-51.0" y="-335.5" />
+      <point x="0.0" y="236.5" />
+    </edge>
+    <edge source="outerhaven.App" target="outerhaven.Plateau">
+      <point x="-37.25" y="-38.0" />
+      <point x="218.68750000000003" y="1809.0" />
+      <point x="198.43750000000003" y="1809.0" />
+      <point x="-57.5" y="93.5" />
+    </edge>
+    <edge source="outerhaven.Archer" target="outerhaven.Equipe">
+      <point x="-36.0" y="-15.0" />
+      <point x="315.3073508522728" y="1452.0" />
+      <point x="290.4688599161256" y="1452.0" />
+      <point x="81.375" y="71.5" />
+    </edge>
+    <edge source="outerhaven.Guerrier" target="outerhaven.Equipe">
+      <point x="42.0" y="-15.0" />
+      <point x="134.5" y="1452.0" />
+      <point x="127.71885991612561" y="1452.0" />
+      <point x="-81.375" y="71.5" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Personne">
+      <point x="47.91666666666663" y="-93.5" />
+      <point x="303.85416666666663" y="1547.0" />
+      <point x="419.73590537067105" y="1547.0" />
+      <point x="419.73590537067105" y="1244.0" />
+      <point x="343.1971387987014" y="1244.0" />
+      <point x="55.636363636363676" y="335.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="262.30176767676755" y="1365.2083333333335" />
+  <SelectedNodes>
+    <node>outerhaven.Case</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
