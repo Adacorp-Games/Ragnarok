@@ -1,8 +1,10 @@
 package outerhaven;
 
 import javafx.scene.Group;
-import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.*;
 import outerhaven.Personnages.*;
+
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
@@ -54,21 +56,27 @@ public class Case {
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
+
             hexagone.setOnMousePressed((mouseEvent)-> {
                 if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu == null) {
                     contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this);
                     affichagecontenu = contenu.affichagePersonnage();
                     Plateau.group.getChildren().add(affichagecontenu);
+                    InnerShadow ombre = new InnerShadow();
+                    ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                    hexagone.setEffect(ombre);
                     estOccupe = true;
                 }
                 else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
                     contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
+                    hexagone.setEffect(null);
                     estOccupe = false;
                 }
                 else if (Plateau.personneSelectionné == null && contenu != null) {
                     contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
+                    hexagone.setEffect(null);
                     estOccupe = false;
                 }
                 else {
@@ -84,7 +92,6 @@ public class Case {
                     timeline.play();
                 }
             });
-            // hexagone.setEffect();
             arriveCase(hexagone);
             return hexagone;
         } else {
