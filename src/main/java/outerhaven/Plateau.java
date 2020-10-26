@@ -49,6 +49,10 @@ public class Plateau {
 
     }
 
+    public void incorporeEquipe(){
+        equipeSelectionné = new Equipe();
+    }
+
     public void lancerScenePlateau() {
 
         taille = 1000/Math.sqrt(aire);
@@ -130,6 +134,13 @@ public class Plateau {
         exit.setLayoutY(110);
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> lancerParti());
+
+        //Bouton équipe
+        Button equipe = new Button("Equipe");
+        equipe.setLayoutY(10);
+        equipe.setLayoutX(800);
+        equipe.setMinSize(60, 20);
+        equipe.setOnMouseClicked(mouseEvent -> incorporeEquipe());
 
         group.getChildren().add(reStrat);
         group.getChildren().add(exit);
