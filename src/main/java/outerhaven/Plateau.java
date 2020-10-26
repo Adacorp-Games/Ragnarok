@@ -21,12 +21,7 @@ public class Plateau {
     private static Stage primary;
     public static Double taille;
     public static Scene scene;
-    public static Group group = new Group();
     public static Personne personneSelectionné;
-    public static Equipe equipeSelectionné;
-
-    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
@@ -34,24 +29,31 @@ public class Plateau {
     }
 
     public void lancerParti() {
-        scene = new Scene(group);
+        Group group = new Group();
+        Scene scene = new Scene(group);
+
+        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+        double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
         Button start = new Button("START");
-        start.setLayoutX((longeurMax-700)/2);
-        start.setLayoutY((largeurMax-200)/2);
+        start.setLayoutX(longeurMax/4);
+        start.setLayoutY(largeurMax/3);
         start.setMinSize(700,200);
-        start.setOnMouseClicked(mouseEvent -> {
-            lancerScenePlateau();
-            group.getChildren().remove(0);
-        } );
-
+        start.setOnMouseClicked(mouseEvent -> lancerScenePlateau());
         group.getChildren().add(start);
+
         primary.setScene(scene);
         primary.show();
 
     }
 
     public void lancerScenePlateau() {
+
+        Group group = new Group();
+        scene = new Scene(group);
+
+        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+        double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
         taille = 1000/Math.sqrt(aire);
         boolean decalage = false;
@@ -85,10 +87,28 @@ public class Plateau {
             }
         }
 
-        test();
-
+        //creation et incorporation d'une slide barre
         BarrePersonnage barre = new BarrePersonnage();
         group.getChildren().add(barre.returnBarre());
+
+
+        // Tests : Barre de vie
+        Equipe team1 = new Equipe();
+        Equipe team2 = new Equipe();
+        Guerrier alex = new Guerrier(team1, listeCase.get(5));
+        Archer medhy = new Archer(team2, listeCase.get(10));
+        //System.out.println(personnages.size());
+
+        medhy.subirDegats(alex);
+        alex.subirDegats(medhy);
+        /*System.out.println("Vie alex : " + alex.getHealth());
+        System.out.println("Vie medhy : " + medhy.getHealth());*/
+
+        //alex.déplacer(listeCase.get(6));
+
+        group.getChildren().add(alex.affichagePersonnage());
+        group.getChildren().add(medhy.affichagePersonnage());
+
 
         //Bouton pause et reprendre
         Label labelPlay = new Label("");
@@ -134,30 +154,6 @@ public class Plateau {
         group.getChildren().add(exit);
 
         primary.setScene(scene);
-    }
-
-    public void test(){
-        //creation et incorporation d'une slide barre
-
-
-
-        // Tests : Barre de vie
-        Equipe team1 = new Equipe();
-        Equipe team2 = new Equipe();
-        Guerrier alex = new Guerrier(team1, listeCase.get(5));
-        Archer medhy = new Archer(team2, listeCase.get(10));
-        //System.out.println(personnages.size());
-
-        medhy.subirDegats(alex);
-        alex.subirDegats(medhy);
-        /*System.out.println("Vie alex : " + alex.getHealth());
-        System.out.println("Vie medhy : " + medhy.getHealth());*/
-
-        //alex.déplacer(listeCase.get(6));
-
-        group.getChildren().add(alex.affichagePersonnage());
-        group.getChildren().add(medhy.affichagePersonnage());
-
-
+//        primary.show();
     }
 }

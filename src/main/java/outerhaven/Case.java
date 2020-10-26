@@ -1,5 +1,6 @@
 package outerhaven;
 
+import outerhaven.Personnages.*;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;

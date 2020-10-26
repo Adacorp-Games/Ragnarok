@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import outerhaven.Case;
 import outerhaven.Equipe;
@@ -35,7 +36,7 @@ public abstract class Personne {
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
 
-    //à revoir en fonction du deplacement des personnages
+    // A revoir en fonction du deplacement des personnages
     private Case position;
 
 
@@ -131,22 +132,34 @@ public abstract class Personne {
         return group;
     }
 
-    public Group afficherInfo(double X, double Y){
+    public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(taille+100, taille, Color.GRAY);
+        Rectangle barre = new Rectangle(taille + 300, taille, Color.LIGHTGRAY);
         barre.setX(X);
-        barre.setY(Y-taille);
-        Text descrip = this.getinfoText();
-        descrip.setX(X+10);
-        descrip.setY(Y+20-taille);
+        barre.setY(Y - taille);
+        barre.getStyleClass().add("border");
+        /*barre.setStyle("-fx-background-color: grey");
+        barre.setStyle("-fx-border-width: 2px");
+        barre.setStyle("-fx-border-style: solid");
+        barre.setStyle("-fx-border-color: black");*/
+
+        Text title = this.getinfoTitleText();
+        title.setX(X + 10);
+        title.setY(Y + 20 - taille);
+        //title.setStyle("-fx-font-style: bold");
+
+        Text descrip = this.getinfoDescText();
+        descrip.setX(X + 10);
+        descrip.setY(Y + 20 - taille);
+
         description.getChildren().add(barre);
+        description.getChildren().add(title);
         description.getChildren().add(descrip);
         return description;
     }
 
-    public Text getinfoText(){
-        return new Text("c'est vide");
-    }
+    public abstract Text getinfoTitleText();
+    public abstract Text getinfoDescText();
 
     public Group affichagePersonnage() {
         Text name = new Text();
@@ -206,7 +219,7 @@ public abstract class Personne {
         return group;
     }
 
-    //gestion nomRandom
+    // Gestion nomRandomName
 
     public static String getRandomName() {
         if(listName.isEmpty()){
@@ -224,11 +237,12 @@ public abstract class Personne {
         listName.add("Jérôme");
         listName.add("Erwan");
         listName.add("Gaël");
+        listName.add("Maxime");
+        listName.add("Benjamin");
+        listName.add("Tanguy");
     }
 
-
-
-    //getteur et setteur
+    // Getteur et setteur
 
     public String getName() {
         return name;
