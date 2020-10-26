@@ -66,13 +66,13 @@ public abstract class Personne {
         this.team.getTeam().add(this);
     }
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
+    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
         this(health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setStatus(true);
     }
 
-    public abstract Personne personneNouvelle(Equipe team);
+    public abstract Personne personneNouvelle(Equipe team, Case position);
 
     public void subirDegats(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);

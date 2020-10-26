@@ -16,13 +16,13 @@ public class Archer extends Personne {
     }
 
     public Archer(Equipe team, Case position) {
-        super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team, position);
+        super(150, 50, 150, 100, 2, 1, team, position);
         this.getPosition().setStatus(true);
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team) {
-        return new Archer(team);
+    public Personne personneNouvelle(Equipe team,Case position) {
+        return new Archer(team,position);
     }
 
     @Override

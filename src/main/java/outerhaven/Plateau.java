@@ -155,21 +155,5 @@ public class Plateau {
     }
 
     public void test(){
-        // Tests : Barre de vie
-        Equipe team1 = new Equipe();
-        Equipe team2 = new Equipe();
-        Guerrier alex = new Guerrier(team1, listeCase.get(5));
-        Archer medhy = new Archer(team2, listeCase.get(10));
-        //System.out.println(personnages.size());
-
-        medhy.subirDegats(alex);
-        alex.subirDegats(medhy);
-        /*System.out.println("Vie alex : " + alex.getHealth());
-        System.out.println("Vie medhy : " + medhy.getHealth());*/
-
-        //alex.déplacer(listeCase.get(6));
-
-        group.getChildren().add(alex.affichagePersonnage());
-        group.getChildren().add(medhy.affichagePersonnage());
     }
 }

@@ -17,13 +17,13 @@ public class Guerrier extends Personne {
     }
 
     public Guerrier(Equipe team, Case position) {
-        super(Personne.getRandomName(), 200, 100, 100, 75, 1, 1, team, position);
+        super(200, 100, 100, 75, 1, 1, team, position);
         this.getPosition().setStatus(true);
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team) {
-        return new Guerrier(team);
+    public Personne personneNouvelle(Equipe team,Case position) {
+        return new Guerrier(team,position);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package outerhaven;
 
+import javafx.scene.Group;
 import outerhaven.Personnages.*;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Case {
     private Color couleur;
     ArrayList<Case> caseVoisines;
     private Personne contenu ;
+    private Group affichagecontenu;
 
     public static Image hexagone_img1 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
@@ -51,13 +53,21 @@ public class Case {
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
-            hexagone.setOnMouseClicked((mouseEvent)->{
-                if(Plateau.personneSelectionné!=null  && Plateau.equipeSelectionné!=null){
-                    contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné);
+            hexagone.setOnMousePressed((mouseEvent)->{
+                if(Plateau.personneSelectionné!=null  && Plateau.equipeSelectionné!=null && contenu == null){
+                    contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this);
+                    affichagecontenu = contenu.affichagePersonnage();
+                    Plateau.group.getChildren().add(affichagecontenu);
                     estOccupe=true;
+                }
+                else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null){
+                    contenu =null;
+                    Plateau.group.getChildren().remove(affichagecontenu);
+                    estOccupe= false;
                 }
                 else if (Plateau.personneSelectionné == null && contenu != null){
                     contenu =null;
+                    Plateau.group.getChildren().remove(affichagecontenu);
                     estOccupe= false;
                 }
                 else{
@@ -68,7 +78,7 @@ public class Case {
                     attention.setFill(Color.RED);
                     Plateau.group.getChildren().add(attention);
                     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
-                        Plateau.group.getChildren().remove(Plateau.group.getChildren().size()-1);
+                        Plateau.group.getChildren().remove(attention);
                     }));
                     timeline.play();
                 }
