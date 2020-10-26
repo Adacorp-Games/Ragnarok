@@ -1,5 +1,7 @@
 package outerhaven;
 
+import java.util.ArrayList;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.effect.ColorAdjust;
@@ -8,59 +10,64 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-
 public class Case {
     int id;
-    boolean status;
+    boolean estOccupe;
     double posX;
     double posY;
     private Color couleur;
-    Case[] caseVoisines = new Case[6];
-    public static Image hexagone_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
-    public static Image hexagone_img2 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
+    ArrayList<Case> caseVoisines;
+    ArrayList<Personne> contenu;
+
+    public static Image hexagone_img1 = new Image(
+            "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
+    public static Image hexagone_img2 = new Image(
+            "https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
 
     public Case(int id, boolean status) {
         this.id = id;
-        this.status = status;
-        this.posX = posX;
-        this.posY = posY;
+        this.estOccupe = status;
+        contenu = new ArrayList<Personne>();
+        caseVoisines = new ArrayList<Case>();
+        // this.posX = posX;
+        // this.posY = posY;
     }
 
-    public ImageView afficherCase(double X, double Y , double taille) {
-        if(!status) {
-            //Image hexagone_img1 = new Image(Case.class.getResourceAsStream("Images/hexagon.png"));
+    public ImageView afficherCase(double X, double Y, double taille) {
+        if (!estOccupe) {
+            // Image hexagone_img1 = new
+            // Image(Case.class.getResourceAsStream("Images/hexagon.png"));
             ImageView hexagone = new ImageView(hexagone_img1);
             hexagone.setFitHeight(taille);
             hexagone.setFitWidth(taille);
             hexagone.setX(X);
-            hexagone.setY(Y+2000);
+            hexagone.setY(Y + 2000);
             this.posX = X;
-            this.posY = Y+20;
+            this.posY = Y + 20;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
-            //hexagone.setEffect();
+            // hexagone.setEffect();
             arriveCase(hexagone);
             return hexagone;
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    private void arriveCase(ImageView image){
+    private void arriveCase(ImageView image) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), ev -> {
-            mouvementY(5,image);
+            mouvementY(5, image);
         }));
         timeline.setCycleCount(400);
         timeline.play();
     }
 
     private void mouvementY(int pixel, ImageView image) {
-        image.setY(image.getY()-pixel);
+        image.setY(image.getY() - pixel);
     }
 
     public int getId() {
@@ -68,11 +75,11 @@ public class Case {
     }
 
     public boolean isStatus() {
-        return status;
+        return estOccupe;
     }
 
     public void setStatus(boolean status) {
-        this.status = status;
+        this.estOccupe = status;
     }
 
     public double getPosX() {
@@ -91,7 +98,7 @@ public class Case {
         this.posY = posY;
     }
 
-    public Case[] getCaseVoisines() {
+    public ArrayList<Case> getCaseVoisines() {
         return caseVoisines;
     }
 
