@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import outerhaven.Interface.BarrePersonnage;
-import outerhaven.Personnages.Archer;
-import outerhaven.Personnages.Guerrier;
+import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
 
@@ -39,32 +39,38 @@ public class Plateau {
         return Integer.parseInt(text);
     }
 
-    public void lancerParti() {
-       scene = new Scene(group);
+    public void lancerPartie() {
+        scene = new Scene(group);
+        //scene.getStylesheets().add("style.css");
 
         Button start = new Button("START");
         start.setLayoutX((longeurMax-700)/2);
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
+        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
+
+        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
+        infoNB.setLayoutX((longeurMax-700)/2);
+        infoNB.setLayoutY((largeurMax-300)/2);
 
         TextField nbCase = new TextField();
         nbCase.setLayoutX((longeurMax-700)/2);
-        nbCase.setLayoutY((largeurMax-300)/2);
-        nbCase.setMinSize(700,20);
+        nbCase.setLayoutY((largeurMax-280)/2);
+        nbCase.setMinSize(100,20);
+        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
+        group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(start);
 
         start.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().clear();
             aire = getIntFromTextField(nbCase);
             lancerScenePlateau();
-            group.getChildren().remove(0);
-            group.getChildren().remove(0);
         });
 
         primary.setScene(scene);
         primary.show();
-
     }
 
     public void incorporeEquipe(Equipe e1){
@@ -83,7 +89,7 @@ public class Plateau {
                 double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
-                    double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
+                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire))/2) + j*taille;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
@@ -92,7 +98,7 @@ public class Plateau {
                     ligne++;
             }
             else {
-                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
@@ -109,11 +115,11 @@ public class Plateau {
         BarrePersonnage barre = new BarrePersonnage();
         group.getChildren().add(barre.returnBarre());
 
+        test();
 
-       test();
 
 
-        //Bouton pause et reprendre
+        // Boutons pause et reprendre
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
 
@@ -122,7 +128,7 @@ public class Plateau {
 
         Button play = new Button("Play");
         play.setLayoutX(10);
-        play.setLayoutY(50);
+        play.setLayoutY(80);
         play.setMinSize(60,20);
         play.setOnMouseClicked(mouseEvent -> {
             labelPlay.setText("La partie reprend");
@@ -130,64 +136,108 @@ public class Plateau {
 
         Button pause = new Button("Pause");
         pause.setLayoutX(10);
-        pause.setLayoutY(20);
+        pause.setLayoutY(50);
         pause.setMinSize(60,20);
-        pause.setOnMouseClicked(mouseEvent ->{
+        pause.setOnMouseClicked(mouseEvent -> {
             labelPause.setText("La partie est en pause");
         });
-        group.getChildren().add(pause);
-        group.getChildren().add(labelPause);
-        group.getChildren().add(play);
-        group.getChildren().add(labelPlay);
 
-        //Bouton restrat et exit
+        // Boutons restrat et exit
         Button reStrat = new Button("RESTART");
         reStrat.setLayoutX(10);
-        reStrat.setLayoutY(80);
+        reStrat.setLayoutY(110);
         reStrat.setMinSize(60,20);
-        reStrat.setOnMouseClicked(mouseEvent ->{
+        reStrat.setOnMouseClicked(mouseEvent -> {
             group.getChildren().remove(0,group.getChildren().size());
             lancerScenePlateau();
         });
 
         Button exit = new Button("EXIT");
         exit.setLayoutX(10);
-        exit.setLayoutY(110);
+        exit.setLayoutY(140);
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> primary.close());
 
-        group.getChildren().add(reStrat);
-        group.getChildren().add(exit);
+        // Bouton menu
+        Button menu = new Button("Menu");
+        menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        menu.setLayoutX(10);
+        menu.setLayoutY(20);
+        menu.setMinSize(60,20);
+        menu.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(pause)) {
+                group.getChildren().add(pause);
+                group.getChildren().add(labelPause);
+                group.getChildren().add(play);
+                group.getChildren().add(labelPlay);
+                group.getChildren().add(reStrat);
+                group.getChildren().add(exit);
+            } else {
+                group.getChildren().remove(pause);
+                group.getChildren().remove(labelPause);
+                group.getChildren().remove(play);
+                group.getChildren().remove(labelPlay);
+                group.getChildren().remove(reStrat);
+                group.getChildren().remove(exit);
+            }
+        });
+        group.getChildren().add(menu);
 
-        //Bouton équipe
+        // Boutons équipes
         Button equipe1 = new Button("Equipe 1");
+        equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         Equipe e1 = new Equipe(Color.RED);
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(800);
         equipe1.setMinSize(60, 20);
-        equipe1.setOnMouseClicked(mouseEvent -> incorporeEquipe(e1));
 
         Button equipe2 = new Button("Equipe 2");
+        equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         Equipe e2 = new Equipe(Color.BLUE);
         equipe2.setLayoutX(80);
         equipe2.setLayoutY(800);
         equipe2.setMinSize(60, 20);
-        equipe2.setOnMouseClicked(mouseEvent -> incorporeEquipe(e2));
 
-        Button equipe3 = new Button("Sans Equipe");
+        // Actions sur les boutons d'équipes
+        equipe1.setOnMouseClicked(mouseEvent -> {
+            incorporeEquipe(e1);
+            equipe1.setEffect(new Effets().putShadow(e1.getCouleur()));
+            equipe2.setEffect(null);
+        });
+        /*equipe1.setOnMouseEntered(mouseEvent -> {
+            equipe1.setEffect(new Effets().putShadow(e1.getCouleur()));
+        });
+        equipe1.setOnMouseExited(mouseEvent -> {
+            equipe1.setEffect(null);
+        });*/
+
+        equipe2.setOnMouseClicked(mouseEvent -> {
+            incorporeEquipe(e2);
+            equipe2.setEffect(new Effets().putShadow(e2.getCouleur()));
+            equipe1.setEffect(null);
+        });
+        /*equipe2.setOnMouseEntered(mouseEvent -> {
+            equipe2.setEffect(new Effets().putShadow(e2.getCouleur()));
+        });
+        equipe2.setOnMouseExited(mouseEvent -> {
+            equipe2.setEffect(null);
+        });*/
+
+        /*Button equipe3 = new Button("Sans Equipe");
         equipe3.setLayoutX(150);
         equipe3.setLayoutY(800);
         equipe3.setMinSize(60, 20);
-        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe(null));
+        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe(null));*/
 
         group.getChildren().add(equipe1);
         group.getChildren().add(equipe2);
-        group.getChildren().add(equipe3);
+        //group.getChildren().add(equipe3);
 
         primary.setScene(scene);
         //primary.show();
     }
 
+    // Zone de test
     public void test(){
 
     }

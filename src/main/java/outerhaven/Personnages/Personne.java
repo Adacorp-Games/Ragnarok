@@ -134,10 +134,11 @@ public abstract class Personne {
 
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(taille + 300, taille, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(taille + 200, taille/1.5, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - taille);
-        barre.getStyleClass().add("border");
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
         /*barre.setStyle("-fx-background-color: grey");
         barre.setStyle("-fx-border-width: 2px");
         barre.setStyle("-fx-border-style: solid");
