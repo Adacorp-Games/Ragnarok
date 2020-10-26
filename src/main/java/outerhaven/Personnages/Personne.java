@@ -27,7 +27,7 @@ public abstract class Personne {
     private int damage;
     private int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
-    public Case position;
+    private Case position;
     private Equipe team;
     public static Image person_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
     private ImageView person = new ImageView(person_img1);

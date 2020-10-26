@@ -11,6 +11,6 @@ public class Archer extends Personne {
 
     public Archer(Equipe team, Case position) {
         super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team, position);
-        this.position.setStatus(true);
+        this.getPosition().setStatus(true);
     }
 }
