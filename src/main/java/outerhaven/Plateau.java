@@ -111,16 +111,18 @@ public class Plateau {
         //Bouton pause et reprendre
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
+
         Label labelPause = new Label("");
         labelPause.setLayoutY(650);
+
         Button play = new Button("Play");
         play.setLayoutX(10);
         play.setLayoutY(50);
         play.setMinSize(60,20);
-
         play.setOnMouseClicked(mouseEvent -> {
             labelPlay.setText("La partie reprend");
         });
+
         Button pause = new Button("Pause");
         pause.setLayoutX(10);
         pause.setLayoutY(20);
@@ -133,7 +135,23 @@ public class Plateau {
         group.getChildren().add(play);
         group.getChildren().add(labelPlay);
 
+        //Bouton restrat et exit
+        Button reStrat = new Button("RESTART");
+        reStrat.setLayoutX(10);
+        reStrat.setLayoutY(80);
+        reStrat.setMinSize(60,20);
+        reStrat.setOnMouseClicked(mouseEvent -> lancerScenePlateau());
+
+        Button exit = new Button("EXIT");
+        exit.setLayoutX(10);
+        exit.setLayoutY(110);
+        exit.setMinSize(60,20);
+        exit.setOnMouseClicked(mouseEvent -> lancerParti());
+
+        group.getChildren().add(reStrat);
+        group.getChildren().add(exit);
+
         primary.setScene(scene);
-        primary.show();
+//        primary.show();
     }
 }
