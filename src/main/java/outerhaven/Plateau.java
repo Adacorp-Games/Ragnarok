@@ -22,7 +22,6 @@ public class Plateau {
     public static Double taille;
     public static Scene scene;
     public static Personne personneSelectionné;
-    public static Equipe equipeSelectionné;
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
@@ -46,10 +45,6 @@ public class Plateau {
         primary.setScene(scene);
         primary.show();
 
-    }
-
-    public void incorporeEquipe(){
-        this.equipeSelectionné = new Equipe();
     }
 
     public void lancerScenePlateau() {
@@ -158,14 +153,6 @@ public class Plateau {
         group.getChildren().add(reStrat);
         group.getChildren().add(exit);
 
-        //Bouton équipe
-        Button equipe = new Button("Equipe");
-        equipe.setLayoutX(10);
-        equipe.setLayoutY(800);
-        equipe.setMinSize(60, 20);
-        equipe.setOnMouseClicked(mouseEvent -> incorporeEquipe());
-
-        group.getChildren().add(equipe);
         primary.setScene(scene);
 //        primary.show();
     }

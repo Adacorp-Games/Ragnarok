@@ -14,16 +14,10 @@ public class Archer extends Personne {
     public Archer(Equipe team) {
         super(150, 50, 150, 100, 2, 1, team);
     }
-
-    @Override
-    public Text getinfoTitleText() {
-        return new Text("Archer (" + this.getCost() + "€) :\n");
+    public Text getinfoText(){
+        return new Text("L'Archer il est eclaté(e) : \n" + this.getHealth() +" : Pv\n" + this.getArmor()+ " : Armure\n");
     }
 
-    @Override
-    public Text getinfoDescText(){
-        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
-    }
 
     public Archer(Equipe team, Case position) {
         super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team, position);

@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
 
@@ -18,7 +19,7 @@ public class Case {
     double posY;
     private Color couleur;
     ArrayList<Case> caseVoisines;
-    ArrayList<Personne> contenu;
+    private Personne contenu ;
 
     public static Image hexagone_img1 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
@@ -28,7 +29,6 @@ public class Case {
     public Case(int id, boolean status) {
         this.id = id;
         this.estOccupe = status;
-        contenu = new ArrayList<Personne>();
         caseVoisines = new ArrayList<Case>();
         // this.posX = posX;
         // this.posY = posY;
@@ -50,6 +50,28 @@ public class Case {
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
+            });
+            hexagone.setOnMouseClicked((mouseEvent)->{
+                if(Plateau.personneSelectionné!=null  && Plateau.equipeSelectionné!=null){
+                    contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné);
+                    estOccupe=true;
+                }
+                else if (Plateau.personneSelectionné == null && contenu != null){
+                    contenu =null;
+                    estOccupe= false;
+                }
+                else{
+                    Text attention = new Text("Veuillez selectionner une equipe et un personnage");
+                    attention.setX(posX);
+                    attention.setY(posY);
+                    attention.underlineProperty().setValue(true);
+                    attention.setFill(Color.RED);
+                    Plateau.group.getChildren().add(attention);
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                        Plateau.group.getChildren().remove(Plateau.group.getChildren().size()-1);
+                    }));
+                    timeline.play();
+                }
             });
             // hexagone.setEffect();
             arriveCase(hexagone);

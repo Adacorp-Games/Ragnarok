@@ -8,9 +8,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Ragnarok");
-        stage.setHeight(600);
-        stage.setWidth(800);
-        //stage.setFullScreen(true);
+        stage.setFullScreen(true);
         Plateau game = new Plateau(100,stage);
         game.lancerParti();
     }

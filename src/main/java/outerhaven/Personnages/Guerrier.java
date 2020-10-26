@@ -21,14 +21,8 @@ public class Guerrier extends Personne {
         this.getPosition().setStatus(true);
     }
 
-    @Override
-    public Text getinfoTitleText() {
-        return new Text("Guerrier (" + this.getCost() + "€) :\n");
-    }
-
-    @Override
-    public Text getinfoDescText(){
-        return new Text("\nPortée et dégats réduits mais vie et armure plus grande." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+    public Text getinfoText(){
+        return new Text("Le Guerrier il est trop fort : \n" + this.getHealth() +" : Pv\n" + this.getArmor()+ " : Armure\n");
     }
 
     public Image getImageFace(){
