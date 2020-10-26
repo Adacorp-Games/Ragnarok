@@ -127,13 +127,16 @@ public class Plateau {
         reStrat.setLayoutX(10);
         reStrat.setLayoutY(80);
         reStrat.setMinSize(60,20);
-        reStrat.setOnMouseClicked(mouseEvent -> lancerScenePlateau());
+        reStrat.setOnMouseClicked(mouseEvent ->{
+            group.getChildren().remove(0,group.getChildren().size());
+            lancerScenePlateau();
+        });
 
         Button exit = new Button("EXIT");
         exit.setLayoutX(10);
         exit.setLayoutY(110);
         exit.setMinSize(60,20);
-        exit.setOnMouseClicked(mouseEvent -> lancerParti());
+        exit.setOnMouseClicked(mouseEvent -> primary.close());
 
         group.getChildren().add(reStrat);
         group.getChildren().add(exit);

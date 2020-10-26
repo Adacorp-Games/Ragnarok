@@ -21,10 +21,6 @@ public class Guerrier extends Personne {
         this.getPosition().setStatus(true);
     }
 
-    public Text getinfoText(){
-        return new Text("Le Guerrier il est trop fort : \n" + this.getHealth() +" : Pv\n" + this.getArmor()+ " : Armure\n");
-    }
-
     @Override
     public Personne personneNouvelle(Equipe team) {
         return new Guerrier(team);
