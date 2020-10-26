@@ -20,6 +20,8 @@ public class Plateau {
     public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
+    public static Scene scene;
+    public static Personne personneSelectionné;
 
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
@@ -48,7 +50,7 @@ public class Plateau {
     public void lancerScenePlateau() {
 
         Group group = new Group();
-        Scene scene = new Scene(group);
+        scene = new Scene(group);
 
         double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
         double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
@@ -86,7 +88,7 @@ public class Plateau {
         }
 
         //creation et incorporation d'une slide barre
-        BarrePersonnage barre = new BarrePersonnage(longeurMax);
+        BarrePersonnage barre = new BarrePersonnage();
         group.getChildren().add(barre.returnBarre());
 
 
@@ -104,9 +106,9 @@ public class Plateau {
 
         //alex.déplacer(listeCase.get(6));
 
-        for (Personne p : personnages) {
-            group.getChildren().add(p.affichagePersonnage());
-        }
+        group.getChildren().add(alex.affichagePersonnage());
+        group.getChildren().add(medhy.affichagePersonnage());
+
 
         //Bouton pause et reprendre
         Label labelPlay = new Label("");
