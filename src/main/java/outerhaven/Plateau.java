@@ -135,15 +135,17 @@ public class Plateau {
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> lancerParti());
 
+        group.getChildren().add(reStrat);
+        group.getChildren().add(exit);
+
         //Bouton équipe
         Button equipe = new Button("Equipe");
-        equipe.setLayoutY(10);
-        equipe.setLayoutX(800);
+        equipe.setLayoutX(10);
+        equipe.setLayoutY(800);
         equipe.setMinSize(60, 20);
         equipe.setOnMouseClicked(mouseEvent -> incorporeEquipe());
 
-        group.getChildren().add(reStrat);
-        group.getChildren().add(exit);
+        group.getChildren().add(equipe);
 
         primary.setScene(scene);
 //        primary.show();
