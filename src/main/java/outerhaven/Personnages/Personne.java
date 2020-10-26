@@ -36,7 +36,7 @@ public abstract class Personne {
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
 
-    // à revoir en fonction du deplacement des personnages
+    // A revoir en fonction du deplacement des personnages
     private Case position;
 
 
