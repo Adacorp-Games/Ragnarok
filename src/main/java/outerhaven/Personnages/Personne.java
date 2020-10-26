@@ -136,10 +136,10 @@ public abstract class Personne {
         barre.setX(X);
         barre.setY(Y - taille);
         barre.getStyleClass().add("border");
-        /*barre.setStyle("-fx-background-color: #0000ff");
+        /*barre.setStyle("-fx-background-color: grey");
         barre.setStyle("-fx-border-width: 2px");
         barre.setStyle("-fx-border-style: solid");
-        barre.setStyle("-fx-border-color: #000000");*/
+        barre.setStyle("-fx-border-color: black");*/
 
         Text title = this.getinfoTitleText();
         title.setX(X + 10);
