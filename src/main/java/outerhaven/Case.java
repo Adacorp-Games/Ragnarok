@@ -53,24 +53,24 @@ public class Case {
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
-            hexagone.setOnMousePressed((mouseEvent)->{
-                if(Plateau.personneSelectionné!=null  && Plateau.equipeSelectionné!=null && contenu == null){
+            hexagone.setOnMousePressed((mouseEvent)-> {
+                if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu == null) {
                     contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this);
                     affichagecontenu = contenu.affichagePersonnage();
                     Plateau.group.getChildren().add(affichagecontenu);
-                    estOccupe=true;
+                    estOccupe = true;
                 }
-                else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null){
-                    contenu =null;
+                else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
+                    contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
-                    estOccupe= false;
+                    estOccupe = false;
                 }
-                else if (Plateau.personneSelectionné == null && contenu != null){
-                    contenu =null;
+                else if (Plateau.personneSelectionné == null && contenu != null) {
+                    contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
-                    estOccupe= false;
+                    estOccupe = false;
                 }
-                else{
+                else {
                     Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                     attention.setX(posX);
                     attention.setY(posY);

@@ -164,9 +164,10 @@ public class Plateau {
         group.getChildren().add(equipe3);
 
         primary.setScene(scene);
-//        primary.show();
+        //primary.show();
     }
 
     public void test(){
+
     }
 }
