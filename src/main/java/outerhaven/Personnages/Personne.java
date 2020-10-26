@@ -240,6 +240,33 @@ public abstract class Personne {
         listName.add("Maxime");
         listName.add("Benjamin");
         listName.add("Tanguy");
+        listName.add("Samuel");
+        listName.add("Santiago");
+        listName.add("Mateusz");
+        listName.add("Obama");
+        listName.add("Johannides");
+        listName.add("Molnar");
+        listName.add("Mou");
+        listName.add("Macron");
+        listName.add("Micron");
+        listName.add("Basile");
+        listName.add("Sarkozy");
+        listName.add("Stéphanie");
+        listName.add("Hugo");
+        listName.add("David");
+        listName.add("Pierrick");
+        listName.add("Benoit");
+        listName.add("Cedric");
+        listName.add("Sars-Cov3");
+        listName.add("COVID-20");
+        listName.add("Nostradamus");
+        listName.add("Thanos");
+        listName.add("Shrek");
+        listName.add("Beanos");
+        listName.add("Charles");
+        listName.add("KimJong2");
+        listName.add("Araki");
+        listName.add("Toriyama");
     }
 
     // Getteur et setteur

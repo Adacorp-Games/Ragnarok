@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Personne;
+
 
 import java.util.ArrayList;
 
@@ -28,9 +30,13 @@ public class Plateau {
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
-    public Plateau(int aire ,Stage primary) {
-        this.aire = aire;
+    public Plateau(Stage primary) {
         Plateau.primary = primary;
+    }
+
+    public static int getIntFromTextField(TextField textField) {
+        String text = textField.getText();
+        return Integer.parseInt(text);
     }
 
     public void lancerParti() {
@@ -40,9 +46,21 @@ public class Plateau {
         start.setLayoutX((longeurMax-700)/2);
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
+
+        TextField nbCase = new TextField();
+        nbCase.setLayoutX((longeurMax-700)/2);
+        nbCase.setLayoutY((largeurMax-300)/2);
+        nbCase.setMinSize(700,20);
+
+        group.getChildren().add(nbCase);
         group.getChildren().add(start);
-        start.setOnMouseClicked(mouseEvent -> { lancerScenePlateau();
-        group.getChildren().remove(0);});
+
+        start.setOnMouseClicked(mouseEvent -> {
+            aire = getIntFromTextField(nbCase);
+            lancerScenePlateau();
+            group.getChildren().remove(0);
+            group.getChildren().remove(0);
+        });
 
         primary.setScene(scene);
         primary.show();
