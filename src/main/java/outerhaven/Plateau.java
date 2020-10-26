@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import outerhaven.Interface.BarrePersonnage;
@@ -48,8 +49,8 @@ public class Plateau {
 
     }
 
-    public void incorporeEquipe(){
-        equipeSelectionné = new Equipe();
+    public void incorporeEquipe(Equipe e1){
+        equipeSelectionné = e1;
     }
 
     public void lancerScenePlateau() {
@@ -142,22 +143,24 @@ public class Plateau {
 
         //Bouton équipe
         Button equipe1 = new Button("Equipe 1");
+        Equipe e1 = new Equipe(Color.RED);
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(800);
         equipe1.setMinSize(60, 20);
-        equipe1.setOnMouseClicked(mouseEvent -> incorporeEquipe());
+        equipe1.setOnMouseClicked(mouseEvent -> incorporeEquipe(e1));
 
         Button equipe2 = new Button("Equipe 2");
+        Equipe e2 = new Equipe(Color.BLUE);
         equipe2.setLayoutX(80);
         equipe2.setLayoutY(800);
         equipe2.setMinSize(60, 20);
-        equipe2.setOnMouseClicked(mouseEvent -> incorporeEquipe());
+        equipe2.setOnMouseClicked(mouseEvent -> incorporeEquipe(e2));
 
         Button equipe3 = new Button("Sans Equipe");
         equipe3.setLayoutX(150);
         equipe3.setLayoutY(800);
         equipe3.setMinSize(60, 20);
-        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe());
+        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe(null));
 
         group.getChildren().add(equipe1);
         group.getChildren().add(equipe2);

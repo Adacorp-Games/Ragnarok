@@ -9,9 +9,9 @@ public class Equipe {
     private ArrayList<Personne> team;
     private Color couleur;
 
-    public Equipe() {
+    public Equipe(Color couleur) {
         this.team = new ArrayList<>();
-        this.couleur = Color.color(Math.random(), Math.random(), Math.random()); // Couleur RBG aléatoire;
+        //this.couleur = Color.color(Math.random(), Math.random(), Math.random()); // Couleur RBG aléatoire;
     }
 
     public Color getCouleur() {
