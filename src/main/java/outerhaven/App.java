@@ -10,7 +10,7 @@ public class App extends Application {
         stage.setTitle("Ragnarok");
         stage.setFullScreen(true);
         Plateau game = new Plateau(100,stage);
-        game.lancerScenePlateau();
+        game.lancerParti();
     }
     public static void main(String[] args) {
         Application.launch(args);

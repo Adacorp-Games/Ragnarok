@@ -2,6 +2,8 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import outerhaven.Interface.BarrePersonnage;
@@ -22,6 +24,25 @@ public class Plateau {
     public Plateau(int aire ,Stage primary) {
         this.aire = aire;
         Plateau.primary = primary;
+    }
+
+    public void lancerParti() {
+        Group group = new Group();
+        Scene scene = new Scene(group);
+
+        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+        double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+
+        Button start = new Button("START");
+        start.setLayoutX(longeurMax/4);
+        start.setLayoutY(largeurMax/3);
+        start.setMinSize(700,200);
+        start.setOnMouseClicked(mouseEvent -> lancerScenePlateau());
+        group.getChildren().add(start);
+
+        primary.setScene(scene);
+        primary.show();
+
     }
 
     public void lancerScenePlateau() {
@@ -48,7 +69,7 @@ public class Plateau {
                     listeCase.add(hexago);
                     i++;
                 }
-                ligne++;
+                    ligne++;
             }
             else {
                 double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
@@ -86,6 +107,31 @@ public class Plateau {
         for (Personne p : personnages) {
             group.getChildren().add(p.affichagePersonnage());
         }
+
+        //Bouton pause et reprendre
+        Label labelPlay = new Label("");
+        labelPlay.setLayoutY(670);
+        Label labelPause = new Label("");
+        labelPause.setLayoutY(650);
+        Button play = new Button("Play");
+        play.setLayoutX(10);
+        play.setLayoutY(50);
+        play.setMinSize(60,20);
+
+        play.setOnMouseClicked(mouseEvent -> {
+            labelPlay.setText("La partie reprend");
+        });
+        Button pause = new Button("Pause");
+        pause.setLayoutX(10);
+        pause.setLayoutY(20);
+        pause.setMinSize(60,20);
+        pause.setOnMouseClicked(mouseEvent ->{
+            labelPause.setText("La partie est en pause");
+        });
+        group.getChildren().add(pause);
+        group.getChildren().add(labelPause);
+        group.getChildren().add(play);
+        group.getChildren().add(labelPlay);
 
         primary.setScene(scene);
         primary.show();
