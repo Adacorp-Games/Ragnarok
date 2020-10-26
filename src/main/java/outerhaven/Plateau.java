@@ -21,8 +21,9 @@ public class Plateau {
     private static Stage primary;
     public static Double taille;
     public static Scene scene;
-    Group group = new Group();
+    public static Group group = new Group();
     public static Personne personneSelectionné;
+    public static Equipe equipeSelectionné;
 
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
@@ -86,6 +87,9 @@ public class Plateau {
 
         test();
 
+        BarrePersonnage barre = new BarrePersonnage();
+        group.getChildren().add(barre.returnBarre());
+
         //Bouton pause et reprendre
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
@@ -134,8 +138,7 @@ public class Plateau {
 
     public void test(){
         //creation et incorporation d'une slide barre
-        BarrePersonnage barre = new BarrePersonnage();
-        group.getChildren().add(barre.returnBarre());
+
 
 
         // Tests : Barre de vie

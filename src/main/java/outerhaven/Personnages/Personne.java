@@ -71,6 +71,8 @@ public abstract class Personne {
         this.position.setStatus(true);
     }
 
+    public abstract Personne personneNouvelle(Equipe team);
+
     public void subirDegats(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);
         double totalDamage = damage * damageMultiplier;
