@@ -4,6 +4,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import outerhaven.Interface.BarrePersonnage;
+import outerhaven.Personnages.Archer;
+import outerhaven.Personnages.Guerrier;
+import outerhaven.Personnages.Personne;
+
 import java.util.ArrayList;
 
 public class Plateau {

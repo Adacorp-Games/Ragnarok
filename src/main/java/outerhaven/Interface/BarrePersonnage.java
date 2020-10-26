@@ -1,4 +1,4 @@
-package outerhaven;
+package outerhaven.Interface;
 import javafx.scene.Group;
 
 public class BarrePersonnage{

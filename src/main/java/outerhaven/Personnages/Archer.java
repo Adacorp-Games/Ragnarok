@@ -1,6 +1,9 @@
-package outerhaven;
+package outerhaven.Personnages;
 
-public class Archer extends Personne{
+import outerhaven.Case;
+import outerhaven.Equipe;
+
+public class Archer extends Personne {
 
     public Archer(Equipe team) {
         super(Personne.getRandomName(), 150, 50, 150, 100, 2, 1, team);

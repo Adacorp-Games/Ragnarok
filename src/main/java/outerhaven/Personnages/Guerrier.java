@@ -1,4 +1,7 @@
-package outerhaven;
+package outerhaven.Personnages;
+
+import outerhaven.Case;
+import outerhaven.Equipe;
 
 public class Guerrier extends Personne {
 

@@ -1,4 +1,4 @@
-package outerhaven;
+package outerhaven.Personnages;
 
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
@@ -9,10 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import outerhaven.Case;
+import outerhaven.Equipe;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 import static outerhaven.Plateau.taille;
 import static outerhaven.Plateau.personnages;
@@ -26,7 +27,7 @@ public abstract class Personne {
     private int damage;
     private int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
-    Case position;
+    public Case position;
     private Equipe team;
     public static Image person_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
     private ImageView person = new ImageView(person_img1);
@@ -166,8 +167,8 @@ public abstract class Personne {
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
 
-        barre.setX(getPosition().posX);
-        barre.setY(getPosition().posY + taille/2.2);
+        barre.setX(getPosition().getPosX());
+        barre.setY(getPosition().getPosY() + taille/2.2);
 
         vie.setY(barre.getY()+2);
         vie.setX(barre.getX()+2);

@@ -1,6 +1,7 @@
 package outerhaven;
 
 import javafx.scene.paint.Color;
+import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
