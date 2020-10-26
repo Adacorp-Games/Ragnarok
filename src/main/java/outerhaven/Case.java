@@ -9,24 +9,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import outerhaven.Personnages.Personne;
 
 public class Case {
-    int id;
-    boolean estOccupe;
-    double posX;
-    double posY;
+    private int id;
+    private double posX;
+    private double posY;
     private Color couleur;
-    ArrayList<Case> caseVoisines;
-    ArrayList<Personne> contenu;
+    private ArrayList<Case> caseVoisines;
+    private ArrayList<Personne> contenu;
 
     public static Image hexagone_img1 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
     public static Image hexagone_img2 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
 
-    public Case(int id, boolean status) {
+    public Case(int id) {
         this.id = id;
-        this.estOccupe = status;
         contenu = new ArrayList<Personne>();
         caseVoisines = new ArrayList<Case>();
         // this.posX = posX;
@@ -34,7 +33,7 @@ public class Case {
     }
 
     public ImageView afficherCase(double X, double Y, double taille) {
-        if (!estOccupe) {
+        if (!estOccupe()) {
             // Image hexagone_img1 = new
             // Image(Case.class.getResourceAsStream("Images/hexagon.png"));
             ImageView hexagone = new ImageView(hexagone_img1);
@@ -74,12 +73,17 @@ public class Case {
         return id;
     }
 
-    public boolean isStatus() {
-        return estOccupe;
-    }
-
-    public void setStatus(boolean status) {
-        this.estOccupe = status;
+    public boolean estOccupe() {
+        if (contenu.size()==0) {
+            return false;
+        }
+        else {
+            if (contenu.size()==1) {
+                return true;
+            }
+            System.out.println("Attention la case contient plus d'un obstacle/unite");
+            return true;
+        }
     }
 
     public double getPosX() {
@@ -102,7 +106,64 @@ public class Case {
         return caseVoisines;
     }
 
+    public void setCaseVoisines(ArrayList<Case> voisines){
+        this.caseVoisines = voisines;
+    }
+
+    public void addVoisin(Case v){
+        caseVoisines.add(v);
+    }
+
+    public void setContenu(Personne p){
+        if(estOccupe()){
+            System.out.println("la case contient deja un obstacle/unite");
+            contenu.add(p);
+        }
+    }
+
+    public ArrayList<Personne> getContenu(){
+        return contenu;
+    }
+
     public void setCouleur(Color couleur) {
         this.couleur = couleur;
+    }
+
+    public ArrayList<Case> voisinsLibres(){
+        ArrayList<Case> libres = new ArrayList<>();
+        for (Case case1 : caseVoisines) {
+            if( !case1.estOccupe()){
+                libres.add(case1);
+            }
+        }
+        return libres;
+    }
+
+    public ArrayList<Case> pathToPerso(Personne p, ArrayList<Case> parcours) {
+        parcours.add(this);
+        if(contenu.contains(p)){
+            return parcours;
+        }
+        ArrayList<Case> aParcourir = new ArrayList<Case>();
+        for (Case case1 : voisinsLibres()) {
+            if(!parcours.contains(case1)){
+                aParcourir.add(case1);
+            }
+        }
+        ArrayList<ArrayList<Case>> cheminsEnfants = new ArrayList<ArrayList<Case>>();
+        for (Case case1 : aParcourir) {
+            cheminsEnfants.add(case1.pathToPerso(p, parcours));
+        }
+        ArrayList<Case> shorterPath = new ArrayList<Case>();
+        for (ArrayList<Case> path : cheminsEnfants) {
+            if (shorterPath.size()==0) {
+                shorterPath = path;
+            } else {
+                if (path.size()<shorterPath.size()) {
+                    shorterPath = path;
+                }
+            }
+        }
+        return shorterPath;
     }
 }
