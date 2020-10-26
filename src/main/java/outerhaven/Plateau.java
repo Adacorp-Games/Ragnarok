@@ -41,8 +41,7 @@ public class Plateau {
         start.setMinSize(700,200);
         group.getChildren().add(start);
         start.setOnMouseClicked(mouseEvent -> { lancerScenePlateau();
-        group.getChildren().remove(0);}
-        );
+        group.getChildren().remove(0);});
 
         primary.setScene(scene);
         primary.show();
@@ -154,8 +153,15 @@ public class Plateau {
         equipe2.setMinSize(60, 20);
         equipe2.setOnMouseClicked(mouseEvent -> incorporeEquipe());
 
+        Button equipe3 = new Button("Sans Equipe");
+        equipe3.setLayoutX(150);
+        equipe3.setLayoutY(800);
+        equipe3.setMinSize(60, 20);
+        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe());
+
         group.getChildren().add(equipe1);
         group.getChildren().add(equipe2);
+        group.getChildren().add(equipe3);
 
         primary.setScene(scene);
 //        primary.show();
