@@ -23,7 +23,6 @@ public class Case {
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
 
-
     public static Image hexagone_img1 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
     public static Image hexagone_img2 = new Image(
@@ -54,43 +53,46 @@ public class Case {
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
-
             hexagone.setOnMousePressed((mouseEvent)-> {
-                if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
-                    contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
-                    affichagecontenu = contenu.get(0).affichagePersonnage();
-                    Plateau.group.getChildren().add(affichagecontenu);
-                    InnerShadow ombre = new InnerShadow();
-                    ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
-                    hexagone.setEffect(ombre);
-                }
-                else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
-                    contenu = null;
-                    Plateau.group.getChildren().remove(affichagecontenu);
-                    hexagone.setEffect(null);
-                }
-                else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
-                    contenu = null;
-                    Plateau.group.getChildren().remove(affichagecontenu);
-                    hexagone.setEffect(null);
-                }
-                else {
-                    Text attention = new Text("Veuillez selectionner une equipe et un personnage");
-                    attention.setX(posX);
-                    attention.setY(posY);
-                    attention.underlineProperty().setValue(true);
-                    attention.setFill(Color.RED);
-                    Plateau.group.getChildren().add(attention);
-                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
-                        Plateau.group.getChildren().remove(attention);
-                    }));
-                    timeline.play();
-                }
+                interactiohex(hexagone);
             });
             arriveCase(hexagone);
             return hexagone;
         } else {
             return null;
+        }
+    }
+
+    public void interactiohex(ImageView hexagone){
+        if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
+            contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+            affichagecontenu = contenu.get(0).affichagePersonnage();
+            Plateau.group.getChildren().add(affichagecontenu);
+            InnerShadow ombre = new InnerShadow();
+            ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+            hexagone.setEffect(ombre);
+        }
+        else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
+            contenu.remove(0);
+            Plateau.group.getChildren().remove(affichagecontenu);
+            hexagone.setEffect(null);
+        }
+        else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
+            contenu.remove(0);
+            Plateau.group.getChildren().remove(affichagecontenu);
+            hexagone.setEffect(null);
+        }
+        else {
+            Text attention = new Text("Veuillez selectionner une equipe et un personnage");
+            attention.setX(posX);
+            attention.setY(posY);
+            attention.underlineProperty().setValue(true);
+            attention.setFill(Color.RED);
+            Plateau.group.getChildren().add(attention);
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                Plateau.group.getChildren().remove(attention);
+            }));
+            timeline.play();
         }
     }
 
@@ -106,10 +108,6 @@ public class Case {
         image.setY(image.getY() - pixel);
     }
 
-    public int getId() {
-        return id;
-    }
-
     public boolean estOccupe() {
         if (contenu.size() == 0) {
             return false;
@@ -120,49 +118,6 @@ public class Case {
             System.out.println("Attention la case contient plus d'un obstacle/unite");
             return true;
         }
-    }
-
-    public double getPosX() {
-        return posX;
-    }
-
-    public void setPosX(double posX) {
-        this.posX = posX;
-    }
-
-    public double getPosY() {
-        return posY;
-    }
-
-    public void setPosY(double posY) {
-        this.posY = posY;
-    }
-
-    public ArrayList<Case> getCaseVoisines() {
-        return caseVoisines;
-    }
-
-    public void setCaseVoisines(ArrayList<Case> voisines) {
-        this.caseVoisines = voisines;
-    }
-
-    public void addVoisin(Case v) {
-        caseVoisines.add(v);
-    }
-
-    public void setContenu(Personne p) {
-        if (estOccupe()) {
-            System.out.println("la case contient deja un obstacle/unite");
-            contenu.add(p);
-        }
-    }
-
-    public ArrayList<Personne> getContenu() {
-        return contenu;
-    }
-
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
     }
 
     public ArrayList<Case> voisinsLibres(boolean lib) {
@@ -239,6 +194,56 @@ public class Case {
             depth++;
         }
         return parcours;
+    }
+
+
+    //getteur et setteur
+
+    public double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(double posX) {
+        this.posX = posX;
+    }
+
+    public double getPosY() {
+        return posY;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setPosY(double posY) {
+        this.posY = posY;
+    }
+
+    public ArrayList<Case> getCaseVoisines() {
+        return caseVoisines;
+    }
+
+    public void setCaseVoisines(ArrayList<Case> voisines) {
+        this.caseVoisines = voisines;
+    }
+
+    public void addVoisin(Case v) {
+        caseVoisines.add(v);
+    }
+
+    public void setContenu(Personne p) {
+        if (estOccupe()) {
+            System.out.println("la case contient deja un obstacle/unite");
+            contenu.add(p);
+        }
+    }
+
+    public ArrayList<Personne> getContenu() {
+        return contenu;
+    }
+
+    public void setCouleur(Color couleur) {
+        this.couleur = couleur;
     }
 
 }

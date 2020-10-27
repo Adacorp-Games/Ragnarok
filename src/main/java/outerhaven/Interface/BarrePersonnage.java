@@ -27,13 +27,6 @@ public class BarrePersonnage{
     }
 
     public void genereBarre() {
-        /*ImageView imageFond = new ImageView(new Image("https://cdn.discordapp.com/attachments/764528562429624391/770430078403870740/barrelong.png"));
-        imageFond.setFitWidth(longeurMax-20);
-        imageFond.setFitHeight(200);
-        imageFond.setX(10);
-        imageFond.setY(largeurMax - imageFond.getFitHeight());
-        group.getChildren().add(imageFond);*/
-
         Rectangle barre = new Rectangle();
         barre.setWidth(longeurMax-20);
         barre.setHeight(200);
@@ -42,9 +35,7 @@ public class BarrePersonnage{
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
         barre.setFill(Color.LIGHTGRAY);
-        //barre.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         group.getChildren().add(barre);
-
         for (int i = 0; i < listClasse.size(); i++) {
             group.getChildren().add(listClasse.get(i).affichagePersonnageBarre(i));
         }
