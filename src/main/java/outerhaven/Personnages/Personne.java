@@ -83,7 +83,9 @@ public abstract class Personne {
         }
         if (p.getHealth() <= 0) {
             System.out.println(p.getName() + " est mort !");
-
+            personnages.remove(p);
+            this.team.getTeam().remove(p);
+            morts.add(p);
             // Voir si on peut le mettre dans une liste de morts (pour les compter) ou juste les supprimer d'une liste des Personnes sur le plateau.
         }
     }

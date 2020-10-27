@@ -31,6 +31,8 @@ public class Plateau {
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean statusPartie = false;
     public static BarrePersonnage barre = new BarrePersonnage();
+    public Equipe e1 = new Equipe(Color.RED);
+    public Equipe e2 = new Equipe(Color.BLUE);
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -135,14 +137,12 @@ public class Plateau {
     private Group boutonEquipe() {
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        Equipe e1 = new Equipe(Color.RED);
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(800);
         equipe1.setMinSize(60, 20);
 
         Button equipe2 = new Button("Equipe 2");
         equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        Equipe e2 = new Equipe(Color.BLUE);
         equipe2.setLayoutX(80);
         equipe2.setLayoutY(800);
         equipe2.setMinSize(60, 20);
@@ -271,6 +271,14 @@ public class Plateau {
         });
         boutonPausePlay();
         group.getChildren().add(menu);
+    }
+
+    public void tour() {
+        while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie != false) {
+            for (Personne p : personnages) {
+                p.action();
+            }
+        }
     }
 
     // Getter et setter
