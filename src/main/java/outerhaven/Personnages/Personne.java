@@ -3,14 +3,19 @@ package outerhaven.Personnages;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Plateau;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +25,8 @@ import static outerhaven.Plateau.personnages;
 
 public abstract class Personne {
     private String name; // Stocké dans un tableau.
+    private static ArrayList<String> listName = new ArrayList<>();
+
     private double health;
     private double maxHealth;
     private double armor;
@@ -27,15 +34,29 @@ public abstract class Personne {
     private int damage;
     private int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
-    private Case position;
     private Equipe team;
-    public static Image person_img1 = new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
-    private ImageView person = new ImageView(person_img1);
-    /*double positionX = position.getPosX();
-    double positionY = position.getPosY();*/
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Equipe team) {
-        this.name = name;
+    // A revoir en fonction du deplacement des personnages
+    private Case position;
+
+
+    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+
+    public Personne(double health, double armor, double cost, int damage, int range, int speed) {
+        this.name = getRandomName();
+        this.health = health;
+        this.maxHealth = health;
+        this.armor = armor;
+        this.cost = cost;
+        this.damage = damage;
+        this.range = range;
+        this.speed = speed;
+        personnages.add(this);
+    }
+
+    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team) {
+        this.name = getRandomName();
         this.health = health;
         this.maxHealth = health;
         this.armor = armor;
@@ -48,49 +69,13 @@ public abstract class Personne {
         this.team.getTeam().add(this);
     }
 
-    public Personne(String name, double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
-        this(name, health, armor, cost, damage, range, speed, team);
+    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
+        this(health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setStatus(true);
-        //this.team.addPersonne(this);
-        //this.position.setCouleur(this.team.getCouleur());
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public double getHealth() {
-        return health;
-    }
-
-    public double getArmor() {
-        return armor;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
-    }
-
-    public Case getPosition() {
-        return position;
-    }
-
-    public void setPosition(Case position) {
-        this.position = position;
-    }
-
-    public Equipe getTeam() {
-        return team;
-    }
+    public abstract Personne personneNouvelle(Equipe team, Case position);
 
     public void subirDegats(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);
@@ -103,12 +88,6 @@ public abstract class Personne {
 
             // Voir si on peut le mettre dans une liste de morts (pour les compter) ou juste les supprimer d'une liste des Personnes sur le plateau.
         }
-    }
-
-    public void inter() {
-        person.setOnMouseClicked((mouseEvent) -> {
-
-        });
     }
 
     public void déplacer(Case c) {
@@ -129,6 +108,63 @@ public abstract class Personne {
         }
     }
 
+    public Group affichagePersonnageBarre(int i){
+        Group group = new Group();
+        ImageView imageperson = new ImageView(this.getImageFace());
+        imageperson.setFitHeight(130);
+        imageperson.setFitWidth(100);
+        imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight()-160);
+        imageperson.setX(200+i*(imageperson.getFitWidth()+50));
+        imageperson.setOnMouseEntered((mouseEvent) -> {
+            group.getChildren().add(this.afficherInfo(imageperson.getX(),imageperson.getY()));
+        });
+        imageperson.setOnMouseExited((mouseEvent) -> {
+            group.getChildren().remove(1);
+        });
+        imageperson.setOnMouseClicked((mouseEvent) -> {
+            if(Plateau.personneSelectionné==null) {
+                Plateau.scene.setCursor(new ImageCursor(getImageFace()));
+                Plateau.personneSelectionné=this;
+            }
+            else{
+                Plateau.scene.setCursor(Cursor.DEFAULT);
+                Plateau.personneSelectionné=null;
+            }
+        });
+        group.getChildren().add(imageperson);
+        return group;
+    }
+
+    public Group afficherInfo(double X, double Y) {
+        Group description = new Group();
+        Rectangle barre = new Rectangle(400 , 130, Color.LIGHTGRAY);
+        barre.setX(X);
+        barre.setY(Y - 150);
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
+        /*barre.setStyle("-fx-background-color: grey");
+        barre.setStyle("-fx-border-width: 2px");
+        barre.setStyle("-fx-border-style: solid");
+        barre.setStyle("-fx-border-color: black");*/
+
+        Text title = this.getinfoTitleText();
+        title.setX(X + 10);
+        title.setY(Y + 20 - 130);
+        //title.setStyle("-fx-font-style: bold");
+
+        Text descrip = this.getinfoDescText();
+        descrip.setX(X + 10);
+        descrip.setY(Y + 20 - 130);
+
+        description.getChildren().add(barre);
+        description.getChildren().add(title);
+        description.getChildren().add(descrip);
+        return description;
+    }
+
+    public abstract Text getinfoTitleText();
+    public abstract Text getinfoDescText();
+
     public Group affichagePersonnage() {
         Text name = new Text();
         name.setText(this.getName());
@@ -136,13 +172,13 @@ public abstract class Personne {
         name.setY(position.getPosY());
 
         Group group = new Group();
-        group.getChildren().add(afficherImage());
+        group.getChildren().add(this.afficherImageFace());
         group.getChildren().add(name);
         return group;
     }
 
-    public Group afficherImage() {
-        ImageView person = new ImageView(person_img1);
+    public Group afficherImageFace() {
+        ImageView person = new ImageView(this.getImageFace());
         person.setFitHeight(taille/1.5);
         person.setFitWidth(taille/3);
         person.setX(position.getPosX() + taille/3);
@@ -187,9 +223,16 @@ public abstract class Personne {
         return group;
     }
 
+    // Gestion nomRandomName
+
     public static String getRandomName() {
-        // Cela pourrait être mis dans une classe séparée.
-        ArrayList<String> listName = new ArrayList<>();
+        if(listName.isEmpty()){
+            ajouteNom();
+        }
+        return listName.get(new Random().nextInt(listName.size()));
+    }
+
+    private static void ajouteNom(){
         listName.add("Alex");
         listName.add("Ilyes");
         listName.add("Pierre-Antoine");
@@ -198,6 +241,77 @@ public abstract class Personne {
         listName.add("Jérôme");
         listName.add("Erwan");
         listName.add("Gaël");
-        return listName.get(new Random().nextInt(listName.size()));
+        listName.add("Maxime");
+        listName.add("Benjamin");
+        listName.add("Tanguy");
+        listName.add("Samuel");
+        listName.add("Santiago");
+        listName.add("Mateusz");
+        listName.add("Obama");
+        listName.add("Johannides");
+        listName.add("Molnar");
+        listName.add("Mou");
+        listName.add("Macron");
+        listName.add("Micron");
+        listName.add("Basile");
+        listName.add("Sarkozy");
+        listName.add("Stéphanie");
+        listName.add("Hugo");
+        listName.add("David");
+        listName.add("Pierrick");
+        listName.add("Benoit");
+        listName.add("Cedric");
+        listName.add("Sars-Cov3");
+        listName.add("COVID-20");
+        listName.add("Nostradamus");
+        listName.add("Thanos");
+        listName.add("Shrek");
+        listName.add("Beanos");
+        listName.add("Charles");
+        listName.add("KimJong2");
+        listName.add("Araki");
+        listName.add("Toriyama");
+    }
+
+    // Getteur et setteur
+
+    public String getName() {
+        return name;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public double getArmor() {
+        return armor;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public Case getPosition() {
+        return position;
+    }
+
+    public void setPosition(Case position) {
+        this.position = position;
+    }
+
+    public Equipe getTeam() {
+        return team;
+    }
+
+    public Image getImageFace() {
+        return new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
     }
 }

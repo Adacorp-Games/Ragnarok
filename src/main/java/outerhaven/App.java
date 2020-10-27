@@ -9,11 +9,11 @@ public class App extends Application {
     public void start(Stage stage) {
         stage.setTitle("Ragnarok");
         stage.setFullScreen(true);
-        Plateau game = new Plateau(100,stage);
-        game.lancerScenePlateau();
+        Plateau game = new Plateau(stage);
+        game.lancerPartie();
     }
+
     public static void main(String[] args) {
         Application.launch(args);
     }
 }
-

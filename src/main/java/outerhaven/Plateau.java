@@ -2,12 +2,17 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import outerhaven.Interface.BarrePersonnage;
-import outerhaven.Personnages.Archer;
-import outerhaven.Personnages.Guerrier;
+import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
+
 
 import java.util.ArrayList;
 
@@ -18,19 +23,79 @@ public class Plateau {
     public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
+    public static Scene scene;
+    public static Personne personneSelectionné;
+    public static Equipe equipeSelectionné;
+    public static Group group = new Group();
+    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
-    public Plateau(int aire ,Stage primary) {
-        this.aire = aire;
+    public Plateau(Stage primary) {
         Plateau.primary = primary;
     }
 
+    public static int getIntFromTextField(TextField textField) {
+        String text = textField.getText();
+        return Integer.parseInt(text);
+    }
+
+    public void lancerPartie() {
+        scene = new Scene(group);
+        //scene.getStylesheets().add("style.css");
+
+        Button start = new Button("START");
+        start.setLayoutX((longeurMax-700)/2);
+        start.setLayoutY((largeurMax-200)/2);
+        start.setMinSize(700,200);
+        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
+        start.setOnMouseEntered(mouseEvent -> {
+            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
+        });
+        start.setOnMouseExited(mouseEvent -> {
+            start.setEffect(null);
+        });
+        /*start.setOnMousePressed(mouseEvent -> {
+            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
+            start.setStyle("-fx-background-color: lightgrey;" +
+                    "-fx-border-style: solid;" +
+                    "-fx-border-width: 2px;" +
+                    "-fx-border-color: black;" +
+                    "-fx-font-weight: bold;" +
+                    "-fx-background-color: darkgrey;" +
+                    "-fx-font-size: 70");
+        });*/
+
+        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
+        infoNB.setLayoutX((longeurMax-700)/2);
+        infoNB.setLayoutY((largeurMax-300)/2);
+
+        TextField nbCase = new TextField();
+        nbCase.setLayoutX((longeurMax-700)/2);
+        nbCase.setLayoutY((largeurMax-280)/2);
+        nbCase.setMinSize(100,20);
+        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+
+        group.getChildren().add(infoNB);
+        group.getChildren().add(nbCase);
+        group.getChildren().add(start);
+
+        start.setOnMouseClicked(mouseEvent -> {
+            aire = getIntFromTextField(nbCase);
+            if (aire > 0) {
+                group.getChildren().clear();
+                lancerScenePlateau();
+            }
+        });
+
+        primary.setScene(scene);
+        primary.show();
+    }
+
+    public void incorporeEquipe(Equipe e1){
+        equipeSelectionné = e1;
+    }
+
     public void lancerScenePlateau() {
-
-        Group group = new Group();
-        Scene scene = new Scene(group);
-
-        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-        double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
         taille = 1000/Math.sqrt(aire);
         boolean decalage = false;
@@ -42,16 +107,16 @@ public class Plateau {
                 double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
-                    double posX = longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille;
+                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire))/2) + j*taille;
                     Case hexago = new Case(i, false);
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
                     i++;
                 }
-                ligne++;
+                    ligne++;
             }
             else {
-                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
@@ -65,29 +130,159 @@ public class Plateau {
         }
 
         //creation et incorporation d'une slide barre
-        BarrePersonnage barre = new BarrePersonnage(longeurMax);
+        BarrePersonnage barre = new BarrePersonnage();
         group.getChildren().add(barre.returnBarre());
 
+        test();
 
-        // Tests : Barre de vie
-        Equipe team1 = new Equipe();
-        Equipe team2 = new Equipe();
-        Guerrier alex = new Guerrier(team1, listeCase.get(5));
-        Archer medhy = new Archer(team2, listeCase.get(10));
-        //System.out.println(personnages.size());
+        // Boutons pause et reprendre
+        Label labelPlay = new Label("");
+        labelPlay.setLayoutY(670);
 
-        medhy.subirDegats(alex);
-        alex.subirDegats(medhy);
-        /*System.out.println("Vie alex : " + alex.getHealth());
-        System.out.println("Vie medhy : " + medhy.getHealth());*/
+        Label labelPause = new Label("");
+        labelPause.setLayoutY(650);
 
-        //alex.déplacer(listeCase.get(6));
+        Button play = new Button("Jouer");
+        play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        play.setLayoutX(75);
+        play.setLayoutY(20);
+        play.setMinSize(60,20);
 
-        for (Personne p : personnages) {
-            group.getChildren().add(p.affichagePersonnage());
-        }
+        Button pause = new Button("Pause");
+        pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        pause.setLayoutX(75);
+        pause.setLayoutY(20);
+        pause.setMinSize(60,20);
+
+        // Boutons restrat, exit et reset
+        Button reStrat = new Button("Restart");
+        reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        reStrat.setLayoutX(10);
+        reStrat.setLayoutY(55);
+        reStrat.setMinSize(60,20);
+        reStrat.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().remove(0,group.getChildren().size());
+            lancerScenePlateau();
+        });
+
+        Button exit = new Button("Quitter");
+        exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        exit.setLayoutX(10);
+        exit.setLayoutY(90);
+        exit.setMinSize(60,20);
+        exit.setOnMouseClicked(mouseEvent -> primary.close());
+
+        Button reset = new Button("Reset (pas encore fait)");
+        reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        reset.setLayoutX(10);
+        reset.setLayoutY(125);
+        reset.setMinSize(60,20);
+        // Doit retourner sur l'écran pour choisir le nombre de cases
+        reset.setOnMouseClicked(mouseEvent -> {
+            //group.getChildren().clear();
+            //lancerPartie();
+        });
+
+        // Bouton menu
+        Button menu = new Button("Menu");
+        menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        menu.setLayoutX(10);
+        menu.setLayoutY(20);
+        menu.setMinSize(60,20);
+        menu.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(exit)) {
+                try {
+                    group.getChildren().add(reset);
+                    group.getChildren().add(reStrat);
+                    group.getChildren().add(exit);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().remove(reset);
+                    group.getChildren().remove(reStrat);
+                    group.getChildren().remove(exit);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        group.getChildren().add(menu);
+        group.getChildren().add(play);
+        group.getChildren().add(labelPause);
+        group.getChildren().add(labelPlay);
+
+        pause.setOnMouseClicked(mouseEvent -> {
+            labelPause.setText("La partie est en pause");
+            group.getChildren().remove(pause);
+            group.getChildren().add(play);
+        });
+
+        play.setOnMouseClicked(mouseEvent -> {
+            labelPlay.setText("La partie reprend");
+            group.getChildren().remove(play);
+            group.getChildren().add(pause);
+
+        });
+
+        // Boutons équipes
+        Button equipe1 = new Button("Equipe 1");
+        equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Equipe e1 = new Equipe(Color.RED);
+        equipe1.setLayoutX(10);
+        equipe1.setLayoutY(800);
+        equipe1.setMinSize(60, 20);
+
+        Button equipe2 = new Button("Equipe 2");
+        equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Equipe e2 = new Equipe(Color.BLUE);
+        equipe2.setLayoutX(80);
+        equipe2.setLayoutY(800);
+        equipe2.setMinSize(60, 20);
+
+        // Actions sur les boutons d'équipes
+        equipe1.setOnMouseClicked(mouseEvent -> {
+            incorporeEquipe(e1);
+            equipe1.setEffect(new Effets().putInnerShadow(e1.getCouleur()));
+            equipe2.setEffect(null);
+        });
+        /*equipe1.setOnMouseEntered(mouseEvent -> {
+            equipe1.setEffect(new Effets().putShadow(e1.getCouleur()));
+        });
+        equipe1.setOnMouseExited(mouseEvent -> {
+            equipe1.setEffect(null);
+        });*/
+
+        equipe2.setOnMouseClicked(mouseEvent -> {
+            incorporeEquipe(e2);
+            equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
+            equipe1.setEffect(null);
+        });
+        /*equipe2.setOnMouseEntered(mouseEvent -> {
+            equipe2.setEffect(new Effets().putShadow(e2.getCouleur()));
+        });
+        equipe2.setOnMouseExited(mouseEvent -> {
+            equipe2.setEffect(null);
+        });*/
+
+        /*Button equipe3 = new Button("Sans Equipe");
+        equipe3.setLayoutX(150);
+        equipe3.setLayoutY(800);
+        equipe3.setMinSize(60, 20);
+        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe(null));*/
+
+        group.getChildren().add(equipe1);
+        group.getChildren().add(equipe2);
+        //group.getChildren().add(equipe3);
 
         primary.setScene(scene);
-        primary.show();
+        //primary.show();
+    }
+
+    // Zone de test
+    public void test(){
+
     }
 }

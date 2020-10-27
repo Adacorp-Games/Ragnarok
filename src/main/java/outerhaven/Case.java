@@ -1,13 +1,18 @@
 package outerhaven;
 
+import javafx.scene.Group;
+import javafx.scene.effect.*;
+import outerhaven.Personnages.*;
+
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
 
@@ -18,6 +23,7 @@ public class Case {
     private Color couleur;
     private ArrayList<Case> caseVoisines;
     private ArrayList<Personne> contenu;
+
 
     public static Image hexagone_img1 = new Image(
             "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
@@ -42,14 +48,49 @@ public class Case {
             hexagone.setX(X);
             hexagone.setY(Y + 2000);
             this.posX = X;
-            this.posY = Y + 20;
+            this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
             });
-            // hexagone.setEffect();
+
+            hexagone.setOnMousePressed((mouseEvent)-> {
+                if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu == null) {
+                    contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this);
+                    affichagecontenu = contenu.affichagePersonnage();
+                    Plateau.group.getChildren().add(affichagecontenu);
+                    InnerShadow ombre = new InnerShadow();
+                    ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                    hexagone.setEffect(ombre);
+                    estOccupe = true;
+                }
+                else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
+                    contenu = null;
+                    Plateau.group.getChildren().remove(affichagecontenu);
+                    hexagone.setEffect(null);
+                    estOccupe = false;
+                }
+                else if (Plateau.personneSelectionné == null && contenu != null) {
+                    contenu = null;
+                    Plateau.group.getChildren().remove(affichagecontenu);
+                    hexagone.setEffect(null);
+                    estOccupe = false;
+                }
+                else {
+                    Text attention = new Text("Veuillez selectionner une equipe et un personnage");
+                    attention.setX(posX);
+                    attention.setY(posY);
+                    attention.underlineProperty().setValue(true);
+                    attention.setFill(Color.RED);
+                    Plateau.group.getChildren().add(attention);
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                        Plateau.group.getChildren().remove(attention);
+                    }));
+                    timeline.play();
+                }
+            });
             arriveCase(hexagone);
             return hexagone;
         } else {
