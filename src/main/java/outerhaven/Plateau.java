@@ -29,6 +29,7 @@ public class Plateau {
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean statusPartie = false;
+    public static BarrePersonnage barre = new BarrePersonnage();
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -72,10 +73,9 @@ public class Plateau {
             }
         }
 
-        // cCeation et incorporation d'une slide barre + boutton
-        BarrePersonnage barre = new BarrePersonnage();
+        // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
-        equipe();
+        group.getChildren().add(boutonEquipe());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
@@ -122,7 +122,7 @@ public class Plateau {
         equipeSelectionné = e1;
     }
 
-    private void equipe() {
+    private Group boutonEquipe() {
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         Equipe e1 = new Equipe(Color.RED);
@@ -148,8 +148,11 @@ public class Plateau {
             equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
             equipe1.setEffect(null);
         });
-        group.getChildren().add(equipe1);
-        group.getChildren().add(equipe2);
+
+        Group groupEquipeButton = new Group();
+        groupEquipeButton.getChildren().add(equipe1);
+        groupEquipeButton.getChildren().add(equipe2);
+        return groupEquipeButton;
     }
 
     private Button boutonExit() {
@@ -194,7 +197,7 @@ public class Plateau {
         Label labelPause = new Label("");
         labelPause.setLayoutY(650);
         Button pause = new Button("Pause");
-                Button play = new Button("Jouer");
+        Button play = new Button("Jouer");
         play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         play.setLayoutX(75);
         play.setLayoutY(20);
@@ -204,7 +207,13 @@ public class Plateau {
             group.getChildren().remove(play);
             group.getChildren().add(pause);
             setStatusPartie(true);
+            if (group.getChildren().contains(barre.returnBarre())) {
+                group.getChildren().remove(barre.returnBarre());
+                //group.getChildren().remove(boutonEquipe());
+                scene.setFill(Color.DARKGRAY);
+            }
         });
+
         pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         pause.setLayoutX(75);
         pause.setLayoutY(20);
@@ -214,6 +223,11 @@ public class Plateau {
             group.getChildren().remove(pause);
             group.getChildren().add(play);
             setStatusPartie(false);
+            if (!group.getChildren().contains(barre.returnBarre())) {
+                group.getChildren().add(barre.returnBarre());
+                //group.getChildren().add(boutonEquipe());
+                scene.setFill(Color.WHITE);
+            }
         });
         group.getChildren().add(play);
         group.getChildren().add(labelPause);
