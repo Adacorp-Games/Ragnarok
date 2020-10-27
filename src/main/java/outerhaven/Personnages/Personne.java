@@ -75,7 +75,7 @@ public abstract class Personne {
 
     public abstract Personne personneNouvelle(Equipe team, Case position);
 
-    public void subirDegats(Personne p) {
+    public void attaquer(Personne p) {
         double damageMultiplier = damage / (damage + armor/5);
         double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
@@ -96,13 +96,11 @@ public abstract class Personne {
         //this.position = c;
     }*/
 
-    public void action(String a) {
-        if (a == "attaquer") {
-
-        }
-        if (a == "déplacer") {
-            Case c = position;
-            //déplacer(c.getCaseVoisines());
+    public void action() {
+        if (position.pathToPerso(team).size() <= range) {
+            //attaquer(position.pathToPersoAux);
+        } else {
+            déplacer(position.pathToPerso(team).get(0));
         }
     }
 
