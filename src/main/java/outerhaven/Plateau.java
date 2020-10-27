@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -35,7 +36,7 @@ public class Plateau {
         Plateau.primary = primary;
     }
     public void lancerPartie() {
-        interfacedebut();
+        interfaceDebut();
         primary.setScene(scene);
         primary.show();
     }
@@ -79,7 +80,7 @@ public class Plateau {
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
-    private void interfacedebut(){
+    private void interfaceDebut() {
         Button start = new Button("START");
         start.setLayoutX((longeurMax-700)/2);
         start.setLayoutY((largeurMax-200)/2);
@@ -106,6 +107,15 @@ public class Plateau {
             if (aire > 0) {
                 group.getChildren().clear();
                 lancerScenePlateau();
+            }
+        });
+        nbCase.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                aire = getIntFromTextField(nbCase);
+                if (aire > 0) {
+                    group.getChildren().clear();
+                    lancerScenePlateau();
+                }
             }
         });
         group.getChildren().add(infoNB);
@@ -159,7 +169,7 @@ public class Plateau {
         Button exit = new Button("Quitter");
         exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         exit.setLayoutX(10);
-        exit.setLayoutY(90);
+        exit.setLayoutY(125);
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> primary.close());
         return exit;
@@ -169,7 +179,7 @@ public class Plateau {
         Button reset = new Button("Nouvelle grille");
         reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reset.setLayoutX(10);
-        reset.setLayoutY(125);
+        reset.setLayoutY(90);
         reset.setMinSize(60,20);
         reset.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
