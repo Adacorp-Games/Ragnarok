@@ -40,6 +40,9 @@ public abstract class Personne {
     private Case position;
 
 
+    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+
     public Personne(double health, double armor, double cost, int damage, int range, int speed) {
         this.name = getRandomName();
         this.health = health;
@@ -134,9 +137,9 @@ public abstract class Personne {
 
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(taille + 200, taille/1.5, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(400 , 130, Color.LIGHTGRAY);
         barre.setX(X);
-        barre.setY(Y - taille);
+        barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
         /*barre.setStyle("-fx-background-color: grey");
@@ -146,12 +149,12 @@ public abstract class Personne {
 
         Text title = this.getinfoTitleText();
         title.setX(X + 10);
-        title.setY(Y + 20 - taille);
+        title.setY(Y + 20 - 130);
         //title.setStyle("-fx-font-style: bold");
 
         Text descrip = this.getinfoDescText();
         descrip.setX(X + 10);
-        descrip.setY(Y + 20 - taille);
+        descrip.setY(Y + 20 - 130);
 
         description.getChildren().add(barre);
         description.getChildren().add(title);

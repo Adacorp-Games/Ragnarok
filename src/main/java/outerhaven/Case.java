@@ -49,7 +49,7 @@ public class Case {
             hexagone.setX(X);
             hexagone.setY(Y + 2000);
             this.posX = X;
-            this.posY = Y + 20;
+            this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
             });

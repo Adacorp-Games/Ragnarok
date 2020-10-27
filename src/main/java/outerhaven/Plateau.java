@@ -130,17 +130,13 @@ public class Plateau {
         play.setLayoutX(10);
         play.setLayoutY(80);
         play.setMinSize(60,20);
-        play.setOnMouseClicked(mouseEvent -> {
-            labelPlay.setText("La partie reprend");
-        });
+
 
         Button pause = new Button("Pause");
         pause.setLayoutX(10);
         pause.setLayoutY(50);
         pause.setMinSize(60,20);
-        pause.setOnMouseClicked(mouseEvent -> {
-            labelPause.setText("La partie est en pause");
-        });
+
 
         // Boutons restrat et exit
         Button reStrat = new Button("RESTART");
@@ -165,23 +161,46 @@ public class Plateau {
         menu.setLayoutY(20);
         menu.setMinSize(60,20);
         menu.setOnMouseClicked(mouseEvent -> {
-            if (!group.getChildren().contains(pause)) {
-                group.getChildren().add(pause);
-                group.getChildren().add(labelPause);
-                group.getChildren().add(play);
-                group.getChildren().add(labelPlay);
-                group.getChildren().add(reStrat);
-                group.getChildren().add(exit);
+            if (!group.getChildren().contains(exit)) {
+                try {
+                    group.getChildren().add(play);
+                    group.getChildren().add(labelPause);
+                    group.getChildren().add(labelPlay);
+                    group.getChildren().add(reStrat);
+                    group.getChildren().add(exit);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
+                try{
                 group.getChildren().remove(pause);
                 group.getChildren().remove(labelPause);
-                group.getChildren().remove(play);
                 group.getChildren().remove(labelPlay);
                 group.getChildren().remove(reStrat);
                 group.getChildren().remove(exit);
+                } catch (Exception e) {
+                    group.getChildren().remove(labelPause);
+                    group.getChildren().remove(play);
+                    group.getChildren().remove(labelPlay);
+                    group.getChildren().remove(reStrat);
+                    group.getChildren().remove(exit);
+                }
             }
         });
         group.getChildren().add(menu);
+
+        pause.setOnMouseClicked(mouseEvent -> {
+            labelPause.setText("La partie est en pause");
+            group.getChildren().remove(pause);
+            group.getChildren().add(play);
+        });
+
+        play.setOnMouseClicked(mouseEvent -> {
+            labelPlay.setText("La partie reprend");
+            group.getChildren().remove(play);
+            group.getChildren().add(pause);
+
+        });
 
         // Boutons équipes
         Button equipe1 = new Button("Equipe 1");
