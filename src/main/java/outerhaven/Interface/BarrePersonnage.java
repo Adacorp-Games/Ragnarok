@@ -8,6 +8,7 @@ import javafx.stage.Screen;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Personne;
+import static outerhaven.Plateau.*;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,9 @@ public class BarrePersonnage{
 
         listClasse.add(new Archer());
         listClasse.add(new Guerrier());
+        for (int i = 0; i < listClasse.size(); i++) {
+            personnages.remove(0);
+        }
         genereBarre();
     }
 

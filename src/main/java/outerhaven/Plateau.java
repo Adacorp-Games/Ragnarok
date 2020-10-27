@@ -216,7 +216,9 @@ public class Plateau {
             labelPlay.setText("La partie reprend");
             group.getChildren().remove(play);
             group.getChildren().add(pause);
+            System.out.println(personnages.size());
             setStatusPartie(true);
+            tour();
             if (group.getChildren().contains(barre.returnBarre())) {
                 group.getChildren().remove(barre.returnBarre());
                 //group.getChildren().remove(boutonEquipe());

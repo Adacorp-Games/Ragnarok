@@ -100,7 +100,7 @@ public abstract class Personne {
 
     public void action() {
         if (position.pathToPerso(team).size() <= range) {
-            //attaquer(position.pathToPersoAux);
+            attaquer(position.pathToPerso(team).get(position.pathToPerso(team).size()).getContenu().get(0));
         } else {
             déplacer(position.pathToPerso(team).get(0));
         }
