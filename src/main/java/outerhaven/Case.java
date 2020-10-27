@@ -54,7 +54,7 @@ public class Case {
                 hexagone.setImage(hexagone_img1);
             });
             hexagone.setOnMousePressed((mouseEvent)-> {
-                interactiohex(hexagone);
+                interactionHex(hexagone);
             });
             arriveCase(hexagone);
             return hexagone;
@@ -63,7 +63,7 @@ public class Case {
         }
     }
 
-    public void interactiohex(ImageView hexagone){
+    public void interactionHex(ImageView hexagone) {
         if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
             contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
             affichagecontenu = contenu.get(0).affichagePersonnage();
@@ -132,7 +132,6 @@ public class Case {
                     libres.add(case1);
                 }
             }
-
         }
         return libres;
     }
@@ -184,7 +183,7 @@ public class Case {
         return parcoursEnfants.get(0);
     }
 
-    // necessite que le plateau contienne au moins un personnage de l'equipe visee
+    // Necessite que le plateau contienne au moins un personnage de l'equipe visee
     // en dehors de this
     public ArrayList<Case> pathToPerso(Equipe e) {
         ArrayList<Case> parcours = new ArrayList<Case>();
@@ -196,8 +195,7 @@ public class Case {
         return parcours;
     }
 
-
-    //getteur et setteur
+    // Getter et setter
 
     public double getPosX() {
         return posX;
@@ -245,5 +243,4 @@ public class Case {
     public void setCouleur(Color couleur) {
         this.couleur = couleur;
     }
-
 }

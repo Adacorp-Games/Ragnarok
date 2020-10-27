@@ -39,7 +39,6 @@ public abstract class Personne {
     // A revoir en fonction du deplacement des personnages
     private Case position;
 
-
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 

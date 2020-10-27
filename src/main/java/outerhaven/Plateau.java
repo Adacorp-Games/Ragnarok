@@ -13,7 +13,6 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
-
 import java.util.ArrayList;
 
 public class Plateau {
@@ -72,7 +71,7 @@ public class Plateau {
             }
         }
 
-        //creation et incorporation d'une slide barre + boutton
+        // cCeation et incorporation d'une slide barre + boutton
         BarrePersonnage barre = new BarrePersonnage();
         ajouteLeMenu();
         equipe();
@@ -118,11 +117,11 @@ public class Plateau {
         return Integer.parseInt(text);
     }
 
-    public void incorporeEquipe(Equipe e1){
+    public void incorporeEquipe(Equipe e1) {
         equipeSelectionné = e1;
     }
 
-    private void equipe(){
+    private void equipe() {
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         Equipe e1 = new Equipe(Color.RED);
@@ -152,7 +151,7 @@ public class Plateau {
         group.getChildren().add(equipe2);
     }
 
-    private Button boutonexit(){
+    private Button boutonExit() {
         Button exit = new Button("Quitter");
         exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         exit.setLayoutX(10);
@@ -162,8 +161,8 @@ public class Plateau {
         return exit;
     }
 
-    private Button boutonreset(){
-        Button reset = new Button("Nouvelle Grille");
+    private Button boutonReset() {
+        Button reset = new Button("Nouvelle grille");
         reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reset.setLayoutX(10);
         reset.setLayoutY(125);
@@ -175,7 +174,7 @@ public class Plateau {
         return reset;
     }
 
-    private Button boutonreStrat(){
+    private Button boutonReStart() {
         Button reStrat = new Button("Restart");
         reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reStrat.setLayoutX(10);
@@ -188,7 +187,7 @@ public class Plateau {
         return reStrat;
     }
 
-    private void boutonPausePlay(){
+    private void boutonPausePlay() {
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
         Label labelPause = new Label("");
@@ -218,26 +217,26 @@ public class Plateau {
         group.getChildren().add(labelPlay);
     }
 
-    private void ajouteLeMenu(){
+    private void ajouteLeMenu() {
         Button menu = new Button("Menu");
         menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         menu.setLayoutX(10);
         menu.setLayoutY(20);
         menu.setMinSize(60,20);
         menu.setOnMouseClicked(mouseEvent -> {
-            if (!group.getChildren().contains(boutonexit())) {
+            if (!group.getChildren().contains(boutonExit())) {
                 try {
-                    group.getChildren().add(boutonreset());
-                    group.getChildren().add(boutonreStrat());
-                    group.getChildren().add(boutonexit());
+                    group.getChildren().add(boutonReset());
+                    group.getChildren().add(boutonReStart());
+                    group.getChildren().add(boutonExit());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().remove(boutonreset());
-                    group.getChildren().remove(boutonreStrat());
-                    group.getChildren().remove(boutonexit());
+                    group.getChildren().remove(boutonReset());
+                    group.getChildren().remove(boutonReStart());
+                    group.getChildren().remove(boutonExit());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

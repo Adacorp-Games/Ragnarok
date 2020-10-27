@@ -6,7 +6,6 @@ import outerhaven.Equipe;
 
 public class Archer extends Personne {
 
-
     public Archer(){
         super(150, 50, 150, 100, 2, 1);
     }

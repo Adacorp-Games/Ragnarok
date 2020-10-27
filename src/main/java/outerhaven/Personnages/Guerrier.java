@@ -7,7 +7,6 @@ import outerhaven.Equipe;
 
 public class Guerrier extends Personne {
 
-
     public Guerrier(){
         super(200, 100, 100, 75, 1, 1);
     }
@@ -36,8 +35,7 @@ public class Guerrier extends Personne {
         return new Text("\nPortée et dégats réduits mais vie et armure plus grande." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
-    public Image getImageFace(){
-        return  new Image("https://media.discordapp.net/attachments/764528562429624391/770287874805071872/fight-151796_1280.png?width=475&height=703");
+    public Image getImageFace() {
+        return new Image("https://media.discordapp.net/attachments/764528562429624391/770287874805071872/fight-151796_1280.png?width=475&height=703");
     }
-
 }
