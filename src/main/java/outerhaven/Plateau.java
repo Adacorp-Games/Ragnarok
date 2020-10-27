@@ -23,78 +23,21 @@ public class Plateau {
     public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
-    public static Scene scene;
     public static Personne personneSelectionné;
     public static Equipe equipeSelectionné;
     public static Group group = new Group();
-    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public static Scene scene = new Scene(group);;
+        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
     }
-
-    public static int getIntFromTextField(TextField textField) {
-        String text = textField.getText();
-        return Integer.parseInt(text);
-    }
-
     public void lancerPartie() {
-        scene = new Scene(group);
-        //scene.getStylesheets().add("style.css");
-
-        Button start = new Button("START");
-        start.setLayoutX((longeurMax-700)/2);
-        start.setLayoutY((largeurMax-200)/2);
-        start.setMinSize(700,200);
-        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
-        start.setOnMouseEntered(mouseEvent -> {
-            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
-        });
-        start.setOnMouseExited(mouseEvent -> {
-            start.setEffect(null);
-        });
-        /*start.setOnMousePressed(mouseEvent -> {
-            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
-            start.setStyle("-fx-background-color: lightgrey;" +
-                    "-fx-border-style: solid;" +
-                    "-fx-border-width: 2px;" +
-                    "-fx-border-color: black;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-background-color: darkgrey;" +
-                    "-fx-font-size: 70");
-        });*/
-
-        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
-        infoNB.setLayoutX((longeurMax-700)/2);
-        infoNB.setLayoutY((largeurMax-300)/2);
-
-        TextField nbCase = new TextField();
-        nbCase.setLayoutX((longeurMax-700)/2);
-        nbCase.setLayoutY((largeurMax-280)/2);
-        nbCase.setMinSize(100,20);
-        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-
-        group.getChildren().add(infoNB);
-        group.getChildren().add(nbCase);
-        group.getChildren().add(start);
-
-        start.setOnMouseClicked(mouseEvent -> {
-            aire = getIntFromTextField(nbCase);
-            if (aire > 0) {
-                group.getChildren().clear();
-                lancerScenePlateau();
-            }
-        });
-
+        interfacedebut();
         primary.setScene(scene);
         primary.show();
     }
-
-    public void incorporeEquipe(Equipe e1){
-        equipeSelectionné = e1;
-    }
-
     public void lancerScenePlateau() {
 
         taille = 1000/Math.sqrt(aire);
@@ -129,105 +72,57 @@ public class Plateau {
             }
         }
 
-        //creation et incorporation d'une slide barre
+        //creation et incorporation d'une slide barre + boutton
         BarrePersonnage barre = new BarrePersonnage();
+        ajouteLeMenu();
+        equipe();
         group.getChildren().add(barre.returnBarre());
-
-        test();
-
-        // Boutons pause et reprendre
-        Label labelPlay = new Label("");
-        labelPlay.setLayoutY(670);
-
-        Label labelPause = new Label("");
-        labelPause.setLayoutY(650);
-
-        Button play = new Button("Jouer");
-        play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        play.setLayoutX(75);
-        play.setLayoutY(20);
-        play.setMinSize(60,20);
-
-        Button pause = new Button("Pause");
-        pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        pause.setLayoutX(75);
-        pause.setLayoutY(20);
-        pause.setMinSize(60,20);
-
-        // Boutons restrat, exit et reset
-        Button reStrat = new Button("Restart");
-        reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        reStrat.setLayoutX(10);
-        reStrat.setLayoutY(55);
-        reStrat.setMinSize(60,20);
-        reStrat.setOnMouseClicked(mouseEvent -> {
-            group.getChildren().remove(0,group.getChildren().size());
-            lancerScenePlateau();
+        primary.setScene(scene);
+    }
+    private void interfacedebut(){
+        Button start = new Button("START");
+        start.setLayoutX((longeurMax-700)/2);
+        start.setLayoutY((largeurMax-200)/2);
+        start.setMinSize(700,200);
+        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
+        start.setOnMouseEntered(mouseEvent -> {
+            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
+        });
+        start.setOnMouseExited(mouseEvent -> {
+            start.setEffect(null);
         });
 
-        Button exit = new Button("Quitter");
-        exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        exit.setLayoutX(10);
-        exit.setLayoutY(90);
-        exit.setMinSize(60,20);
-        exit.setOnMouseClicked(mouseEvent -> primary.close());
+        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
+        infoNB.setLayoutX((longeurMax-700)/2);
+        infoNB.setLayoutY((largeurMax-300)/2);
 
-        Button reset = new Button("Reset (pas encore fait)");
-        reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        reset.setLayoutX(10);
-        reset.setLayoutY(125);
-        reset.setMinSize(60,20);
-        // Doit retourner sur l'écran pour choisir le nombre de cases
-        reset.setOnMouseClicked(mouseEvent -> {
-            //group.getChildren().clear();
-            //lancerPartie();
-        });
-
-        // Bouton menu
-        Button menu = new Button("Menu");
-        menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        menu.setLayoutX(10);
-        menu.setLayoutY(20);
-        menu.setMinSize(60,20);
-        menu.setOnMouseClicked(mouseEvent -> {
-            if (!group.getChildren().contains(exit)) {
-                try {
-                    group.getChildren().add(reset);
-                    group.getChildren().add(reStrat);
-                    group.getChildren().add(exit);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    group.getChildren().remove(reset);
-                    group.getChildren().remove(reStrat);
-                    group.getChildren().remove(exit);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        TextField nbCase = new TextField();
+        nbCase.setLayoutX((longeurMax-700)/2);
+        nbCase.setLayoutY((largeurMax-280)/2);
+        nbCase.setMinSize(100,20);
+        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        start.setOnMouseClicked(mouseEvent -> {
+            aire = getIntFromTextField(nbCase);
+            if (aire > 0) {
+                group.getChildren().clear();
+                lancerScenePlateau();
             }
         });
+        group.getChildren().add(infoNB);
+        group.getChildren().add(nbCase);
+        group.getChildren().add(start);
+    }
 
-        group.getChildren().add(menu);
-        group.getChildren().add(play);
-        group.getChildren().add(labelPause);
-        group.getChildren().add(labelPlay);
+    public static int getIntFromTextField(TextField textField) {
+        String text = textField.getText();
+        return Integer.parseInt(text);
+    }
 
-        pause.setOnMouseClicked(mouseEvent -> {
-            labelPause.setText("La partie est en pause");
-            group.getChildren().remove(pause);
-            group.getChildren().add(play);
-        });
+    public void incorporeEquipe(Equipe e1){
+        equipeSelectionné = e1;
+    }
 
-        play.setOnMouseClicked(mouseEvent -> {
-            labelPlay.setText("La partie reprend");
-            group.getChildren().remove(play);
-            group.getChildren().add(pause);
-
-        });
-
-        // Boutons équipes
+    private void equipe(){
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         Equipe e1 = new Equipe(Color.RED);
@@ -248,41 +143,107 @@ public class Plateau {
             equipe1.setEffect(new Effets().putInnerShadow(e1.getCouleur()));
             equipe2.setEffect(null);
         });
-        /*equipe1.setOnMouseEntered(mouseEvent -> {
-            equipe1.setEffect(new Effets().putShadow(e1.getCouleur()));
-        });
-        equipe1.setOnMouseExited(mouseEvent -> {
-            equipe1.setEffect(null);
-        });*/
-
         equipe2.setOnMouseClicked(mouseEvent -> {
             incorporeEquipe(e2);
             equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
             equipe1.setEffect(null);
         });
-        /*equipe2.setOnMouseEntered(mouseEvent -> {
-            equipe2.setEffect(new Effets().putShadow(e2.getCouleur()));
-        });
-        equipe2.setOnMouseExited(mouseEvent -> {
-            equipe2.setEffect(null);
-        });*/
-
-        /*Button equipe3 = new Button("Sans Equipe");
-        equipe3.setLayoutX(150);
-        equipe3.setLayoutY(800);
-        equipe3.setMinSize(60, 20);
-        equipe3.setOnMouseClicked(mouseEvent -> incorporeEquipe(null));*/
-
         group.getChildren().add(equipe1);
         group.getChildren().add(equipe2);
-        //group.getChildren().add(equipe3);
-
-        primary.setScene(scene);
-        //primary.show();
     }
 
-    // Zone de test
-    public void test(){
+    private Button boutonexit(){
+        Button exit = new Button("Quitter");
+        exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        exit.setLayoutX(10);
+        exit.setLayoutY(90);
+        exit.setMinSize(60,20);
+        exit.setOnMouseClicked(mouseEvent -> primary.close());
+        return exit;
+    }
 
+    private Button boutonreset(){
+        Button reset = new Button("Nouvelle Grille");
+        reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        reset.setLayoutX(10);
+        reset.setLayoutY(125);
+        reset.setMinSize(60,20);
+        reset.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().clear();
+            this.lancerPartie();
+        });
+        return reset;
+    }
+
+    private Button boutonreStrat(){
+        Button reStrat = new Button("Restart");
+        reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        reStrat.setLayoutX(10);
+        reStrat.setLayoutY(55);
+        reStrat.setMinSize(60,20);
+        reStrat.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().remove(0,group.getChildren().size());
+            lancerScenePlateau();
+        });
+        return reStrat;
+    }
+
+    private void boutonPausePlay(){
+        Label labelPlay = new Label("");
+        labelPlay.setLayoutY(670);
+        Label labelPause = new Label("");
+        labelPause.setLayoutY(650);
+        Button pause = new Button("Pause");
+                Button play = new Button("Jouer");
+        play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        play.setLayoutX(75);
+        play.setLayoutY(20);
+        play.setMinSize(60,20);
+        play.setOnMouseClicked(mouseEvent -> {
+            labelPlay.setText("La partie reprend");
+            group.getChildren().remove(play);
+            group.getChildren().add(pause);
+        });
+        pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        pause.setLayoutX(75);
+        pause.setLayoutY(20);
+        pause.setMinSize(60,20);
+        pause.setOnMouseClicked(mouseEvent -> {
+            labelPause.setText("La partie est en pause");
+            group.getChildren().remove(pause);
+            group.getChildren().add(play);
+        });
+        group.getChildren().add(play);
+        group.getChildren().add(labelPause);
+        group.getChildren().add(labelPlay);
+    }
+
+    private void ajouteLeMenu(){
+        Button menu = new Button("Menu");
+        menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        menu.setLayoutX(10);
+        menu.setLayoutY(20);
+        menu.setMinSize(60,20);
+        menu.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(boutonexit())) {
+                try {
+                    group.getChildren().add(boutonreset());
+                    group.getChildren().add(boutonreStrat());
+                    group.getChildren().add(boutonexit());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().remove(boutonreset());
+                    group.getChildren().remove(boutonreStrat());
+                    group.getChildren().remove(boutonexit());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        boutonPausePlay();
+        group.getChildren().add(menu);
     }
 }
