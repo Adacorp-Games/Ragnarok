@@ -72,7 +72,7 @@ public abstract class Personne {
     public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
         this(health, armor, cost, damage, range, speed, team);
         this.position = position;
-        this.position.setStatus(true);
+        this.position.setContenu(this);
     }
 
     public abstract Personne personneNouvelle(Equipe team, Case position);

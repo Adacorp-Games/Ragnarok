@@ -17,7 +17,7 @@ public class Archer extends Personne {
 
     public Archer(Equipe team, Case position) {
         super(150, 50, 150, 100, 2, 1, team, position);
-        this.getPosition().setStatus(true);
+        this.getPosition().setContenu(this);
     }
 
     @Override

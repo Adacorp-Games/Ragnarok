@@ -2,9 +2,7 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.effect.*;
-import outerhaven.Personnages.*;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
@@ -23,6 +21,7 @@ public class Case {
     private Color couleur;
     private ArrayList<Case> caseVoisines;
     private ArrayList<Personne> contenu;
+    private Group affichagecontenu;
 
 
     public static Image hexagone_img1 = new Image(
@@ -57,26 +56,23 @@ public class Case {
             });
 
             hexagone.setOnMousePressed((mouseEvent)-> {
-                if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu == null) {
-                    contenu = Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this);
-                    affichagecontenu = contenu.affichagePersonnage();
+                if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
+                    contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+                    affichagecontenu = contenu.get(0).affichagePersonnage();
                     Plateau.group.getChildren().add(affichagecontenu);
                     InnerShadow ombre = new InnerShadow();
                     ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
                     hexagone.setEffect(ombre);
-                    estOccupe = true;
                 }
                 else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
                     contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
                     hexagone.setEffect(null);
-                    estOccupe = false;
                 }
-                else if (Plateau.personneSelectionné == null && contenu != null) {
+                else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
                     contenu = null;
                     Plateau.group.getChildren().remove(affichagecontenu);
                     hexagone.setEffect(null);
-                    estOccupe = false;
                 }
                 else {
                     Text attention = new Text("Veuillez selectionner une equipe et un personnage");
