@@ -192,7 +192,8 @@ public class Case {
         return parcoursEnfants.get(0);
     }
 
-    // necessite que le plateau contienne au moins un personnage de l'equipe visee en dehors de this
+    // necessite que le plateau contienne au moins un personnage de l'equipe visee
+    // en dehors de this
     public ArrayList<Case> pathToPerso(Equipe e) {
         ArrayList<Case> parcours = new ArrayList<Case>();
         int depth = 1;
