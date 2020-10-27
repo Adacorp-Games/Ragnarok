@@ -11,17 +11,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Interface.Effets;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static outerhaven.Plateau.taille;
-import static outerhaven.Plateau.personnages;
+import static outerhaven.Plateau.*;
 
 public abstract class Personne {
     private String name; // Stocké dans un tableau.
@@ -165,13 +164,20 @@ public abstract class Personne {
     public abstract Text getinfoDescText();
 
     public Group affichagePersonnage() {
-        Text name = new Text();
-        name.setText(this.getName());
-        name.setX(position.getPosX());
-        name.setY(position.getPosY());
-
         Group group = new Group();
         group.getChildren().add(this.afficherImageFace());
+        return group;
+    }
+
+    public Group afficherNom() {
+        Text name = new Text();
+        name.setText(this.getName());
+        name.setX(getPosition().getPosX() + 10);
+        name.setY(getPosition().getPosY() + taille/2.6);
+        name.setStyle("-fx-font-weight: bold");
+        name.setEffect(new Effets().putInnerShadow(this.team.getCouleur()));
+
+        Group group = new Group();
         group.getChildren().add(name);
         return group;
     }
@@ -185,15 +191,20 @@ public abstract class Personne {
 
         Group group = new Group();
         Group sante = afficherSante();
+        Group name = afficherNom();
         group.getChildren().add(person);
 
-        person.setOnMouseClicked((mouseEvent) -> {
-            if (!group.getChildren().contains(sante)) {
-                group.getChildren().add(sante);
-            } else {
-                group.getChildren().remove(sante);
-            }
-        });
+        //if (Plateau.getStatusPartie() != false) {
+            person.setOnMouseClicked((mouseEvent) -> {
+                if (!group.getChildren().contains(sante)) {
+                    group.getChildren().add(sante);
+                    group.getChildren().add(name);
+                } else {
+                    group.getChildren().remove(sante);
+                    group.getChildren().remove(name);
+                }
+            });
+        //}
 
         return group;
     }

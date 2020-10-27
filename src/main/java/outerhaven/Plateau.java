@@ -26,8 +26,9 @@ public class Plateau {
     public static Equipe equipeSelectionné;
     public static Group group = new Group();
     public static Scene scene = new Scene(group);;
-        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public static boolean statusPartie = false;
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -202,6 +203,7 @@ public class Plateau {
             labelPlay.setText("La partie reprend");
             group.getChildren().remove(play);
             group.getChildren().add(pause);
+            setStatusPartie(true);
         });
         pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         pause.setLayoutX(75);
@@ -211,6 +213,7 @@ public class Plateau {
             labelPause.setText("La partie est en pause");
             group.getChildren().remove(pause);
             group.getChildren().add(play);
+            setStatusPartie(false);
         });
         group.getChildren().add(play);
         group.getChildren().add(labelPause);
@@ -244,5 +247,14 @@ public class Plateau {
         });
         boutonPausePlay();
         group.getChildren().add(menu);
+    }
+
+    // Getter et setter
+    public static boolean getStatusPartie() {
+        return statusPartie;
+    }
+
+    public static void setStatusPartie(boolean statusPartie) {
+        Plateau.statusPartie = statusPartie;
     }
 }
