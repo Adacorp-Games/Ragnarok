@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Effets {
 
-    public InnerShadow putShadow(Color couleur) {
+    public InnerShadow putInnerShadow(Color couleur) {
         InnerShadow shadow = new InnerShadow();
         shadow.setColor(couleur);
         return shadow;

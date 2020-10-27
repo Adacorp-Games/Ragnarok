@@ -48,6 +48,22 @@ public class Plateau {
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
         start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
+        start.setOnMouseEntered(mouseEvent -> {
+            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
+        });
+        start.setOnMouseExited(mouseEvent -> {
+            start.setEffect(null);
+        });
+        /*start.setOnMousePressed(mouseEvent -> {
+            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
+            start.setStyle("-fx-background-color: lightgrey;" +
+                    "-fx-border-style: solid;" +
+                    "-fx-border-width: 2px;" +
+                    "-fx-border-color: black;" +
+                    "-fx-font-weight: bold;" +
+                    "-fx-background-color: darkgrey;" +
+                    "-fx-font-size: 70");
+        });*/
 
         Text infoNB = new Text("Entrez le nombre de cases du plateau :");
         infoNB.setLayoutX((longeurMax-700)/2);
@@ -64,9 +80,11 @@ public class Plateau {
         group.getChildren().add(start);
 
         start.setOnMouseClicked(mouseEvent -> {
-            group.getChildren().clear();
             aire = getIntFromTextField(nbCase);
-            lancerScenePlateau();
+            if (aire > 0) {
+                group.getChildren().clear();
+                lancerScenePlateau();
+            }
         });
 
         primary.setScene(scene);
@@ -117,8 +135,6 @@ public class Plateau {
 
         test();
 
-
-
         // Boutons pause et reprendre
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
@@ -126,33 +142,46 @@ public class Plateau {
         Label labelPause = new Label("");
         labelPause.setLayoutY(650);
 
-        Button play = new Button("Play");
-        play.setLayoutX(10);
-        play.setLayoutY(80);
+        Button play = new Button("Jouer");
+        play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        play.setLayoutX(75);
+        play.setLayoutY(20);
         play.setMinSize(60,20);
 
-
         Button pause = new Button("Pause");
-        pause.setLayoutX(10);
-        pause.setLayoutY(50);
+        pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        pause.setLayoutX(75);
+        pause.setLayoutY(20);
         pause.setMinSize(60,20);
 
-
-        // Boutons restrat et exit
-        Button reStrat = new Button("RESTART");
+        // Boutons restrat, exit et reset
+        Button reStrat = new Button("Restart");
+        reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reStrat.setLayoutX(10);
-        reStrat.setLayoutY(110);
+        reStrat.setLayoutY(55);
         reStrat.setMinSize(60,20);
         reStrat.setOnMouseClicked(mouseEvent -> {
             group.getChildren().remove(0,group.getChildren().size());
             lancerScenePlateau();
         });
 
-        Button exit = new Button("EXIT");
+        Button exit = new Button("Quitter");
+        exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         exit.setLayoutX(10);
-        exit.setLayoutY(140);
+        exit.setLayoutY(90);
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> primary.close());
+
+        Button reset = new Button("Reset (pas encore fait)");
+        reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        reset.setLayoutX(10);
+        reset.setLayoutY(125);
+        reset.setMinSize(60,20);
+        // Doit retourner sur l'écran pour choisir le nombre de cases
+        reset.setOnMouseClicked(mouseEvent -> {
+            //group.getChildren().clear();
+            //lancerPartie();
+        });
 
         // Bouton menu
         Button menu = new Button("Menu");
@@ -163,31 +192,27 @@ public class Plateau {
         menu.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(exit)) {
                 try {
-                    group.getChildren().add(play);
-                    group.getChildren().add(labelPause);
-                    group.getChildren().add(labelPlay);
+                    group.getChildren().add(reset);
                     group.getChildren().add(reStrat);
                     group.getChildren().add(exit);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                try{
-                group.getChildren().remove(pause);
-                group.getChildren().remove(labelPause);
-                group.getChildren().remove(labelPlay);
-                group.getChildren().remove(reStrat);
-                group.getChildren().remove(exit);
-                } catch (Exception e) {
-                    group.getChildren().remove(labelPause);
-                    group.getChildren().remove(play);
-                    group.getChildren().remove(labelPlay);
+                try {
+                    group.getChildren().remove(reset);
                     group.getChildren().remove(reStrat);
                     group.getChildren().remove(exit);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
+
         group.getChildren().add(menu);
+        group.getChildren().add(play);
+        group.getChildren().add(labelPause);
+        group.getChildren().add(labelPlay);
 
         pause.setOnMouseClicked(mouseEvent -> {
             labelPause.setText("La partie est en pause");
@@ -220,7 +245,7 @@ public class Plateau {
         // Actions sur les boutons d'équipes
         equipe1.setOnMouseClicked(mouseEvent -> {
             incorporeEquipe(e1);
-            equipe1.setEffect(new Effets().putShadow(e1.getCouleur()));
+            equipe1.setEffect(new Effets().putInnerShadow(e1.getCouleur()));
             equipe2.setEffect(null);
         });
         /*equipe1.setOnMouseEntered(mouseEvent -> {
@@ -232,7 +257,7 @@ public class Plateau {
 
         equipe2.setOnMouseClicked(mouseEvent -> {
             incorporeEquipe(e2);
-            equipe2.setEffect(new Effets().putShadow(e2.getCouleur()));
+            equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
             equipe1.setEffect(null);
         });
         /*equipe2.setOnMouseEntered(mouseEvent -> {
