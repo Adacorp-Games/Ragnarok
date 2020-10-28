@@ -21,6 +21,7 @@ public class Plateau {
     public static ArrayList<Personne> personnages = new ArrayList<>();
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
+    public static ArrayList<Equipe> listeEquipe = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
     public static Personne personneSelectionné;
@@ -120,6 +121,9 @@ public class Plateau {
                 }
             }
         });
+
+        listeEquipe.add(e1);
+        listeEquipe.add(e2);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(start);
@@ -218,12 +222,12 @@ public class Plateau {
             group.getChildren().add(pause);
             System.out.println(personnages.size());
             setStatusPartie(true);
-            tour();
             if (group.getChildren().contains(barre.returnBarre())) {
                 group.getChildren().remove(barre.returnBarre());
                 //group.getChildren().remove(boutonEquipe());
                 scene.setFill(Color.DARKGRAY);
             }
+            tour();
         });
 
         pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");

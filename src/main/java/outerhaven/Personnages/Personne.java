@@ -99,10 +99,10 @@ public abstract class Personne {
     }*/
 
     public void action() {
-        if (position.pathToPerso(team).size() <= range) {
-            attaquer(position.pathToPerso(team).get(position.pathToPerso(team).size()).getContenu().get(0));
+        if (position.pathToPerso(getOtherTeam()).size() <= range) {
+            attaquer(position.pathToPerso(getOtherTeam()).get(position.pathToPerso(getOtherTeam()).size()).getContenu().get(0));
         } else {
-            déplacer(position.pathToPerso(team).get(0));
+            déplacer(position.pathToPerso(getOtherTeam()).get(0));
         }
     }
 
@@ -319,6 +319,14 @@ public abstract class Personne {
 
     public Equipe getTeam() {
         return team;
+    }
+
+    public Equipe getOtherTeam() {
+        if (listeEquipe.get(0) == this.team) {
+            return listeEquipe.get(1);
+        } else {
+            return listeEquipe.get(0);
+        }
     }
 
     public Image getImageFace() {
