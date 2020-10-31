@@ -34,6 +34,7 @@ public class Plateau {
     public static BarrePersonnage barre = new BarrePersonnage();
     public Equipe e1 = new Equipe(Color.RED);
     public Equipe e2 = new Equipe(Color.BLUE);
+    //attribut de test
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
