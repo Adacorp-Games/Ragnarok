@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -13,7 +14,6 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
-
 import java.util.ArrayList;
 
 public class Plateau {
@@ -21,20 +21,26 @@ public class Plateau {
     public static ArrayList<Personne> personnages = new ArrayList<>();
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
+    public static ArrayList<Equipe> listeEquipe = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
     public static Personne personneSelectionné;
     public static Equipe equipeSelectionné;
     public static Group group = new Group();
     public static Scene scene = new Scene(group);;
-        double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public static boolean statusPartie = false;
+    public static BarrePersonnage barre = new BarrePersonnage();
+    public Equipe e1 = new Equipe(Color.RED);
+    public Equipe e2 = new Equipe(Color.BLUE);
+    //attribut de test
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
     }
     public void lancerPartie() {
-        interfacedebut();
+        interfaceDebut();
         primary.setScene(scene);
         primary.show();
     }
@@ -72,15 +78,13 @@ public class Plateau {
             }
         }
 
-        //creation et incorporation d'une slide barre + boutton
-        BarrePersonnage barre = new BarrePersonnage();
+        // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
-        equipe();
-
+        group.getChildren().add(boutonEquipe());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
-    private void interfacedebut(){
+    private void interfaceDebut() {
         Button start = new Button("START");
         start.setLayoutX((longeurMax-700)/2);
         start.setLayoutY((largeurMax-200)/2);
@@ -109,6 +113,18 @@ public class Plateau {
                 lancerScenePlateau();
             }
         });
+        nbCase.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                aire = getIntFromTextField(nbCase);
+                if (aire > 0) {
+                    group.getChildren().clear();
+                    lancerScenePlateau();
+                }
+            }
+        });
+
+        listeEquipe.add(e1);
+        listeEquipe.add(e2);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(start);
@@ -119,21 +135,19 @@ public class Plateau {
         return Integer.parseInt(text);
     }
 
-    public void incorporeEquipe(Equipe e1){
+    public void incorporeEquipe(Equipe e1) {
         equipeSelectionné = e1;
     }
 
-    private void equipe(){
+    private Group boutonEquipe() {
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        Equipe e1 = new Equipe(Color.RED);
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(800);
         equipe1.setMinSize(60, 20);
 
         Button equipe2 = new Button("Equipe 2");
         equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        Equipe e2 = new Equipe(Color.BLUE);
         equipe2.setLayoutX(80);
         equipe2.setLayoutY(800);
         equipe2.setMinSize(60, 20);
@@ -149,25 +163,28 @@ public class Plateau {
             equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
             equipe1.setEffect(null);
         });
-        group.getChildren().add(equipe1);
-        group.getChildren().add(equipe2);
+
+        Group groupEquipeButton = new Group();
+        groupEquipeButton.getChildren().add(equipe1);
+        groupEquipeButton.getChildren().add(equipe2);
+        return groupEquipeButton;
     }
 
-    private Button boutonexit(){
+    private Button boutonExit() {
         Button exit = new Button("Quitter");
         exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         exit.setLayoutX(10);
-        exit.setLayoutY(90);
+        exit.setLayoutY(125);
         exit.setMinSize(60,20);
         exit.setOnMouseClicked(mouseEvent -> primary.close());
         return exit;
     }
 
-    private Button boutonreset(){
-        Button reset = new Button("Nouvelle Grille");
+    private Button boutonReset() {
+        Button reset = new Button("Nouvelle grille");
         reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reset.setLayoutX(10);
-        reset.setLayoutY(125);
+        reset.setLayoutY(90);
         reset.setMinSize(60,20);
         reset.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
@@ -176,7 +193,7 @@ public class Plateau {
         return reset;
     }
 
-    private Button boutonreStrat(){
+    private Button boutonReStart() {
         Button reStrat = new Button("Restart");
         reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         reStrat.setLayoutX(10);
@@ -189,13 +206,13 @@ public class Plateau {
         return reStrat;
     }
 
-    private void boutonPausePlay(){
+    private void boutonPausePlay() {
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
         Label labelPause = new Label("");
         labelPause.setLayoutY(650);
         Button pause = new Button("Pause");
-                Button play = new Button("Jouer");
+        Button play = new Button("Jouer");
         play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         play.setLayoutX(75);
         play.setLayoutY(20);
@@ -204,7 +221,16 @@ public class Plateau {
             labelPlay.setText("La partie reprend");
             group.getChildren().remove(play);
             group.getChildren().add(pause);
+            System.out.println(personnages.size());
+            setStatusPartie(true);
+            if (group.getChildren().contains(barre.returnBarre())) {
+                group.getChildren().remove(barre.returnBarre());
+                //group.getChildren().remove(boutonEquipe());
+                scene.setFill(Color.DARKGRAY);
+            }
+            tour();
         });
+
         pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         pause.setLayoutX(75);
         pause.setLayoutY(20);
@@ -213,26 +239,32 @@ public class Plateau {
             labelPause.setText("La partie est en pause");
             group.getChildren().remove(pause);
             group.getChildren().add(play);
+            setStatusPartie(false);
+            if (!group.getChildren().contains(barre.returnBarre())) {
+                group.getChildren().add(barre.returnBarre());
+                //group.getChildren().add(boutonEquipe());
+                scene.setFill(Color.WHITE);
+            }
         });
         group.getChildren().add(play);
         group.getChildren().add(labelPause);
         group.getChildren().add(labelPlay);
     }
 
-    private void ajouteLeMenu(){
+    private void ajouteLeMenu() {
         Button menu = new Button("Menu");
         menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         menu.setLayoutX(10);
         menu.setLayoutY(20);
         menu.setMinSize(60,20);
-        Button exit = boutonexit();
-        Button reSTart = boutonreStrat();
-        Button reset = boutonreset();
+        Button exit = boutonExit();
+        Button reset = boutonReset();
+        Button reStart = boutonReStart();
         menu.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(exit)) {
                 try {
                     group.getChildren().add(reset);
-                    group.getChildren().add(reSTart);
+                    group.getChildren().add(reStart);
                     group.getChildren().add(exit);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -240,7 +272,7 @@ public class Plateau {
             } else {
                 try {
                     group.getChildren().remove(reset);
-                    group.getChildren().remove(reSTart);
+                    group.getChildren().remove(reStart);
                     group.getChildren().remove(exit);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -249,5 +281,22 @@ public class Plateau {
         });
         boutonPausePlay();
         group.getChildren().add(menu);
+    }
+
+    public void tour() {
+        while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie != false) {
+            for (Personne p : personnages) {
+               // p.action();
+            }
+        }
+    }
+
+    // Getter et setter
+    public static boolean getStatusPartie() {
+        return statusPartie;
+    }
+
+    public static void setStatusPartie(boolean statusPartie) {
+        Plateau.statusPartie = statusPartie;
     }
 }
