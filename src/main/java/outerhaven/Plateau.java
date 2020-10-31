@@ -34,16 +34,18 @@ public class Plateau {
     public static BarrePersonnage barre = new BarrePersonnage();
     public Equipe e1 = new Equipe(Color.RED);
     public Equipe e2 = new Equipe(Color.BLUE);
-    //attribut de test
+    // Attribut de test
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
     }
+
     public void lancerPartie() {
         interfaceDebut();
         primary.setScene(scene);
         primary.show();
     }
+
     public void lancerScenePlateau() {
 
         taille = 1000/Math.sqrt(aire);
@@ -84,6 +86,7 @@ public class Plateau {
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
+
     private void interfaceDebut() {
         Button start = new Button("START");
         start.setLayoutX((longeurMax-700)/2);
