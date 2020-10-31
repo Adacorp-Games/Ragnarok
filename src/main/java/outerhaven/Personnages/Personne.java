@@ -25,7 +25,7 @@ import static outerhaven.Plateau.*;
 public abstract class Personne {
     private String name; // Stocké dans un tableau.
     private static ArrayList<String> listName = new ArrayList<>();
-
+    private Group SanteNom = new Group();
     private double health;
     private double maxHealth;
     private double armor;
@@ -37,9 +37,6 @@ public abstract class Personne {
 
     // A revoir en fonction du deplacement des personnages
     private Case position;
-
-
-    private Group SantéNom = new Group();
 
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
@@ -188,7 +185,7 @@ public abstract class Personne {
     public Group afficherImageFace() {
         ImageView person = new ImageView(this.getImageFace());
         person.setFitHeight(taille/1.5);
-        person.setFitWidth(taille/3);
+        person.setFitWidth(taille/2);
         person.setX(position.getPosX() + taille/3);
         person.setY(position.getPosY() - taille/20);
 
@@ -203,12 +200,12 @@ public abstract class Personne {
         return group;
     }
 
-    public void afficherSanteetnom(){
-        SantéNom.getChildren().addAll(afficherSante(),afficherNom());
-        if (!group.getChildren().contains(SantéNom)) {
-                    group.getChildren().add(SantéNom);
+    public void afficherSanteEtNom(){
+        SanteNom.getChildren().addAll(afficherSante(),afficherNom());
+        if (!group.getChildren().contains(SanteNom)) {
+                    group.getChildren().add(SanteNom);
         } else {
-                    group.getChildren().remove(SantéNom);
+                    group.getChildren().remove(SanteNom);
         }
     }
 

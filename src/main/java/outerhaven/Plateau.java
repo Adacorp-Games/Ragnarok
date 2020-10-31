@@ -265,15 +265,15 @@ public class Plateau {
 
 
     private Button afficheBarVie(){
-        Button barVie = new Button("barre de vie");
+        Button barVie = new Button("Afficher barres de vie");
         barVie.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         barVie.setLayoutX(1700);
         barVie.setLayoutY(20);
-        barVie.setMinSize(60, 20);
+        barVie.setMinSize(60, 40);
         barVie.setOnMouseClicked(mouseEvent -> {
             if (!personnages.isEmpty()){
                 for (int i = 0; i < personnages.size(); i++) {
-                    personnages.get(i).afficherSanteetnom();
+                    personnages.get(i).afficherSanteEtNom();
                 }
             }
         });

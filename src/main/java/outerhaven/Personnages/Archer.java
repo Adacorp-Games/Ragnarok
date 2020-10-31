@@ -8,15 +8,15 @@ import outerhaven.Equipe;
 public class Archer extends Personne {
 
     public Archer(){
-        super(150, 50, 150, 100, 2, 1);
+        super(150, 50, 150, 125, 2, 1);
     }
 
     public Archer(Equipe team) {
-        super(150, 50, 150, 100, 2, 1, team);
+        super(150, 50, 150, 125, 2, 1, team);
     }
 
     public Archer(Equipe team, Case position) {
-        super(150, 50, 150, 100, 2, 1, team, position);
+        super(150, 50, 150, 125, 2, 1, team, position);
         this.getPosition().setContenu(this);
     }
 
@@ -34,7 +34,9 @@ public class Archer extends Personne {
     public Text getinfoDescText() {
         return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
+
     public Image getImageFace() {
-        return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
+        return new Image(Guerrier.class.getResourceAsStream("../Images/Archer.png"));
+        //return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
     }
 }

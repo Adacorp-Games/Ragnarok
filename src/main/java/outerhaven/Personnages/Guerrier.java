@@ -8,15 +8,15 @@ import outerhaven.Equipe;
 public class Guerrier extends Personne {
 
     public Guerrier(){
-        super(200, 100, 100, 75, 1, 1);
+        super(200, 100, 100, 100, 1, 1);
     }
 
     public Guerrier(Equipe team) {
-        super(200, 100, 100, 75, 1, 1, team);
+        super(200, 100, 100, 100, 1, 1, team);
     }
 
     public Guerrier(Equipe team, Case position) {
-        super(200, 100, 100, 75, 1, 1, team, position);
+        super(200, 100, 100, 100, 1, 1, team, position);
         this.getPosition().setContenu(this);
     }
 
@@ -36,7 +36,7 @@ public class Guerrier extends Personne {
     }
 
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("../Images/guerrierFace.png"));
+        return new Image(Guerrier.class.getResourceAsStream("../Images/Warrior.png"));
         //return new Image("https://images108.fotki.com/v156/photos/6/830356/8792277/joyDancingstickmantransparent-vi.gif");
     }
 }

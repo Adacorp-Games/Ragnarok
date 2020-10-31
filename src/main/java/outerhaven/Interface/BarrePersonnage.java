@@ -25,8 +25,8 @@ public class BarrePersonnage{
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
 
-        listClasse.add(new Archer());
         listClasse.add(new Guerrier());
+        listClasse.add(new Archer());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }
