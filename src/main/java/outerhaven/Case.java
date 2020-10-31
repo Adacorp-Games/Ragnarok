@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
+import static outerhaven.Plateau.statusPartie;
 
 public class Case {
     private int id;
@@ -64,35 +65,37 @@ public class Case {
     }
 
     public void interactionHex(ImageView hexagone) {
-        if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
-            contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
-            affichagecontenu = contenu.get(0).affichagePersonnage();
-            Plateau.group.getChildren().add(affichagecontenu);
-            InnerShadow ombre = new InnerShadow();
-            ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
-            hexagone.setEffect(ombre);
-        }
-        else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
-            contenu.remove(0);
-            Plateau.group.getChildren().remove(affichagecontenu);
-            hexagone.setEffect(null);
-        }
-        else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
-            contenu.remove(0);
-            Plateau.group.getChildren().remove(affichagecontenu);
-            hexagone.setEffect(null);
-        }
-        else {
-            Text attention = new Text("Veuillez selectionner une equipe et un personnage");
-            attention.setX(posX);
-            attention.setY(posY);
-            attention.underlineProperty().setValue(true);
-            attention.setFill(Color.RED);
-            Plateau.group.getChildren().add(attention);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
-                Plateau.group.getChildren().remove(attention);
-            }));
-            timeline.play();
+        if (statusPartie != true) {
+            if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
+                contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+                affichagecontenu = contenu.get(0).affichagePersonnage();
+                Plateau.group.getChildren().add(affichagecontenu);
+                InnerShadow ombre = new InnerShadow();
+                ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                hexagone.setEffect(ombre);
+            }
+            else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
+                contenu.remove(0);
+                Plateau.group.getChildren().remove(affichagecontenu);
+                hexagone.setEffect(null);
+            }
+            else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
+                contenu.remove(0);
+                Plateau.group.getChildren().remove(affichagecontenu);
+                hexagone.setEffect(null);
+            }
+            else {
+                Text attention = new Text("Veuillez selectionner une equipe et un personnage");
+                attention.setX(posX);
+                attention.setY(posY);
+                attention.underlineProperty().setValue(true);
+                attention.setFill(Color.RED);
+                Plateau.group.getChildren().add(attention);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                    Plateau.group.getChildren().remove(attention);
+                }));
+                timeline.play();
+            }
         }
     }
 
