@@ -32,8 +32,8 @@ public class Plateau {
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean statusPartie = false;
     public static BarrePersonnage barre = new BarrePersonnage();
-    public Equipe e1 = new Equipe(Color.RED);
-    public Equipe e2 = new Equipe(Color.BLUE);
+    public static Equipe e1 = new Equipe(Color.RED);
+    public static Equipe e2 = new Equipe(Color.BLUE);
     // Attribut de test
 
     public Plateau(Stage primary) {
@@ -82,7 +82,7 @@ public class Plateau {
 
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
-        group.getChildren().add(boutonEquipe());
+        //group.getChildren().add(boutonEquipe());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
@@ -142,39 +142,8 @@ public class Plateau {
         return Integer.parseInt(text);
     }
 
-    public void incorporeEquipe(Equipe e1) {
+    public static void incorporeEquipe(Equipe e1) {
         equipeSelectionné = e1;
-    }
-
-    private Group boutonEquipe() {
-        Button equipe1 = new Button("Equipe 1");
-        equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        equipe1.setLayoutX(10);
-        equipe1.setLayoutY(800);
-        equipe1.setMinSize(60, 20);
-
-        Button equipe2 = new Button("Equipe 2");
-        equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        equipe2.setLayoutX(80);
-        equipe2.setLayoutY(800);
-        equipe2.setMinSize(60, 20);
-
-        // Actions sur les boutons d'équipes
-        equipe1.setOnMouseClicked(mouseEvent -> {
-            incorporeEquipe(e1);
-            equipe1.setEffect(new Effets().putInnerShadow(e1.getCouleur()));
-            equipe2.setEffect(null);
-        });
-        equipe2.setOnMouseClicked(mouseEvent -> {
-            incorporeEquipe(e2);
-            equipe2.setEffect(new Effets().putInnerShadow(e2.getCouleur()));
-            equipe1.setEffect(null);
-        });
-
-        Group groupEquipeButton = new Group();
-        groupEquipeButton.getChildren().add(equipe1);
-        groupEquipeButton.getChildren().add(equipe2);
-        return groupEquipeButton;
     }
 
     private Button boutonExit() {
@@ -235,7 +204,7 @@ public class Plateau {
                 setStatusPartie(true);
                 if (group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().remove(barre.returnBarre());
-                    //group.getChildren().remove(boutonEquipe());
+                    //boutonEquipe().getChildren().clear();
                     scene.setFill(Color.DARKGRAY);
                 }
                 tour();
@@ -308,5 +277,13 @@ public class Plateau {
 
     public static void setStatusPartie(boolean statusPartie) {
         Plateau.statusPartie = statusPartie;
+    }
+
+    public static Equipe getE1() {
+        return e1;
+    }
+
+    public static Equipe getE2() {
+        return e2;
     }
 }
