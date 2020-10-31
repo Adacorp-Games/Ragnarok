@@ -257,20 +257,23 @@ public class Plateau {
         menu.setLayoutX(10);
         menu.setLayoutY(20);
         menu.setMinSize(60,20);
+        Button exit = boutonExit();
+        Button reset = boutonReset();
+        Button reStart = boutonReStart();
         menu.setOnMouseClicked(mouseEvent -> {
-            if (!group.getChildren().contains(boutonExit())) {
+            if (!group.getChildren().contains(exit)) {
                 try {
-                    group.getChildren().add(boutonReset());
-                    group.getChildren().add(boutonReStart());
-                    group.getChildren().add(boutonExit());
+                    group.getChildren().add(reset);
+                    group.getChildren().add(reStart);
+                    group.getChildren().add(exit);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().remove(boutonReset());
-                    group.getChildren().remove(boutonReStart());
-                    group.getChildren().remove(boutonExit());
+                    group.getChildren().remove(reset);
+                    group.getChildren().remove(reStart);
+                    group.getChildren().remove(exit);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -283,7 +286,7 @@ public class Plateau {
     public void tour() {
         while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie != false) {
             for (Personne p : personnages) {
-                p.action();
+               // p.action();
             }
         }
     }
