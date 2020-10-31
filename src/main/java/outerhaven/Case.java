@@ -3,6 +3,7 @@ package outerhaven;
 import javafx.scene.Group;
 import javafx.scene.effect.*;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
@@ -13,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
+
+import javax.imageio.stream.FileImageInputStream;
+
 import static outerhaven.Plateau.statusPartie;
 
 public class Case {
@@ -24,10 +28,8 @@ public class Case {
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
 
-    public static Image hexagone_img1 = new Image(
-            "https://cdn.discordapp.com/attachments/764528562429624391/764556130671132672/hexagon.png");
-    public static Image hexagone_img2 = new Image(
-            "https://cdn.discordapp.com/attachments/764528562429624391/764556132613488680/hexagon2.png");
+    public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("./Images/hexagon.png"));
+    public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("./Images/hexagon2.png"));
 
     public Case(int id) {
         this.id = id;
@@ -39,8 +41,6 @@ public class Case {
 
     public ImageView afficherCase(double X, double Y, double taille) {
         if (!estOccupe()) {
-            // Image hexagone_img1 = new
-            // Image(Case.class.getResourceAsStream("Images/hexagon.png"));
             ImageView hexagone = new ImageView(hexagone_img1);
             hexagone.setFitHeight(taille);
             hexagone.setFitWidth(taille);

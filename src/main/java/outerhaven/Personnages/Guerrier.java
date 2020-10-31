@@ -36,6 +36,6 @@ public class Guerrier extends Personne {
     }
 
     public Image getImageFace() {
-        return new Image("https://media.discordapp.net/attachments/764528562429624391/770287874805071872/fight-151796_1280.png?width=475&height=703");
+        return new Image(Guerrier.class.getResourceAsStream("../Images/guerrierFace.png"));
     }
 }

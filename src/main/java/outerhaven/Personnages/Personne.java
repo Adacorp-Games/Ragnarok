@@ -330,6 +330,6 @@ public abstract class Personne {
     }
 
     public Image getImageFace() {
-        return new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
+        return new Image(Personne.class.getResourceAsStream("../Images/inconnu.png"));
     }
 }
