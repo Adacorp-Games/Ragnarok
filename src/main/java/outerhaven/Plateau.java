@@ -217,6 +217,7 @@ public class Plateau {
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
         Label labelPause = new Label("");
+        labelPause.setText("La partie est en pause");
         labelPause.setLayoutY(650);
         Button pause = new Button("Pause");
         Button play = new Button("Jouer");
@@ -225,17 +226,20 @@ public class Plateau {
         play.setLayoutY(20);
         play.setMinSize(60,20);
         play.setOnMouseClicked(mouseEvent -> {
-            labelPlay.setText("La partie reprend");
-            group.getChildren().remove(play);
-            group.getChildren().add(pause);
-            System.out.println(personnages.size());
-            setStatusPartie(true);
-            if (group.getChildren().contains(barre.returnBarre())) {
-                group.getChildren().remove(barre.returnBarre());
-                //group.getChildren().remove(boutonEquipe());
-                scene.setFill(Color.DARKGRAY);
+            //labelPlay.setText("La partie reprend");
+            if (e1.getTeam().size() > 0 && e2.getTeam().size() > 0){
+                group.getChildren().remove(labelPause);
+                group.getChildren().remove(play);
+                group.getChildren().add(pause);
+                //System.out.println(personnages.size());
+                setStatusPartie(true);
+                if (group.getChildren().contains(barre.returnBarre())) {
+                    group.getChildren().remove(barre.returnBarre());
+                    //group.getChildren().remove(boutonEquipe());
+                    scene.setFill(Color.DARKGRAY);
+                }
+                tour();
             }
-            tour();
         });
 
         pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -243,7 +247,7 @@ public class Plateau {
         pause.setLayoutY(20);
         pause.setMinSize(60,20);
         pause.setOnMouseClicked(mouseEvent -> {
-            labelPause.setText("La partie est en pause");
+            group.getChildren().add(labelPause);
             group.getChildren().remove(pause);
             group.getChildren().add(play);
             setStatusPartie(false);
@@ -254,7 +258,6 @@ public class Plateau {
             }
         });
         group.getChildren().add(play);
-        group.getChildren().add(labelPause);
         group.getChildren().add(labelPlay);
     }
 
@@ -293,7 +296,7 @@ public class Plateau {
     public void tour() {
         while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie != false) {
             for (Personne p : personnages) {
-               // p.action();
+                p.action();
             }
         }
     }

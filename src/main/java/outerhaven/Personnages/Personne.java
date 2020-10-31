@@ -98,13 +98,13 @@ public abstract class Personne {
         //this.position = c;
     }*/
 
-    /*public void action() {
+    public void action() {
         if (position.pathToPerso(getOtherTeam()).size() <= range) {
             attaquer(position.pathToPerso(getOtherTeam()).get(position.pathToPerso(getOtherTeam()).size()).getContenu().get(0));
         } else {
             déplacer(position.pathToPerso(getOtherTeam()).get(0));
         }
-    }*/
+    }
 
     public Group affichagePersonnageBarre(int i){
         Group group = new Group();
@@ -321,13 +321,13 @@ public abstract class Personne {
         return team;
     }
 
-   /* public Equipe getOtherTeam() {
+    public Equipe getOtherTeam() {
         if (listeEquipe.get(0) == this.team) {
             return listeEquipe.get(1);
         } else {
             return listeEquipe.get(0);
         }
-    }*/
+    }
 
     public Image getImageFace() {
         return new Image("https://cdn.discordapp.com/attachments/764528562429624391/766184794068877332/person.png");
