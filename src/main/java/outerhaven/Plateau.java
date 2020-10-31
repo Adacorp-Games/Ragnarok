@@ -126,11 +126,15 @@ public class Plateau {
             }
         });
 
+        Button quitter = boutonExit();
+        quitter.setLayoutY(10);
+
         listeEquipe.add(e1);
         listeEquipe.add(e2);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(start);
+        group.getChildren().add(quitter);
     }
 
     public static int getIntFromTextField(TextField textField) {
