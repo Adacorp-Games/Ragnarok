@@ -38,6 +38,9 @@ public abstract class Personne {
     // A revoir en fonction du deplacement des personnages
     private Case position;
 
+
+    private Group SantéNom = new Group();
+
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
@@ -190,24 +193,23 @@ public abstract class Personne {
         person.setY(position.getPosY() - taille/20);
 
         Group group = new Group();
-        Group sante = afficherSante();
-        Group name = afficherNom();
         group.getChildren().add(person);
-
         //if (Plateau.getStatusPartie() != false) {
             person.setOnMouseClicked((mouseEvent) -> {
-               /*if (!group.getChildren().contains(sante)) {
-                    group.getChildren().add(sante);
-                    group.getChildren().add(name);
-                } else {
-                    group.getChildren().remove(sante);
-                    group.getChildren().remove(name);
-                }*/
                 selfDelete();
             });
         //}
 
         return group;
+    }
+
+    public void afficherSanteetnom(){
+        SantéNom.getChildren().addAll(afficherSante(),afficherNom());
+        if (!group.getChildren().contains(SantéNom)) {
+                    group.getChildren().add(SantéNom);
+        } else {
+                    group.getChildren().remove(SantéNom);
+        }
     }
 
     public void selfDelete() {

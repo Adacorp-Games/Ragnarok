@@ -73,9 +73,6 @@ public class Case {
             contenu.remove(0);
             Plateau.group.getChildren().remove(affichagecontenu);
             hexagone.setEffect(null);
-            //System.out.println(personnages.size());
-            //System.out.println(Plateau.e1.getTeam().size());
-            //System.out.println(Plateau.e2.getTeam().size());
         }
 
     }

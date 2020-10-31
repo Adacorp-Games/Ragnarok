@@ -1,5 +1,6 @@
 package outerhaven.Personnages;
 
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
@@ -32,5 +33,8 @@ public class Archer extends Personne {
     @Override
     public Text getinfoDescText() {
         return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+    }
+    public Image getImageFace() {
+        return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
     }
 }

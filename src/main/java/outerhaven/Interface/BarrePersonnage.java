@@ -20,7 +20,7 @@ public class BarrePersonnage{
     private Group group = new Group();
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    ArrayList<Personne> listClasse = new ArrayList<Personne>();
+    ArrayList<Personne> listClasse = new ArrayList<>();
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
