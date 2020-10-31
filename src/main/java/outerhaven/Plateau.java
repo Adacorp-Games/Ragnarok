@@ -259,7 +259,29 @@ public class Plateau {
             }
         });
         boutonPausePlay();
+        afficheBarVie();
         group.getChildren().add(menu);
+    }
+
+
+    private Button afficheBarVie(){
+        Button barVie = new Button("bar de vie");
+        barVie.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        barVie.setLayoutX(1700);
+        barVie.setLayoutY(20);
+        barVie.setMinSize(60, 20);
+        barVie.setOnMouseClicked(mouseEvent -> {
+            System.out.println(personnages.isEmpty());
+            if (!personnages.isEmpty()){
+                for (int i = 0; i < personnages.size(); i++) {
+                    personnages.get(i).afficherSante();
+                }
+            }
+        });
+
+        group.getChildren().add(barVie);
+
+        return barVie;
     }
 
     public void tour() {

@@ -196,17 +196,22 @@ public abstract class Personne {
 
         //if (Plateau.getStatusPartie() != false) {
             person.setOnMouseClicked((mouseEvent) -> {
-                if (!group.getChildren().contains(sante)) {
+               /*if (!group.getChildren().contains(sante)) {
                     group.getChildren().add(sante);
                     group.getChildren().add(name);
                 } else {
                     group.getChildren().remove(sante);
                     group.getChildren().remove(name);
-                }
+                }*/
+                selfDelete();
             });
         //}
 
         return group;
+    }
+
+    public void selfDelete() {
+        position.seVider();
     }
 
     public Group afficherSante() {

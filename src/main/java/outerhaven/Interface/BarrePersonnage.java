@@ -49,6 +49,8 @@ public class BarrePersonnage{
         }
     }
 
+    /*Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
+    barre de personnage les boutons d'équipes lorsque l'on lance la partie*/
     private Group boutonEquipe() {
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");

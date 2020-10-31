@@ -17,6 +17,7 @@ import outerhaven.Personnages.Personne;
 
 import javax.imageio.stream.FileImageInputStream;
 
+import static outerhaven.Plateau.personnages;
 import static outerhaven.Plateau.statusPartie;
 
 public class Case {
@@ -27,6 +28,7 @@ public class Case {
     private ArrayList<Case> caseVoisines;
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
+    private ImageView hexagone;
 
     public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("./Images/hexagon.png"));
     public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("./Images/hexagon2.png"));
@@ -41,7 +43,7 @@ public class Case {
 
     public ImageView afficherCase(double X, double Y, double taille) {
         if (!estOccupe()) {
-            ImageView hexagone = new ImageView(hexagone_img1);
+            hexagone = new ImageView(hexagone_img1);
             hexagone.setFitHeight(taille);
             hexagone.setFitWidth(taille);
             hexagone.setX(X);
@@ -55,7 +57,7 @@ public class Case {
                 hexagone.setImage(hexagone_img1);
             });
             hexagone.setOnMousePressed((mouseEvent)-> {
-                interactionHex(hexagone);
+                interactionHex();
             });
             arriveCase(hexagone);
             return hexagone;
@@ -64,7 +66,21 @@ public class Case {
         }
     }
 
-    public void interactionHex(ImageView hexagone) {
+    public void seVider() {
+        if (contenu.size() > 0) {
+            personnages.remove(contenu.get(0));
+            contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
+            contenu.remove(0);
+            Plateau.group.getChildren().remove(affichagecontenu);
+            hexagone.setEffect(null);
+            //System.out.println(personnages.size());
+            //System.out.println(Plateau.e1.getTeam().size());
+            //System.out.println(Plateau.e2.getTeam().size());
+        }
+
+    }
+
+    public void interactionHex() {
         if (statusPartie != true) {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
                 contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
@@ -74,15 +90,8 @@ public class Case {
                 ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
                 hexagone.setEffect(ombre);
             }
-            else if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) {
-                contenu.remove(0);
-                Plateau.group.getChildren().remove(affichagecontenu);
-                hexagone.setEffect(null);
-            }
-            else if (Plateau.personneSelectionné == null &&  !contenu.isEmpty()) {
-                contenu.remove(0);
-                Plateau.group.getChildren().remove(affichagecontenu);
-                hexagone.setEffect(null);
+            else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null &&  !contenu.isEmpty())) {
+                seVider();
             }
             else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
