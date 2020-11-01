@@ -69,6 +69,7 @@ public class Case {
     public void seVider() {
         if (contenu.size() > 0) {
             personnages.remove(contenu.get(0));
+            contenu.get(0).supprimerSanteEtNom();
             contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
             contenu.remove(0);
             Plateau.group.getChildren().remove(affichagecontenu);

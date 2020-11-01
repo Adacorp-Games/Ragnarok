@@ -205,7 +205,12 @@ public abstract class Personne {
         if (!group.getChildren().contains(SanteNom)) {
                     group.getChildren().add(SanteNom);
         } else {
-                    group.getChildren().remove(SanteNom);
+            supprimerSanteEtNom();
+        }
+    }
+    public void supprimerSanteEtNom(){
+        if(group.getChildren().contains(SanteNom)) {
+            group.getChildren().remove(SanteNom);
         }
     }
 
