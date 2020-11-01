@@ -1,5 +1,7 @@
 package outerhaven;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
@@ -207,11 +210,10 @@ public class Plateau {
         play.setMinSize(60,20);
         play.setOnMouseClicked(mouseEvent -> {
             //labelPlay.setText("La partie reprend");
-            if (e1.getTeam().size() > 0 && e2.getTeam().size() > 0){
+            if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()){
                 group.getChildren().remove(labelPause);
                 group.getChildren().remove(play);
                 group.getChildren().add(pause);
-                //System.out.println(personnages.size());
                 setStatusPartie(true);
                 if (group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().remove(barre.returnBarre());
@@ -219,6 +221,30 @@ public class Plateau {
                     scene.setFill(Color.DARKGRAY);
                 }
                 tour();
+            }
+            else if(!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())){
+                Text attention = new Text("Il n'y qu'une seule equipe sur le terrain");
+                attention.setY(650);
+                attention.setX(20);
+                attention.underlineProperty().setValue(true);
+                attention.setFill(Color.RED);
+                Plateau.group.getChildren().add(attention);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                    Plateau.group.getChildren().remove(attention);
+                }));
+                timeline.play();
+            }
+            else{
+                Text attention = new Text("Veuillez remplir les hexagones avec des personnages");
+                attention.setY(650);
+                attention.setX(20);
+                attention.underlineProperty().setValue(true);
+                attention.setFill(Color.RED);
+                Plateau.group.getChildren().add(attention);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
+                    Plateau.group.getChildren().remove(attention);
+                }));
+                timeline.play();
             }
         });
 
@@ -295,11 +321,11 @@ public class Plateau {
     }
 
     public void tour() {
-        while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie != false) {
-            for (Personne p : personnages) {
-                p.action();
+            while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie) {
+                for (Personne p : personnages) {
+                    p.action();
+                }
             }
-        }
     }
 
     public void initVoisins() {
