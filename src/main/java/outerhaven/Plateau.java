@@ -80,6 +80,9 @@ public class Plateau {
             }
         }
 
+        // Initialisation des cases voisines
+        initVoisins();
+
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
         //group.getChildren().add(boutonEquipe());
@@ -271,8 +274,7 @@ public class Plateau {
         group.getChildren().add(menu);
     }
 
-
-    private Button afficheBarVie(){
+    private Button afficheBarVie() {
         Button barVie = new Button("Afficher barres de vie");
         barVie.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         barVie.setLayoutX(1700);
@@ -297,6 +299,12 @@ public class Plateau {
             for (Personne p : personnages) {
                 p.action();
             }
+        }
+    }
+
+    public void initVoisins() {
+        for (Case c : listeCase) {
+            c.trouverVoisin();
         }
     }
 

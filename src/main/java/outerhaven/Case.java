@@ -3,7 +3,6 @@ package outerhaven;
 import javafx.scene.Group;
 import javafx.scene.effect.*;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import javafx.animation.KeyFrame;
@@ -14,8 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
-
-import javax.imageio.stream.FileImageInputStream;
 
 import static outerhaven.Plateau.personnages;
 import static outerhaven.Plateau.statusPartie;
@@ -129,6 +126,10 @@ public class Case {
             System.out.println("Attention la case contient plus d'un obstacle/unite");
             return true;
         }
+    }
+
+    public void trouverVoisin() {
+
     }
 
     public ArrayList<Case> voisinsLibres(boolean lib) {

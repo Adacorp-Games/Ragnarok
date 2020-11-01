@@ -107,7 +107,7 @@ public abstract class Personne {
         }
     }
 
-    public Group affichagePersonnageBarre(int i){
+    public Group affichagePersonnageBarre(int i) {
         Group group = new Group();
         ImageView imageperson = new ImageView(this.getImageFace());
         imageperson.setFitHeight(130);
@@ -201,7 +201,7 @@ public abstract class Personne {
         return group;
     }
 
-    public void afficherSanteEtNom(){
+    public void afficherSanteEtNom() {
         SanteNom.getChildren().addAll(afficherSante(),afficherNom());
         if (barreVisible && !group.getChildren().contains(SanteNom)) {
                     group.getChildren().add(SanteNom);
@@ -210,7 +210,7 @@ public abstract class Personne {
             supprimerSanteEtNom();
         }
     }
-    public void supprimerSanteEtNom(){
+    public void supprimerSanteEtNom() {
         if(group.getChildren().contains(SanteNom)) {
             group.getChildren().remove(SanteNom);
         }
@@ -253,7 +253,7 @@ public abstract class Personne {
         return listName.get(new Random().nextInt(listName.size()));
     }
 
-    private static void ajouteNom(){
+    private static void ajouteNom() {
         listName.add("Alex");
         listName.add("Ilyes");
         listName.add("Pierre-Antoine");
