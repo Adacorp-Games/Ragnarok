@@ -34,6 +34,7 @@ public abstract class Personne {
     private int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
+    public static boolean barreVisible = false ;
 
     // A revoir en fonction du deplacement des personnages
     private Case position;
@@ -202,9 +203,10 @@ public abstract class Personne {
 
     public void afficherSanteEtNom(){
         SanteNom.getChildren().addAll(afficherSante(),afficherNom());
-        if (!group.getChildren().contains(SanteNom)) {
+        if (barreVisible && !group.getChildren().contains(SanteNom)) {
                     group.getChildren().add(SanteNom);
-        } else {
+        }
+        else if(!barreVisible && group.getChildren().contains(SanteNom)) {
             supprimerSanteEtNom();
         }
     }

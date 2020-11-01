@@ -177,6 +177,10 @@ public class Plateau {
         reStrat.setMinSize(60,20);
         reStrat.setOnMouseClicked(mouseEvent -> {
             group.getChildren().remove(0,group.getChildren().size());
+            personnages.clear();
+            morts.clear();
+            listeCase.clear();
+            listeEquipe.clear();
             lancerScenePlateau();
         });
         return reStrat;
@@ -272,6 +276,7 @@ public class Plateau {
         barVie.setMinSize(60, 40);
         barVie.setOnMouseClicked(mouseEvent -> {
             if (!personnages.isEmpty()){
+                Personne.barreVisible = !Personne.barreVisible;
                 for (int i = 0; i < personnages.size(); i++) {
                     personnages.get(i).afficherSanteEtNom();
                 }

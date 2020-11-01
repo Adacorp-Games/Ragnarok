@@ -83,6 +83,7 @@ public class Case {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
                 contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
                 affichagecontenu = contenu.get(0).affichagePersonnage();
+                contenu.get(0).afficherSanteEtNom();
                 Plateau.group.getChildren().add(affichagecontenu);
                 InnerShadow ombre = new InnerShadow();
                 ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
