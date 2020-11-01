@@ -164,6 +164,10 @@ public class Plateau {
         reset.setMinSize(60,20);
         reset.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
+            personnages.clear();
+            morts.clear();
+            listeCase.clear();
+            listeEquipe.clear();
             this.lancerPartie();
         });
         return reset;
