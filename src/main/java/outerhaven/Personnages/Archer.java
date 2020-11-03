@@ -8,15 +8,11 @@ import outerhaven.Equipe;
 public class Archer extends Personne {
 
     public Archer(){
-        super(150, 50, 150, 125, 2, 1);
-    }
-
-    public Archer(Equipe team) {
-        super(150, 50, 150, 125, 2, 1, team);
+        super(150, 50, 150, 125, 3, 1);
     }
 
     public Archer(Equipe team, Case position) {
-        super(150, 50, 150, 125, 2, 1, team, position);
+        super(150, 50, 150, 125, 3, 1, team, position);
         this.getPosition().setContenu(this);
     }
 

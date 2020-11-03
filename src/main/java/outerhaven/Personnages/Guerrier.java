@@ -11,10 +11,6 @@ public class Guerrier extends Personne {
         super(200, 100, 100, 100, 1, 1);
     }
 
-    public Guerrier(Equipe team) {
-        super(200, 100, 100, 100, 1, 1, team);
-    }
-
     public Guerrier(Equipe team, Case position) {
         super(200, 100, 100, 100, 1, 1, team, position);
         this.getPosition().setContenu(this);
