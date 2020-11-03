@@ -18,10 +18,10 @@ import outerhaven.Personnages.Personne;
 import static outerhaven.Plateau.*;
 
 public class Case {
-    int[] coordonnee = new int[2];
     private double posX;
     private double posY;
     private Color couleur;
+    private int[] coordonnee = new int[2];
     private ArrayList<Case> caseVoisines;
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
@@ -35,8 +35,6 @@ public class Case {
         coordonnee[1] = y;
         contenu = new ArrayList<Personne>();
         caseVoisines = new ArrayList<Case>();
-        // this.posX = posX;
-        // this.posY = posY;
     }
 
     public ImageView afficherCase(double X, double Y, double taille) {
@@ -50,9 +48,15 @@ public class Case {
             this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
+                /*for (Case c : caseVoisines) {
+                    c.hexagone.setImage(hexagone_img2);
+                }*/
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
+                /*for (Case c : caseVoisines) {
+                    c.hexagone.setImage(hexagone_img1);
+                }*/
             });
             hexagone.setOnMousePressed((mouseEvent)-> {
                 interactionHex();
@@ -86,6 +90,7 @@ public class Case {
                 InnerShadow ombre = new InnerShadow();
                 ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
                 hexagone.setEffect(ombre);
+                //System.out.println(this.caseVoisines);
             }
             else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null &&  !contenu.isEmpty())) {
                 seVider();
@@ -131,23 +136,43 @@ public class Case {
 
     @Override
     public String toString() {
-        return "Case{" + Arrays.toString(coordonnee) +
+        return "Case {" + Arrays.toString(coordonnee) +
                 '}';
     }
 
     public void trouverVoisin() {
         for (Case c : listeCase) {
-            if((c.getCoordonnee()[1]==this.getCoordonnee()[1]-1 ||c.getCoordonnee()[1]==this.getCoordonnee()[1]+1)
-            && c.getCoordonnee()[0]== getCoordonnee()[0]) {
+            if((c.getCoordonnee()[1] == this.getCoordonnee()[1]-1
+                    || c.getCoordonnee()[1] == this.getCoordonnee()[1]+1) && c.getCoordonnee()[0] == getCoordonnee()[0]) {
                 caseVoisines.add(c);
             }
-            if((c.getCoordonnee()[0]==this.getCoordonnee()[0]-1 ||c.getCoordonnee()[0]==this.getCoordonnee()[0]+1)
-                    && c.getCoordonnee()[1]== getCoordonnee()[1]) {
+            if((c.getCoordonnee()[0]==this.getCoordonnee()[0]-1
+                    || c.getCoordonnee()[0]==this.getCoordonnee()[0]+1) && c.getCoordonnee()[1] == getCoordonnee()[1]) {
                 caseVoisines.add(c);
             }
-            if((c.getCoordonnee()[0]==this.getCoordonnee()[0]-1 && c.getCoordonnee()[1]==this.getCoordonnee()[1]+1)
-                    || (c.getCoordonnee()[0]== getCoordonnee()[0]+1 && c.getCoordonnee()[1]== getCoordonnee()[1]-1)) {
+            if((c.getCoordonnee()[0] == this.getCoordonnee()[0]-1 && c.getCoordonnee()[1] == this.getCoordonnee()[1]+1)
+                    || (c.getCoordonnee()[0] == getCoordonnee()[0]+1 && c.getCoordonnee()[1] == getCoordonnee()[1]-1)) {
                 caseVoisines.add(c);
+            }
+        }
+    }
+
+    public void afficherCaseVoisines(int longueur, boolean status) {
+        Image voisin;
+        if (status) {
+            voisin = hexagone_img2;
+        } else {
+            voisin = hexagone_img1;
+        }
+        this.getHexagone().setImage(voisin);
+        if (longueur == 1) {
+            for (Case c : this.getCaseVoisines()) {
+                c.getHexagone().setImage(voisin);
+            }
+        } else {
+            for (Case c : this.getCaseVoisines()) {
+                c.getHexagone().setImage(voisin);
+                c.afficherCaseVoisines(longueur - 1, status);
             }
         }
     }
@@ -232,6 +257,10 @@ public class Case {
 
     public int[] getCoordonnee() {
         return coordonnee;
+    }
+
+    public ImageView getHexagone() {
+        return hexagone;
     }
 
     public double getPosX() {

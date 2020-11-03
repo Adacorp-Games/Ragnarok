@@ -193,9 +193,19 @@ public abstract class Personne {
         Group group = new Group();
         group.getChildren().add(person);
         //if (Plateau.getStatusPartie() != false) {
-            person.setOnMouseClicked((mouseEvent) -> {
-                selfDelete();
-            });
+        person.setOnMouseClicked((mouseEvent) -> {
+            selfDelete();
+        });
+
+        // Affichage des case voisines en fonction de la portée de déplacement
+        person.setOnMouseEntered((mouseEvent) -> {
+            position.afficherCaseVoisines(range, true);
+        });
+
+        person.setOnMouseExited((mouseEvent) -> {
+            position.afficherCaseVoisines(range, false);
+        });
+
         //}
 
         return group;
