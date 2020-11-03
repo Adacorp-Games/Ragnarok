@@ -38,7 +38,6 @@ public class Plateau {
     public static BarrePersonnage barre = new BarrePersonnage();
     public static Equipe e1 = new Equipe(Color.RED);
     public static Equipe e2 = new Equipe(Color.BLUE);
-    // Attribut de test
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -210,7 +209,7 @@ public class Plateau {
         play.setMinSize(60,20);
         play.setOnMouseClicked(mouseEvent -> {
             //labelPlay.setText("La partie reprend");
-            if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()){
+            if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()) {
                 group.getChildren().remove(labelPause);
                 group.getChildren().remove(play);
                 group.getChildren().add(pause);
@@ -222,7 +221,7 @@ public class Plateau {
                 }
                 tour();
             }
-            else if(!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())){
+            else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
                 Text attention = new Text("Il n'y qu'une seule equipe sur le terrain");
                 attention.setY(650);
                 attention.setX(20);
@@ -234,7 +233,7 @@ public class Plateau {
                 }));
                 timeline.play();
             }
-            else{
+            else {
                 Text attention = new Text("Veuillez remplir les hexagones avec des personnages");
                 attention.setY(650);
                 attention.setX(20);
@@ -321,11 +320,11 @@ public class Plateau {
     }
 
     public void tour() {
-            while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie) {
-                for (Personne p : personnages) {
-                    p.action();
-                }
+        while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie) {
+            for (Personne p : personnages) {
+                p.action();
             }
+        }
     }
 
     public void initVoisins() {

@@ -48,15 +48,9 @@ public class Case {
             this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
-                /*for (Case c : caseVoisines) {
-                    c.hexagone.setImage(hexagone_img2);
-                }*/
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);
-                /*for (Case c : caseVoisines) {
-                    c.hexagone.setImage(hexagone_img1);
-                }*/
             });
             hexagone.setOnMousePressed((mouseEvent)-> {
                 interactionHex();
@@ -240,8 +234,7 @@ public class Case {
         return parcoursEnfants.get(0);
     }
 
-    // Necessite que le plateau contienne au moins un personnage de l'equipe visee
-    // en dehors de this
+    // Necessite que le plateau contienne au moins un personnage de l'equipe visee en dehors de this
     public ArrayList<Case> pathToPerso(Equipe e) {
         ArrayList<Case> parcours = new ArrayList<Case>();
         int depth = 1;
@@ -253,7 +246,6 @@ public class Case {
     }
 
     // Getter et setter
-
 
     public int[] getCoordonnee() {
         return coordonnee;
@@ -300,9 +292,5 @@ public class Case {
 
     public ArrayList<Personne> getContenu() {
         return contenu;
-    }
-
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
     }
 }
