@@ -5,25 +5,25 @@ import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
 
-public class Archer extends Personne {
+public class Mage extends Personne {
 
-    public Archer() {
-        super(150, 50, 150, 125, 4, 1);
+    public Mage() {
+        super(100, 50, 200, 150, 3, 1);
     }
 
-    public Archer(Equipe team, Case position) {
-        super(150, 50, 150, 125, 4, 1, team, position);
+    public Mage(Equipe team, Case position) {
+        super(150, 50, 200, 150, 3, 1, team, position);
         this.getPosition().setContenu(this);
     }
 
     @Override
     public Personne personneNouvelle(Equipe team,Case position) {
-        return new Archer(team,position);
+        return new Mage(team,position);
     }
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Archer (" + this.getCost() + "€) :\n");
+        return new Text("Mage (" + this.getCost() + "€) :\n");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Archer extends Personne {
     }
 
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("../Images/Archer.png"));
+        return new Image(Guerrier.class.getResourceAsStream("../Images/Mage.png"));
         //return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
     }
 }

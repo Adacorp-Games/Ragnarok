@@ -7,7 +7,7 @@ import outerhaven.Equipe;
 
 public class Guerrier extends Personne {
 
-    public Guerrier(){
+    public Guerrier() {
         super(200, 100, 100, 100, 1, 1);
     }
 
