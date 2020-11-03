@@ -28,7 +28,7 @@ public class BarrePersonnage {
 
         listClasse.add(new Guerrier());
         listClasse.add(new Archer());
-        listClasse.add(new Mage());
+        //listClasse.add(new Mage());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }

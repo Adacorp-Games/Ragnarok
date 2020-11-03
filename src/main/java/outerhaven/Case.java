@@ -161,12 +161,16 @@ public class Case {
         this.getHexagone().setImage(voisin);
         if (longueur == 1) {
             for (Case c : this.getCaseVoisines()) {
-                c.getHexagone().setImage(voisin);
+                if (!c.estOccupe()) {
+                    c.getHexagone().setImage(voisin);
+                }
             }
         } else {
             for (Case c : this.getCaseVoisines()) {
-                c.getHexagone().setImage(voisin);
-                c.afficherCaseVoisines(longueur - 1, status);
+                if (!c.estOccupe()) {
+                    c.getHexagone().setImage(voisin);
+                    c.afficherCaseVoisines(longueur - 1, status);
+                }
             }
         }
     }

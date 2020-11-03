@@ -103,25 +103,25 @@ public abstract class Personne {
 
     public void action() {
         ArrayList<Case> pathToEnnemy = position.pathToPerso(getOtherTeam());
-        System.out.println(pathToEnnemy.size());
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + pathToEnnemy.size());
         if (pathToEnnemy.size() <= range) {
             attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-            System.out.println("je attaque");
+            System.out.println(this.getName() + " attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName());
         } else {
             déplacer(pathToEnnemy.get(0));
-            System.out.println("je deplace");
+            System.out.println(this.getName() + " se déplace");
         }
-        System.out.println(getHealth());
-        wait2(500000000);
+        System.out.println("Vie restante de la cible " + getHealth());
+        waitTEST(500000000);
         
     }
 
-public void wait2(long nb) {
-    long i = 0;
-    for (long j = 0; j < nb; j++) {
-        i = j -i + 5;
+    public void waitTEST(long nb) {
+        long i = 0;
+        for (long j = 0; j < nb; j++) {
+            i = j -i + 5;
+        }
     }
-}
 
     public Group affichagePersonnageBarre(int i) {
         Group group = new Group();
