@@ -34,7 +34,7 @@ public abstract class Personne {
     private int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
-    public static boolean barreVisible = false ;
+    public static boolean barreVisible = false;
 
     // A revoir en fonction du deplacement des personnages
     private Case position;
@@ -68,7 +68,8 @@ public abstract class Personne {
         this.team.getTeam().add(this);
     }
 
-    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
+    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team,
+            Case position) {
         this(health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setContenu(this);
@@ -77,7 +78,7 @@ public abstract class Personne {
     public abstract Personne personneNouvelle(Equipe team, Case position);
 
     public void attaquer(Personne p) {
-        double damageMultiplier = damage / (damage + armor/5);
+        double damageMultiplier = damage / (damage + armor / 5);
         double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
             p.setHealth(p.getHealth() - totalDamage);
@@ -85,9 +86,10 @@ public abstract class Personne {
         if (p.getHealth() <= 0) {
             System.out.println(p.getName() + " est mort !");
             personnages.remove(p);
-            this.team.getTeam().remove(p);
+            p.team.getTeam().remove(p);
             morts.add(p);
-            // Voir si on peut le mettre dans une liste de morts (pour les compter) ou juste les supprimer d'une liste des Personnes sur le plateau.
+            // Voir si on peut le mettre dans une liste de morts (pour les compter) ou juste
+            // les supprimer d'une liste des Personnes sur le plateau.
         }
     }
 
@@ -95,17 +97,31 @@ public abstract class Personne {
         this.position = c;
     }
 
-    /*public void déplacer(Case[] c) {
-        //this.position = c;
-    }*/
+    /*
+     * public void déplacer(Case[] c) { //this.position = c; }
+     */
 
     public void action() {
-        if (position.pathToPerso(getOtherTeam()).size() <= range) {
-            attaquer(position.pathToPerso(getOtherTeam()).get(position.pathToPerso(getOtherTeam()).size()).getContenu().get(0));
+        ArrayList<Case> pathToEnnemy = position.pathToPerso(getOtherTeam());
+        System.out.println(pathToEnnemy.size());
+        if (pathToEnnemy.size() <= range) {
+            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+            System.out.println("je attaque");
         } else {
-            déplacer(position.pathToPerso(getOtherTeam()).get(0));
+            déplacer(pathToEnnemy.get(0));
+            System.out.println("je deplace");
         }
+        System.out.println(getHealth());
+        wait2(500000000);
+        
     }
+
+public void wait2(long nb) {
+    long i = 0;
+    for (long j = 0; j < nb; j++) {
+        i = j -i + 5;
+    }
+}
 
     public Group affichagePersonnageBarre(int i) {
         Group group = new Group();

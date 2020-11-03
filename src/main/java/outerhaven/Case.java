@@ -218,6 +218,7 @@ public class Case {
 
     public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth) {
         if (depth == 0) {
+            //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
             if (contenu.get(0).getTeam() == equipe) {
                 parcours.add(this);
                 return parcours;
@@ -230,6 +231,9 @@ public class Case {
             if (parcoursVoisin.size() == depth) {
                 parcoursEnfants.add(parcoursVoisin);
             }
+        }
+        if(parcoursEnfants.isEmpty()){
+            return parcours;
         }
         return parcoursEnfants.get(0);
     }
