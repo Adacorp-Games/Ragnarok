@@ -226,7 +226,7 @@ public class Case {
         ArrayList<ArrayList<Case>> parcoursEnfants = new ArrayList<ArrayList<Case>>();
         parcours.add(this);
         for (Case voisin : voisinsLibres(depth != 1)) {
-            ArrayList<Case> parcoursVoisin = voisin.pathToPersoAux(equipe, parcours, -1);
+            ArrayList<Case> parcoursVoisin = voisin.pathToPersoAux(equipe, parcours, depth-1);
             if (parcoursVoisin.size() == depth) {
                 parcoursEnfants.add(parcoursVoisin);
             }
