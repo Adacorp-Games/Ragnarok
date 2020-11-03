@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.effect.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,11 +15,10 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
 
-import static outerhaven.Plateau.personnages;
-import static outerhaven.Plateau.statusPartie;
+import static outerhaven.Plateau.*;
 
 public class Case {
-    private int id;
+    int[] coordonnee = new int[2];
     private double posX;
     private double posY;
     private Color couleur;
@@ -30,8 +30,9 @@ public class Case {
     public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("./Images/hexagon.png"));
     public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("./Images/hexagon2.png"));
 
-    public Case(int id) {
-        this.id = id;
+    public Case(int x, int y) {
+        coordonnee[0] = x;
+        coordonnee[1] = y;
         contenu = new ArrayList<Personne>();
         caseVoisines = new ArrayList<Case>();
         // this.posX = posX;
@@ -78,6 +79,7 @@ public class Case {
     public void interactionHex() {
         if (statusPartie != true) {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
+                System.out.println(caseVoisines.toString());
                 contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
                 affichagecontenu = contenu.get(0).affichagePersonnage();
                 contenu.get(0).afficherSanteEtNom();
@@ -128,7 +130,36 @@ public class Case {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Case{" + Arrays.toString(coordonnee) +
+                '}';
+    }
+
     public void trouverVoisin() {
+        for (Case c : listeCase) {
+            if((c.getCoordonnee()[1]==this.getCoordonnee()[1]-1 ||c.getCoordonnee()[1]==this.getCoordonnee()[1]+1)
+            && c.getCoordonnee()[0]== getCoordonnee()[0]) {
+                caseVoisines.add(c);
+            }
+            if((c.getCoordonnee()[0]==this.getCoordonnee()[0]-1 ||c.getCoordonnee()[0]==this.getCoordonnee()[0]+1)
+                    && c.getCoordonnee()[1]== getCoordonnee()[1]) {
+                caseVoisines.add(c);
+            }
+            if((c.getCoordonnee()[0]==this.getCoordonnee()[0]-1 && c.getCoordonnee()[1]==this.getCoordonnee()[1]+1)
+                    || (c.getCoordonnee()[0]== getCoordonnee()[0]+1 && c.getCoordonnee()[1]== getCoordonnee()[1]-1)) {
+                caseVoisines.add(c);
+            }
+        }
+
+
+        /*int[] premier = {this.coordonnee[0],this.coordonnee[0]+1};
+        int[] deuxieme = {this.coordonnee[0],this.coordonnee[0]+1};
+
+        caseVoisines.add(Platceau.donneCase.get(getCoordonnee()));
+
+        //int[] deuxieme = {this.coordonnee[0],this.coordonnee[0]-1};
+        caseVoisines.add(Plateau.donneCase.get(deuxieme));*/
 
     }
 
@@ -209,6 +240,11 @@ public class Case {
 
     // Getter et setter
 
+
+    public int[] getCoordonnee() {
+        return coordonnee;
+    }
+
     public double getPosX() {
         return posX;
     }
@@ -219,10 +255,6 @@ public class Case {
 
     public double getPosY() {
         return posY;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public void setPosY(double posY) {

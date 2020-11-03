@@ -18,10 +18,13 @@ import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Plateau {
     int aire;
     public static ArrayList<Personne> personnages = new ArrayList<>();
+    public static HashMap <int[],Case> donneCase = new HashMap<>();
+
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
     public static ArrayList<Equipe> listeEquipe = new ArrayList<>();
@@ -62,9 +65,10 @@ public class Plateau {
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     double posX = longeurMax/2 - (taille * (Math.sqrt(aire))/2) + j*taille;
-                    Case hexago = new Case(i);
+                    Case hexago = new Case(ligne, j-(ligne/2));
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
+                    donneCase.put(hexago.getCoordonnee(),hexago);
                     i++;
                 }
                     ligne++;
@@ -74,21 +78,22 @@ public class Plateau {
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
-                    Case hexago = new Case(i);
+                    Case hexago = new Case(ligne, j-ligne+(ligne/2));
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
+                    donneCase.put(hexago.getCoordonnee(),hexago);
                     i++;
                 }
                 ligne++;
             }
         }
-
         // Initialisation des cases voisines
         initVoisins();
 
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
         //group.getChildren().add(boutonEquipe());
+
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
