@@ -79,7 +79,6 @@ public class Case {
     public void interactionHex() {
         if (statusPartie != true) {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
-                System.out.println(caseVoisines.toString());
                 contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
                 affichagecontenu = contenu.get(0).affichagePersonnage();
                 contenu.get(0).afficherSanteEtNom();
@@ -151,16 +150,6 @@ public class Case {
                 caseVoisines.add(c);
             }
         }
-
-
-        /*int[] premier = {this.coordonnee[0],this.coordonnee[0]+1};
-        int[] deuxieme = {this.coordonnee[0],this.coordonnee[0]+1};
-
-        caseVoisines.add(Platceau.donneCase.get(getCoordonnee()));
-
-        //int[] deuxieme = {this.coordonnee[0],this.coordonnee[0]-1};
-        caseVoisines.add(Plateau.donneCase.get(deuxieme));*/
-
     }
 
     public ArrayList<Case> voisinsLibres(boolean lib) {

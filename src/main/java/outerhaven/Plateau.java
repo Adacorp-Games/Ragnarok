@@ -23,8 +23,6 @@ import java.util.HashMap;
 public class Plateau {
     int aire;
     public static ArrayList<Personne> personnages = new ArrayList<>();
-    public static HashMap <int[],Case> donneCase = new HashMap<>();
-
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
     public static ArrayList<Equipe> listeEquipe = new ArrayList<>();
@@ -64,11 +62,10 @@ public class Plateau {
                 double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/ 2) + ligne * taille - taille*ligne/4;
                 decalage = true;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
-                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire))/2) + j*taille;
+                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
                     Case hexago = new Case(ligne, j-(ligne/2));
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
-                    donneCase.put(hexago.getCoordonnee(),hexago);
                     i++;
                 }
                     ligne++;
@@ -77,11 +74,10 @@ public class Plateau {
                 double posY = largeurMax / 2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
-                    double posX =longeurMax/2 - (taille*(Math.sqrt(aire))/2)+ j*taille - taille/2 ;
+                    double posX = longeurMax / 2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille / 2;
                     Case hexago = new Case(ligne, j-ligne+(ligne/2));
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
-                    donneCase.put(hexago.getCoordonnee(),hexago);
                     i++;
                 }
                 ligne++;
@@ -92,7 +88,6 @@ public class Plateau {
 
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
-        //group.getChildren().add(boutonEquipe());
 
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
