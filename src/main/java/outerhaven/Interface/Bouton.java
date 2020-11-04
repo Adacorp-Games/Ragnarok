@@ -18,7 +18,7 @@ public class Bouton {
         button.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         button.setOnMouseEntered(mouseEvent -> {
             if (button.getEffect() == null) {
-                button.setEffect(innerShadowOrange);
+                button.setEffect(innerShadowBlack);
             }
         });
         button.setOnMouseExited(mouseEvent -> {
