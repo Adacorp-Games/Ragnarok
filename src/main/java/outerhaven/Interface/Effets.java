@@ -8,6 +8,7 @@ public class Effets {
     public InnerShadow putInnerShadow(Color couleur) {
         InnerShadow shadow = new InnerShadow();
         shadow.setColor(couleur);
+        shadow.setHeight(30);
         return shadow;
     }
 }

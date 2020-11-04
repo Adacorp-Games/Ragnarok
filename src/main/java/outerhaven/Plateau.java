@@ -14,6 +14,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import outerhaven.Interface.BarrePersonnage;
+import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
@@ -97,7 +98,7 @@ public class Plateau {
         start.setLayoutX((longeurMax-700)/2);
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
-        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 50");
+        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
         start.setOnMouseEntered(mouseEvent -> {
             start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
         });
@@ -107,12 +108,12 @@ public class Plateau {
 
         Text infoNB = new Text("Entrez le nombre de cases du plateau :");
         infoNB.setLayoutX((longeurMax-700)/2);
-        infoNB.setLayoutY((largeurMax-300)/2);
+        infoNB.setLayoutY((largeurMax-300)/2-20);
 
         TextField nbCase = new TextField();
         nbCase.setLayoutX((longeurMax-700)/2);
-        nbCase.setLayoutY((largeurMax-280)/2);
-        nbCase.setMinSize(100,20);
+        nbCase.setLayoutY((largeurMax-280)/2-20);
+        nbCase.setMinSize(100,50);
         nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         start.setOnMouseClicked(mouseEvent -> {
             aire = getIntFromTextField(nbCase);
@@ -152,21 +153,17 @@ public class Plateau {
     }
 
     private Button boutonExit() {
-        Button exit = new Button("Quitter");
-        exit.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Button exit = new Bouton().creerBouton("Quitter");
         exit.setLayoutX(10);
-        exit.setLayoutY(125);
-        exit.setMinSize(60,20);
+        exit.setLayoutY(190);
         exit.setOnMouseClicked(mouseEvent -> primary.close());
         return exit;
     }
 
     private Button boutonReset() {
-        Button reset = new Button("Nouvelle grille");
-        reset.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Button reset = new Bouton().creerBouton("Nouvelle grille");
         reset.setLayoutX(10);
-        reset.setLayoutY(90);
-        reset.setMinSize(60,20);
+        reset.setLayoutY(130);
         reset.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
             personnages.clear();
@@ -179,11 +176,9 @@ public class Plateau {
     }
 
     private Button boutonReStart() {
-        Button reStrat = new Button("Restart");
-        reStrat.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Button reStrat = new Bouton().creerBouton("Restart");
         reStrat.setLayoutX(10);
-        reStrat.setLayoutY(55);
-        reStrat.setMinSize(60,20);
+        reStrat.setLayoutY(70);
         reStrat.setOnMouseClicked(mouseEvent -> {
             group.getChildren().remove(0,group.getChildren().size());
             personnages.clear();
@@ -201,12 +196,10 @@ public class Plateau {
         Label labelPause = new Label("");
         labelPause.setText("La partie est en pause");
         labelPause.setLayoutY(650);
-        Button pause = new Button("Pause");
-        Button play = new Button("Jouer");
-        play.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        play.setLayoutX(75);
-        play.setLayoutY(20);
-        play.setMinSize(60,20);
+        Button pause = new Bouton().creerBouton("Pause");
+        Button play = new Bouton().creerBouton("Play");
+        play.setLayoutX(120);
+        play.setLayoutY(10);
         play.setOnMouseClicked(mouseEvent -> {
             //labelPlay.setText("La partie reprend");
             if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()) {
@@ -247,10 +240,8 @@ public class Plateau {
             }
         });
 
-        pause.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        pause.setLayoutX(75);
-        pause.setLayoutY(20);
-        pause.setMinSize(60,20);
+        pause.setLayoutX(120);
+        pause.setLayoutY(10);
         pause.setOnMouseClicked(mouseEvent -> {
             group.getChildren().add(labelPause);
             group.getChildren().remove(pause);
@@ -267,11 +258,9 @@ public class Plateau {
     }
 
     private void ajouteLeMenu() {
-        Button menu = new Button("Menu");
-        menu.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Button menu = new Bouton().creerBouton("Menu");
         menu.setLayoutX(10);
-        menu.setLayoutY(20);
-        menu.setMinSize(60,20);
+        menu.setLayoutY(10);
         Button exit = boutonExit();
         Button reset = boutonReset();
         Button reStart = boutonReStart();
@@ -300,11 +289,9 @@ public class Plateau {
     }
 
     private Button afficheBarVie() {
-        Button barVie = new Button("Afficher barres de vie");
-        barVie.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        barVie.setLayoutX(1700);
-        barVie.setLayoutY(20);
-        barVie.setMinSize(60, 40);
+        Button barVie = new Bouton().creerBouton("Afficher barres de vie");
+        barVie.setLayoutX(longeurMax - 150);
+        barVie.setLayoutY(10);
         barVie.setOnMouseClicked(mouseEvent -> {
             if (!personnages.isEmpty()){
                 Personne.barreVisible = !Personne.barreVisible;

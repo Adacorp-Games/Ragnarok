@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class BarrePersonnage {
 
     private Group group = new Group();
-    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    ArrayList<Personne> listClasse = new ArrayList<>();
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    private ArrayList<Personne> listClasse = new ArrayList<>();
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
@@ -55,27 +55,43 @@ public class BarrePersonnage {
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
     private Group boutonEquipe() {
         Button equipe1 = new Button("Equipe 1");
-        equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe1.setLayoutX(10);
-        equipe1.setLayoutY(800);
-        equipe1.setMinSize(60, 20);
+        equipe1.setLayoutY(780);
+        equipe1.setMinSize(100, 50);
 
         Button equipe2 = new Button("Equipe 2");
-        equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        equipe2.setLayoutX(80);
-        equipe2.setLayoutY(800);
-        equipe2.setMinSize(60, 20);
+        equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
+        equipe2.setLayoutX(120);
+        equipe2.setLayoutY(780);
+        equipe2.setMinSize(100, 50);
 
         // Actions sur les boutons d'équipes
         equipe1.setOnMouseClicked(mouseEvent -> {
             Plateau.incorporeEquipe(Plateau.getE1());
-            equipe1.setEffect(new Effets().putInnerShadow(Plateau.getE1().getCouleur()));
+            equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
+        });
+        equipe1.setOnMouseEntered(mouseEvent -> {
+            equipe1.setEffect(Bouton.effectE1);
+        });
+        equipe1.setOnMouseExited(mouseEvent -> {
+            if (equipe1.getEffect() == Bouton.effectE1 && equipeSelectionné != Plateau.getE1()) {
+                equipe1.setEffect(null);
+            }
         });
         equipe2.setOnMouseClicked(mouseEvent -> {
             Plateau.incorporeEquipe(Plateau.getE2());
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
+        });
+        equipe2.setOnMouseEntered(mouseEvent -> {
+            equipe2.setEffect(Bouton.effectE2);
+        });
+        equipe2.setOnMouseExited(mouseEvent -> {
+            if (equipe2.getEffect() == Bouton.effectE2 && equipeSelectionné != Plateau.getE2()) {
+                equipe2.setEffect(null);
+            }
         });
 
         Group groupEquipeButton = new Group();
