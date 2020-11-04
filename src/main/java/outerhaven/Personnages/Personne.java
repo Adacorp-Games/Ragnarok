@@ -215,11 +215,11 @@ public abstract class Personne {
 
         // Affichage des case voisines en fonction de la portée de déplacement
         person.setOnMouseEntered((mouseEvent) -> {
-            position.afficherCaseVoisines(range, true);
+            position.afficherCaseVoisines(speed, true);
         });
 
         person.setOnMouseExited((mouseEvent) -> {
-            position.afficherCaseVoisines(range, false);
+            position.afficherCaseVoisines(speed, false);
         });
 
         //}
