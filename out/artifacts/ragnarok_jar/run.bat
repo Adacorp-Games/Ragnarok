@@ -1,1 +1,0 @@
-java --module-path "C:\javafx-sdk-15\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -jar ragnarok.jar
