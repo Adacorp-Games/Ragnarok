@@ -5,6 +5,7 @@ import javafx.scene.effect.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -220,26 +221,26 @@ public class Case {
         return shorterPath;
     }
 
-    public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth) {
-        if (depth == 0) {
-            //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
-            if (contenu.get(0).getTeam() == equipe) {
+    public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
+            if (depth == 0) {
+                //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
+                if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
+                    parcours.add(this);
+                    return parcours;
+                } else {
+                    return new ArrayList<>();
+                }
+            } else {
                 parcours.add(this);
-                return parcours;
+                for (int i = 0; i < caseVoisines.size() - 1; i++) {
+                    if (!parcours.contains(caseVoisines.get(i))) {
+                        if (caseVoisines.get(i) != null && caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth).size() == initialdepth + 1) {
+                            return caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth);
+                        }
+                    }
+                }
+                return new ArrayList<>();
             }
-        }
-        ArrayList<ArrayList<Case>> parcoursEnfants = new ArrayList<ArrayList<Case>>();
-        parcours.add(this);
-        for (Case voisin : voisinsLibres(depth != 1)) {
-            ArrayList<Case> parcoursVoisin = voisin.pathToPersoAux(equipe, parcours, depth-1);
-            if (parcoursVoisin.size() == depth) {
-                parcoursEnfants.add(parcoursVoisin);
-            }
-        }
-        if(parcoursEnfants.isEmpty()){
-            return parcours;
-        }
-        return parcoursEnfants.get(0);
     }
 
     // Necessite que le plateau contienne au moins un personnage de l'equipe visee en dehors de this
@@ -247,7 +248,7 @@ public class Case {
         ArrayList<Case> parcours = new ArrayList<Case>();
         int depth = 1;
         while (parcours.isEmpty()) {
-            parcours = pathToPersoAux(e, new ArrayList<Case>(), depth);
+            parcours = pathToPersoAux(e, new ArrayList<Case>(), depth, depth);
             depth++;
         }
         return parcours;

@@ -18,6 +18,8 @@ import outerhaven.Interface.Effets;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import static outerhaven.Plateau.*;
@@ -85,11 +87,8 @@ public abstract class Personne {
         }
         if (p.getHealth() <= 0) {
             System.out.println(p.getName() + " est mort !");
-            personnages.remove(p);
-            p.team.getTeam().remove(p);
-            morts.add(p);
-            // Voir si on peut le mettre dans une liste de morts (pour les compter) ou juste
-            // les supprimer d'une liste des Personnes sur le plateau.
+
+            this.selfDelete();
         }
     }
 
@@ -102,17 +101,22 @@ public abstract class Personne {
      */
 
     public void action() {
-        ArrayList<Case> pathToEnnemy = position.pathToPerso(getOtherTeam());
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + pathToEnnemy.size());
-        if (pathToEnnemy.size() <= range) {
+
+        ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
+
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size()-1));
+
+        if (pathToEnnemy.size()-1 <= range) {
             attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+
             System.out.println(this.getName() + " attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName());
         } else {
-            déplacer(pathToEnnemy.get(0));
+            déplacer(pathToEnnemy.get(speed));
+
             System.out.println(this.getName() + " se déplace");
         }
+
         System.out.println("Vie restante de la cible " + getHealth());
-        waitTEST(500000000);
         
     }
 
@@ -359,10 +363,10 @@ public abstract class Personne {
     }
 
     public Equipe getOtherTeam() {
-        if (listeEquipe.get(0) == this.team) {
-            return listeEquipe.get(1);
+        if (e1.equals(this.team)) {
+            return e2;
         } else {
-            return listeEquipe.get(0);
+            return e1;
         }
     }
 

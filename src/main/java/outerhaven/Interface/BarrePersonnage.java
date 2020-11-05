@@ -1,8 +1,6 @@
 package outerhaven.Interface;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
@@ -25,10 +23,9 @@ public class BarrePersonnage {
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
-
         listClasse.add(new Guerrier());
         listClasse.add(new Archer());
-        //listClasse.add(new Mage());
+        listClasse.add(new Mage());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }

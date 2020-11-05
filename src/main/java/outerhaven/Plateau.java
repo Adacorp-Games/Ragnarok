@@ -26,7 +26,6 @@ public class Plateau {
     public static ArrayList<Personne> personnages = new ArrayList<>();
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
-    public static ArrayList<Equipe> listeEquipe = new ArrayList<>();
     private static Stage primary;
     public static Double taille;
     public static Personne personneSelectionné;
@@ -135,8 +134,6 @@ public class Plateau {
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
 
-        listeEquipe.add(e1);
-        listeEquipe.add(e2);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(start);
@@ -148,8 +145,8 @@ public class Plateau {
         return Integer.parseInt(text);
     }
 
-    public static void incorporeEquipe(Equipe e1) {
-        equipeSelectionné = e1;
+    public static void incorporeEquipe(Equipe equipe) {
+        equipeSelectionné = equipe;
     }
 
     private Button boutonExit() {
@@ -169,7 +166,6 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
-            listeEquipe.clear();
             this.lancerPartie();
         });
         return reset;
@@ -184,7 +180,6 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
-            listeEquipe.clear();
             lancerScenePlateau();
         });
         return reStrat;
@@ -307,10 +302,11 @@ public class Plateau {
     }
 
     public void tour() {
-        while (e1.getTeam().size() != 0 || e2.getTeam().size() != 0 || statusPartie) {
+        while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
             for (Personne p : personnages) {
                 p.action();
             }
+            statusPartie=false;
         }
     }
 
