@@ -304,9 +304,18 @@ public class Plateau {
     public void tour() {
         while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
             for (Personne p : personnages) {
-                p.action();
+                if (!morts.contains(p)) {
+                    p.action();
+                }
             }
-            statusPartie=false;
+            for (Personne p : morts) {
+                p.selfDelete();
+            }
+            System.out.println("Nombre de morts durant ce tour : " + morts.size());
+            System.out.println("Taille équipe 1 : " + e1.getTeam().size());
+            System.out.println("Taille équipe 2 : " + e2.getTeam().size());
+            morts.clear();
+            statusPartie = false;
         }
     }
 

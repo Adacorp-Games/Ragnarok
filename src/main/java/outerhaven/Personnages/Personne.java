@@ -87,8 +87,8 @@ public abstract class Personne {
         }
         if (p.getHealth() <= 0) {
             System.out.println(p.getName() + " est mort !");
-
-            this.selfDelete();
+            morts.add(p);
+            //p.selfDelete();
         }
     }
 
@@ -103,21 +103,15 @@ public abstract class Personne {
     public void action() {
 
         ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
-
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size()-1));
-
-        if (pathToEnnemy.size()-1 <= range) {
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+        if (pathToEnnemy.size() - 1 <= range) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
             attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-
-            System.out.println(this.getName() + " attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName());
         } else {
             déplacer(pathToEnnemy.get(speed));
-
             System.out.println(this.getName() + " se déplace");
         }
-
-        System.out.println("Vie restante de la cible " + getHealth());
-        
+        // System.out.println("Vie restante de la cible " + getHealth());
     }
 
     public void waitTEST(long nb) {
@@ -214,7 +208,9 @@ public abstract class Personne {
         group.getChildren().add(person);
         //if (Plateau.getStatusPartie() != false) {
         person.setOnMouseClicked((mouseEvent) -> {
-            selfDelete();
+            if (!statusPartie) {
+                selfDelete();
+            }
         });
 
         // Affichage des case voisines en fonction de la portée de déplacement
@@ -247,7 +243,7 @@ public abstract class Personne {
     }
 
     public void selfDelete() {
-        position.seVider();
+        this.position.seVider();
     }
 
     public Group afficherSante() {

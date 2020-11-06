@@ -192,35 +192,6 @@ public class Case {
         return libres;
     }
 
-    @Deprecated
-    public ArrayList<Case> pathToPerso(Personne p, ArrayList<Case> parcours) {
-        parcours.add(this);
-        if (contenu.contains(p)) {
-            return parcours;
-        }
-        ArrayList<Case> aParcourir = new ArrayList<Case>();
-        for (Case case1 : voisinsLibres(true)) {
-            if (!parcours.contains(case1)) {
-                aParcourir.add(case1);
-            }
-        }
-        ArrayList<ArrayList<Case>> cheminsEnfants = new ArrayList<ArrayList<Case>>();
-        for (Case case1 : aParcourir) {
-            cheminsEnfants.add(case1.pathToPerso(p, parcours));
-        }
-        ArrayList<Case> shorterPath = new ArrayList<Case>();
-        for (ArrayList<Case> path : cheminsEnfants) {
-            if (shorterPath.size() == 0) {
-                shorterPath = path;
-            } else {
-                if (path.size() < shorterPath.size()) {
-                    shorterPath = path;
-                }
-            }
-        }
-        return shorterPath;
-    }
-
     public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
             if (depth == 0) {
                 //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
