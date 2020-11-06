@@ -19,6 +19,7 @@ import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Plateau {
@@ -27,7 +28,7 @@ public class Plateau {
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
-    public static Double taille;
+    public static double taille;
     public static Personne personneSelectionné;
     public static Equipe equipeSelectionné;
     public static Group group = new Group();
@@ -35,9 +36,11 @@ public class Plateau {
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean statusPartie = false;
+    private static boolean stoptimeline = true;
     public static BarrePersonnage barre = new BarrePersonnage();
     public static Equipe e1 = new Equipe(Color.RED);
     public static Equipe e2 = new Equipe(Color.BLUE);
+    public static Case[][]  tableauCase  ;
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -52,6 +55,7 @@ public class Plateau {
     public void lancerScenePlateau() {
 
         taille = 1000/Math.sqrt(aire);
+        tableauCase = new Case[(int)taille][(int)taille];
         boolean decalage = false;
         int i = 0;
         int ligne = 0;
@@ -63,6 +67,7 @@ public class Plateau {
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     double posX = longeurMax/2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
                     Case hexago = new Case(ligne, j-(ligne/2));
+                    tableauCase[ligne][j]=hexago;
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
                     i++;
@@ -75,6 +80,7 @@ public class Plateau {
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     double posX = longeurMax / 2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille / 2;
                     Case hexago = new Case(ligne, j-ligne+(ligne/2));
+                    tableauCase[ligne][j]=hexago;
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
                     i++;
@@ -166,7 +172,10 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
+            setStatusPartie(false);
+            scene.setFill(Color.WHITE);
             this.lancerPartie();
+
         });
         return reset;
     }
@@ -180,6 +189,8 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
+            setStatusPartie(false);
+            scene.setFill(Color.WHITE);
             lancerScenePlateau();
         });
         return reStrat;
@@ -302,7 +313,13 @@ public class Plateau {
     }
 
     public void tour() {
-        while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
+        while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie && stoptimeline) {
+            if ( Personne.barreVisible && !personnages.isEmpty()) {
+                for (int i = 0; i < personnages.size(); i++) {
+                    personnages.get(i).afficherSanteEtNom();
+                }
+            }
+            //Collections.shuffle(personnages);
             for (Personne p : personnages) {
                 if (!morts.contains(p)) {
                     p.action();
@@ -315,7 +332,12 @@ public class Plateau {
             System.out.println("Taille équipe 1 : " + e1.getTeam().size());
             System.out.println("Taille équipe 2 : " + e2.getTeam().size());
             morts.clear();
-            statusPartie = false;
+            stoptimeline=false;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), ev -> {
+                stoptimeline=true;
+               tour();
+            }));
+            timeline.play();
         }
     }
 

@@ -205,28 +205,30 @@ public class Case {
     }
 
     public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
-            if (depth == 0) {
-                //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
-                if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
-                    parcours.add(this);
-                    return parcours;
-                } else {
-                    return new ArrayList<>();
-                }
-            } else {
+        if (depth == 0) {
+            //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
+            if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
                 parcours.add(this);
-                for (int i = 0; i < caseVoisines.size() - 1; i++) {
-                    if (!parcours.contains(caseVoisines.get(i))) {
-                        if (caseVoisines.get(i) != null && caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth).size() == initialdepth + 1) {
-                            return caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth);
-                        }
-                    }
-                }
+                return parcours;
+            } else {
                 return new ArrayList<>();
             }
+        } else {
+            parcours.add(this);
+            for (int i = 0; i < caseVoisines.size() - 1; i++) {
+                if (!parcours.contains(caseVoisines.get(i)) && (caseVoisines.get(i).contenu.isEmpty() || caseVoisines.get(i).contenu.get(0).getTeam() == equipe )) {
+
+                    if (caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth).size() == initialdepth + 1) {
+                        return caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth);
+                    }
+                }
+            }
+            return new ArrayList<>();
+        }
     }
 
     // Necessite que le plateau contienne au moins un personnage de l'equipe visee en dehors de this
+
     public ArrayList<Case> pathToPerso(Equipe e) {
         ArrayList<Case> parcours = new ArrayList<Case>();
         int depth = 1;
@@ -236,6 +238,63 @@ public class Case {
         }
         return parcours;
     }
+
+    public ArrayList<Case> pathToPerso2(Equipe e) {
+        int depth = 100000;
+        Personne Leplusprocche = null;
+        for (int i = 0; i < personnages.size(); i++) {
+            int x = (personnages.get(i).getPosition().getCoordonnee()[0]- getCoordonnee()[0]);
+            int y = (personnages.get(i).getPosition().getCoordonnee()[1]- getCoordonnee()[1]);
+            double norme = Math.sqrt(x*x+y*y);
+            if(norme<depth && personnages.get(i).getTeam()==e){
+                depth = (int)norme;
+                Leplusprocche=personnages.get(i);
+            }
+        }
+        return pathToPersoAux2(Leplusprocche);
+    }
+    public ArrayList<Case> pathToPersoAux2(Personne personne){
+        ArrayList<Case> chemin= new ArrayList<>();
+        boolean decalage=false;
+        int x = (personne.getPosition().getCoordonnee()[0]- getCoordonnee()[0]);
+        int y = (personne.getPosition().getCoordonnee()[1]- getCoordonnee()[1]);
+        int xIncr=0;
+        int yIncr=0;
+        while(x!=xIncr && y!=yIncr){
+            if(!decalage && x<0){
+                chemin.add(tableauCase[personne.getPosition().getCoordonnee()[0]+1][personne.getPosition().donneYpourTab()]);
+                x=x+1;
+                decalage=true;
+            }
+            if(!decalage && x>0){
+                chemin.add(tableauCase[personne.getPosition().getCoordonnee()[0]][personne.getPosition().donneYpourTab()]);
+                x=x-1;
+                decalage=true;
+            }
+            else if(!decalage && x==xIncr){
+                decalage=true;
+            }
+            if(decalage && y<0){
+                chemin.add(tableauCase[personne.getPosition().getCoordonnee()[0]][personne.getPosition().donneYpourTab()]);
+                decalage=false;
+            }
+            else if(decalage && y==yIncr){
+                decalage=false;
+            }
+
+        }
+        return chemin;
+    }
+
+    private int donneYpourTab(){
+        if(coordonnee[0]%2==0) {
+            return coordonnee[1] - coordonnee[0]/2 ;
+        }
+        else{
+            return coordonnee[1]-coordonnee[0]+(coordonnee[0]/2);
+        }
+    }
+
 
     // Getter et setter
 

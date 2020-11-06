@@ -84,11 +84,10 @@ public abstract class Personne {
         double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
             p.setHealth(p.getHealth() - totalDamage);
-        }
-        if (p.getHealth() <= 0) {
-            System.out.println(p.getName() + " est mort !");
-            morts.add(p);
-            //p.selfDelete();
+            if (p.getHealth() <= 0) {
+                System.out.println(p.getName() + " est mort !");
+                morts.add(p);
+            }
         }
     }
 
@@ -97,6 +96,9 @@ public abstract class Personne {
         this.position = c;
         c.rentrePersonnage(this);
         casePrecedente.seVider();
+        if(Personne.barreVisible){
+            this.afficherSanteEtNom();
+        }
 
     }
 
@@ -232,9 +234,11 @@ public abstract class Personne {
     }
 
     public void afficherSanteEtNom() {
+        SanteNom.getChildren().clear();
         SanteNom.getChildren().addAll(afficherSante(),afficherNom());
-        if (barreVisible && !group.getChildren().contains(SanteNom)) {
-                    group.getChildren().add(SanteNom);
+        if (barreVisible) {
+            supprimerSanteEtNom();
+            group.getChildren().add(SanteNom);
         }
         else if(!barreVisible && group.getChildren().contains(SanteNom)) {
             supprimerSanteEtNom();
@@ -248,7 +252,9 @@ public abstract class Personne {
 
     public void selfDelete() {
         this.position.seVider();
+        SanteNom.getChildren().clear();
         this.getTeam().getTeam().remove(this);
+        personnages.remove(this);
     }
 
     public Group afficherSante() {
