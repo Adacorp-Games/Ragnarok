@@ -93,7 +93,11 @@ public abstract class Personne {
     }
 
     public void déplacer(Case c) {
+        Case casePrecedente = this.position;
         this.position = c;
+        c.rentrePersonnage(this);
+        casePrecedente.seVider();
+
     }
 
     /*
@@ -244,6 +248,7 @@ public abstract class Personne {
 
     public void selfDelete() {
         this.position.seVider();
+        this.getTeam().getTeam().remove(this);
     }
 
     public Group afficherSante() {

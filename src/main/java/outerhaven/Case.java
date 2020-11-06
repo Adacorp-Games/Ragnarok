@@ -65,16 +65,28 @@ public class Case {
 
     public void seVider() {
         if (contenu.size() > 0) {
-            personnages.remove(contenu.get(0));
+            if(!statusPartie){
+                personnages.remove(contenu.get(0));
+                contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
+            }
             contenu.get(0).supprimerSanteEtNom();
-            contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
             contenu.remove(0);
             Plateau.group.getChildren().remove(affichagecontenu);
             hexagone.setEffect(null);
         }
 
     }
-
+    public void rentrePersonnage(Personne personne){
+        if(!estOccupe()){
+            contenu.add(personne);
+            affichagecontenu = contenu.get(0).affichagePersonnage();
+            contenu.get(0).afficherSanteEtNom();
+            Plateau.group.getChildren().add(affichagecontenu);
+            InnerShadow ombre = new InnerShadow();
+            ombre.colorProperty().setValue(contenu.get(0).getTeam().getCouleur());
+            hexagone.setEffect(ombre);
+        }
+    }
     public void interactionHex() {
         if (statusPartie != true) {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
