@@ -86,7 +86,6 @@ public abstract class Personne {
             p.setHealth(p.getHealth() - totalDamage);
             if (p.getHealth() <= 0) {
                 System.out.println(p.getName() + " est mort !");
-                morts.add(p);
             }
         }
     }
@@ -96,10 +95,9 @@ public abstract class Personne {
         this.position = c;
         c.rentrePersonnage(this);
         casePrecedente.seVider();
-        if(Personne.barreVisible){
+        if (Personne.barreVisible) {
             this.afficherSanteEtNom();
         }
-
     }
 
     /*
@@ -107,17 +105,25 @@ public abstract class Personne {
      */
 
     public void action() {
-
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (pathToEnnemy.size() - 1 <= range) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
+        if (this.position.nbVoisinsLibres() == 0) {
+            System.out.println(this.getName() + " patiente");
         } else {
-            déplacer(pathToEnnemy.get(speed));
-            System.out.println(this.getName() + " se déplace");
+            if (position.pathToPerso(getOtherTeam()).size() == 0) {
+                System.out.println(this.getName() + " patiente");
+            } else {
+                ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
+                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+                if (pathToEnnemy.size() - 1 <= range) {
+                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+                } else {
+                    System.out.println(this.getName() + " se déplace");
+                    déplacer(pathToEnnemy.get(speed));
+                }
+                // System.out.println("Vie restante de la cible " + getHealth());
+            }
         }
-        // System.out.println("Vie restante de la cible " + getHealth());
     }
 
     public void waitTEST(long nb) {
@@ -132,8 +138,8 @@ public abstract class Personne {
         ImageView imageperson = new ImageView(this.getImageFace());
         imageperson.setFitHeight(130);
         imageperson.setFitWidth(100);
-        imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight()-160);
-        imageperson.setX(200+i*(imageperson.getFitWidth()+50));
+        imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
+        imageperson.setX(200 + i * (imageperson.getFitWidth() + 50));
         imageperson.setOnMouseEntered((mouseEvent) -> {
             group.getChildren().add(this.afficherInfo(imageperson.getX(),imageperson.getY()));
         });
@@ -141,13 +147,12 @@ public abstract class Personne {
             group.getChildren().remove(1);
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
-            if(Plateau.personneSelectionné==null) {
+            if(Plateau.personneSelectionné == null) {
                 Plateau.scene.setCursor(new ImageCursor(getImageFace()));
-                Plateau.personneSelectionné=this;
-            }
-            else{
+                Plateau.personneSelectionné = this;
+            } else {
                 Plateau.scene.setCursor(Cursor.DEFAULT);
-                Plateau.personneSelectionné=null;
+                Plateau.personneSelectionné = null;
             }
         });
         group.getChildren().add(imageperson);
@@ -379,5 +384,10 @@ public abstract class Personne {
 
     public Image getImageFace() {
         return new Image(Personne.class.getResourceAsStream("../Images/inconnu.png"));
+    }
+
+    @Override
+    public String toString() {
+        return this.getName() + " : " + this.getHealth() + "\n";
     }
 }

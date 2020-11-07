@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -32,7 +33,7 @@ public class Plateau {
     public static Personne personneSelectionné;
     public static Equipe equipeSelectionné;
     public static Group group = new Group();
-    public static Scene scene = new Scene(group);;
+    public static Scene scene = new Scene(group);
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean statusPartie = false;
@@ -40,7 +41,7 @@ public class Plateau {
     public static BarrePersonnage barre = new BarrePersonnage();
     public static Equipe e1 = new Equipe(Color.RED);
     public static Equipe e2 = new Equipe(Color.BLUE);
-    public static Case[][]  tableauCase  ;
+    public static Case[][] tableauCase;
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -93,6 +94,9 @@ public class Plateau {
 
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
+
+        // Afficher les infos des équipes (pas au point encore)
+        //group.getChildren().add(afficherInfosEquipes());
 
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
@@ -204,7 +208,7 @@ public class Plateau {
         labelPause.setLayoutY(650);
         Button pause = new Bouton().creerBouton("Pause");
         Button play = new Bouton().creerBouton("Play");
-        play.setLayoutX(120);
+        play.setLayoutX(140);
         play.setLayoutY(10);
         play.setOnMouseClicked(mouseEvent -> {
             //labelPlay.setText("La partie reprend");
@@ -246,7 +250,7 @@ public class Plateau {
             }
         });
 
-        pause.setLayoutX(120);
+        pause.setLayoutX(140);
         pause.setLayoutY(10);
         pause.setOnMouseClicked(mouseEvent -> {
             group.getChildren().add(labelPause);
@@ -306,36 +310,36 @@ public class Plateau {
                 }
             }
         });
-
         group.getChildren().add(barVie);
-
         return barVie;
     }
 
     public void tour() {
         while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie && stoptimeline) {
-            if ( Personne.barreVisible && !personnages.isEmpty()) {
+            if (Personne.barreVisible && !personnages.isEmpty()) {
                 for (int i = 0; i < personnages.size(); i++) {
                     personnages.get(i).afficherSanteEtNom();
                 }
             }
-            //Collections.shuffle(personnages);
             for (Personne p : personnages) {
+                if (p.getHealth() <= 0) {
+                    morts.add(p);
+                }
                 if (!morts.contains(p)) {
                     p.action();
                 }
             }
+            //Collections.shuffle(personnages);
             for (Personne p : morts) {
                 p.selfDelete();
             }
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
-            System.out.println("Taille équipe 1 : " + e1.getTeam().size());
-            System.out.println("Taille équipe 2 : " + e2.getTeam().size());
+            System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
             morts.clear();
-            stoptimeline=false;
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), ev -> {
-                stoptimeline=true;
-               tour();
+            stoptimeline = false;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ev -> {
+                stoptimeline = true;
+                tour();
             }));
             timeline.play();
         }
@@ -346,6 +350,29 @@ public class Plateau {
             c.trouverVoisin();
         }
     }
+
+    /*public static Group afficherInfosEquipes() {
+        Group description = new Group();
+        Rectangle barre = new Rectangle(200 , getE1().getTeam().size()*4 + getE2().getTeam().size()*4 + 200, Color.LIGHTGRAY);
+        barre.setX(10);
+        barre.setY(100);
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
+
+        Text title = new Text("Informations sur les équipes");
+        title.setX(barre.getX() + 10);
+        title.setY(barre.getY() + 10);
+        //title.setStyle("-fx-font-style: bold");
+
+        Text descrip = new Text(getE1().toString() + "\n" + getE2().toString());
+        descrip.setX(title.getX());
+        descrip.setY(title.getY() + 20);
+
+        description.getChildren().add(barre);
+        description.getChildren().add(title);
+        description.getChildren().add(descrip);
+        return description;
+    }*/
 
     // Getter et setter
     public static boolean getStatusPartie() {

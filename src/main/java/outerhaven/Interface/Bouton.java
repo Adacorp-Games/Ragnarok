@@ -14,7 +14,7 @@ public class Bouton {
     // Pour faire des boutons spécialements conçus pour le projet et éviter la redondance
     public Button creerBouton(String texte) {
         Button button = new Button(texte);
-        button.setMinSize(100,50);
+        button.setMinSize(120,50);
         button.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         button.setOnMouseEntered(mouseEvent -> {
             if (button.getEffect() == null) {

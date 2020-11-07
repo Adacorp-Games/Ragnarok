@@ -8,11 +8,11 @@ import outerhaven.Equipe;
 public class Guerrier extends Personne {
 
     public Guerrier() {
-        super(200, 100, 100, 100, 1, 1);
+        super(200, 100, 100, 75, 1, 1);
     }
 
     public Guerrier(Equipe team, Case position) {
-        super(200, 100, 100, 100, 1, 1, team, position);
+        super(200, 100, 100, 75, 1, 1, team, position);
         this.getPosition().setContenu(this);
     }
 

@@ -65,7 +65,7 @@ public class Case {
 
     public void seVider() {
         if (contenu.size() > 0) {
-            if(!statusPartie){
+            if (!statusPartie) {
                 personnages.remove(contenu.get(0));
                 contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
             }
@@ -76,8 +76,9 @@ public class Case {
         }
 
     }
-    public void rentrePersonnage(Personne personne){
-        if(!estOccupe()){
+
+    public void rentrePersonnage(Personne personne) {
+        if (!estOccupe()) {
             contenu.add(personne);
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
@@ -87,6 +88,7 @@ public class Case {
             hexagone.setEffect(ombre);
         }
     }
+
     public void interactionHex() {
         if (statusPartie != true) {
             if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
@@ -97,12 +99,12 @@ public class Case {
                 InnerShadow ombre = new InnerShadow();
                 ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
                 hexagone.setEffect(ombre);
+                //group.getChildren().remove(afficherInfosEquipes());
+                //group.getChildren().add(afficherInfosEquipes());
                 //System.out.println(this.caseVoisines);
-            }
-            else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null &&  !contenu.isEmpty())) {
+            } else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null &&  !contenu.isEmpty())) {
                 seVider();
-            }
-            else {
+            } else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                 attention.setX(posX);
                 attention.setY(posY);
@@ -204,10 +206,23 @@ public class Case {
         return libres;
     }
 
+    public int nbVoisinsLibres() {
+        int i = 0;
+        for (Case c : caseVoisines) {
+            if (!c.estOccupe()) {
+                i++;
+            }
+        }
+        return i;
+    }
+
     public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
+        /*if (depth > listeCase.size()/2) {
+            return new ArrayList<>();
+        }*/
         if (depth == 0) {
-            //si this contient le perso de l'equipe voulue retourne le chemin jusqu'a lui
-            if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
+            // Si this contient le perso de l'equipe voulue retourne le chemin jusqu'à lui
+            if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe /*&& contenu.get(0).getHealth() > 0*/) {
                 parcours.add(this);
                 return parcours;
             } else {
@@ -216,8 +231,7 @@ public class Case {
         } else {
             parcours.add(this);
             for (int i = 0; i < caseVoisines.size() - 1; i++) {
-                if (!parcours.contains(caseVoisines.get(i)) && (caseVoisines.get(i).contenu.isEmpty() || caseVoisines.get(i).contenu.get(0).getTeam() == equipe )) {
-
+                if (!parcours.contains(caseVoisines.get(i)) && (caseVoisines.get(i).contenu.isEmpty() || caseVoisines.get(i).contenu.get(0).getTeam() == equipe)) {
                     if (caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth).size() == initialdepth + 1) {
                         return caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth);
                     }
@@ -228,7 +242,6 @@ public class Case {
     }
 
     // Necessite que le plateau contienne au moins un personnage de l'equipe visee en dehors de this
-
     public ArrayList<Case> pathToPerso(Equipe e) {
         ArrayList<Case> parcours = new ArrayList<Case>();
         int depth = 1;
@@ -253,6 +266,7 @@ public class Case {
         }
         return pathToPersoAux2(Leplusprocche);
     }
+
     public ArrayList<Case> pathToPersoAux2(Personne personne){
         ArrayList<Case> chemin= new ArrayList<>();
         boolean decalage=false;
@@ -281,20 +295,17 @@ public class Case {
             else if(decalage && y==yIncr){
                 decalage=false;
             }
-
         }
         return chemin;
     }
 
-    private int donneYpourTab(){
-        if(coordonnee[0]%2==0) {
+    private int donneYpourTab() {
+        if(coordonnee[0]%2 == 0) {
             return coordonnee[1] - coordonnee[0]/2 ;
-        }
-        else{
-            return coordonnee[1]-coordonnee[0]+(coordonnee[0]/2);
+        } else {
+            return coordonnee[1] - coordonnee[0] + (coordonnee[0]/2);
         }
     }
-
 
     // Getter et setter
 

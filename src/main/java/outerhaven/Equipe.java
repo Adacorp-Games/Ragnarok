@@ -25,6 +25,10 @@ public class Equipe {
 
     @Override
     public String toString() {
-        return "Equipe : " + "\n" + team;
+        String affichage = "Equipe : " + "\n";
+        for (Personne p : team) {
+            affichage += p.toString();
+        }
+        return affichage;
     }
 }
