@@ -90,6 +90,9 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <outputDirectory>Lancement</outputDirectory>            
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -145,6 +148,7 @@
                   <mainClass>outerhaven.SuperMain</mainClass>
                 </transformer>
               </transformers>
+              <outputDirectory>Lancement</outputDirectory>
             </configuration>
           </execution>
         </executions>
