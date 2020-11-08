@@ -33,6 +33,6 @@ public class Mage extends Personne {
 
     public Image getImageFace() {
         return new Image(Guerrier.class.getResourceAsStream("../Images/Mage.png"));
-        //return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
+        //return new Image("https://cdn.discordapp.com/attachments/513075072156827651/774392108248989706/tumblr_mepk78hspV1rgpyeqo1_400.gif");
     }
 }

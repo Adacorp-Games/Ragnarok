@@ -56,7 +56,7 @@ public class Plateau {
     public void lancerScenePlateau() {
 
         taille = 1000/Math.sqrt(aire);
-        tableauCase = new Case[(int)taille][(int)taille];
+        tableauCase = new Case[(int) Math.sqrt(aire)][(int) Math.sqrt(aire)+2];
         boolean decalage = false;
         int i = 0;
         int ligne = 0;
@@ -80,7 +80,7 @@ public class Plateau {
                 decalage = false;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
                     double posX = longeurMax / 2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille / 2;
-                    Case hexago = new Case(ligne, j-ligne+(ligne/2));
+                    Case hexago = new Case(ligne, j - ((ligne)/2+1));
                     tableauCase[ligne][j]=hexago;
                     group.getChildren().add(hexago.afficherCase(posX,posY,taille));
                     listeCase.add(hexago);
