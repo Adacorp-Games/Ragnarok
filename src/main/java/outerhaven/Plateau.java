@@ -130,7 +130,7 @@ public class Plateau {
         infoNB.setLayoutX((longeurMax-700)/2);
         infoNB.setLayoutY((largeurMax-300)/2-20);
 
-        Text infoArgent = new Text("Entrez la somme d'argent de départ pour chaque équipe :");
+        Text infoArgent = new Text("Entrez la limite d'argent pour chaque équipe : (vide = pas de limite)");
         infoArgent.setLayoutX((longeurMax-700)/2);
         infoArgent.setLayoutY((largeurMax-450)/2-20);
 
