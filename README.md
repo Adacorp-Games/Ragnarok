@@ -37,6 +37,6 @@ EN COURS ...
 - Diagramme de séquence d'un tour : Pas encore fait
 - Diagramme d'états-transition d'une personne : Fait
 
-### Phase 3 : Dévelloppement
+### Phase 3 : Développement
 
 EN COURS ...

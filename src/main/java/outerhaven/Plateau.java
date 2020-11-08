@@ -109,6 +109,7 @@ public class Plateau {
         System.out.println(getE2().getArgent());
 
         group.getChildren().add(boutonPausePlay());
+        //group.getChildren().add(barre.afficherArgentEquipes());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }

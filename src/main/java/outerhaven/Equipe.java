@@ -5,6 +5,8 @@ import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
+import static outerhaven.Plateau.barre;
+
 public class Equipe {
     private ArrayList<Personne> team;
     private Color couleur;
@@ -36,6 +38,7 @@ public class Equipe {
 
     public void setArgent(double argent) {
         this.argent = argent;
+        //barre.updateArgentEquipes();
     }
 
     public double getArgent() {

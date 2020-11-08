@@ -247,13 +247,13 @@ public abstract class Personne {
         if (barreVisible) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
-        }
-        else if(!barreVisible && group.getChildren().contains(SanteNom)) {
+        } else if(!barreVisible && group.getChildren().contains(SanteNom)) {
             supprimerSanteEtNom();
         }
     }
+
     public void supprimerSanteEtNom() {
-        if(group.getChildren().contains(SanteNom)) {
+        if (group.getChildren().contains(SanteNom)) {
             group.getChildren().remove(SanteNom);
         }
     }
