@@ -297,6 +297,15 @@ public class Case {
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         //System.out.println(xIncr +" "+ yIncr);
         if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
+            if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
+                for (int i = 0; i < caseVoisines.size() ; i++) {
+                    for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
+                        if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
+                            chemin.add(caseVoisines.get(i));
+                        }
+                    }
+                }
+            }
             chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr]);
         } else {
             for (int i = 0; i < caseVoisines.size() ; i++) {
