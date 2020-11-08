@@ -141,13 +141,13 @@ public abstract class Personne {
         imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
         imageperson.setX(200 + i * (imageperson.getFitWidth() + 50));
         imageperson.setOnMouseEntered((mouseEvent) -> {
-            group.getChildren().add(this.afficherInfo(imageperson.getX(),imageperson.getY()));
+            group.getChildren().add(this.afficherInfo(imageperson.getX(), imageperson.getY()));
         });
         imageperson.setOnMouseExited((mouseEvent) -> {
             group.getChildren().remove(1);
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
-            if(Plateau.personneSelectionné == null) {
+            if (Plateau.personneSelectionné == null) {
                 Plateau.scene.setCursor(new ImageCursor(getImageFace()));
                 Plateau.personneSelectionné = this;
             } else {

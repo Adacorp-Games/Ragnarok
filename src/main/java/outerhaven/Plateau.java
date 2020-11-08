@@ -2,6 +2,7 @@ package outerhaven;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -98,6 +99,7 @@ public class Plateau {
         // Afficher les infos des équipes (pas au point encore)
         //group.getChildren().add(afficherInfosEquipes());
 
+        group.getChildren().add(boutonPausePlay());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
@@ -200,7 +202,8 @@ public class Plateau {
         return reStrat;
     }
 
-    private void boutonPausePlay() {
+    private Group boutonPausePlay() {
+        Group boutonGame = new Group();
         Label labelPlay = new Label("");
         labelPlay.setLayoutY(670);
         Label labelPause = new Label("");
@@ -213,18 +216,20 @@ public class Plateau {
         play.setOnMouseClicked(mouseEvent -> {
             //labelPlay.setText("La partie reprend");
             if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()) {
-                group.getChildren().remove(labelPause);
-                group.getChildren().remove(play);
-                group.getChildren().add(pause);
+                boutonGame.getChildren().remove(labelPause);
+                boutonGame.getChildren().remove(play);
+                boutonGame.getChildren().add(pause);
                 setStatusPartie(true);
                 if (group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().remove(barre.returnBarre());
                     //boutonEquipe().getChildren().clear();
                     scene.setFill(Color.DARKGRAY);
+                    Plateau.scene.setCursor(Cursor.DEFAULT);
+                    Plateau.personneSelectionné = null;
+                    //Plateau.incorporeEquipe(null);
                 }
                 tour();
-            }
-            else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
+            } else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
                 Text attention = new Text("Il n'y qu'une seule equipe sur le terrain");
                 attention.setY(650);
                 attention.setX(20);
@@ -235,8 +240,7 @@ public class Plateau {
                     Plateau.group.getChildren().remove(attention);
                 }));
                 timeline.play();
-            }
-            else {
+            } else {
                 Text attention = new Text("Veuillez remplir les hexagones avec des personnages");
                 attention.setY(650);
                 attention.setX(20);
@@ -253,9 +257,9 @@ public class Plateau {
         pause.setLayoutX(140);
         pause.setLayoutY(10);
         pause.setOnMouseClicked(mouseEvent -> {
-            group.getChildren().add(labelPause);
-            group.getChildren().remove(pause);
-            group.getChildren().add(play);
+            boutonGame.getChildren().add(labelPause);
+            boutonGame.getChildren().remove(pause);
+            boutonGame.getChildren().add(play);
             setStatusPartie(false);
             if (!group.getChildren().contains(barre.returnBarre())) {
                 group.getChildren().add(barre.returnBarre());
@@ -263,8 +267,9 @@ public class Plateau {
                 scene.setFill(Color.WHITE);
             }
         });
-        group.getChildren().add(play);
-        group.getChildren().add(labelPlay);
+        boutonGame.getChildren().add(play);
+        boutonGame.getChildren().add(labelPlay);
+        return boutonGame;
     }
 
     private void ajouteLeMenu() {
@@ -342,6 +347,13 @@ public class Plateau {
                 tour();
             }));
             timeline.play();
+            if (e1.getTeam().isEmpty() || e2.getTeam().isEmpty()) {
+                setStatusPartie(false);
+                scene.setFill(Color.WHITE);
+                group.getChildren().remove(boutonPausePlay());
+                group.getChildren().add(boutonPausePlay());
+                group.getChildren().add(barre.returnBarre());
+            }
         }
     }
 
