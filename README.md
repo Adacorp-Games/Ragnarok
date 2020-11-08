@@ -9,6 +9,16 @@
 
 ### Sujet : Simulateur de batailles automatique
 
+## Lancer le projet
+
+executer "Lancement/ragnarok.jar"
+exemple en cli:
+```bash
+java -jar ./Lancement/ragnarok.jar
+```
+depuis le repertoire du projet
+
+
 ### Partie conception (UML)
 
 ### Lancement du jeu
