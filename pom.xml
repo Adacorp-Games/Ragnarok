@@ -149,6 +149,7 @@
                 </transformer>
               </transformers>
               <outputDirectory>Lancement</outputDirectory>
+              <finalName>ragnarok</finalName>
             </configuration>
           </execution>
         </executions>
