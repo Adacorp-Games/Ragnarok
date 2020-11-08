@@ -220,6 +220,9 @@ public abstract class Personne {
         //if (Plateau.getStatusPartie() != false) {
         person.setOnMouseClicked((mouseEvent) -> {
             if (!statusPartie) {
+                if (argentPartie != 0) {
+                    position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + 100);
+                }
                 selfDelete();
             }
         });
@@ -289,7 +292,7 @@ public abstract class Personne {
     // Gestion nomRandomName
 
     public static String getRandomName() {
-        if(listName.isEmpty()){
+        if (listName.isEmpty()) {
             ajouteNom();
         }
         return listName.get(new Random().nextInt(listName.size()));
