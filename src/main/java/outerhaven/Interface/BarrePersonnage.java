@@ -63,28 +63,34 @@ public class BarrePersonnage {
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
 
+
         // Actions sur les boutons d'équipes
         equipe1.setOnMouseClicked(mouseEvent -> {
             Plateau.incorporeEquipe(Plateau.getE1());
             equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
         });
+
         equipe1.setOnMouseEntered(mouseEvent -> {
             equipe1.setEffect(Bouton.effectE1);
         });
+
         equipe1.setOnMouseExited(mouseEvent -> {
             if (equipe1.getEffect() == Bouton.effectE1 && equipeSelectionné != Plateau.getE1()) {
                 equipe1.setEffect(null);
             }
         });
+
         equipe2.setOnMouseClicked(mouseEvent -> {
             Plateau.incorporeEquipe(Plateau.getE2());
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
         });
+
         equipe2.setOnMouseEntered(mouseEvent -> {
             equipe2.setEffect(Bouton.effectE2);
         });
+
         equipe2.setOnMouseExited(mouseEvent -> {
             if (equipe2.getEffect() == Bouton.effectE2 && equipeSelectionné != Plateau.getE2()) {
                 equipe2.setEffect(null);
@@ -92,11 +98,11 @@ public class BarrePersonnage {
         });
 
         Group groupEquipeButton = new Group();
-        if (!statusPartie){
+
+        if (!statusPartie) {
             groupEquipeButton.getChildren().add(equipe1);
             groupEquipeButton.getChildren().add(equipe2);
-        }
-        else{
+        } else {
             equipe1.setVisible(true);
             equipe2.setVisible(true);
         }

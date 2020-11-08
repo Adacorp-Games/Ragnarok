@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class Equipe {
     private ArrayList<Personne> team;
     private Color couleur;
+    private double argent;
 
     public Equipe(Color couleur) {
         this.team = new ArrayList<>();
         this.couleur = couleur;
+        this.argent = 0;
         //this.couleur = Color.color(Math.random(), Math.random(), Math.random()); // Couleur RBG aléatoire;
     }
 
@@ -30,5 +32,13 @@ public class Equipe {
             affichage += p.toString();
         }
         return affichage;
+    }
+
+    public void setArgent(double argent) {
+        this.argent = argent;
+    }
+
+    public double getArgent() {
+        return argent;
     }
 }

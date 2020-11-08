@@ -141,13 +141,13 @@ public abstract class Personne {
         imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
         imageperson.setX(200 + i * (imageperson.getFitWidth() + 50));
         imageperson.setOnMouseEntered((mouseEvent) -> {
-            group.getChildren().add(this.afficherInfo(imageperson.getX(),imageperson.getY()));
+            group.getChildren().add(this.afficherInfo(imageperson.getX(), imageperson.getY()));
         });
         imageperson.setOnMouseExited((mouseEvent) -> {
             group.getChildren().remove(1);
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
-            if(Plateau.personneSelectionné == null) {
+            if (Plateau.personneSelectionné == null) {
                 Plateau.scene.setCursor(new ImageCursor(getImageFace()));
                 Plateau.personneSelectionné = this;
             } else {
@@ -220,6 +220,9 @@ public abstract class Personne {
         //if (Plateau.getStatusPartie() != false) {
         person.setOnMouseClicked((mouseEvent) -> {
             if (!statusPartie) {
+                if (argentPartie != 0) {
+                    position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + this.getCost());
+                }
                 selfDelete();
             }
         });
@@ -289,7 +292,7 @@ public abstract class Personne {
     // Gestion nomRandomName
 
     public static String getRandomName() {
-        if(listName.isEmpty()){
+        if (listName.isEmpty()) {
             ajouteNom();
         }
         return listName.get(new Random().nextInt(listName.size()));
