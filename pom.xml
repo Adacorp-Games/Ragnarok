@@ -96,9 +96,17 @@
             <artifactId>javafx-maven-plugin</artifactId>
             <version>0.0.4</version>
             <configuration>
-              <mainClass>outerhaven.App</mainClass>
+              <mainClass>outerhaven.Main</mainClass>
             </configuration>
           </plugin>
       </plugins>
+      <resources>
+        <resource>
+            <directory>${basedir}/ressources</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </resource>
+        </resources>
   </build>
 </project>

@@ -383,7 +383,7 @@ public abstract class Personne {
     }
 
     public Image getImageFace() {
-        return new Image(Personne.class.getResourceAsStream("../Images/inconnu.png"));
+        return new Image(Personne.class.getResourceAsStream("/Images/inconnu.png"));
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         stage.setTitle("Ragnarok");
         stage.setFullScreen(true);
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("./Images/Ragnarok.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/Images/Ragnarok.png")));
         Plateau game = new Plateau(stage);
         game.lancerPartie();
     }

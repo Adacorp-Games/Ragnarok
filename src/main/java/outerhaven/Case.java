@@ -29,8 +29,8 @@ public class Case {
     private Group affichagecontenu;
     private ImageView hexagone;
 
-    public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("./Images/hexagon.png"));
-    public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("./Images/hexagon2.png"));
+    public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/hexagon.png"));
+    public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/hexagon2.png"));
 
     public Case(int x, int y) {
         coordonnee[0] = x;
