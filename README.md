@@ -9,7 +9,7 @@
 
 ### Sujet : Simulateur de batailles automatique
 
-## Lancer le projet
+### Lancer le projet
 
 executer "Lancement/ragnarok.jar"
 
@@ -19,6 +19,12 @@ exemple en cli:
 java -jar ./Lancement/ragnarok.jar
 ```
 depuis le repertoire du projet
+
+
+pour generer le jar si il n'est pas a jour:
+```bash
+mvn package
+```
 
 
 ### Partie conception (UML)
