@@ -12,6 +12,8 @@
 ## Lancer le projet
 
 executer "Lancement/ragnarok.jar"
+
+
 exemple en cli:
 ```bash
 java -jar ./Lancement/ragnarok.jar
