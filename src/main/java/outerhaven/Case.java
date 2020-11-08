@@ -278,10 +278,8 @@ public class Case {
         while(chemin.get(chemin.size()-1).contenu.isEmpty() || chemin.get(chemin.size()-1).contenu.get(0) != personne) {
             xIncr = xIncr + Avancementx;
             yIncr = yIncr + Avanvementy;
-            System.out.println(xIncr +" "+ arrondir(xIncr));
             testCase(chemin, arrondir(xIncr),arrondir(yIncr),personne);
         }
-        System.out.println(chemin.toString());
         return chemin;
     }
 
@@ -289,8 +287,7 @@ public class Case {
         //System.out.println(xIncr +" "+ yIncr);
         if(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
             chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr]);
-        }
-        else {
+        }else {
             for (int i = 0; i < caseVoisines.size() ; i++) {
                 for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
                     if(tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()){
@@ -305,22 +302,19 @@ public class Case {
     private int donneYpourTab(){
         if(coordonnee[0]%2==0) {
             return coordonnee[1] + (coordonnee[0]/2) ;
-        }
-        else{
+        }else{
             return (coordonnee[1] + (coordonnee[0])/2+1);
         }
     }
 
-    private int arrondir(double nombre){
-        if(Math.abs(nombre-(int)nombre)>0.5){
+    private int arrondir(double nombre) {
+        if(Math.abs(nombre-(int)nombre)>0.5) {
             if(nombre<0){
                 return (int) nombre - 1;
-            }
-            else{
+            }else{
                 return (int) nombre +1 ;
             }
-        }
-        else{
+        } else{
             return (int)nombre;
         }
     }
