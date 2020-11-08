@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Equipe {
     private ArrayList<Personne> team;
     private Color couleur;
-    private int argent;
+    private double argent;
 
     public Equipe(Color couleur) {
         this.team = new ArrayList<>();
@@ -34,11 +34,11 @@ public class Equipe {
         return affichage;
     }
 
-    public void setArgent(int argent) {
+    public void setArgent(double argent) {
         this.argent = argent;
     }
 
-    public int getArgent() {
+    public double getArgent() {
         return argent;
     }
 }

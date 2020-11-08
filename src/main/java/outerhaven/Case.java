@@ -102,14 +102,14 @@ public class Case {
                     hexagone.setEffect(ombre);
                     //System.out.println(this.caseVoisines);
                     if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
-                        Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - 100);
+                        Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
                     }
                 } /*else {
                     System.out.println("Pas assez d'argent !");
                 }*/
             } else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null && !contenu.isEmpty())) {
                 if (argentPartie != 0) {
-                    contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + 100);
+                    contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }
                 seVider();
             } else {

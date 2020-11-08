@@ -221,7 +221,7 @@ public abstract class Personne {
         person.setOnMouseClicked((mouseEvent) -> {
             if (!statusPartie) {
                 if (argentPartie != 0) {
-                    position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + 100);
+                    position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + this.getCost());
                 }
                 selfDelete();
             }

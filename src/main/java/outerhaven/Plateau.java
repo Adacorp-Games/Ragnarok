@@ -400,6 +400,9 @@ public class Plateau {
                 group.getChildren().add(boutonPausePlay());
                 group.getChildren().add(barre.returnBarre());
             }
+            getE1().setArgent(getE1().getArgent() + 25);
+            getE2().setArgent(getE2().getArgent() + 25);
+            System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
         }
     }
 
