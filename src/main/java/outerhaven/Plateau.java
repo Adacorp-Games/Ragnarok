@@ -382,6 +382,9 @@ public class Plateau {
             }
             //Collections.shuffle(personnages);
             for (Personne p : morts) {
+                if (argentPartie > 0) {
+                    p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
+                }
                 p.selfDelete();
             }
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
@@ -400,9 +403,11 @@ public class Plateau {
                 group.getChildren().add(boutonPausePlay());
                 group.getChildren().add(barre.returnBarre());
             }
-            getE1().setArgent(getE1().getArgent() + 25);
-            getE2().setArgent(getE2().getArgent() + 25);
-            System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
+            if (argentPartie > 0) {
+                getE1().setArgent(getE1().getArgent() + 25);
+                getE2().setArgent(getE2().getArgent() + 25);
+                System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
+            }
         }
     }
 
