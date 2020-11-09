@@ -27,7 +27,7 @@ public class Paladin extends PersonneMagique {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
 
-                // Soin dans vie basse
+                // Auto-soin
             } else if (this.getMana() > 125 && this.getHealth() < this.getMaxHealth()/4) {
                 this.setHealth(this.getHealth() + getMaxHealth()/4);
                 this.setMana(this.getMana() - 125);
