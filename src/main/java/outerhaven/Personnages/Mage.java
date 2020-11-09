@@ -8,11 +8,11 @@ import outerhaven.Equipe;
 public class Mage extends Personne {
 
     public Mage() {
-        super(100, 50, 200, 20, 3, 1);
+        super(1500, 50, 200, 150, 3, 1);
     }
 
     public Mage(Equipe team, Case position) {
-        super(150, 50, 200, 20, 3, 1, team, position);
+        super(1500, 50, 200, 150, 3, 1, team, position);
         this.getPosition().setContenu(this);
     }
 

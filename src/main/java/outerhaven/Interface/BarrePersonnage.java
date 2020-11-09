@@ -8,7 +8,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
+import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Mage;
+import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -29,6 +31,7 @@ public class BarrePersonnage {
         listClasse.add(new Guerrier());
         listClasse.add(new Archer());
         listClasse.add(new Mage());
+        listClasse.add(new Necromancien());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }

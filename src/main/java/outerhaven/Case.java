@@ -124,7 +124,6 @@ public class Case {
                 }));
                 timeline.play();
             }
-            System.out.println(equipeSelectionné.getArgent());
         }
     }
 
@@ -386,5 +385,13 @@ public class Case {
 
     public ArrayList<Personne> getContenu() {
         return contenu;
+    }
+
+    public Group getAffichagecontenu() {
+        return affichagecontenu;
+    }
+
+    public void setAffichagecontenu(Group affichagecontenu) {
+        this.affichagecontenu = affichagecontenu;
     }
 }

@@ -15,6 +15,7 @@ import javafx.stage.Screen;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
+import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
@@ -51,7 +52,9 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        personnages.add(this);
+        if (this.getClass() != Mort.class) {
+            personnages.add(this);
+        }
     }
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team) {
@@ -338,7 +341,7 @@ public abstract class Personne {
         listName.add("Toriyama");
     }
 
-    // Getteur et setteur
+    // Getter et setter
 
     public String getName() {
         return name;
@@ -374,6 +377,18 @@ public abstract class Personne {
 
     public Equipe getTeam() {
         return team;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
     }
 
     public Equipe getOtherTeam() {

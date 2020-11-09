@@ -28,6 +28,7 @@ public class Plateau {
     private int aire;
     public static ArrayList<Personne> personnages = new ArrayList<>();
     public static ArrayList<Personne> morts = new ArrayList<>();
+    public static ArrayList<Personne> invocationAttente = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
     private static Stage primary;
     public static double taille;
@@ -380,6 +381,7 @@ public class Plateau {
                     personnages.get(i).afficherSanteEtNom();
                 }
             }
+            Collections.shuffle(personnages);
             for (Personne p : personnages) {
                 if (p.getHealth() <= 0) {
                     morts.add(p);
@@ -388,7 +390,8 @@ public class Plateau {
                     p.action();
                 }
             }
-            Collections.shuffle(personnages);
+
+            // Gestion des morts
             for (Personne p : morts) {
                 if (argentPartie > 0) {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
@@ -398,6 +401,14 @@ public class Plateau {
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
             System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
             morts.clear();
+
+            // Gestion des invocations
+            for (Personne p : invocationAttente) {
+                personnages.add(p);
+            }
+            invocationAttente.clear();
+
+            // Mise en pause de la partie & conditions de fin de partie
             stoptimeline = false;
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ev -> {
                 stoptimeline = true;
