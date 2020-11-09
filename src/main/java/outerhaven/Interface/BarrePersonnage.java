@@ -112,7 +112,7 @@ public class BarrePersonnage {
         return groupEquipeButton;
     }
 
-    /*public Group afficherArgentEquipes() {
+    public void afficherArgentEquipes() {
         Text argentEquipe1 = new Text(getE1().getArgent() + "€");
         argentEquipe1.setX(10);
         argentEquipe1.setY(760);
@@ -123,15 +123,18 @@ public class BarrePersonnage {
         argentEquipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         argentGroup.getChildren().add(argentEquipe1);
         argentGroup.getChildren().add(argentEquipe2);
-        return argentGroup;
     }
 
     public void updateArgentEquipes() {
-        Plateau.group.getChildren().remove(argentGroup);
-        Plateau.group.getChildren().add(afficherArgentEquipes());
-    }*/
+        argentGroup.getChildren().clear();
+        afficherArgentEquipes();
+    }
 
-    public Group returnBarre(){
+    public Group returnBarre() {
         return group;
+    }
+
+    public Group getArgentGroup() {
+        return argentGroup;
     }
 }

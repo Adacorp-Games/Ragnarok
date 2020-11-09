@@ -38,7 +38,7 @@ public class Equipe {
 
     public void setArgent(double argent) {
         this.argent = argent;
-        //barre.updateArgentEquipes();
+        barre.updateArgentEquipes();
     }
 
     public double getArgent() {
