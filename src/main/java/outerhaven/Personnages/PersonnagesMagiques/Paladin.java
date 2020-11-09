@@ -1,24 +1,21 @@
 package outerhaven.Personnages.PersonnagesMagiques;
 
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Personne;
-import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
 public class Paladin extends PersonneMagique {
 
     public Paladin() {
-        super(3000, 1000, 500, 300, 1, 1, 100);
+        super(3000, 1000, 300, 300, 1, 1, 100);
     }
 
     public Paladin(Equipe team, Case position) {
-        super(3000, 1000, 500, 300, 1, 1, team, position, 100);
+        super(3000, 1000, 300, 300, 1, 1, team, position, 100);
     }
 
     public void action() {
@@ -29,10 +26,14 @@ public class Paladin extends PersonneMagique {
         } else {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
-            } else if (this.getMana() > 150 && this.getHealth() < this.getMaxHealth()/2) {
 
                 // Soin dans vie basse
+            } else if (this.getMana() > 125 && this.getHealth() < this.getMaxHealth()/4) {
                 this.setHealth(this.getHealth() + getMaxHealth()/4);
+                this.setMana(this.getMana() - 125);
+
+            } else if (this.getMana() > 125 && this.getHealth() >= this.getMaxHealth()/4) {
+                this.setHealth(getMaxHealth());
                 this.setMana(this.getMana() - 125);
 
             } else {
