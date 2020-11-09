@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class Necromancien extends PersonneMagique {
 
     public Necromancien() {
-        super(2000, 50, 1000, 50, 4, 1, 100);
+        super(2000, 50, 1000, 100, 4, 1, 100);
     }
 
     public Necromancien(Equipe team, Case position) {
-        super(2000, 50, 1000, 50, 4, 1, team, position, 100);
+        super(2000, 50, 1000, 100, 4, 1, team, position, 100);
     }
 
     public void attaquer(Personne p) {
@@ -92,6 +92,7 @@ public class Necromancien extends PersonneMagique {
         return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
+    @Override
     public Image getImageFace() {
         return new Image(Necromancien.class.getResourceAsStream("/Images/Necromancer.png"));
     }

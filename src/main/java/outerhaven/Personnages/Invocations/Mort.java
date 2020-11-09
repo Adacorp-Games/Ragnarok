@@ -37,6 +37,7 @@ public class Mort extends Personne {
         return new Text("\nSkelette à la vie, armure et dégâts faibles." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
+    @Override
     public Image getImageFace() {
         return new Image(Guerrier.class.getResourceAsStream("/Images/Dead.png"));
     }

@@ -31,6 +31,7 @@ public class Archer extends Personne {
         return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
+    @Override
     public Image getImageFace() {
         return new Image(Guerrier.class.getResourceAsStream("/Images/Archer.png"));
         //return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");

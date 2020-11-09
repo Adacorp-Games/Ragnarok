@@ -8,11 +8,11 @@ import outerhaven.Equipe;
 public class Mage extends Personne {
 
     public Mage() {
-        super(1500, 50, 200, 150, 3, 1);
+        super(1500, 50, 200, 200, 3, 1);
     }
 
     public Mage(Equipe team, Case position) {
-        super(1500, 50, 200, 150, 3, 1, team, position);
+        super(1500, 50, 200, 200, 3, 1, team, position);
         this.getPosition().setContenu(this);
     }
 
@@ -31,6 +31,7 @@ public class Mage extends Personne {
         return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
+    @Override
     public Image getImageFace() {
         return new Image(Guerrier.class.getResourceAsStream("/Images/Mage.png"));
         //return new Image("https://cdn.discordapp.com/attachments/513075072156827651/774392108248989706/tumblr_mepk78hspV1rgpyeqo1_400.gif");

@@ -243,9 +243,11 @@ public abstract class Personne {
         return group;
     }
 
+    // Affichage santé et nom
+
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
-        SanteNom.getChildren().addAll(afficherSante(),afficherNom());
+        SanteNom.getChildren().addAll(afficherSante(), afficherNom());
         if (barreVisible) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
@@ -269,19 +271,19 @@ public abstract class Personne {
 
     public Group afficherSante() {
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
-        Rectangle vie = new Rectangle(taille-4, taille/10-4, Color.RED);
+        Rectangle vie = new Rectangle(taille - 4, taille/10 - 4, Color.RED);
 
         barre.setX(getPosition().getPosX());
         barre.setY(getPosition().getPosY() + taille/2.2);
 
-        vie.setY(barre.getY()+2);
-        vie.setX(barre.getX()+2);
+        vie.setY(barre.getY() + 2);
+        vie.setX(barre.getX() + 2);
 
         DoubleProperty healthPercentage = new SimpleDoubleProperty(1.0);
         DoubleBinding b = vie.widthProperty().multiply(healthPercentage);
 
         double percentage = (this.getHealth() / maxHealth);
-        double width = (percentage * (taille-4));
+        double width = (percentage * (taille - 4));
         vie.widthProperty().setValue(width);
 
         Group group = new Group();
@@ -399,9 +401,7 @@ public abstract class Personne {
         }
     }
 
-    public Image getImageFace() {
-        return new Image(Personne.class.getResourceAsStream("/Images/inconnu.png"));
-    }
+    public abstract Image getImageFace();
 
     @Override
     public String toString() {
