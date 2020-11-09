@@ -18,8 +18,6 @@ import outerhaven.Interface.Effets;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 
 import static outerhaven.Plateau.*;
@@ -172,6 +170,7 @@ public abstract class Personne {
         barre.setStyle("-fx-border-color: black");*/
 
         Text title = this.getinfoTitleText();
+        title.setStyle("-fx-font-weight: bold");
         title.setX(X + 10);
         title.setY(Y + 20 - 130);
         //title.setStyle("-fx-font-style: bold");

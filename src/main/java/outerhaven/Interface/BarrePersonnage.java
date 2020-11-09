@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
@@ -113,12 +114,12 @@ public class BarrePersonnage {
     }
 
     public void afficherArgentEquipes() {
-        Text argentEquipe1 = new Text(getE1().getArgent() + "€");
+        Text argentEquipe1 = new Text(getE1().getArgent() + " €");
         argentEquipe1.setX(10);
         argentEquipe1.setY(760);
         argentEquipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
-        Text argentEquipe2 = new Text(getE2().getArgent() + "€");
-        argentEquipe2.setX(100);
+        Text argentEquipe2 = new Text(getE2().getArgent() + " €");
+        argentEquipe2.setX(120);
         argentEquipe2.setY(argentEquipe1.getY());
         argentEquipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         argentGroup.getChildren().add(argentEquipe1);
@@ -126,8 +127,10 @@ public class BarrePersonnage {
     }
 
     public void updateArgentEquipes() {
-        argentGroup.getChildren().clear();
-        afficherArgentEquipes();
+        if (argentPartie > 0) {
+            argentGroup.getChildren().clear();
+            afficherArgentEquipes();
+        }
     }
 
     public Group returnBarre() {

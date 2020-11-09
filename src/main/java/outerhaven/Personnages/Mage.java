@@ -23,7 +23,7 @@ public class Mage extends Personne {
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Mage (" + this.getCost() + "€) :\n");
+        return new Text("Mage (" + this.getCost() + " €) :\n");
     }
 
     @Override

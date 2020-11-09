@@ -23,7 +23,7 @@ public class Archer extends Personne {
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Archer (" + this.getCost() + "€) :\n");
+        return new Text("Archer (" + this.getCost() + " €) :\n");
     }
 
     @Override

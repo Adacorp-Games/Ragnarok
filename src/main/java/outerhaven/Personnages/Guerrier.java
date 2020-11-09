@@ -23,7 +23,7 @@ public class Guerrier extends Personne {
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Guerrier (" + this.getCost() + "€) :\n");
+        return new Text("Guerrier (" + this.getCost() + " €) :\n");
     }
 
     @Override

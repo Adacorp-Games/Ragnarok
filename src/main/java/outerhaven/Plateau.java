@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class Plateau {
-    int aire;
+    private int aire;
     public static ArrayList<Personne> personnages = new ArrayList<>();
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
@@ -100,16 +100,19 @@ public class Plateau {
         //group.getChildren().add(afficherInfosEquipes());
 
         // Tests argent
-        System.out.println(argentPartie);
-        //System.out.println(aire);
+        /*System.out.println(argentPartie);
+        System.out.println(aire);*/
 
-        getE1().setArgent(argentPartie);
-        getE2().setArgent(argentPartie);
-        System.out.println(getE1().getArgent());
-        System.out.println(getE2().getArgent());
+        if (argentPartie > 0) {
+            getE1().setArgent(argentPartie);
+            getE2().setArgent(argentPartie);
+            group.getChildren().add(barre.getArgentGroup());
+        }
+
+        /*System.out.println(getE1().getArgent());
+        System.out.println(getE2().getArgent());*/
 
         group.getChildren().add(boutonPausePlay());
-        group.getChildren().add(barre.getArgentGroup());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
     }
@@ -229,6 +232,8 @@ public class Plateau {
             this.lancerPartie();
             aire = 0;
             argentPartie = 0;
+            Plateau.scene.setCursor(Cursor.DEFAULT);
+            Plateau.personneSelectionné = null;
         });
         return reset;
     }
@@ -245,6 +250,8 @@ public class Plateau {
             setStatusPartie(false);
             scene.setFill(Color.WHITE);
             lancerScenePlateau();
+            Plateau.scene.setCursor(Cursor.DEFAULT);
+            Plateau.personneSelectionné = null;
         });
         return reStrat;
     }
@@ -381,7 +388,7 @@ public class Plateau {
                     p.action();
                 }
             }
-            //Collections.shuffle(personnages);
+            Collections.shuffle(personnages);
             for (Personne p : morts) {
                 if (argentPartie > 0) {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
@@ -407,7 +414,7 @@ public class Plateau {
             if (argentPartie > 0) {
                 getE1().setArgent(getE1().getArgent() + 25);
                 getE2().setArgent(getE2().getArgent() + 25);
-                System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
+                //System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
             }
         }
     }
