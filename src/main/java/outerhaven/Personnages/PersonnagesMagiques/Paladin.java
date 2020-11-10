@@ -68,6 +68,6 @@ public class Paladin extends PersonneMagique {
 
     @Override
     public Image getImageFace() {
-        return new Image(Paladin.class.getResourceAsStream("/Images/Paladin.png"));
+        return new Image(Paladin.class.getResourceAsStream("/Images/Personnes/Paladin.png"));
     }
 }

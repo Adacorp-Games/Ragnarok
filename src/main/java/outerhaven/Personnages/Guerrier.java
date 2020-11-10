@@ -33,7 +33,7 @@ public class Guerrier extends Personne {
 
     @Override
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("/Images/Warrior.png"));
+        return new Image(Guerrier.class.getResourceAsStream("/Images/Personnes/Warrior.png"));
         //return new Image("https://images108.fotki.com/v156/photos/6/830356/8792277/joyDancingstickmantransparent-vi.gif");
     }
 }

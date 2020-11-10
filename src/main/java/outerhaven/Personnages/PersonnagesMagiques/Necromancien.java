@@ -94,6 +94,6 @@ public class Necromancien extends PersonneMagique {
 
     @Override
     public Image getImageFace() {
-        return new Image(Necromancien.class.getResourceAsStream("/Images/Necromancer.png"));
+        return new Image(Necromancien.class.getResourceAsStream("/Images/Personnes/Necromancer.png"));
     }
 }

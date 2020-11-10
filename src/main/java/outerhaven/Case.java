@@ -1,13 +1,11 @@
 package outerhaven;
 
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.effect.*;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,8 +29,8 @@ public class Case {
     private ImageView hexagone;
     public static boolean clique= false;
 
-    private static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/hexagon.png"));
-    private static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/hexagon2.png"));
+    private static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
+    private static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
 
     public Case(int x, int y) {
         coordonnee[0] = x;
