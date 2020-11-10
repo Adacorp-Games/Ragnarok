@@ -1,5 +1,6 @@
 package outerhaven;
 
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.effect.*;
 
@@ -28,9 +29,10 @@ public class Case {
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
     private ImageView hexagone;
+    public static boolean clique= false;
 
-    public static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/hexagon.png"));
-    public static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/hexagon2.png"));
+    private static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/hexagon.png"));
+    private static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/hexagon2.png"));
 
     public Case(int x, int y) {
         coordonnee[0] = x;
@@ -50,6 +52,23 @@ public class Case {
             this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
+                if(clique){
+                    if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
+                        if ((equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) || argentPartie == 0) {
+                            contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+                            affichagecontenu = contenu.get(0).affichagePersonnage();
+                            contenu.get(0).afficherSanteEtNom();
+                            Plateau.group.getChildren().add(affichagecontenu);
+                            InnerShadow ombre = new InnerShadow();
+                            ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                            hexagone.setEffect(ombre);
+                            //System.out.println(this.caseVoisines);
+                            if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
+                                Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
+                            }
+                        }
+                    }
+                }
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
                 hexagone.setImage(hexagone_img1);

@@ -17,7 +17,6 @@ public class Mort extends Personne {
 
     public Mort(Equipe team, Case position) {
         super(500, 0, 50, 100, 1, 1, team, position);
-        //this.getPosition().setContenu(this);
         Plateau.invocationAttente.add(this);
         this.getTeam().getTeam().add(this);
     }

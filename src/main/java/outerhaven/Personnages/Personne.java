@@ -66,9 +66,11 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        personnages.add(this);
         this.team = team;
-        this.team.getTeam().add(this);
+        if (this.getClass() != Mort.class) {
+            personnages.add(this);
+            this.team.getTeam().add(this);
+        }
     }
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team,

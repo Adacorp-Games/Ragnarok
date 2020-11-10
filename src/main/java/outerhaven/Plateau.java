@@ -45,6 +45,7 @@ public class Plateau {
     public static Equipe e1 = new Equipe(Color.RED);
     public static Equipe e2 = new Equipe(Color.BLUE);
     public static Case[][] tableauCase;
+    private static int temps = 500;
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -353,10 +354,78 @@ public class Plateau {
                 }
             }
         });
+
+        Button vitesse = new Bouton().creerBouton("Vitesse");
+        vitesse.setLayoutX(270);
+        vitesse.setLayoutY(10);
+        Button x1 = vitesseX1();
+        Button x2 = vitesseX2();
+        Button x3 = vitesseX3();
+        x1.setOnMouseClicked(mouseEvent-> {
+            temps = 500;
+            x1.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            x2.setEffect(null);
+            x3.setEffect(null);
+        });
+        x2.setOnMouseClicked(mouseEvent-> {
+            temps = 250;
+            x2.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            x1.setEffect(null);
+            x3.setEffect(null);
+        });
+        x3.setOnMouseClicked(mouseEvent-> {
+            temps = 166;
+            x3.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            x1.setEffect(null);
+            x2.setEffect(null);
+        });
+        vitesse.setOnMouseClicked(mouseEvent-> {
+            if (!group.getChildren().contains(x1)) {
+                try {
+                    group.getChildren().add(x1);
+                    group.getChildren().add(x2);
+                    group.getChildren().add(x3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().remove(x1);
+                    group.getChildren().remove(x2);
+                    group.getChildren().remove(x3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        group.getChildren().add(vitesse);
         boutonPausePlay();
         afficheBarVie();
         group.getChildren().add(menu);
     }
+
+    private Button vitesseX1(){
+        Button vitesseX1 = new Bouton().creerBouton("x1");
+        vitesseX1.setLayoutX(270);
+        vitesseX1.setLayoutY(70);
+        vitesseX1.setEffect(new Effets().putInnerShadow(Color.BLACK));
+        return vitesseX1;
+    }
+
+    private Button vitesseX2(){
+        Button vitesseX2 = new Bouton().creerBouton("x2");
+        vitesseX2.setLayoutX(270);
+        vitesseX2.setLayoutY(vitesseX1().getLayoutY()+60);
+        return vitesseX2;
+    }
+
+    private Button vitesseX3(){
+        Button vitesseX3 = new Bouton().creerBouton("x3");
+        vitesseX3.setLayoutX(270);
+        vitesseX3.setLayoutY(vitesseX2().getLayoutY()+60);
+        return vitesseX3;
+    }
+
 
     private Button afficheBarVie() {
         Button barVie = new Bouton().creerBouton("Afficher barres de vie");
@@ -376,6 +445,8 @@ public class Plateau {
 
     public void tour() {
         while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie && stoptimeline) {
+            personnages.addAll(invocationAttente);
+            invocationAttente.clear();
             if (Personne.barreVisible && !personnages.isEmpty()) {
                 for (int i = 0; i < personnages.size(); i++) {
                     personnages.get(i).afficherSanteEtNom();
@@ -403,14 +474,10 @@ public class Plateau {
             morts.clear();
 
             // Gestion des invocations
-            for (Personne p : invocationAttente) {
-                personnages.add(p);
-            }
-            invocationAttente.clear();
 
             // Mise en pause de la partie & conditions de fin de partie
             stoptimeline = false;
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps), ev -> {
                 stoptimeline = true;
                 tour();
             }));
