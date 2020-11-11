@@ -230,6 +230,7 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
+            invocationAttente.clear();
             getE1().getTeam().clear();
             getE2().getTeam().clear();
             setStatusPartie(false);
@@ -252,6 +253,7 @@ public class Plateau {
             personnages.clear();
             morts.clear();
             listeCase.clear();
+            invocationAttente.clear();
             getE1().getTeam().clear();
             getE2().getTeam().clear();
             setStatusPartie(false);
