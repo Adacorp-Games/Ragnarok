@@ -292,7 +292,7 @@ public class Case {
             if (this.contenu.get(0) != personnages.get(i)) {
                 int x = (personnages.get(i).getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
                 int y = (personnages.get(i).getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
-                double norme = Math.sqrt(x*x+y*y);
+                double norme = Math.sqrt(x*x + y*y);
                 if (norme < depth && personnages.get(i).getTeam() == e) {
                     depth = (int)norme;
                     Leplusprocche = personnages.get(i);
@@ -426,9 +426,9 @@ public class Case {
     }
 
     public void setAlteration(Alteration alteration) {
-        int getTourActuel = Plateau.nbTour;
         this.alteration = alteration;
         this.hexagone.setImage(alteration.getImage());
+        listeCaseAltérées.add(this);
         /*if (this.alteration.getDurée() + getTourActuel >= Plateau.nbTour) {
             this.alteration = null;
             this.hexagone.setImage(hexagone_img1);

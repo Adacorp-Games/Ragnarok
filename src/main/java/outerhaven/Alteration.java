@@ -10,6 +10,7 @@ public class Alteration {
     private String effet;
     private int puissance;
     private int durée;
+    private int timer = Plateau.nbTour;
 
     public Alteration(String effet, int puissance, int durée) {
         this.effet = effet;
@@ -76,5 +77,13 @@ public class Alteration {
 
     public void setDurée(int durée) {
         this.durée = durée;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
     }
 }

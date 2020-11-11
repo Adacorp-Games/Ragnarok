@@ -30,6 +30,7 @@ public class Plateau {
     public static ArrayList<Personne> morts = new ArrayList<>();
     public static ArrayList<Personne> invocationAttente = new ArrayList<>();
     public static ArrayList<Case> listeCase = new ArrayList<>();
+    public static ArrayList<Case> listeCaseAltérées = new ArrayList<>();
     private static Stage primary;
     public static double taille;
     public static int argentPartie = 0;
@@ -451,10 +452,26 @@ public class Plateau {
 
     public void tour() {
         while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie && stoptimeline) {
+            nbTour++;
+            System.out.println("Tour : " + nbTour);
+            //System.out.println("Nombre de cases altérées : " + listeCaseAltérées.size());
 
             // Gestion des invocations
             personnages.addAll(invocationAttente);
             invocationAttente.clear();
+
+            if (!listeCaseAltérées.isEmpty()) {
+                for (Case c : listeCaseAltérées) {
+                    if (c.getAlteration().getTimer() + c.getAlteration().getDurée() <= nbTour) {
+                        c.setAlteration(null);
+                    }
+                }
+                for (Case c : listeCaseAltérées) {
+                    if (c.getAlteration() == null) {
+                        listeCaseAltérées.remove(c);
+                    }
+                }
+            }
 
             if (Personne.barreVisible && !personnages.isEmpty()) {
                 for (int i = 0; i < personnages.size(); i++) {

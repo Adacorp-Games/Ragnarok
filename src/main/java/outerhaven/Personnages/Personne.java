@@ -281,9 +281,6 @@ public abstract class Personne {
         vie.setY(barre.getY() + 2);
         vie.setX(barre.getX() + 2);
 
-        DoubleProperty healthPercentage = new SimpleDoubleProperty(1.0);
-        DoubleBinding b = vie.widthProperty().multiply(healthPercentage);
-
         double percentage = (this.getHealth() / maxHealth);
         double width = (percentage * (taille - 4));
         vie.widthProperty().setValue(width);
@@ -323,6 +320,7 @@ public abstract class Personne {
         listName.add("Johannides");
         listName.add("Molnar");
         listName.add("Mou");
+        listName.add("Medhy");
         listName.add("Macron");
         listName.add("Micron");
         listName.add("Basile");
@@ -396,7 +394,7 @@ public abstract class Personne {
     }
 
     public void getAlteration() {
-        if (position.getAlteration() != null) {
+        if (this.position.getAlteration() != null) {
             this.position.getAlteration().appliquerEffet(this);
         }
     }
