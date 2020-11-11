@@ -38,6 +38,6 @@ public class Mort extends Personne {
 
     @Override
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("/Images/Dead.png"));
+        return new Image(Guerrier.class.getResourceAsStream("/Images/Personnes/Dead.png"));
     }
 }

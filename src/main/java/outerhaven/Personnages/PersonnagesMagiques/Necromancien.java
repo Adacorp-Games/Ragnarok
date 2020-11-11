@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
@@ -48,18 +49,21 @@ public class Necromancien extends PersonneMagique {
         } else {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
-            } else if (this.getMana() > 100) {
 
-                // Invocation de morts (marche pas encore)
-                for (Case c : this.getPosition().voisinsLibres(true)) {
-                    c.getContenu().add(new Mort(this.getTeam(), c));
-                    c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
-                    c.getContenu().get(0).afficherSanteEtNom();
-                    Plateau.group.getChildren().add(c.getAffichagecontenu());
-                    InnerShadow ombre = new InnerShadow();
-                    ombre.colorProperty().setValue(this.getTeam().getCouleur());
-                    c.getHexagone().setEffect(ombre);
-                }
+                // Invocation de morts (marche pas totalement)
+            } else if (this.getMana() > 100) {
+                //while (this.getMana() > 0) {
+                    for (Case c : this.getPosition().voisinsLibres(true)) {
+                        c.getContenu().add(new Mort(this.getTeam(), c));
+                        c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
+                        c.getContenu().get(0).afficherSanteEtNom();
+                        Plateau.group.getChildren().add(c.getAffichagecontenu());
+                        /*InnerShadow ombre = new InnerShadow();
+                        ombre.colorProperty().setValue(this.getTeam().getCouleur());*/
+                        c.getHexagone().setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+                        //this.setMana(this.getMana() - 25);
+                    }
+                //}
                 this.setMana(this.getMana() - 100);
 
             } else {
