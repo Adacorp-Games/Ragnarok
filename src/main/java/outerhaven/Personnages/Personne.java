@@ -395,6 +395,12 @@ public abstract class Personne {
         return maxHealth;
     }
 
+    public void getAlteration() {
+        if (position.getAlteration() != null) {
+            this.position.getAlteration().appliquerEffet(this);
+        }
+    }
+
     public Equipe getOtherTeam() {
         if (e1.equals(this.team)) {
             return e2;

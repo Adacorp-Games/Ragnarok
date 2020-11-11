@@ -27,7 +27,8 @@ public class Case {
     private ArrayList<Personne> contenu;
     private Group affichagecontenu;
     private ImageView hexagone;
-    public static boolean clique= false;
+    public static boolean clique = false;
+    private Alteration alteration;
 
     private static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
     private static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
@@ -69,7 +70,11 @@ public class Case {
                 }
             });
             hexagone.setOnMouseExited((mouseEvent) -> {
-                hexagone.setImage(hexagone_img1);
+                if (this.getAlteration() != null) {
+                    hexagone.setImage(this.getAlteration().getImage());
+                } else {
+                    hexagone.setImage(hexagone_img1);
+                }
             });
             hexagone.setOnMousePressed((mouseEvent)-> {
                 interactionHex();
@@ -196,7 +201,11 @@ public class Case {
         if (status) {
             voisin = hexagone_img2;
         } else {
-            voisin = hexagone_img1;
+            if (this.getAlteration() != null) {
+                voisin = this.getAlteration().getImage();
+            } else {
+                voisin = hexagone_img1;
+            }
         }
         this.getHexagone().setImage(voisin);
         if (longueur == 1) {
@@ -230,6 +239,7 @@ public class Case {
         }
         return libres;
     }
+
     public int nbVoisinsLibres() {
         int i = 0;
         for (Case c : caseVoisines) {
@@ -354,7 +364,6 @@ public class Case {
         }
     }
 
-
     // Getter et setter
 
     public int[] getCoordonnee() {
@@ -410,5 +419,19 @@ public class Case {
 
     public void setAffichagecontenu(Group affichagecontenu) {
         this.affichagecontenu = affichagecontenu;
+    }
+
+    public Alteration getAlteration() {
+        return alteration;
+    }
+
+    public void setAlteration(Alteration alteration) {
+        int getTourActuel = Plateau.nbTour;
+        this.alteration = alteration;
+        this.hexagone.setImage(alteration.getImage());
+        /*if (this.alteration.getDurée() + getTourActuel >= Plateau.nbTour) {
+            this.alteration = null;
+            this.hexagone.setImage(hexagone_img1);
+        }*/
     }
 }

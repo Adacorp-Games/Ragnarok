@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -38,6 +37,6 @@ public class Mort extends Personne {
 
     @Override
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("/Images/Personnes/Dead.png"));
+        return new Image(Mort.class.getResourceAsStream("/Images/Personnes/Dead.png"));
     }
 }

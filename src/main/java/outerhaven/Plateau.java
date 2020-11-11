@@ -463,6 +463,7 @@ public class Plateau {
             }
             Collections.shuffle(personnages);
             for (Personne p : personnages) {
+                p.getAlteration();
                 if (p.getHealth() <= 0) {
                     morts.add(p);
                 }

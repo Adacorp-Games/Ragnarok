@@ -33,7 +33,7 @@ public class Archer extends Personne {
 
     @Override
     public Image getImageFace() {
-        return new Image(Guerrier.class.getResourceAsStream("/Images/Personnes/Archer.png"));
+        return new Image(Archer.class.getResourceAsStream("/Images/Personnes/Archer.png"));
         //return new Image("https://cdn.discordapp.com/attachments/653027161862832128/772186706967396352/giphy.gif");
     }
 }
