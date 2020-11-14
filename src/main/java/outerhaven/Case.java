@@ -6,6 +6,7 @@ import javafx.scene.effect.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -240,6 +241,12 @@ public class Case {
             }
         }
         return libres;
+    }
+
+    public ArrayList<Case> getRandomVoisinLibre() {
+        ArrayList listeVoisinLibres = this.voisinsLibres(true);
+        Collections.shuffle(listeVoisinLibres);
+        return listeVoisinLibres;
     }
 
     public int nbVoisinsLibres() {

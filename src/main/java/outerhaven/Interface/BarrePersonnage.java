@@ -11,6 +11,7 @@ import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Mage;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
+import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.PersonnagesMagiques.Paladin;
 import outerhaven.Personnages.Personne;
@@ -36,6 +37,7 @@ public class BarrePersonnage {
         listClasse.add(new Paladin());
         listClasse.add(new Necromancien());
         listClasse.add(new Alchimiste());
+        listClasse.add(new Archimage());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }

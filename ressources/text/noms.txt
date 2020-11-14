@@ -41,5 +41,4 @@ Charles
 KimJong2
 Araki
 Toriyama
-
-
+Void
