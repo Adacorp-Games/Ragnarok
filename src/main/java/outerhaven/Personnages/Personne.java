@@ -313,7 +313,7 @@ public abstract class Personne {
 
     private static void ajouteNom() {
         // File noms = new File("/text/noms.txt");
-        Scanner scan = new Scanner(Personne.class.getResourceAsStream("/text/noms.txt"));
+        Scanner scan = new Scanner(Personne.class.getResourceAsStream("/Texts/noms.txt"));
         int ligne = 1;
         while (scan.hasNextLine()) {
             String nom = scan.nextLine();
