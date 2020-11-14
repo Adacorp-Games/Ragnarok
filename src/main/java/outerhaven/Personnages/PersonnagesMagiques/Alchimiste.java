@@ -8,7 +8,6 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Alchimiste extends PersonneMagique{
@@ -53,19 +52,18 @@ public class Alchimiste extends PersonneMagique{
         }
     }
 
-    public void ajouterAlter(Case c){
-        if(c.getAlteration()==null) {
-            c.setAlteration(new Alteration("poison", 50, 5));
+    public void ajouterAlter(Case c) {
+        if (c.getAlteration() == null) {
+            c.setAlteration(new Alteration("poison", 50, 10));
             Plateau.listeCaseAltérées.add(c);
-        }
-        else{
+        } else {
             c.getAlteration().setDurée(5);
         }
     }
 
     @Override
     public Personne personneNouvelle(Equipe team,Case position) {
-        return new Alchimiste(team,position);
+        return new Alchimiste(team, position);
     }
 
     @Override

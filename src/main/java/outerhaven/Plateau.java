@@ -243,7 +243,6 @@ public class Plateau {
             this.lancerPartie();
             aire = 0;
             argentPartie = 0;
-            Plateau.scene.setCursor(Cursor.DEFAULT);
             Plateau.personneSelectionné = null;
         });
         return reset;
@@ -264,7 +263,6 @@ public class Plateau {
             setStatusPartie(false);
             scene.setFill(Color.WHITE);
             lancerScenePlateau();
-            Plateau.scene.setCursor(Cursor.DEFAULT);
             Plateau.personneSelectionné = null;
         });
         return reStrat;

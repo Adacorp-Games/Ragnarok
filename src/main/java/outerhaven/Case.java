@@ -51,7 +51,7 @@ public class Case {
             this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
-                if(clique){
+                if (clique) {
                     if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
                         if ((equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) || argentPartie == 0) {
                             contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
