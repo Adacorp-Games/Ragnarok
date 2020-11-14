@@ -5,12 +5,15 @@ import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.PersonneMagique;
 import outerhaven.Personnages.Personne;
 
+import java.util.ArrayList;
+
 public class Alteration {
     private Image image;
     private String effet;
     private int puissance;
     private int durée;
     private int timer = Plateau.nbTour;
+    public static ArrayList<Case> AlterSupr = new ArrayList<>();
 
     public Alteration(String effet, int puissance, int durée) {
         this.effet = effet;
@@ -33,6 +36,25 @@ public class Alteration {
         } else if (this.effet == "heal" && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getMaxHealth());
         }
+    }
+
+    public void passeTour(){
+        if(durée>1){
+            durée--;
+        }
+        else{
+            for (Case c:Plateau.listeCaseAltérées) {
+                if(c.getAlteration()==this){
+                    c.setAlteration(null);
+                    AlterSupr.add(c);
+                }
+            }
+        }
+    }
+
+    public static void nettoiCaseAlter(){
+        Plateau.listeCaseAltérées.removeAll(AlterSupr);
+        AlterSupr.clear();
     }
 
     public void appliquerEffet(PersonneMagique p) {

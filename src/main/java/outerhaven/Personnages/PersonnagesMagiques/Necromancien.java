@@ -28,7 +28,7 @@ public class Necromancien extends PersonneMagique {
         if (this.getTeam() != p.getTeam()) {
             p.setHealth(p.getHealth() - totalDamage);
 
-            // Vol de vie
+            // Vol en vie à la cible le montant de dégâts infligés
             if (this.getHealth() < this.getMaxHealth() - totalDamage) {
                 this.setHealth(this.getHealth() + totalDamage);
             } else if (this.getHealth() < this.getMaxHealth()) {
@@ -42,6 +42,7 @@ public class Necromancien extends PersonneMagique {
     }
 
     public void action() {
+        // Gagne de la mana chaque tour
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
         if (this.getPosition().nbVoisinsLibres() == 0) {
@@ -50,20 +51,20 @@ public class Necromancien extends PersonneMagique {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
 
-                // Invocation de morts (marche pas totalement)
+                // Invocation de morts dans les cases libres autour de lui
             } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0) {
                 //while (this.getMana() > 0) {
                     for (Case c : this.getPosition().voisinsLibres(true)) {
+                        // Remplissage des cases voisinnes vides par des morts
                         c.getContenu().add(new Mort(this.getTeam(), c));
                         c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
                         c.getContenu().get(0).afficherSanteEtNom();
                         Plateau.group.getChildren().add(c.getAffichagecontenu());
-                        /*InnerShadow ombre = new InnerShadow();
-                        ombre.colorProperty().setValue(this.getTeam().getCouleur());*/
                         c.getHexagone().setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
                         //this.setMana(this.getMana() - 25);
                     }
                 //}
+                // Décrémentation de son mana après le sort lancé
                 this.setMana(this.getMana() - 100);
 
             } else {

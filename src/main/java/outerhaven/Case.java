@@ -51,7 +51,7 @@ public class Case {
             this.posY = Y + taille/5;
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
-                if(clique){
+                if (clique) {
                     if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
                         if ((equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) || argentPartie == 0) {
                             contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
@@ -126,6 +126,7 @@ public class Case {
                     if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
                         Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
                     }
+                    Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
                 } /*else {
                     System.out.println("Pas assez d'argent !");
                 }*/
@@ -134,6 +135,7 @@ public class Case {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }
                 seVider();
+                Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
             } else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                 attention.setX(posX);
@@ -322,6 +324,7 @@ public class Case {
 
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         //System.out.println(xIncr +" "+ yIncr);
+        try{
         if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
             if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
                 for (int i = 0; i < caseVoisines.size() ; i++) {
@@ -340,6 +343,12 @@ public class Case {
                         chemin.add(caseVoisines.get(i));
                     }
                 }
+            }
+        }} catch (Exception e) {
+            try{
+            testCase(chemin, xIncr-1, yIncr, personne);
+            }catch(Exception e2){
+                testCase(chemin,xIncr+1,yIncr,personne);
             }
         }
     }
@@ -426,12 +435,14 @@ public class Case {
     }
 
     public void setAlteration(Alteration alteration) {
-        this.alteration = alteration;
-        this.hexagone.setImage(alteration.getImage());
-        listeCaseAltérées.add(this);
-        /*if (this.alteration.getDurée() + getTourActuel >= Plateau.nbTour) {
-            this.alteration = null;
-            this.hexagone.setImage(hexagone_img1);
-        }*/
+        if(alteration != null){
+            this.alteration=alteration;
+            this.hexagone.setImage(alteration.getImage());
+            listeCaseAltérées.add(this);
+        }
+        else{
+            this.alteration=null;
+            hexagone.setImage(hexagone_img1);
+        }
     }
 }

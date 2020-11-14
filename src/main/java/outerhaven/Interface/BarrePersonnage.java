@@ -25,7 +25,7 @@ public class BarrePersonnage {
     private Group group = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    private ArrayList<Personne> listClasse = new ArrayList<>();
+    public ArrayList<Personne> listClasse = new ArrayList<>();
     private Group argentGroup = new Group();
 
     public BarrePersonnage() {
@@ -58,6 +58,8 @@ public class BarrePersonnage {
         }
     }
 
+
+
     /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
     private Group boutonEquipe() {
@@ -79,6 +81,13 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE1());
             equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
+            for (Personne p : listClasse) {
+                if (personneSelectionné == p) {
+                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                } else {
+                    p.getImageperson().setEffect(null);
+                }
+            }
         });
 
         equipe1.setOnMouseEntered(mouseEvent -> {
@@ -95,6 +104,13 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE2());
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
+            for (Personne p : listClasse) {
+                if (personneSelectionné == p) {
+                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                } else {
+                    p.getImageperson().setEffect(null);
+                }
+            }
         });
 
         equipe2.setOnMouseEntered(mouseEvent -> {
@@ -146,5 +162,9 @@ public class BarrePersonnage {
 
     public Group getArgentGroup() {
         return argentGroup;
+    }
+
+    public ArrayList<Personne> getListClasse() {
+        return listClasse;
     }
 }

@@ -13,6 +13,10 @@ Samuel
 Santiago
 Mateusz
 Obama
+Agnes
+Alain
+Atchoum-Dalama
+Gilles
 Johannides
 Molnar
 Mou
@@ -37,3 +41,5 @@ Charles
 KimJong2
 Araki
 Toriyama
+
+

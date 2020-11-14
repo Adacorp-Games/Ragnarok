@@ -48,6 +48,7 @@ public class Plateau {
     public static Case[][] tableauCase;
     private static int temps = 500;
     public static int nbTour = 0;
+    private static Group nbPersonne = new Group();
 
     public Plateau(Stage primary) {
         Plateau.primary = primary;
@@ -100,8 +101,8 @@ public class Plateau {
         // Creation et incorporation d'une slide barre + boutton
         ajouteLeMenu();
 
-        // Afficher les infos des équipes (pas au point encore)
-        //group.getChildren().add(afficherInfosEquipes());
+        // Creation et incorporation d'information sur les équipes
+        afficherNbPersonne();
 
         // Tests argent
         /*System.out.println(argentPartie);
@@ -112,6 +113,8 @@ public class Plateau {
             getE2().setArgent(argentPartie);
             group.getChildren().add(barre.getArgentGroup());
         }
+
+        group.getChildren().add(nbPersonne);
 
         /*System.out.println(getE1().getArgent());
         System.out.println(getE2().getArgent());*/
@@ -203,6 +206,7 @@ public class Plateau {
         group.getChildren().add(nbArgent);
         group.getChildren().add(start);
         group.getChildren().add(quitter);
+
     }
 
     public static int getIntFromTextField(TextField textField) {
@@ -239,7 +243,6 @@ public class Plateau {
             this.lancerPartie();
             aire = 0;
             argentPartie = 0;
-            Plateau.scene.setCursor(Cursor.DEFAULT);
             Plateau.personneSelectionné = null;
         });
         return reset;
@@ -260,7 +263,6 @@ public class Plateau {
             setStatusPartie(false);
             scene.setFill(Color.WHITE);
             lancerScenePlateau();
-            Plateau.scene.setCursor(Cursor.DEFAULT);
             Plateau.personneSelectionné = null;
         });
         return reStrat;
@@ -451,6 +453,7 @@ public class Plateau {
     }
 
     public void tour() {
+        afficherNbPersonne();
         while (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie && stoptimeline) {
             nbTour++;
             System.out.println("Tour : " + nbTour);
@@ -458,19 +461,20 @@ public class Plateau {
 
             // Gestion des invocations
             personnages.addAll(invocationAttente);
+            /*getE1().setNbPersonne(personnages.size());
+            getE2().setNbPersonne(personnages.size());*/
             invocationAttente.clear();
 
             if (!listeCaseAltérées.isEmpty()) {
                 for (Case c : listeCaseAltérées) {
-                    if (c.getAlteration().getTimer() + c.getAlteration().getDurée() <= nbTour) {
-                        c.setAlteration(null);
+                    if(c.getAlteration()!=null) {
+                        c.getAlteration().passeTour();
+                    }
+                    else{
+                        Alteration.AlterSupr.add(c);
                     }
                 }
-                for (Case c : listeCaseAltérées) {
-                    if (c.getAlteration() == null) {
-                        listeCaseAltérées.remove(c);
-                    }
-                }
+                Alteration.nettoiCaseAlter();
             }
 
             if (Personne.barreVisible && !personnages.isEmpty()) {
@@ -479,7 +483,7 @@ public class Plateau {
                 }
             }
             Collections.shuffle(personnages);
-            for (Personne p : personnages) {
+            /*for (Personne p : personnages) {
                 p.getAlteration();
                 if (p.getHealth() <= 0) {
                     morts.add(p);
@@ -487,14 +491,22 @@ public class Plateau {
                 if (!morts.contains(p)) {
                     p.action();
                 }
+            }*/
+            for (int i = 0; i < personnages.size(); i++) {
+                if (personnages.get(i).getHealth() <= 0) {
+                    morts.add(personnages.get(i));
+                }
+                if (!morts.contains(personnages.get(i))) {
+                    personnages.get(i).action();
+                }
             }
-
             // Gestion des morts
             for (Personne p : morts) {
                 if (argentPartie > 0) {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
                 }
                 p.selfDelete();
+                p.getTeam().setNbPersonne(equipeSelectionné.getNbPersonne());
             }
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
             System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
@@ -516,12 +528,16 @@ public class Plateau {
                 group.getChildren().add(barre.returnBarre());
                 morts.clear();
                 personnages.addAll(invocationAttente);
+                /*getE1().setNbPersonne(getE1().getTeam().size());
+                getE2().setNbPersonne(getE2().getTeam().size());*/
             }
             if (argentPartie > 0) {
                 getE1().setArgent(getE1().getArgent() + 25);
                 getE2().setArgent(getE2().getArgent() + 25);
                 //System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
             }
+
+
         }
     }
 
@@ -531,32 +547,41 @@ public class Plateau {
         }
     }
 
-    /*public static Group afficherInfosEquipes() {
-        Group description = new Group();
-        Rectangle barre = new Rectangle(200 , getE1().getTeam().size()*4 + getE2().getTeam().size()*4 + 200, Color.LIGHTGRAY);
+    public static void afficherNbPersonne() {
+
+        Rectangle barre = new Rectangle(200 , 60, Color.LIGHTGRAY);
         barre.setX(10);
-        barre.setY(100);
+        barre.setY(400);
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
 
-        Text title = new Text("Informations sur les équipes");
-        title.setX(barre.getX() + 10);
-        title.setY(barre.getY() + 10);
+        Text title = new Text("Nombre de personne par équipe");
+        title.setX(barre.getX() + 23);
+        title.setY(barre.getY() + 15);
         //title.setStyle("-fx-font-style: bold");
 
-        Text descrip = new Text(getE1().toString() + "\n" + getE2().toString());
-        descrip.setX(title.getX());
-        descrip.setY(title.getY() + 20);
+        Text equipes = new Text( "Equipe 1 : " + getE1().getNbPersonne() + "\n" + "Equipe 2 : " + getE2().getNbPersonne());
+        equipes.setX(title.getX());
+        equipes.setY(title.getY() + 20);
 
-        description.getChildren().add(barre);
-        description.getChildren().add(title);
-        description.getChildren().add(descrip);
-        return description;
-    }*/
+        nbPersonne.getChildren().add(barre);
+        nbPersonne.getChildren().add(title);
+        nbPersonne.getChildren().add(equipes);
+
+    }
+
+    public static void updateNbPersonne() {
+        nbPersonne.getChildren().clear();
+        afficherNbPersonne();
+    }
 
     // Getter et setter
     public static boolean getStatusPartie() {
         return statusPartie;
+    }
+
+    public static Group getNbPersonne() {
+        return nbPersonne;
     }
 
     public static void setStatusPartie(boolean statusPartie) {
