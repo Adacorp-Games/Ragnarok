@@ -18,8 +18,11 @@ import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import static outerhaven.Plateau.*;
 
@@ -302,45 +305,15 @@ public abstract class Personne {
     }
 
     private static void ajouteNom() {
-        listName.add("Alex");
-        listName.add("Ilyes");
-        listName.add("Pierre-Antoine");
-        listName.add("Julien");
-        listName.add("Hamza");
-        listName.add("Jérôme");
-        listName.add("Erwan");
-        listName.add("Gaël");
-        listName.add("Maxime");
-        listName.add("Benjamin");
-        listName.add("Tanguy");
-        listName.add("Samuel");
-        listName.add("Santiago");
-        listName.add("Mateusz");
-        listName.add("Obama");
-        listName.add("Johannides");
-        listName.add("Molnar");
-        listName.add("Mou");
-        listName.add("Medhy");
-        listName.add("Macron");
-        listName.add("Micron");
-        listName.add("Basile");
-        listName.add("Sarkozy");
-        listName.add("Stéphanie");
-        listName.add("Hugo");
-        listName.add("David");
-        listName.add("Pierrick");
-        listName.add("Benoit");
-        listName.add("Cedric");
-        listName.add("Sars-Cov3");
-        listName.add("COVID-20");
-        listName.add("Nostradamus");
-        listName.add("Thanos");
-        listName.add("Shrek");
-        listName.add("Beanos");
-        listName.add("Charles");
-        listName.add("KimJong2");
-        listName.add("Araki");
-        listName.add("Toriyama");
+        // File noms = new File("/text/noms.txt");
+        Scanner scan = new Scanner(Personne.class.getResourceAsStream("/text/noms.txt"));
+        int ligne = 1;
+        while (scan.hasNextLine()) {
+            String nom = scan.nextLine();
+            listName.add(nom);
+            ligne++;
+        }     
+        scan.close();
     }
 
     // Getter et setter
