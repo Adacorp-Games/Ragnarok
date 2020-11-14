@@ -557,7 +557,7 @@ public class Plateau {
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
 
-        Text title = new Text("Informations sur les équipes");
+        Text title = new Text("Nombre de personne par équipe");
         title.setX(barre.getX() + 23);
         title.setY(barre.getY() + 15);
         //title.setStyle("-fx-font-style: bold");

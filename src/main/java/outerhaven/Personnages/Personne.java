@@ -39,6 +39,7 @@ public abstract class Personne {
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
     public static boolean barreVisible = false;
+    private ImageView imageperson = new ImageView(this.getImageFace());
 
     // A revoir en fonction du deplacement des personnages
     private Case position;
@@ -141,7 +142,7 @@ public abstract class Personne {
 
     public Group affichagePersonnageBarre(int i) {
         Group group = new Group();
-        ImageView imageperson = new ImageView(this.getImageFace());
+
         imageperson.setFitHeight(130);
         imageperson.setFitWidth(100);
         imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
@@ -156,8 +157,21 @@ public abstract class Personne {
             if (Plateau.personneSelectionné == null) {
                 Plateau.scene.setCursor(new ImageCursor(getImageFace()));
                 Plateau.personneSelectionné = this;
+                if (equipeSelectionné != null) {
+                    imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                    for (Personne p : barre.getListClasse()) {
+                        if (personneSelectionné == p) {
+                            p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                        } else {
+                            p.getImageperson().setEffect(null);
+                        }
+                    }
+                }
             } else {
                 Plateau.scene.setCursor(Cursor.DEFAULT);
+                for (Personne p : barre.getListClasse()) {
+                    p.getImageperson().setEffect(null);
+                }
                 Plateau.personneSelectionné = null;
             }
         });
@@ -378,6 +392,14 @@ public abstract class Personne {
         } else {
             return e1;
         }
+    }
+
+    public ImageView getImageperson() {
+        return imageperson;
+    }
+
+    public void setImageperson(ImageView imageperson) {
+        this.imageperson = imageperson;
     }
 
     public abstract Image getImageFace();
