@@ -126,6 +126,7 @@ public class Case {
                     if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
                         Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
                     }
+                    Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
                 } /*else {
                     System.out.println("Pas assez d'argent !");
                 }*/
@@ -134,6 +135,7 @@ public class Case {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }
                 seVider();
+                Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
             } else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                 attention.setX(posX);
