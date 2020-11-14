@@ -36,9 +36,10 @@ public class Archimage extends PersonneMagique {
                 System.out.println(this.getName() + " patiente");
 
                 // Téléportation si cible trop proche
-            } else if (danger == true) {
+            } else if (danger == true && this.getPosition().nbVoisinsLibres() > 0) {
                 déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
                 danger = false;
+
 
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
