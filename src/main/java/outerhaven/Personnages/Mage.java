@@ -8,11 +8,12 @@ import outerhaven.Equipe;
 public class Mage extends Personne {
 
     public Mage() {
-        super(1500, 50, 200, 200, 3, 1);
+        //  vie armor cost degat range speed)
+        super(300, 40, 250, 325, 8, 1);
     }
 
     public Mage(Equipe team, Case position) {
-        super(1500, 50, 200, 200, 3, 1, team, position);
+        super(300, 40, 250, 325, 8, 1, team, position);
         this.getPosition().setContenu(this);
     }
 

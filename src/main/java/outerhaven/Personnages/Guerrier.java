@@ -8,11 +8,12 @@ import outerhaven.Equipe;
 public class Guerrier extends Personne {
 
     public Guerrier() {
-        super(2000, 100, 100, 175, 1, 1);
+        //  vie armor cost degat range speed)
+        super(1000, 100, 100, 175, 1, 1);
     }
 
     public Guerrier(Equipe team, Case position) {
-        super(2000, 100, 100, 175, 1, 1, team, position);
+        super(1000, 100, 100, 175, 1, 1, team, position);
         this.getPosition().setContenu(this);
     }
 
