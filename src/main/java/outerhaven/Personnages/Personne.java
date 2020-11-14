@@ -86,6 +86,7 @@ public abstract class Personne {
 
     public abstract Personne personneNouvelle(Equipe team, Case position);
 
+    //Fonction qui permet d'attaquer le personnage mit en parametre s'il est d'une équipe différente
     public void attaquer(Personne p) {
         double damageMultiplier = damage / (damage + armor / 5);
         double totalDamage = damage * damageMultiplier;
@@ -97,6 +98,7 @@ public abstract class Personne {
         }
     }
 
+    //Fonction qui permet de se déplacer dans une case mis en parametre et vidant la case précédente
     public void déplacer(Case c) {
         Case casePrecedente = this.position;
         this.position = c;
@@ -108,8 +110,9 @@ public abstract class Personne {
     }
 
     /*
-     * public void déplacer(Case[] c) { //this.position = c; }
+     public void déplacer(Case[] c) { //this.position = c; }
      */
+
 
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
@@ -140,6 +143,8 @@ public abstract class Personne {
         }
     }
 
+    /*Fonction qui permet d'afficher la barre des personnages selectionables et qui implémente les fonctionnalités
+      liées à la séléction des personnages*/
     public Group affichagePersonnageBarre(int i) {
         Group group = new Group();
 
@@ -177,6 +182,7 @@ public abstract class Personne {
         return group;
     }
 
+    //Fonction permettant de créer la barre d'information d'un personnage
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
         Rectangle barre = new Rectangle(400 , 130, Color.LIGHTGRAY);
@@ -261,7 +267,6 @@ public abstract class Personne {
     }
 
     // Affichage santé et nom
-
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
         SanteNom.getChildren().addAll(afficherSante(), afficherNom());
@@ -279,6 +284,7 @@ public abstract class Personne {
         }
     }
 
+    //Fonction qui permet à un personnage de s'auto détruire
     public void selfDelete() {
         this.position.seVider();
         SanteNom.getChildren().clear();
@@ -286,6 +292,7 @@ public abstract class Personne {
         personnages.remove(this);
     }
 
+    //Fonction qui permet de créer la barre de vie d'un personnage
     public Group afficherSante() {
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle vie = new Rectangle(taille - 4, taille/10 - 4, Color.RED);
