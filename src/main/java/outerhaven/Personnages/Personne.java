@@ -155,7 +155,6 @@ public abstract class Personne {
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
             if (Plateau.personneSelectionné == null) {
-                Plateau.scene.setCursor(new ImageCursor(getImageFace()));
                 Plateau.personneSelectionné = this;
                 if (equipeSelectionné != null) {
                     imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
@@ -168,7 +167,6 @@ public abstract class Personne {
                     }
                 }
             } else {
-                Plateau.scene.setCursor(Cursor.DEFAULT);
                 for (Personne p : barre.getListClasse()) {
                     p.getImageperson().setEffect(null);
                 }
