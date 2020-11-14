@@ -34,8 +34,8 @@ public abstract class Personne {
     private double maxHealth;
     private double armor;
     private double cost;
-    private int damage;
-    private int range; // Portée d'attaque en nombre de case.
+    protected int damage;
+    protected int range; // Portée d'attaque en nombre de case.
     private int speed; // Nombre de case qu'il parcourt chaque tour.
     private Equipe team;
     public static boolean barreVisible = false;
