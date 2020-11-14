@@ -1,11 +1,6 @@
 package outerhaven.Personnages;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -18,8 +13,6 @@ import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -40,12 +33,10 @@ public abstract class Personne {
     private Equipe team;
     public static boolean barreVisible = false;
     private ImageView imageperson = new ImageView(this.getImageFace());
-
-    // A revoir en fonction du deplacement des personnages
     private Case position;
 
-    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed) {
         this.name = getRandomName();
@@ -84,9 +75,8 @@ public abstract class Personne {
         this.position.setContenu(this);
     }
 
-    public abstract Personne personneNouvelle(Equipe team, Case position);
-
     //Fonction qui permet d'attaquer le personnage mit en parametre s'il est d'une équipe différente
+
     public void attaquer(Personne p) {
         double damageMultiplier = damage / (damage + armor / 5);
         double totalDamage = damage * damageMultiplier;
@@ -97,8 +87,8 @@ public abstract class Personne {
             }
         }
     }
+    // Fonction qui permet de se déplacer dans une case mis en parametre et vidant la case précédente
 
-    //Fonction qui permet de se déplacer dans une case mis en parametre et vidant la case précédente
     public void déplacer(Case c) {
         Case casePrecedente = this.position;
         this.position = c;
@@ -108,11 +98,7 @@ public abstract class Personne {
             this.afficherSanteEtNom();
         }
     }
-
-    /*
-     public void déplacer(Case[] c) { //this.position = c; }
-     */
-
+    // Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer
 
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
@@ -135,6 +121,7 @@ public abstract class Personne {
             }
         }
     }
+    // Méthode pour ralentir certaines méthodes
 
     public void waitTEST(long nb) {
         long i = 0;
@@ -142,9 +129,8 @@ public abstract class Personne {
             i = j -i + 5;
         }
     }
+    // Fonction qui permet d'afficher la barre des personnages selectionables et qui implémente les fonctionnalités liées à la séléction des personnages
 
-    /*Fonction qui permet d'afficher la barre des personnages selectionables et qui implémente les fonctionnalités
-      liées à la séléction des personnages*/
     public Group affichagePersonnageBarre(int i) {
         Group group = new Group();
 
@@ -181,8 +167,8 @@ public abstract class Personne {
         group.getChildren().add(imageperson);
         return group;
     }
+    // Fonction permettant de créer la barre d'informations d'un personnage
 
-    //Fonction permettant de créer la barre d'information d'un personnage
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
         Rectangle barre = new Rectangle(400 , 130, Color.LIGHTGRAY);
@@ -211,8 +197,11 @@ public abstract class Personne {
         return description;
     }
 
+    // Méthodes personnalisées en fonction du personnage
+    public abstract Personne personneNouvelle(Equipe team, Case position);
     public abstract Text getinfoTitleText();
     public abstract Text getinfoDescText();
+    public abstract Image getImageFace();
 
     public Group affichagePersonnage() {
         Group group = new Group();
@@ -265,8 +254,8 @@ public abstract class Personne {
 
         return group;
     }
-
     // Affichage santé et nom
+
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
         SanteNom.getChildren().addAll(afficherSante(), afficherNom());
@@ -283,16 +272,16 @@ public abstract class Personne {
             group.getChildren().remove(SanteNom);
         }
     }
+    // Fonction qui permet à un personnage de s'auto détruire
 
-    //Fonction qui permet à un personnage de s'auto détruire
     public void selfDelete() {
         this.position.seVider();
         SanteNom.getChildren().clear();
         this.getTeam().getTeam().remove(this);
         personnages.remove(this);
     }
+    // Fonction qui permet de créer la barre de vie d'un personnage
 
-    //Fonction qui permet de créer la barre de vie d'un personnage
     public Group afficherSante() {
         Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle vie = new Rectangle(taille - 4, taille/10 - 4, Color.RED);
@@ -313,8 +302,7 @@ public abstract class Personne {
 
         return group;
     }
-
-    // Gestion nomRandomName
+    // Gestion des nom aléatoires pour les personnages
 
     public static String getRandomName() {
         if (listName.isEmpty()) {
@@ -331,7 +319,7 @@ public abstract class Personne {
             String nom = scan.nextLine();
             listName.add(nom);
             ligne++;
-        }     
+        }
         scan.close();
     }
 
@@ -406,8 +394,6 @@ public abstract class Personne {
     public void setImageperson(ImageView imageperson) {
         this.imageperson = imageperson;
     }
-
-    public abstract Image getImageFace();
 
     @Override
     public String toString() {

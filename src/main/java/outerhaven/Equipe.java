@@ -1,15 +1,11 @@
 package outerhaven;
 
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
 import static outerhaven.Plateau.barre;
-import static outerhaven.Plateau.getE1;
 
 public class Equipe {
     private ArrayList<Personne> team;

@@ -104,10 +104,6 @@ public class Plateau {
         // Creation et incorporation d'information sur les équipes
         afficherNbPersonne();
 
-        // Tests argent
-        /*System.out.println(argentPartie);
-        System.out.println(aire);*/
-
         if (argentPartie > 0) {
             getE1().setArgent(argentPartie);
             getE2().setArgent(argentPartie);
@@ -115,10 +111,6 @@ public class Plateau {
         }
 
         group.getChildren().add(nbPersonne);
-
-        /*System.out.println(getE1().getArgent());
-        System.out.println(getE2().getArgent());*/
-
         group.getChildren().add(boutonPausePlay());
         group.getChildren().add(barre.returnBarre());
         primary.setScene(scene);
@@ -243,7 +235,7 @@ public class Plateau {
             this.lancerPartie();
             aire = 0;
             argentPartie = 0;
-            Plateau.personneSelectionné = null;
+            //Plateau.personneSelectionné = null;
         });
         return reset;
     }
@@ -263,7 +255,7 @@ public class Plateau {
             setStatusPartie(false);
             scene.setFill(Color.WHITE);
             lancerScenePlateau();
-            Plateau.personneSelectionné = null;
+            //Plateau.personneSelectionné = null;
         });
         return reStrat;
     }
@@ -291,7 +283,7 @@ public class Plateau {
                     //boutonEquipe().getChildren().clear();
                     scene.setFill(Color.DARKGRAY);
                     Plateau.scene.setCursor(Cursor.DEFAULT);
-                    Plateau.personneSelectionné = null;
+                    //Plateau.personneSelectionné = null;
                     //Plateau.incorporeEquipe(null);
                 }
                 tour();
@@ -338,6 +330,7 @@ public class Plateau {
         return boutonGame;
     }
 
+    // Ajout du menu
     private void ajouteLeMenu() {
         Button menu = new Bouton().creerBouton("Menu");
         menu.setLayoutX(10);
@@ -414,6 +407,7 @@ public class Plateau {
         group.getChildren().add(menu);
     }
 
+    // Boutons permettant au jeu d'aller plus vite en modifiant l'int (en millisecondes) d'attente entre chaque tour
     private Button vitesseX1() {
         Button vitesseX1 = new Bouton().creerBouton("x1");
         vitesseX1.setLayoutX(270);
@@ -461,16 +455,14 @@ public class Plateau {
 
             // Gestion des invocations
             personnages.addAll(invocationAttente);
-            /*getE1().setNbPersonne(personnages.size());
-            getE2().setNbPersonne(personnages.size());*/
             invocationAttente.clear();
 
+            // Gestion des cases altérées
             if (!listeCaseAltérées.isEmpty()) {
                 for (Case c : listeCaseAltérées) {
-                    if(c.getAlteration()!=null) {
+                    if (c.getAlteration() != null) {
                         c.getAlteration().passeTour();
-                    }
-                    else{
+                    } else {
                         Alteration.AlterSupr.add(c);
                     }
                 }
@@ -482,6 +474,8 @@ public class Plateau {
                     personnages.get(i).afficherSanteEtNom();
                 }
             }
+
+            // Gestion de l'ordre d'action des personnages
             Collections.shuffle(personnages);
             /*for (Personne p : personnages) {
                 p.getAlteration();
@@ -500,6 +494,7 @@ public class Plateau {
                     personnages.get(i).action();
                 }
             }
+
             // Gestion des morts
             for (Personne p : morts) {
                 if (argentPartie > 0) {
@@ -536,19 +531,18 @@ public class Plateau {
                 getE2().setArgent(getE2().getArgent() + 25);
                 //System.out.println("Equipe 1 : " + e1.getArgent() + "€ | Equipe 2 : " + e2.getArgent() + "€");
             }
-
-
         }
     }
 
+    // Initialisation des cases voisines pour chaque case du plateau
     public void initVoisins() {
         for (Case c : listeCase) {
             c.trouverVoisin();
         }
     }
 
+    // Méthode qui affiche le nombre de personnes dans chaque équipe en temps réel
     public static void afficherNbPersonne() {
-
         Rectangle barre = new Rectangle(200 , 60, Color.LIGHTGRAY);
         barre.setX(10);
         barre.setY(400);
@@ -567,9 +561,9 @@ public class Plateau {
         nbPersonne.getChildren().add(barre);
         nbPersonne.getChildren().add(title);
         nbPersonne.getChildren().add(equipes);
-
     }
 
+    // Méthode pour update les compteurs de afficherNbPersonne()
     public static void updateNbPersonne() {
         nbPersonne.getChildren().clear();
         afficherNbPersonne();

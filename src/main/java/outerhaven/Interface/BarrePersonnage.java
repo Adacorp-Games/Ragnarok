@@ -60,8 +60,6 @@ public class BarrePersonnage {
         }
     }
 
-
-
     /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
     private Group boutonEquipe() {
@@ -76,7 +74,6 @@ public class BarrePersonnage {
         equipe2.setLayoutX(120);
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
-
 
         // Actions sur les boutons d'équipes
         equipe1.setOnMouseClicked(mouseEvent -> {

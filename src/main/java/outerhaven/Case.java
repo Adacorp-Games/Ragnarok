@@ -351,11 +351,11 @@ public class Case {
                     }
                 }
             }
-        }} catch (Exception e) {
-            try{
-            testCase(chemin, xIncr-1, yIncr, personne);
-            }catch(Exception e2){
-                testCase(chemin,xIncr+1,yIncr,personne);
+        }} catch(Exception e) {
+            try {
+                testCase(chemin,xIncr-1, yIncr, personne);
+            } catch(Exception e2) {
+                testCase(chemin,xIncr+1, yIncr, personne);
             }
         }
     }
@@ -442,13 +442,12 @@ public class Case {
     }
 
     public void setAlteration(Alteration alteration) {
-        if(alteration != null){
-            this.alteration=alteration;
+        if (alteration != null) {
+            this.alteration = alteration;
             this.hexagone.setImage(alteration.getImage());
             listeCaseAltérées.add(this);
-        }
-        else{
-            this.alteration=null;
+        } else {
+            this.alteration = null;
             hexagone.setImage(hexagone_img1);
         }
     }

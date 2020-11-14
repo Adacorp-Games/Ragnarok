@@ -38,13 +38,22 @@ public class Alteration {
         }
     }
 
-    public void passeTour(){
-        if(durée>1){
-            durée--;
+    public void appliquerEffet(PersonneMagique p) {
+        if (this.effet == "manaVore") {
+            if (p.getMana() >= 35) {
+                p.setMana(p.getMana() - 35);
+            } else if (p.getMana() < 35) {
+                p.setMana(0);
+            }
         }
-        else{
-            for (Case c:Plateau.listeCaseAltérées) {
-                if(c.getAlteration()==this){
+    }
+
+    public void passeTour() {
+        if (durée > 1) {
+            durée--;
+        } else {
+            for (Case c : Plateau.listeCaseAltérées) {
+                if (c.getAlteration() == this) {
                     c.setAlteration(null);
                     AlterSupr.add(c);
                 }
@@ -55,16 +64,6 @@ public class Alteration {
     public static void nettoiCaseAlter(){
         Plateau.listeCaseAltérées.removeAll(AlterSupr);
         AlterSupr.clear();
-    }
-
-    public void appliquerEffet(PersonneMagique p) {
-        if (this.effet == "manaVore") {
-            if (p.getMana() >= 35) {
-                p.setMana(p.getMana() - 35);
-            } else if (p.getMana() < 35) {
-                p.setMana(0);
-            }
-        }
     }
 
     // Getter et setter
