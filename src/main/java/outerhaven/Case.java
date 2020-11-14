@@ -322,6 +322,7 @@ public class Case {
 
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         //System.out.println(xIncr +" "+ yIncr);
+        try{
         if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
             if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
                 for (int i = 0; i < caseVoisines.size() ; i++) {
@@ -340,6 +341,12 @@ public class Case {
                         chemin.add(caseVoisines.get(i));
                     }
                 }
+            }
+        }} catch (Exception e) {
+            try{
+            testCase(chemin, xIncr-1, yIncr, personne);
+            }catch(Exception e2){
+                testCase(chemin,xIncr+1,yIncr,personne);
             }
         }
     }
