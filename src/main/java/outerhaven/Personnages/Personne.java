@@ -159,7 +159,7 @@ public abstract class Personne {
             group.getChildren().remove(1);
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
-            if (Plateau.personneSelectionné == null) {
+            //if (Plateau.personneSelectionné == null) {
                 Plateau.personneSelectionné = this;
                 if (equipeSelectionné != null) {
                     imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
@@ -171,12 +171,12 @@ public abstract class Personne {
                         }
                     }
                 }
-            } else {
+            /*} else {
                 for (Personne p : barre.getListClasse()) {
                     p.getImageperson().setEffect(null);
                 }
                 Plateau.personneSelectionné = null;
-            }
+            }*/
         });
         group.getChildren().add(imageperson);
         return group;
