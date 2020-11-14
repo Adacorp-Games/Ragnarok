@@ -426,12 +426,14 @@ public class Case {
     }
 
     public void setAlteration(Alteration alteration) {
-        this.alteration = alteration;
-        this.hexagone.setImage(alteration.getImage());
-        listeCaseAltérées.add(this);
-        /*if (this.alteration.getDurée() + getTourActuel >= Plateau.nbTour) {
-            this.alteration = null;
-            this.hexagone.setImage(hexagone_img1);
-        }*/
+        if(alteration != null){
+            this.alteration=alteration;
+            this.hexagone.setImage(alteration.getImage());
+            listeCaseAltérées.add(this);
+        }
+        else{
+            this.alteration=null;
+            hexagone.setImage(hexagone_img1);
+        }
     }
 }

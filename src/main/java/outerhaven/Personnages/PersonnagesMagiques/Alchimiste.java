@@ -6,7 +6,9 @@ import outerhaven.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
+import outerhaven.Plateau;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Alchimiste extends PersonneMagique{
@@ -33,11 +35,10 @@ public class Alchimiste extends PersonneMagique{
 
                 // Capacités de l'alchimiste
                 if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
-                    pathToEnnemy.get(pathToEnnemy.size() - 1).setAlteration(new Alteration("poison", 50, 5));
+                    ajouterAlter(pathToEnnemy.get(pathToEnnemy.size() - 1));
                     for (Case c : pathToEnnemy.get(pathToEnnemy.size() - 1).getCaseVoisines()) {
-                        c.setAlteration(new Alteration("poison", 50, 5));
+                        ajouterAlter(c);
                     }
-                    pathToEnnemy.get(pathToEnnemy.size() - 1).setAlteration(new Alteration("poison", 50, 5));
                     this.setMana(this.getMana() - 125);
 
                 } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
@@ -49,6 +50,16 @@ public class Alchimiste extends PersonneMagique{
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }
+        }
+    }
+
+    public void ajouterAlter(Case c){
+        if(c.getAlteration()==null) {
+            c.setAlteration(new Alteration("poison", 50, 5));
+            Plateau.listeCaseAltérées.add(c);
+        }
+        else{
+            c.getAlteration().setDurée(5);
         }
     }
 

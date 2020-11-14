@@ -462,15 +462,14 @@ public class Plateau {
 
             if (!listeCaseAltérées.isEmpty()) {
                 for (Case c : listeCaseAltérées) {
-                    if (c.getAlteration().getTimer() + c.getAlteration().getDurée() <= nbTour) {
-                        c.setAlteration(null);
+                    if(c.getAlteration()!=null) {
+                        c.getAlteration().passeTour();
+                    }
+                    else{
+                        Alteration.AlterSupr.add(c);
                     }
                 }
-                for (Case c : listeCaseAltérées) {
-                    if (c.getAlteration() == null) {
-                        listeCaseAltérées.remove(c);
-                    }
-                }
+                Alteration.nettoiCaseAlter();
             }
 
             if (Personne.barreVisible && !personnages.isEmpty()) {
