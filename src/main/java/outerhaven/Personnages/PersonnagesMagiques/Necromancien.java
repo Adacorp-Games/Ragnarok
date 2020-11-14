@@ -51,7 +51,7 @@ public class Necromancien extends PersonneMagique {
                 System.out.println(this.getName() + " patiente");
 
                 // Invocation de morts (marche pas totalement)
-            } else if (this.getMana() > 100) {
+            } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0) {
                 //while (this.getMana() > 0) {
                     for (Case c : this.getPosition().voisinsLibres(true)) {
                         c.getContenu().add(new Mort(this.getTeam(), c));
