@@ -16,13 +16,14 @@ import outerhaven.Personnages.Personne;
 import static outerhaven.Plateau.*;
 
 /**
- * Une case represente un hexagone sur le plateau,
- * elle peut contenir un personnage et etre alterer,
- * cette classe contient aussi tout le systeme de detection permettant ainsi les combats
+ * Une case représente un hexagone sur le plateau,
+ * elle peut contenir un personnage et être altérée,
+ * cette classe contient aussi tout le systeme de détection permettant ainsi les combats
  */
+
 public class Case {
     /**
-     * Pos X et Pos Y contiennent les coordonées de la case en px sur l'ecran de l'utilisteur
+     * Pos X et Pos Y contiennent les coordonnées de la case en px sur l'ecran de l'utilisteur
      * coordonnee contient les coordonnée X -> (0) et Y -> (1) de la case
      */
     private double posX;
@@ -33,19 +34,19 @@ public class Case {
      */
     private ArrayList<Case> caseVoisines = new ArrayList<>();
     /**
-     *C'est ce que contient la case, nous avons choisi d'untuliser une liste pour eviter certaine erreur
+     * C'est ce que contient la case, nous avons choisi d'untuliser une liste pour eviter certaine erreur
      */
     private final ArrayList<Personne> contenu = new ArrayList<>();
     /**
-     * group contenant l'affichage de la case
+     * Groupe contenant l'affichage de la case
      */
     private Group affichagecontenu;
     /**
-     *Contenant l'alteration de la case : null si la case n'a rien
+     * Contenant l'alteration de la case : null si la case n'a rien
      */
     private Alteration alteration;
     /**
-     * contient l'image d'une case --> forme hexagonale
+     * Contient l'image d'une case --> forme hexagonale
      */
     private ImageView hexagone;
     private static final Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
@@ -57,11 +58,10 @@ public class Case {
     }
 
     /**
-     * Genere l'aficche d'une case ainsi que ses interactions
-     * @param X
-     * @param Y
-     * @param taille
-     * @return
+     * Génère l'affichage d'une case ainsi que ses intéractions
+     * @param X : position en X de l'image
+     * @param Y : position en Y de l'image
+     * @param taille : taille de l'image pixels
      */
     public ImageView afficherCase(double X, double Y, double taille) {
         if (!estOccupe()) {
@@ -72,9 +72,9 @@ public class Case {
             hexagone.setY(Y + 2000);
             this.posX = X;
             this.posY = Y + taille/5;
-            //lorsqu'une souris sort de la case
+            // Lorsqu'une souris sort de la case
             hexagone.setOnMouseEntered((mouseEvent) -> hexagone.setImage(hexagone_img2));
-            //lorsqu'une souris sort de la case (en focntion de l'alteration)
+            // Lorsqu'une souris sort de la case (en fonction de l'altération)
             hexagone.setOnMouseExited((mouseEvent) -> {
                 if (this.getAlteration() != null) {
                     hexagone.setImage(this.getAlteration().getImage());
@@ -82,7 +82,7 @@ public class Case {
                     hexagone.setImage(hexagone_img1);
                 }
             });
-            //lorsque l'on clique sur la souris
+            // Lorsque l'on clique sur la souris
             hexagone.setOnMousePressed((mouseEvent)-> interactionHex());
             arriveCase(hexagone);
             return hexagone;
@@ -92,7 +92,7 @@ public class Case {
     }
 
     /**
-     * Methode permetant à une classe de se vider, ne plus avoir de contenu
+     * Methode permetant à une case (this) de se vider, ne plus avoir de contenu
      */
     public void seVider() {
         if (contenu.size() > 0) {
@@ -124,15 +124,15 @@ public class Case {
     }
 
     /**
-     * Gere l'interaction d'une case lorsque l'on clique dessus
+     * Gère l'intéraction d'une case lorsque l'on clique dessus
      */
     public void interactionHex() {
         if (!statusPartie) {
-            //Verifie si il y a bien un personnage selectionné dans une equipe et que la case vide est vide
+            // Vérifie si il y a bien un personnage selectionné dans une equipe et que la case vide est vide
             if (personneSelectionne != null && equipeSelectionne != null && contenu.isEmpty()) {
-                //Verifie si l'utilisateur à assez d'argent
+                // Vérifie si l'utilisateur à assez d'argent
                 if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
-                    //met à jour l'affichage,la liste des personnages sur le plateau et dans les equipes
+                    // Met à jour l'affichage, la liste des personnages sur le plateau et dans les équipes
                     contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
@@ -146,7 +146,7 @@ public class Case {
                     equipeSelectionne.setNbPersonne();
                 }
             }
-            //Cas où l'utilisateur cherche à vider une case
+            // Cas où l'utilisateur cherche à vider une case
             else if ((personneSelectionne != null && equipeSelectionne != null) || (personneSelectionne == null && !contenu.isEmpty())) {
                 if (argentPartie != 0) {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
@@ -154,7 +154,7 @@ public class Case {
                 seVider();
                 equipeSelectionne.setNbPersonne();
             }
-            //Cas ou l'utilisateur ne respect aucune condition
+            // Cas ou l'utilisateur ne respecte aucune condition
             else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                 attention.setX(posX);
@@ -170,7 +170,6 @@ public class Case {
 
     /**
      * Anime les cases lors de l'arrivée
-     * @param image
      */
     private void arriveCase(ImageView image) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), ev -> mouvementY(image)));
@@ -179,7 +178,7 @@ public class Case {
     }
 
     /**
-     * Deplace une case en Y
+     * Déplace une case en Y
      * @param image
      */
     private void mouvementY(ImageView image) {
@@ -187,8 +186,8 @@ public class Case {
     }
 
     /**
-     * Verifie si une case est vide ou pleine
-     * @return
+     * Vérifie si une case est vide ou pleine
+     * @return false si vide et true si occupée
      */
     public boolean estOccupe() {
         if (contenu.size() == 0) {
@@ -209,10 +208,10 @@ public class Case {
     }
 
     /**
-     * Cherche les voisins d'une casse pour les mettrent dans voisinCase
+     * Cherche les voisins d'une casse pour les mettrent dans voisinCase en début de partie
      */
     public void trouverVoisin() {
-        //Verifie toutes les case en fonction de leurs cordonnées
+        // Vérifie toutes les cases en fonction de leurs cordonnées
         for (Case c : listeCase) {
             if ((c.getCoordonnee()[1] == this.getCoordonnee()[1] - 1
                     || c.getCoordonnee()[1] == this.getCoordonnee()[1] + 1) && c.getCoordonnee()[0] == getCoordonnee()[0]) {
@@ -230,9 +229,9 @@ public class Case {
     }
 
     /**
-     * Permet d'afficher visiuellement les case voisines
-     * @param longueur
-     * @param status
+     * Permet d'afficher visuellement les case voisines
+     * @param longueur : portée d'affichage en case voisine
+     * @param status : afficher ou non
      */
     public void afficherCaseVoisines(int longueur, boolean status) {
         Image voisin;
@@ -263,25 +262,24 @@ public class Case {
     }
 
     /**
-     * cherches tout les cases voisines libres
-     * @param lib
-     * @return
+     * Cherches toutes les cases voisines libres/pleines
+     * @param lib : on cherche une case libre ou pleine
+     * @return une liste de cases libres/pleines autour de this
      */
     public ArrayList<Case> voisinsLibres(boolean lib) {
         ArrayList<Case> libres = new ArrayList<>();
-        for (Case case1 : caseVoisines) {
-            if (case1.estOccupe()!=lib) {
-                libres.add(case1);
+        for (Case c : caseVoisines) {
+            if (c.estOccupe() != lib) {
+                libres.add(c);
             } else {
-                libres.add(case1);
+                libres.add(c);
             }
         }
         return libres;
     }
 
     /**
-     * Retourne une liste de voisin melangée
-     * @return
+     * Retourne une liste de voisin libres melangés
      */
     public ArrayList<Case> getRandomVoisinLibre() {
         ArrayList<Case> listeVoisinLibres = this.voisinsLibres(true);
@@ -290,20 +288,18 @@ public class Case {
     }
 
     /**
-     * la nombre de liste vide
-     * @return
+     * Méthode qui retourne le nombre de voisins vides
      */
     public int nbVoisinsLibres() {
         return voisinsLibres(true).size();
     }
 
     /**
-     * Trouves le personnage ennemie le plus proche d'une case grace à un calcule de norme vectoriel
-     * @param e
-     * @return
+     * Trouves le personnage ennemie le plus proche d'une case grâce à un calcul de norme vectoriel
+     * @return une liste de cases étant le chemin vers la cible la plus proche
      */
     public ArrayList<Case> pathToPerso(Equipe e) {
-        //la profondeur max possible
+        // La profondeur max possible
         int depth = 10000000;
         Personne Leplusprocche = null;
         for (int i = 0; i < personnages.size(); i++) {
@@ -322,16 +318,14 @@ public class Case {
     }
 
     /**
-     * Calule l'intinairaire d'une case à une autre grace à un systeme de deplacement vectoriel (deplacement unitaire vectoriel)
-     * @param personne
-     * @return
+     * Calcule l'itinéraire d'une case à une autre grace à un systeme de déplacement vectoriel (déplacement unitaire vectoriel)
      */
     public ArrayList<Case> pathToPersoAux(Personne personne) {
         ArrayList<Case> chemin = new ArrayList<>();
         chemin.add(this);
         int x = (personne.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
         int y = (personne.getPosition().donneYpourTab() - this.donneYpourTab());
-        //Calcule du deplacment unitaire allant de xIncr à AvancementX de 1 en 1
+        // Calcule du deplacment unitaire allant de xIncr à AvancementX de 1 en 1
         double Avancementx =  x/Math.sqrt(x*x+y*y);
         double Avanvementy =  y/Math.sqrt(x*x+y*y);
         double xIncr = 0;
@@ -352,10 +346,21 @@ public class Case {
      * @param personne
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
-        try{
-        if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
-            //si la case est vide
-            if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
+        try {
+            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
+                // Si la case est vide
+                if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
+                    for (int i = 0; i < caseVoisines.size() ; i++) {
+                        for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
+                            if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
+                                chemin.add(caseVoisines.get(i));
+                            }
+                        }
+                    }
+                }
+                chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr]);
+            } else {
+                // Si la case est utilisé
                 for (int i = 0; i < caseVoisines.size() ; i++) {
                     for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
                         if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
@@ -364,18 +369,8 @@ public class Case {
                     }
                 }
             }
-            chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr]);
-        } else {
-            //si la case est utilisé
-            for (int i = 0; i < caseVoisines.size() ; i++) {
-                for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
-                    if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
-                        chemin.add(caseVoisines.get(i));
-                    }
-                }
-            }
-        }} catch(Exception e) {
-            //l'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
+        } catch(Exception e) {
+            // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
             try {
                 testCase(chemin,xIncr-1, yIncr, personne);
             } catch(Exception e2) {
@@ -385,11 +380,11 @@ public class Case {
     }
 
     /**
-     * Cette methode convertie les coordonnées X Y d'une case (allant de -racine(aire) à +racine(aire)) en coordonné valable pour le tableau (allant de 0 à tableauCase.length)
+     * Cette méthode convertie les coordonnées X Y d'une case (allant de -racine(aire) à +racine(aire)) en coordonné valable pour le tableau (allant de 0 à tableauCase.length)
      * @return
      */
     private int donneYpourTab() {
-        //pour comprendre ce codage, il fait aller dans lancerScenePlateau de Plateau.class
+        // Pour comprendre ce codage, il faut aller dans lancerScenePlateau de Plateau.class
         if (coordonnee[0]%2 == 0) {
             return coordonnee[1] + (coordonnee[0]/2) ;
         } else {
@@ -399,8 +394,6 @@ public class Case {
 
     /**
      * Permet d'arrondir un nombre au 0.5 près (utile car (int) arrondi à la decimal inferieur
-     * @param nombre
-     * @return
      */
     private int arrondir(double nombre) {
         if (Math.abs(nombre - (int)nombre) > 0.6) {
@@ -415,8 +408,7 @@ public class Case {
     }
 
     /**
-     * Autre pathToPerso et PathToPersoAux à partir d'un algo recurant (fonctionnelle mais bcp moins performant)
-     * @return
+     * Autre pathToPerso et PathToPersoAux à partir d'un algo récurant (fonctionnelle mais bcp moins performant)
      */
     /*public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
         if (depth == 0) {
@@ -454,10 +446,8 @@ public class Case {
     }*/
 
     /**
-     * cette section contient tout les getteur et setteur de Equipe
+     * Cette section contient tout les getters et setters de Case
      */
-
-
     public int[] getCoordonnee() {
         return coordonnee;
     }
@@ -509,6 +499,10 @@ public class Case {
         return alteration;
     }
 
+    /**
+     * Méthode permettant de modifier l'atération de this
+     * @param alteration à mettre sur this
+     */
     public void setAlteration(Alteration alteration) {
         if (alteration != null) {
             this.alteration = alteration;

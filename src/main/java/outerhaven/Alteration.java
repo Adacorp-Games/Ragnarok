@@ -43,7 +43,7 @@ public class Alteration {
     }
 
     /**
-     * applique les effets d'une alteration sur un personnage (par tour)
+     * Applique les effets d'une alteration sur un personnage (par tour)
      * @param p
      */
     public void appliquerEffet(Personne p) {
@@ -57,8 +57,8 @@ public class Alteration {
     }
 
     /**
-     * Applique les effets d'un vole de mana sur les Personne magique
-     * @param p
+     * Applique les effets d'un vol de mana sur les PersonneMagique
+     * @param p est la personne à affecter
      */
     public void appliquerEffet(PersonneMagique p) {
         if (this.effet == "manaVore") {
@@ -71,7 +71,7 @@ public class Alteration {
     }
 
     /**
-     * Methode reduisant la durée à chaque tour
+     * Méthode réduisant la durée de l'altération à chaque tour
      */
     public void passeTour() {
         if (duree > 1) {
@@ -87,18 +87,16 @@ public class Alteration {
     }
 
     /**
-     * Supprime definitivement une alteration
+     * Supprime définitivement une alteration
      */
-
     public static void nettoiCaseAlter(){
         Plateau.listeCaseAlterees.removeAll(AlterSupr);
         AlterSupr.clear();
     }
 
     /**
-     * cette section contient tout les getteur et setteur de Equipe
+     * Cette section contient tout les getters et setters de Alteration
      */
-
     public Image getImage() {
         return image;
     }

@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
     /**
      * Le role du Main est de lancer le jeu avec des parametres de base :
-     * -nom de la fenetre
-     * -icone de la fenetre
-     * -taille de la fenetre
+     * - nom de la fenetre
+     * - icone de la fenetre
+     * - taille de la fenetre (plein écran ou non)
      */
 
     @Override
