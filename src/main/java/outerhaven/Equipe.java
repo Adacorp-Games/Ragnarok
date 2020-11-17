@@ -2,24 +2,35 @@ package outerhaven;
 
 import javafx.scene.paint.Color;
 import outerhaven.Personnages.Personne;
-
 import java.util.ArrayList;
-
 import static outerhaven.Plateau.barre;
 
 public class Equipe {
-    private ArrayList<Personne> team;
-    private Color couleur;
+    /**
+     *Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
+     */
+    /**
+     * liste des personnage quelle contient
+     */
+    private final ArrayList<Personne> team;
+    /**
+     * Couleur qui defini une equipe
+     */
+    private final Color couleur;
+    /**
+     * argent que possede l'equipe
+     */
     private double argent;
-    private int nbPersonne;
 
     public Equipe(Color couleur) {
         this.team = new ArrayList<>();
         this.couleur = couleur;
         this.argent = 0;
-        this.nbPersonne = team.size();
-        //this.couleur = Color.color(Math.random(), Math.random(), Math.random()); // Couleur RBG aléatoire;
     }
+
+    /**
+     * cette section contient tout les getteur et setteur de Equipe
+     */
 
     public Color getCouleur() {
         return couleur;
@@ -33,18 +44,17 @@ public class Equipe {
         return this.team.size();
     }
 
-    public void setNbPersonne(int nbPersonne) {
-        this.nbPersonne = nbPersonne;
+    public void setNbPersonne() {
         Plateau.updateNbPersonne();
     }
 
     @Override
     public String toString() {
-        String affichage = "Equipe : " + "\n";
+        StringBuilder affichage = new StringBuilder("Equipe : " + "\n");
         for (Personne p : team) {
-            affichage += p.toString();
+            affichage.append(p.toString());
         }
-        return affichage;
+        return affichage.toString();
     }
 
     public void setArgent(double argent) {

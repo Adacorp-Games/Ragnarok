@@ -619,7 +619,7 @@ public class Plateau {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
                 }
                 p.selfDelete();
-                p.getTeam().setNbPersonne(equipeSelectionne.getNbPersonne());
+                p.getTeam().setNbPersonne();
             }
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
             System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
@@ -649,7 +649,7 @@ public class Plateau {
     }
 
     /**
-     * cette section contien tout les getteurs et setteur de Plateau
+     * cette section contient tout les getteur et setteur de Plateau
      */
 
     public static boolean getStatusPartie() {
