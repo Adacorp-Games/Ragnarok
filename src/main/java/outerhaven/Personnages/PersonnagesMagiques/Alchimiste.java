@@ -56,7 +56,7 @@ public class Alchimiste extends PersonneMagique{
             c.setAlteration(new Alteration("poison", 50, 10));
             Plateau.listeCaseAlterees.add(c);
         } else {
-            c.getAlteration().setDurée(5);
+            c.getAlteration().setDuree(5);
         }
     }
 

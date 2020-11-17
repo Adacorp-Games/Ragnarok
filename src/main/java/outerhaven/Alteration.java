@@ -8,17 +8,31 @@ import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 
 public class Alteration {
+    /**
+     * L'image qui changera une case qui sera alterés
+     */
     private Image image;
+    /**
+     * Nom caracterisant une alteration
+     */
     private String effet;
+    /**
+     * Puissance d'une alteration
+     */
     private int puissance;
-    private int durée;
-    private int timer = Plateau.nbTour;
+    /**
+     * Durée en tour d'une alteration
+     */
+    private int duree;
+    /**
+     * Liste d'alteration à supprimer au cours du temps
+     */
     public static ArrayList<Case> AlterSupr = new ArrayList<>();
 
-    public Alteration(String effet, int puissance, int durée) {
+    public Alteration(String effet, int puissance, int duree) {
         this.effet = effet;
         this.puissance = puissance;
-        this.durée = durée;
+        this.duree = duree;
         if (effet == "poison") {
             this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonToxic.png"));
         } else if (effet == "manaVore") {
@@ -28,6 +42,10 @@ public class Alteration {
         }
     }
 
+    /**
+     * applique les effets d'une alteration sur un personnage (par tour)
+     * @param p
+     */
     public void appliquerEffet(Personne p) {
         if (this.effet == "poison" && p.getClass() != Alchimiste.class) {
             p.setHealth(p.getHealth() - this.puissance * 5);
@@ -38,6 +56,10 @@ public class Alteration {
         }
     }
 
+    /**
+     * Applique les effets d'un vole de mana sur les Personne magique
+     * @param p
+     */
     public void appliquerEffet(PersonneMagique p) {
         if (this.effet == "manaVore") {
             if (p.getMana() >= 35) {
@@ -48,9 +70,12 @@ public class Alteration {
         }
     }
 
+    /**
+     * Methode reduisant la durée à chaque tour
+     */
     public void passeTour() {
-        if (durée > 1) {
-            durée--;
+        if (duree > 1) {
+            duree--;
         } else {
             for (Case c : Plateau.listeCaseAlterees) {
                 if (c.getAlteration() == this) {
@@ -61,12 +86,18 @@ public class Alteration {
         }
     }
 
+    /**
+     * Supprime definitivement une alteration
+     */
+
     public static void nettoiCaseAlter(){
         Plateau.listeCaseAlterees.removeAll(AlterSupr);
         AlterSupr.clear();
     }
 
-    // Getter et setter
+    /**
+     * cette section contient tout les getteur et setteur de Equipe
+     */
 
     public Image getImage() {
         return image;
@@ -92,19 +123,11 @@ public class Alteration {
         this.puissance = puissance;
     }
 
-    public int getDurée() {
-        return durée;
+    public int getDuree() {
+        return duree;
     }
 
-    public void setDurée(int durée) {
-        this.durée = durée;
-    }
-
-    public int getTimer() {
-        return timer;
-    }
-
-    public void setTimer(int timer) {
-        this.timer = timer;
+    public void setDuree(int duree) {
+        this.duree = duree;
     }
 }
