@@ -29,12 +29,11 @@ public class Guerrier extends Personne {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée et dégats réduits mais vie et armure plus grande." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nPortée réduite mais vie, armure et dégâts plus grands." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
     @Override
     public Image getImageFace() {
         return new Image(Guerrier.class.getResourceAsStream("/Images/Personnes/Warrior.png"));
-        //return new Image("https://images108.fotki.com/v156/photos/6/830356/8792277/joyDancingstickmantransparent-vi.gif");
     }
 }

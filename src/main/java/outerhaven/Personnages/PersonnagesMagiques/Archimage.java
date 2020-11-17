@@ -21,10 +21,14 @@ public class Archimage extends PersonneMagique {
         this.gainMana();
         boolean danger = false;
 
-        // Vérification des cases voisines
+        // Vérification si les cases voisines contiennent au moins un ennemi
         for (Case c : this.getPosition().voisinsLibres(false)) {
-            if (c.getContenu().get(0).getTeam() != this.getTeam()) {
-                danger = true;
+            // Si la case voisine n'est pas vide
+            if (c.getContenu().size() != 0) {
+                // Si le contenu de la case n'est pas un allié
+                if (c.getContenu().get(0).getTeam() != this.getTeam()) {
+                    danger = true;
+                }
             }
         }
 
@@ -35,19 +39,17 @@ public class Archimage extends PersonneMagique {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
 
-                // Téléportation si cible trop proche
-            } else if (danger == true && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
+                // Téléportation si cible trop proche (danger détecté)
+            } else if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
 
                 // Cherche un voisin libre et un voisin libre du voisin libre si possible
                 Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
                 if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
                     déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
-                    this.setMana(this.getMana() - 50);
                 } else {
                     déplacer(voisinLibre);
-                    this.setMana(this.getMana() - 50);
                 }
-                danger = false;
+                this.setMana(this.getMana() - 50);
 
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));

@@ -6,3 +6,10 @@
     -fx-stroke-dash-offset: 6;
     -fx-stroke-line-cap: butt;
 }
+
+.textBox {
+    -fx-background-color: lightgrey;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}

@@ -184,7 +184,7 @@ public abstract class Personne {
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(400 , 130, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(400 , 150, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
@@ -193,12 +193,13 @@ public abstract class Personne {
         Text title = this.getinfoTitleText();
         title.setStyle("-fx-font-weight: bold");
         title.setX(X + 10);
-        title.setY(Y + 20 - 130);
+        title.setY(Y - 130);
         //title.setStyle("-fx-font-style: bold");
 
         Text descrip = this.getinfoDescText();
+        //descrip.getStyleClass().add("textBox");
         descrip.setX(X + 10);
-        descrip.setY(Y + 20 - 130);
+        descrip.setY(Y - 130);
 
         description.getChildren().add(barre);
         description.getChildren().add(title);

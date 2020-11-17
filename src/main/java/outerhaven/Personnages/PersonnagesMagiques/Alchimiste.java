@@ -31,13 +31,14 @@ public class Alchimiste extends PersonneMagique{
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
                 System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+
                 // Capacités de l'alchimiste
                 if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
                     ajouterAlter(pathToEnnemy.get(pathToEnnemy.size() - 1));
                     for (Case c : pathToEnnemy.get(pathToEnnemy.size() - 1).getCaseVoisines()) {
                         ajouterAlter(c);
                     }
-                    this.setMana(this.getMana() - 125);
+                    this.setMana(this.getMana() - 100);
 
                 } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
                     System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");

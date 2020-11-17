@@ -301,7 +301,7 @@ public class Case {
     public ArrayList<Case> pathToPerso(Equipe e) {
         // La profondeur max possible
         int depth = 10000000;
-        Personne Leplusprocche = null;
+        Personne laPlusProche = null;
         for (int i = 0; i < personnages.size(); i++) {
             if (this.contenu.get(0) != personnages.get(i)) {
                 int x = (personnages.get(i).getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
@@ -309,12 +309,12 @@ public class Case {
                 double normeVectoriel = Math.sqrt(x*x + y*y);
                 if (normeVectoriel < depth && personnages.get(i).getTeam() == e) {
                     depth = (int)normeVectoriel;
-                    Leplusprocche = personnages.get(i);
+                    laPlusProche = personnages.get(i);
                 }
             }
         }
-        assert Leplusprocche != null;
-        return pathToPersoAux(Leplusprocche);
+        assert laPlusProche != null;
+        return pathToPersoAux(laPlusProche);
     }
 
     /**
@@ -372,9 +372,9 @@ public class Case {
         } catch(Exception e) {
             // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
             try {
-                testCase(chemin,xIncr-1, yIncr, personne);
+                testCase(chemin,xIncr - 1, yIncr, personne);
             } catch(Exception e2) {
-                testCase(chemin,xIncr+1, yIncr, personne);
+                testCase(chemin,xIncr + 1, yIncr, personne);
             }
         }
     }

@@ -50,7 +50,7 @@ public class Archer extends Personne {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nPortée augmentée mais vie, armure et dégâts plus bas.\nNombre de flèches limité à 15 :\nSe bat ensuite au corps-à-corps et fait plus de dégâts." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
     @Override
