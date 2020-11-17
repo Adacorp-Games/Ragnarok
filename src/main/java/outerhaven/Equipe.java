@@ -4,11 +4,10 @@ import javafx.scene.paint.Color;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import static outerhaven.Plateau.barre;
-
+/**
+ *Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
+ */
 public class Equipe {
-    /**
-     *Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
-     */
     /**
      * liste des personnage quelle contient
      */

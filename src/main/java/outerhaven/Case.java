@@ -2,12 +2,9 @@ package outerhaven;
 
 import javafx.scene.Group;
 import javafx.scene.effect.*;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -16,29 +13,42 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Personnages.Personne;
-
 import static outerhaven.Plateau.*;
 
+/**
+ * Une case represente un hexagone sur le plateau,
+ * elle peut contenir un personnage et etre alterer,
+ * cette classe contient aussi tout le systeme de detection permettant ainsi les combats
+ */
 public class Case {
+    /**
+     * Pos X et Pos Y contiennent les coordonées de la case en px sur l'ecran de l'utilisteur
+     * coordonnee contient les coordonnée X -> (0) et Y -> (1) de la case
+     */
     private double posX;
     private double posY;
-    private Color couleur;
-    private int[] coordonnee = new int[2];
+    private final int[] coordonnee = new int[2];
+    /**
+     * caseVoisines contient les cases cases partagant des cotés avec la this (6 max)
+     */
     private ArrayList<Case> caseVoisines;
-    private ArrayList<Personne> contenu;
+    /**
+     *
+     */
+    private final ArrayList<Personne> contenu;
     private Group affichagecontenu;
-    private ImageView hexagone;
     public static boolean clique = false;
     private Alteration alteration;
 
-    private static Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
-    private static Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
+    private ImageView hexagone;
+    private static final Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
+    private static final Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
 
     public Case(int x, int y) {
         coordonnee[0] = x;
         coordonnee[1] = y;
-        contenu = new ArrayList<Personne>();
-        caseVoisines = new ArrayList<Case>();
+        contenu = new ArrayList<>();
+        caseVoisines = new ArrayList<>();
     }
 
     public ImageView afficherCase(double X, double Y, double taille) {
