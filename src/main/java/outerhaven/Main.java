@@ -5,6 +5,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    /**
+     * Le role du Main est de lancer le jeu avec des parametres de base :
+     * -nom de la fenetre
+     * -icone de la fenetre
+     * -taille de la fenetre
+     */
 
     @Override
     public void start(Stage stage) {
