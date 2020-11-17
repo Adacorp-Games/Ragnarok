@@ -56,7 +56,7 @@ public class Plateau {
      * liste/tableau des cases (alteré ou non) dans le plateau
      */
     public static ArrayList<Case> listeCase = new ArrayList<>();
-    public static ArrayList<Case> listeCaseAltérées = new ArrayList<>();
+    public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
     public static Case[][] tableauCase;
     /**
      * les differentes equipes
@@ -72,8 +72,8 @@ public class Plateau {
     /**
      * Status de certain parametre utile pour le fonctionnement du jeu
      */
-    public static Personne personneSelectionné;
-    public static Equipe equipeSelectionné;
+    public static Personne personneSelectionne;
+    public static Equipe equipeSelectionne;
     public static boolean statusPartie = false;
     /**
      * Interface utile au plateau à mettre à jour durant une partie
@@ -215,12 +215,8 @@ public class Plateau {
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
         start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
-        start.setOnMouseEntered(mouseEvent -> {
-            start.setEffect(new Effets().putInnerShadow(Color.ORANGE));
-        });
-        start.setOnMouseExited(mouseEvent -> {
-            start.setEffect(null);
-        });
+        start.setOnMouseEntered(mouseEvent -> start.setEffect(new Effets().putInnerShadow(Color.ORANGE)));
+        start.setOnMouseExited(mouseEvent -> start.setEffect(null));
 
         //ajout de textes
         Text infoNB = new Text("Entrez le nombre de cases du plateau :");
@@ -285,9 +281,9 @@ public class Plateau {
                 lancerScenePlateau();
             }
         });
-
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
+
         //ajout de toute ces interfaces dans le group
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
@@ -295,7 +291,6 @@ public class Plateau {
         group.getChildren().add(nbArgent);
         group.getChildren().add(start);
         group.getChildren().add(quitter);
-
     }
 
     /**
@@ -313,7 +308,7 @@ public class Plateau {
      * @param equipe
      */
     public static void incorporeEquipe(Equipe equipe) {
-        equipeSelectionné = equipe;
+        equipeSelectionne = equipe;
     }
 
     /*
@@ -423,9 +418,7 @@ public class Plateau {
                 attention.underlineProperty().setValue(true);
                 attention.setFill(Color.RED);
                 Plateau.group.getChildren().add(attention);
-                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
-                    Plateau.group.getChildren().remove(attention);
-                }));
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> Plateau.group.getChildren().remove(attention)));
                 timeline.play();
             } else {
                 Text attention = new Text("Veuillez remplir les hexagones avec des personnages");
@@ -434,9 +427,7 @@ public class Plateau {
                 attention.underlineProperty().setValue(true);
                 attention.setFill(Color.RED);
                 Plateau.group.getChildren().add(attention);
-                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> {
-                    Plateau.group.getChildren().remove(attention);
-                }));
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> Plateau.group.getChildren().remove(attention)));
                 timeline.play();
             }
         });
@@ -487,22 +478,20 @@ public class Plateau {
 
     /**
      * crée un bouton affichant la vie et le nom des personnages
-     * @return
      */
-    private Button afficheBarVie() {
+    private void afficheBarVie() {
         Button barVie = new Bouton().creerBouton("Afficher barres de vie");
         barVie.setLayoutX(longeurMax - 150);
         barVie.setLayoutY(10);
         barVie.setOnMouseClicked(mouseEvent -> {
             if (!personnages.isEmpty()){
                 Personne.barreVisible = !Personne.barreVisible;
-                for (int i = 0; i < personnages.size(); i++) {
-                    personnages.get(i).afficherSanteEtNom();
+                for (Personne personnage : personnages) {
+                    personnage.afficherSanteEtNom();
                 }
             }
         });
         group.getChildren().add(barVie);
-        return barVie;
     }
 
     /**
@@ -595,8 +584,8 @@ public class Plateau {
             personnages.addAll(invocationAttente);
             invocationAttente.clear();
             // Gestion des cases altérées
-            if (!listeCaseAltérées.isEmpty()) {
-                for (Case c : listeCaseAltérées) {
+            if (!listeCaseAlterees.isEmpty()) {
+                for (Case c : listeCaseAlterees) {
                     if (c.getAlteration() != null) {
                         c.getAlteration().passeTour();
                     } else {
@@ -607,20 +596,20 @@ public class Plateau {
             }
             //Gestion de l'affichage de barres de vie
             if (Personne.barreVisible && !personnages.isEmpty()) {
-                for (int i = 0; i < personnages.size(); i++) {
-                    personnages.get(i).afficherSanteEtNom();
+                for (Personne personnage : personnages) {
+                    personnage.afficherSanteEtNom();
                 }
             }
 
             // Gestion de l'ordre d'action des personnages
             Collections.shuffle(personnages);
             //fait combattre les peronnages non contenu dans mort
-            for (int i = 0; i < personnages.size(); i++) {
-                if (personnages.get(i).getHealth() <= 0) {
-                    morts.add(personnages.get(i));
+            for (Personne personnage : personnages) {
+                if (personnage.getHealth() <= 0) {
+                    morts.add(personnage);
                 }
-                if (!morts.contains(personnages.get(i))) {
-                    personnages.get(i).action();
+                if (!morts.contains(personnage)) {
+                    personnage.action();
                 }
             }
 
@@ -630,7 +619,7 @@ public class Plateau {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
                 }
                 p.selfDelete();
-                p.getTeam().setNbPersonne(equipeSelectionné.getNbPersonne());
+                p.getTeam().setNbPersonne(equipeSelectionne.getNbPersonne());
             }
             System.out.println("Nombre de morts durant ce tour : " + morts.size());
             System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
@@ -638,9 +627,7 @@ public class Plateau {
             morts.clear();
 
             //relance le prochain tour (dans un certain temps --> vitesse)
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps), ev -> {
-                tour();
-            }));
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps), ev -> tour()));
             timeline.play();
 
             //change l'interface car nous somme en jeu

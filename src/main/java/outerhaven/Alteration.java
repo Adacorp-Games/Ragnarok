@@ -52,7 +52,7 @@ public class Alteration {
         if (durée > 1) {
             durée--;
         } else {
-            for (Case c : Plateau.listeCaseAltérées) {
+            for (Case c : Plateau.listeCaseAlterees) {
                 if (c.getAlteration() == this) {
                     c.setAlteration(null);
                     AlterSupr.add(c);
@@ -62,7 +62,7 @@ public class Alteration {
     }
 
     public static void nettoiCaseAlter(){
-        Plateau.listeCaseAltérées.removeAll(AlterSupr);
+        Plateau.listeCaseAlterees.removeAll(AlterSupr);
         AlterSupr.clear();
     }
 

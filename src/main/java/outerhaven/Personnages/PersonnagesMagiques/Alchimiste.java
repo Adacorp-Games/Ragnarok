@@ -54,7 +54,7 @@ public class Alchimiste extends PersonneMagique{
     public void ajouterAlter(Case c) {
         if (c.getAlteration() == null) {
             c.setAlteration(new Alteration("poison", 50, 10));
-            Plateau.listeCaseAltérées.add(c);
+            Plateau.listeCaseAlterees.add(c);
         } else {
             c.getAlteration().setDurée(5);
         }

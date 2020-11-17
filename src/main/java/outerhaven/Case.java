@@ -53,18 +53,18 @@ public class Case {
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 hexagone.setImage(hexagone_img2);
                 if (clique) {
-                    if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
-                        if ((equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) || argentPartie == 0) {
-                            contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+                    if (Plateau.personneSelectionne != null && Plateau.equipeSelectionne != null && contenu.isEmpty()) {
+                        if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
+                            contenu.add(Plateau.personneSelectionne.personneNouvelle(Plateau.equipeSelectionne,this));
                             affichagecontenu = contenu.get(0).affichagePersonnage();
                             contenu.get(0).afficherSanteEtNom();
                             Plateau.group.getChildren().add(affichagecontenu);
                             InnerShadow ombre = new InnerShadow();
-                            ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                            ombre.colorProperty().setValue(Plateau.equipeSelectionne.getCouleur());
                             hexagone.setEffect(ombre);
                             //System.out.println(this.caseVoisines);
-                            if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
-                                Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
+                            if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
+                                Plateau.equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                             }
                         }
                     }
@@ -114,29 +114,29 @@ public class Case {
 
     public void interactionHex() {
         if (statusPartie != true) {
-            if (Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null && contenu.isEmpty()) {
-                if ((equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) || argentPartie == 0) {
-                    contenu.add(Plateau.personneSelectionné.personneNouvelle(Plateau.equipeSelectionné,this));
+            if (Plateau.personneSelectionne != null && Plateau.equipeSelectionne != null && contenu.isEmpty()) {
+                if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
+                    contenu.add(Plateau.personneSelectionne.personneNouvelle(Plateau.equipeSelectionne,this));
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
                     Plateau.group.getChildren().add(affichagecontenu);
                     InnerShadow ombre = new InnerShadow();
-                    ombre.colorProperty().setValue(Plateau.equipeSelectionné.getCouleur());
+                    ombre.colorProperty().setValue(Plateau.equipeSelectionne.getCouleur());
                     hexagone.setEffect(ombre);
                     //System.out.println(this.caseVoisines);
-                    if (equipeSelectionné.getArgent() >= personneSelectionné.getCost() && argentPartie > 0) {
-                        Plateau.equipeSelectionné.setArgent(equipeSelectionné.getArgent() - personneSelectionné.getCost());
+                    if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
+                        Plateau.equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
-                    Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
+                    Plateau.equipeSelectionne.setNbPersonne(equipeSelectionne.getNbPersonne());
                 } /*else {
                     System.out.println("Pas assez d'argent !");
                 }*/
-            } else if ((Plateau.personneSelectionné != null && Plateau.equipeSelectionné != null) || (Plateau.personneSelectionné == null && !contenu.isEmpty())) {
+            } else if ((Plateau.personneSelectionne != null && Plateau.equipeSelectionne != null) || (Plateau.personneSelectionne == null && !contenu.isEmpty())) {
                 if (argentPartie != 0) {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }
                 seVider();
-                Plateau.equipeSelectionné.setNbPersonne(equipeSelectionné.getNbPersonne());
+                Plateau.equipeSelectionne.setNbPersonne(equipeSelectionne.getNbPersonne());
             } else {
                 Text attention = new Text("Veuillez selectionner une equipe et un personnage");
                 attention.setX(posX);
@@ -445,7 +445,7 @@ public class Case {
         if (alteration != null) {
             this.alteration = alteration;
             this.hexagone.setImage(alteration.getImage());
-            listeCaseAltérées.add(this);
+            listeCaseAlterees.add(this);
         } else {
             this.alteration = null;
             hexagone.setImage(hexagone_img1);

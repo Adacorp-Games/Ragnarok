@@ -146,12 +146,12 @@ public abstract class Personne {
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
             //if (Plateau.personneSelectionné == null) {
-                Plateau.personneSelectionné = this;
-                if (equipeSelectionné != null) {
-                    imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                Plateau.personneSelectionne = this;
+                if (equipeSelectionne != null) {
+                    imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                     for (Personne p : barre.getListClasse()) {
-                        if (personneSelectionné == p) {
-                            p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                        if (personneSelectionne == p) {
+                            p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                         } else {
                             p.getImageperson().setEffect(null);
                         }

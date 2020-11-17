@@ -4,11 +4,9 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
-import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Mage;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
@@ -81,8 +79,8 @@ public class BarrePersonnage {
             equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
             for (Personne p : listClasse) {
-                if (personneSelectionné == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                if (personneSelectionne == p) {
+                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                 } else {
                     p.getImageperson().setEffect(null);
                 }
@@ -94,7 +92,7 @@ public class BarrePersonnage {
         });
 
         equipe1.setOnMouseExited(mouseEvent -> {
-            if (equipe1.getEffect() == Bouton.effectE1 && equipeSelectionné != Plateau.getE1()) {
+            if (equipe1.getEffect() == Bouton.effectE1 && equipeSelectionne != Plateau.getE1()) {
                 equipe1.setEffect(null);
             }
         });
@@ -104,8 +102,8 @@ public class BarrePersonnage {
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
             for (Personne p : listClasse) {
-                if (personneSelectionné == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionné.getCouleur()));
+                if (personneSelectionne == p) {
+                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                 } else {
                     p.getImageperson().setEffect(null);
                 }
@@ -117,7 +115,7 @@ public class BarrePersonnage {
         });
 
         equipe2.setOnMouseExited(mouseEvent -> {
-            if (equipe2.getEffect() == Bouton.effectE2 && equipeSelectionné != Plateau.getE2()) {
+            if (equipe2.getEffect() == Bouton.effectE2 && equipeSelectionne != Plateau.getE2()) {
                 equipe2.setEffect(null);
             }
         });
