@@ -37,6 +37,7 @@ public abstract class Personne {
     public static boolean barreVisible = false;
     private ImageView imageperson = new ImageView(this.getImageFace());
     private Case position;
+    private String status = "normal";
 
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
@@ -438,6 +439,14 @@ public abstract class Personne {
 
     public void setImageperson(ImageView imageperson) {
         this.imageperson = imageperson;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

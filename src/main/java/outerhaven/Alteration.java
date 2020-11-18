@@ -2,6 +2,7 @@ package outerhaven;
 
 import javafx.scene.image.Image;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
+import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.PersonneMagique;
 import outerhaven.Personnages.Personne;
 
@@ -39,6 +40,8 @@ public class Alteration {
             this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonManaVore.png"));
         } else if (effet == "heal") {
             this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
+        } else if (effet == "freeze") {
+            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
         }
     }
 
@@ -53,6 +56,9 @@ public class Alteration {
             p.setHealth(p.getHealth() + this.puissance * 5);
         } else if (this.effet == "heal" && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getMaxHealth());
+        } else if (this.effet == "freeze" && p.getClass() != Archimage.class) {
+            p.setHealth(p.getHealth() - this.puissance * 2);
+            p.setStatus("freeze");
         }
     }
 
@@ -89,7 +95,7 @@ public class Alteration {
     /**
      * Supprime définitivement une alteration
      */
-    public static void nettoiCaseAlter(){
+    public static void nettoiCaseAlter() {
         Plateau.listeCaseAlterees.removeAll(AlterSupr);
         AlterSupr.clear();
     }

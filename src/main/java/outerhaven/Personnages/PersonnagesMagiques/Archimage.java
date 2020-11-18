@@ -2,9 +2,11 @@ package outerhaven.Personnages.PersonnagesMagiques;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
+import outerhaven.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
+import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
@@ -43,6 +45,10 @@ public class Archimage extends PersonneMagique {
             } else if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
 
                 // Cherche un voisin libre et un voisin libre du voisin libre si possible
+                ajouterAlter(this.getPosition());
+                for (Case c : this.getPosition().getCaseVoisines()) {
+                    ajouterAlter(c);
+                }
                 Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
                 if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
                     déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
@@ -63,6 +69,15 @@ public class Archimage extends PersonneMagique {
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }
+        }
+    }
+
+    public void ajouterAlter(Case c) {
+        if (c.getAlteration() == null) {
+            c.setAlteration(new Alteration("freeze", 50, 10));
+            Plateau.listeCaseAlterees.add(c);
+        } else {
+            c.getAlteration().setDuree(5);
         }
     }
 

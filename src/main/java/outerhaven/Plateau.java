@@ -577,9 +577,11 @@ public class Plateau {
         if(!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
             nbTour++;
             System.out.println("Tour : " + nbTour);
+
             // Gestion des invocations
             personnages.addAll(invocationAttente);
             invocationAttente.clear();
+
             // Gestion des cases altérées
             if (!listeCaseAlterees.isEmpty()) {
                 for (Case c : listeCaseAlterees) {
@@ -591,6 +593,7 @@ public class Plateau {
                 }
                 Alteration.nettoiCaseAlter();
             }
+
             // Gestion de l'affichage de barres de vie
             if (Personne.barreVisible && !personnages.isEmpty()) {
                 for (Personne personnage : personnages) {
@@ -606,7 +609,14 @@ public class Plateau {
                     morts.add(personnage);
                 }
                 if (!morts.contains(personnage)) {
-                    personnage.action();
+                    personnage.getAlteration();
+                    if (personnage.getPosition().getAlteration() != null) {
+                        if (personnage.getPosition().getAlteration().getEffet() != "freeze") {
+                            personnage.action();
+                        }
+                    } else {
+                        personnage.action();
+                    }
                 }
             }
 
