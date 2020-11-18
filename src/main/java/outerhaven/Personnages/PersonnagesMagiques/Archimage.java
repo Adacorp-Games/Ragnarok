@@ -41,26 +41,31 @@ public class Archimage extends PersonneMagique {
             if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
                 System.out.println(this.getName() + " patiente");
 
-                // Téléportation si cible trop proche (danger détecté)
-            } else if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
-
-                // Cherche un voisin libre et un voisin libre du voisin libre si possible
-                ajouterAlter(this.getPosition());
-                for (Case c : this.getPosition().getCaseVoisines()) {
-                    ajouterAlter(c);
-                }
-                Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
-                if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
-                    déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
-                } else {
-                    déplacer(voisinLibre);
-                }
-                this.setMana(this.getMana() - 50);
-
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
                 System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= this.getRange()) {
+
+                // Téléportation si cible trop proche (danger détecté)
+                if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
+
+                    // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
+                    ajouterAlter(this.getPosition());
+                    for (Case c : this.getPosition().getCaseVoisines()) {
+                        ajouterAlter(c);
+                    }
+
+                    // Cherche un voisin libre et un voisin libre du voisin libre si possible
+                    Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
+                    if (voisinLibre.nbVoisinsLibres() > 0) {
+                    /*if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
+                        déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
+                    } else {*/
+                        déplacer(voisinLibre);
+                        //}
+                    }
+                    this.setMana(this.getMana() - 50);
+
+                } else if (pathToEnnemy.size() - 1 <= this.getRange()) {
                     System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
                 } else {
@@ -77,7 +82,7 @@ public class Archimage extends PersonneMagique {
             c.setAlteration(new Alteration("freeze", 50, 10));
             Plateau.listeCaseAlterees.add(c);
         } else {
-            c.getAlteration().setDuree(5);
+            c.getAlteration().setDuree(10);
         }
     }
 
