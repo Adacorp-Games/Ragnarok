@@ -1,15 +1,15 @@
 package outerhaven.Personnages.PersonnagesMagiques;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import outerhaven.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
+import outerhaven.Plateau;
 
 import static outerhaven.Plateau.taille;
 
@@ -35,11 +35,24 @@ public abstract class PersonneMagique extends Personne {
         this.manaMax = mana*2;
     }
 
+    /**
+     * Fonction permettant à la personne d'altérer des cases contre du mana
+     */
+    public void ajouterAlter(String effet, int puissance, int duree, Case c, Equipe equipe) {
+        if (c.getAlteration() == null) {
+            c.setAlteration(new Alteration(effet, puissance, duree, equipe));
+            Plateau.listeCaseAlterees.add(c);
+        } else {
+            c.getAlteration().setDuree(duree);
+        }
+    }
+
     public abstract Personne personneNouvelle(Equipe team, Case position);
     public abstract Text getinfoTitleText();
     public abstract Text getinfoDescText();
+    public abstract Image getImageFace();
 
-    // Affichage santé et nom
+    // Affichage santé et nom et mana
 
     public Group afficherSante() {
         Rectangle barre = new Rectangle(taille, taille/5.3, Color.BLACK);
@@ -71,7 +84,7 @@ public abstract class PersonneMagique extends Personne {
         return group;
     }
 
-    // Getter et setter
+    // Getters et setters
 
     public double getMana() {
         return mana;

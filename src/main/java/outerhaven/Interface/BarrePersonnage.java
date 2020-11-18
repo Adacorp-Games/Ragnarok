@@ -8,10 +8,8 @@ import javafx.stage.Screen;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
-import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
-import outerhaven.Personnages.PersonnagesMagiques.Archimage;
-import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
-import outerhaven.Personnages.PersonnagesMagiques.Paladin;
+import outerhaven.Personnages.PersonnagesEnergetiques.Samourai;
+import outerhaven.Personnages.PersonnagesMagiques.*;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -36,6 +34,8 @@ public class BarrePersonnage {
         listClasse.add(new Necromancien());
         listClasse.add(new Alchimiste());
         listClasse.add(new Archimage());
+        listClasse.add(new Pretre());
+        listClasse.add(new Samourai());
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }

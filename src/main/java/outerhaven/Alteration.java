@@ -26,6 +26,10 @@ public class Alteration {
      */
     private int duree;
     /**
+     * Equipe a qui appartient l'alteration (pas obligatoire)
+     */
+    private Equipe equipe;
+    /**
      * Liste d'alteration à supprimer au cours du temps
      */
     public static ArrayList<Case> AlterSupr = new ArrayList<>();
@@ -45,6 +49,11 @@ public class Alteration {
         }
     }
 
+    public Alteration(String effet, int puissance, int duree, Equipe equipe) {
+        this(effet, puissance, duree);
+        this.equipe = equipe;
+    }
+
     /**
      * Applique les effets d'une alteration sur un personnage (par tour)
      * @param p
@@ -54,7 +63,7 @@ public class Alteration {
             p.setHealth(p.getHealth() - this.puissance * 5);
         } else if (this.effet == "heal" && p.getHealth() <= p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getHealth() + this.puissance * 5);
-        } else if (this.effet == "heal" && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
+        } else if (this.effet == "heal" && this.equipe == p.getTeam() && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getMaxHealth());
         } else if (this.effet == "freeze" && p.getClass() != Archimage.class) {
             p.setHealth(p.getHealth() - this.puissance * 2);
