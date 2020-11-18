@@ -1,6 +1,5 @@
 package outerhaven.Personnages.PersonnagesMagiques;
 
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
