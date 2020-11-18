@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
+import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -611,7 +612,9 @@ public class Plateau {
                 if (!morts.contains(personnage)) {
                     personnage.getAlteration();
                     if (personnage.getPosition().getAlteration() != null) {
-                        if (personnage.getPosition().getAlteration().getEffet() != "freeze") {
+                        if (personnage.getPosition().getAlteration().getEffet() == "freeze" && personnage.getClass() == Archimage.class) {
+                            personnage.action();
+                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze") {
                             personnage.action();
                         }
                     } else {
