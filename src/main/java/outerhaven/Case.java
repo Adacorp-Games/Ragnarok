@@ -271,8 +271,6 @@ public class Case {
         for (Case c : caseVoisines) {
             if (c.estOccupe() != lib) {
                 libres.add(c);
-            } else {
-                libres.add(c);
             }
         }
         return libres;
