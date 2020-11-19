@@ -110,10 +110,10 @@ public class Case {
     }
 
     public void seViderPourAnimation(){
-        contenu.get(0).supprimerSanteEtNom();
-        contenu.remove(0);
-        Plateau.group.getChildren().remove(affichagecontenu);
-        hexagone.setEffect(null);
+            contenu.get(0).supprimerSanteEtNom();
+            contenu.remove(0);
+            Plateau.group.getChildren().remove(affichagecontenu);
+            hexagone.setEffect(null);
     }
 
     /**
@@ -126,9 +126,9 @@ public class Case {
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
             Plateau.group.getChildren().add(affichagecontenu);
-            InnerShadow ombre = new InnerShadow();
+            /*InnerShadow ombre = new InnerShadow();
             ombre.colorProperty().setValue(contenu.get(0).getTeam().getCouleur());
-            hexagone.setEffect(ombre);
+            hexagone.setEffect(ombre);*/
         }
     }
 

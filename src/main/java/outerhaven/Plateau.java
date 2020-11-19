@@ -334,18 +334,21 @@ public class Plateau {
         reset.setLayoutX(10);
         reset.setLayoutY(130);
         reset.setOnMouseClicked(mouseEvent -> {
-            group.getChildren().clear();
-            personnages.clear();
-            morts.clear();
-            listeCase.clear();
-            invocationAttente.clear();
-            getE1().getTeam().clear();
-            getE2().getTeam().clear();
             setStatusPartie(false);
-            scene.setFill(Color.WHITE);
-            this.lancerPartie();
-            aire = 0;
-            argentPartie = 0;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), ev -> {
+                group.getChildren().clear();
+                personnages.clear();
+                morts.clear();
+                listeCase.clear();
+                invocationAttente.clear();
+                getE1().getTeam().clear();
+                getE2().getTeam().clear();
+                scene.setFill(Color.WHITE);
+                this.lancerPartie();
+                aire = 0;
+                argentPartie = 0;
+            }));
+            timeline.play();
             //Plateau.personneSelectionné = null;
         });
         return reset;
@@ -361,16 +364,19 @@ public class Plateau {
         reStrat.setLayoutX(10);
         reStrat.setLayoutY(70);
         reStrat.setOnMouseClicked(mouseEvent -> {
-            group.getChildren().remove(0,group.getChildren().size());
-            personnages.clear();
-            morts.clear();
-            listeCase.clear();
-            invocationAttente.clear();
-            getE1().getTeam().clear();
-            getE2().getTeam().clear();
             setStatusPartie(false);
-            scene.setFill(Color.WHITE);
-            lancerScenePlateau();
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), ev -> {
+                group.getChildren().remove(0, group.getChildren().size());
+                personnages.clear();
+                morts.clear();
+                listeCase.clear();
+                invocationAttente.clear();
+                getE1().getTeam().clear();
+                getE2().getTeam().clear();
+                scene.setFill(Color.WHITE);
+                lancerScenePlateau();
+            }));
+            timeline.play();
             //Plateau.personneSelectionné = null;
         });
         return reStrat;

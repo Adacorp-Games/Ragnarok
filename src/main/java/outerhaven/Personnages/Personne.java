@@ -104,20 +104,23 @@ public abstract class Personne {
     public void deplacer(Case fin) {
         fin.getContenu().add(this);
         Case casePrecedente = this.position;
+        Group affichageCaseprecedente = this.affichagePersonnage();
         this.setPosition(fin);
-        casePrecedente.getContenu().clear();
-        AtomicReference<Double> x = new AtomicReference<>(casePrecedente.getAffichagecontenu().getLayoutX());
-        AtomicReference<Double> y = new AtomicReference<>(casePrecedente.getAffichagecontenu().getLayoutY());
+        group.getChildren().add(affichageCaseprecedente);
+        casePrecedente.seVider();
+        AtomicReference<Double> x = new AtomicReference<>(affichageCaseprecedente.getLayoutX());
+        AtomicReference<Double> y = new AtomicReference<>(affichageCaseprecedente.getLayoutY());
         double xVec = (casePrecedente.getPosX() - fin.getPosX())/20;
         double yVec = (casePrecedente.getPosY() - fin.getPosY())/20;
         AtomicInteger count= new AtomicInteger(0);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps/20), ev -> {
             x.set(x.get() - xVec);
             y.set(y.get() - yVec);
-            casePrecedente.getAffichagecontenu().setLayoutX(x.get());
-            casePrecedente.getAffichagecontenu().setLayoutY(y.get());
+            affichageCaseprecedente.setLayoutX(x.get());
+            affichageCaseprecedente.setLayoutY(y.get());
             count.getAndIncrement();
             if(count.get()==20){
+                group.getChildren().remove(affichageCaseprecedente);
                 this.position = fin;
                 deplacementFinal(casePrecedente,fin);
             }
@@ -133,9 +136,7 @@ public abstract class Personne {
      * @param fin
      */
     public void deplacementFinal(Case depart,Case fin ){
-        depart.getContenu().add(this);
         fin.seViderPourAnimation();
-        depart.seViderPourAnimation();
         fin.rentrePersonnage(this);
         if (Personne.barreVisible) {
             this.afficherSanteEtNom();
@@ -258,6 +259,7 @@ public abstract class Personne {
      */
     public Group affichagePersonnage() {
         Group group = new Group();
+        group.setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
         group.getChildren().add(this.afficherImageFace());
         return group;
     }
