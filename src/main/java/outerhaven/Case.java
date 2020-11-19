@@ -5,6 +5,7 @@ import javafx.scene.effect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -56,6 +57,7 @@ public class Case {
         coordonnee[0] = x;
         coordonnee[1] = y;
     }
+    private static boolean bloqué;
 
     /**
      * Génère l'affichage d'une case ainsi que ses intéractions
@@ -105,6 +107,13 @@ public class Case {
             Plateau.group.getChildren().remove(affichagecontenu);
             hexagone.setEffect(null);
         }
+    }
+
+    public void seViderPourAnimation(){
+        contenu.get(0).supprimerSanteEtNom();
+        contenu.remove(0);
+        Plateau.group.getChildren().remove(affichagecontenu);
+        hexagone.setEffect(null);
     }
 
     /**
@@ -328,7 +337,8 @@ public class Case {
         double Avanvementy =  y/Math.sqrt(x*x+y*y);
         double xIncr = 0;
         double yIncr = 0;
-        while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne) {
+        bloqué = true;
+        while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && bloqué) {
             xIncr = xIncr + Avancementx;
             yIncr = yIncr + Avanvementy;
             testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne);
@@ -345,6 +355,7 @@ public class Case {
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         try {
+            boolean ajout =false;
             if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
                 // Si la case est vide
                 if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
@@ -352,6 +363,7 @@ public class Case {
                         for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
                             if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
                                 chemin.add(caseVoisines.get(i));
+                                ajout=true;
                             }
                         }
                     }
@@ -363,9 +375,13 @@ public class Case {
                     for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
                         if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
                             chemin.add(caseVoisines.get(i));
+                            ajout=true;
                         }
                     }
                 }
+            }
+            if(!ajout){
+                bloqué= false;
             }
         } catch(Exception e) {
             // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)

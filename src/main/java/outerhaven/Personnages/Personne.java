@@ -134,8 +134,8 @@ public abstract class Personne {
      */
     public void deplacementFinal(Case depart,Case fin ){
         depart.getContenu().add(this);
-        fin.seVider();
-        depart.seVider();
+        fin.seViderPourAnimation();
+        depart.seViderPourAnimation();
         fin.rentrePersonnage(this);
         if (Personne.barreVisible) {
             this.afficherSanteEtNom();
