@@ -60,7 +60,7 @@ public class Archimage extends PersonneMagique {
                     /*if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
                         déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
                     } else {*/
-                        déplacer(voisinLibre);
+                        deplacer(voisinLibre);
                         //}
                     }
                     this.setMana(this.getMana() - 50);
@@ -70,7 +70,7 @@ public class Archimage extends PersonneMagique {
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
                 } else {
                     System.out.println(this.getName() + " se déplace");
-                    déplacer(pathToEnnemy.get(this.getSpeed()));
+                    deplacer(pathToEnnemy.get(this.getSpeed()));
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }

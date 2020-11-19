@@ -74,7 +74,7 @@ public class Necromancien extends PersonneMagique {
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
                 } else {
                     System.out.println(this.getName() + " se déplace");
-                    déplacer(pathToEnnemy.get(this.getSpeed()));
+                    deplacer(pathToEnnemy.get(this.getSpeed()));
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }

@@ -1,5 +1,7 @@
 package outerhaven.Personnages;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
@@ -16,6 +19,8 @@ import outerhaven.Plateau;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static outerhaven.Plateau.*;
 
@@ -94,13 +99,44 @@ public abstract class Personne {
     }
 
     /**
-     * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente et l'affichant la nouvelle
+     * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente avec une animation
      */
-    public void déplacer(Case c) {
+    public void deplacer(Case fin) {
+        fin.getContenu().add(this);
         Case casePrecedente = this.position;
-        this.position = c;
-        c.rentrePersonnage(this);
-        casePrecedente.seVider();
+        this.setPosition(fin);
+        casePrecedente.getContenu().clear();
+        AtomicReference<Double> x = new AtomicReference<>(casePrecedente.getAffichagecontenu().getLayoutX());
+        AtomicReference<Double> y = new AtomicReference<>(casePrecedente.getAffichagecontenu().getLayoutY());
+        double xVec = (casePrecedente.getPosX() - fin.getPosX())/20;
+        double yVec = (casePrecedente.getPosY() - fin.getPosY())/20;
+        AtomicInteger count= new AtomicInteger(0);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps/20), ev -> {
+            x.set(x.get() - xVec);
+            y.set(y.get() - yVec);
+            casePrecedente.getAffichagecontenu().setLayoutX(x.get());
+            casePrecedente.getAffichagecontenu().setLayoutY(y.get());
+            count.getAndIncrement();
+            if(count.get()==20){
+                this.position = fin;
+                deplacementFinal(casePrecedente,fin);
+            }
+            }));
+        timeline.setCycleCount(20);
+        timeline.play();
+       
+    }
+
+    /**
+     * Algo gerant l'animationfinale des deplacements
+     * @param depart
+     * @param fin
+     */
+    public void deplacementFinal(Case depart,Case fin ){
+        depart.getContenu().add(this);
+        fin.seVider();
+        depart.seVider();
+        fin.rentrePersonnage(this);
         if (Personne.barreVisible) {
             this.afficherSanteEtNom();
         }
@@ -124,7 +160,7 @@ public abstract class Personne {
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
                 } else {
                     System.out.println(this.getName() + " se déplace");
-                    déplacer(pathToEnnemy.get(speed));
+                    deplacer(pathToEnnemy.get(speed));
                 }
             }
         }

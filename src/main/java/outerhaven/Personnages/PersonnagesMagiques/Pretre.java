@@ -4,10 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Interface.Effets;
-import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Personne;
-import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
@@ -38,7 +35,7 @@ public class Pretre extends PersonneMagique {
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
                 } else {
                     System.out.println(this.getName() + " se déplace");
-                    déplacer(pathToEnnemy.get(this.getSpeed()));
+                    deplacer(pathToEnnemy.get(this.getSpeed()));
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }

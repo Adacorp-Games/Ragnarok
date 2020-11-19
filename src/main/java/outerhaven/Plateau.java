@@ -68,7 +68,7 @@ public class Plateau {
      * Informations concernants une partie en cours
      */
     public static int argentPartie = 0;
-    private static int temps = 500;
+    public static int temps = 500;
     public static int nbTour = 0;
     /**
      * Status de certains parametre utiles pour le fonctionnement du jeu

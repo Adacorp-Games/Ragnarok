@@ -64,7 +64,7 @@ public abstract class PersonneEnergetique extends Personne {
     /**
      * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente et l'affichant la nouvelle
      */
-    public void déplacer(Case c) {
+    public void deplacer(Case c) {
         this.setEnergie(this.getEnergie() + 10);
         Case casePrecedente = this.getPosition();
         this.setPosition(c);

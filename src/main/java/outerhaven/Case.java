@@ -300,14 +300,14 @@ public class Case {
         // La profondeur max possible
         int depth = 10000000;
         Personne laPlusProche = null;
-        for (int i = 0; i < personnages.size(); i++) {
-            if (this.contenu.get(0) != personnages.get(i)) {
-                int x = (personnages.get(i).getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
-                int y = (personnages.get(i).getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
-                double normeVectoriel = Math.sqrt(x*x + y*y);
-                if (normeVectoriel < depth && personnages.get(i).getTeam() == e) {
-                    depth = (int)normeVectoriel;
-                    laPlusProche = personnages.get(i);
+        for (Personne personnage : personnages) {
+            if (this.contenu.get(0) != personnage) {
+                int x = (personnage.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
+                int y = (personnage.getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
+                double normeVectoriel = Math.sqrt(x * x + y * y);
+                if (normeVectoriel < depth && personnage.getTeam() == e) {
+                    depth = (int) normeVectoriel;
+                    laPlusProche = personnage;
                 }
             }
         }
@@ -511,4 +511,5 @@ public class Case {
             hexagone.setImage(hexagone_img1);
         }
     }
+
 }
