@@ -49,10 +49,8 @@ public class Archimage extends PersonneMagique {
                 if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
 
                     // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
-                    ajouterAlter(this.getPosition());
-                    for (Case c : this.getPosition().getCaseVoisines()) {
-                        ajouterAlter(c);
-                    }
+                    ajouterAlter("freeze",50,10,this.getPosition(), this.getTeam());
+                    ajouterAlterVoisine("freeze",50,10,this.getPosition(), this.getTeam());
 
                     // Cherche un voisin libre et un voisin libre du voisin libre si possible
                     Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
@@ -74,15 +72,6 @@ public class Archimage extends PersonneMagique {
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }
-        }
-    }
-
-    public void ajouterAlter(Case c) {
-        if (c.getAlteration() == null) {
-            c.setAlteration(new Alteration("freeze", 50, 10));
-            Plateau.listeCaseAlterees.add(c);
-        } else {
-            c.getAlteration().setDuree(10);
         }
     }
 

@@ -61,7 +61,7 @@ public class Alteration {
     public void appliquerEffet(Personne p) {
         if (this.effet == "poison" && p.getClass() != Alchimiste.class) {
             p.setHealth(p.getHealth() - this.puissance * 5);
-        } else if (this.effet == "heal" && p.getHealth() <= p.getMaxHealth() - this.puissance * 5) {
+        } else if (this.effet == "heal" && this.equipe == p.getTeam() && p.getHealth() <= p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getHealth() + this.puissance * 5);
         } else if (this.effet == "heal" && this.equipe == p.getTeam() && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getMaxHealth());
@@ -94,6 +94,7 @@ public class Alteration {
             for (Case c : Plateau.listeCaseAlterees) {
                 if (c.getAlteration() == this) {
                     c.setAlteration(null);
+                    c.getHexagone().setEffect(null);
                     AlterSupr.add(c);
                 }
             }

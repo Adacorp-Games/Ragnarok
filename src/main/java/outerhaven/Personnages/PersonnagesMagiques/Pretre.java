@@ -42,9 +42,9 @@ public class Pretre extends PersonneMagique {
         }
 
         // Soigne les cases voisines
-        ajouterAlter("heal", 50, 1, this.getPosition(), this.getTeam());
+        ajouterAlter("heal", 60, 1, this.getPosition(), this.getTeam());
         for (Case c1 : this.getPosition().getCaseVoisines()) {
-            ajouterAlter("heal", 50, 1, c1, this.getTeam());
+            ajouterAlter("heal", 60, 1, c1, this.getTeam());
         }
     }
 

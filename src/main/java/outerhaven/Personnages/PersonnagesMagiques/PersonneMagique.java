@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import outerhaven.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -36,14 +37,24 @@ public abstract class PersonneMagique extends Personne {
     }
 
     /**
-     * Fonction permettant à la personne d'altérer des cases contre du mana
+     * Fonction permettant à la personne d'altérer de la case c
      */
     public void ajouterAlter(String effet, int puissance, int duree, Case c, Equipe equipe) {
         if (c.getAlteration() == null) {
             c.setAlteration(new Alteration(effet, puissance, duree, equipe));
+            c.getHexagone().setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
             Plateau.listeCaseAlterees.add(c);
         } else {
             c.getAlteration().setDuree(duree);
+        }
+    }
+
+    /**
+     * Fonction permettant à la personne d'altérer les cases voisines de la case c
+     */
+    public void ajouterAlterVoisine(String effet, int puissance, int duree, Case c, Equipe equipe) {
+        for (Case cv : c.getCaseVoisines()) {
+            ajouterAlter(effet, puissance, duree, cv, equipe);
         }
     }
 
