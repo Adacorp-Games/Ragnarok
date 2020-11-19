@@ -6,6 +6,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -76,6 +77,7 @@ public class Plateau {
     public static Personne personneSelectionne;
     public static Equipe equipeSelectionne;
     public static boolean statusPartie = false;
+    public static boolean activerAnimation = false;
     /**
      * Interface utile au plateau à mettre à jour durant une partie
      */
@@ -242,6 +244,18 @@ public class Plateau {
         nbArgent.setMinSize(100,50);
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
+        // Demande l'utilisation des animations
+        CheckBox animationCB = new CheckBox();
+        animationCB.setSelected(true);
+        animationCB.setLayoutX((longeurMax-700)/2);
+        animationCB.setLayoutY((largeurMax+220)/2);
+        animationCB.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        if (animationCB.isSelected()) {
+            activerAnimation = true;
+        } else {
+            activerAnimation = false;
+        }
+
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 aire = getIntFromTextField(nbCase);
@@ -283,12 +297,14 @@ public class Plateau {
         quitter.setLayoutY(10);
 
         //ajout de toute ces interfaces dans le group
+        group.getChildren().addAll(animationCB, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
+        /*group.getChildren().add(animationCB);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
         group.getChildren().add(infoArgent);
         group.getChildren().add(nbArgent);
         group.getChildren().add(start);
-        group.getChildren().add(quitter);
+        group.getChildren().add(quitter);*/
     }
 
     /**
@@ -675,6 +691,10 @@ public class Plateau {
 
     public static Group getNbPersonne() {
         return nbPersonne;
+    }
+
+    public static boolean isActiverAnimation() {
+        return activerAnimation;
     }
 
     public static void setStatusPartie(boolean statusPartie) {

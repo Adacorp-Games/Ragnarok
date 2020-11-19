@@ -102,32 +102,41 @@ public abstract class Personne {
      * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente avec une animation
      */
     public void deplacer(Case fin) {
-        fin.getContenu().add(this);
-        Case casePrecedente = this.position;
-        Group affichageCaseprecedente = this.affichagePersonnage();
-        this.setPosition(fin);
-        group.getChildren().add(affichageCaseprecedente);
-        casePrecedente.seVider();
-        AtomicReference<Double> x = new AtomicReference<>(affichageCaseprecedente.getLayoutX());
-        AtomicReference<Double> y = new AtomicReference<>(affichageCaseprecedente.getLayoutY());
-        double xVec = (casePrecedente.getPosX() - fin.getPosX())/20;
-        double yVec = (casePrecedente.getPosY() - fin.getPosY())/20;
-        AtomicInteger count= new AtomicInteger(0);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps/20), ev -> {
-            x.set(x.get() - xVec);
-            y.set(y.get() - yVec);
-            affichageCaseprecedente.setLayoutX(x.get());
-            affichageCaseprecedente.setLayoutY(y.get());
-            count.getAndIncrement();
-            if(count.get()==20){
-                group.getChildren().remove(affichageCaseprecedente);
-                this.position = fin;
-                deplacementFinal(casePrecedente,fin);
+        if (!isActiverAnimation()) {
+            Case casePrecedente = this.getPosition();
+            this.setPosition(fin);
+            fin.rentrePersonnage(this);
+            casePrecedente.seVider();
+            if (Personne.barreVisible) {
+                this.afficherSanteEtNom();
             }
+        } else {
+            fin.getContenu().add(this);
+            Case casePrecedente = this.position;
+            Group affichageCaseprecedente = this.affichagePersonnage();
+            this.setPosition(fin);
+            group.getChildren().add(affichageCaseprecedente);
+            casePrecedente.seVider();
+            AtomicReference<Double> x = new AtomicReference<>(affichageCaseprecedente.getLayoutX());
+            AtomicReference<Double> y = new AtomicReference<>(affichageCaseprecedente.getLayoutY());
+            double xVec = (casePrecedente.getPosX() - fin.getPosX()) / 20;
+            double yVec = (casePrecedente.getPosY() - fin.getPosY()) / 20;
+            AtomicInteger count = new AtomicInteger(0);
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps / 20), ev -> {
+                x.set(x.get() - xVec);
+                y.set(y.get() - yVec);
+                affichageCaseprecedente.setLayoutX(x.get());
+                affichageCaseprecedente.setLayoutY(y.get());
+                count.getAndIncrement();
+                if (count.get() == 20) {
+                    group.getChildren().remove(affichageCaseprecedente);
+                    this.position = fin;
+                    deplacementFinal(casePrecedente, fin);
+                }
             }));
-        timeline.setCycleCount(20);
-        timeline.play();
-       
+            timeline.setCycleCount(20);
+            timeline.play();
+        }
     }
 
     /**
@@ -135,13 +144,27 @@ public abstract class Personne {
      * @param depart
      * @param fin
      */
-    public void deplacementFinal(Case depart,Case fin ){
+    public void deplacementFinal(Case depart, Case fin ) {
         fin.seViderPourAnimation();
         fin.rentrePersonnage(this);
         if (Personne.barreVisible) {
             this.afficherSanteEtNom();
         }
     }
+
+    /**
+     * Ancienne méthode de déplacement (sans animation)
+     */
+    /*public void deplacer(Case c) {
+        Case casePrecedente = this.getPosition();
+        this.setPosition(c);
+        c.rentrePersonnage(this);
+        casePrecedente.seVider();
+        if (Personne.barreVisible) {
+            this.afficherSanteEtNom();
+        }
+    }*/
+
 
     /**
      * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer
