@@ -38,7 +38,7 @@ public class Paladin extends PersonneMagique {
 
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+                System.out.println("Taille du chemin vers l'ennemi le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
                 if (pathToEnnemy.size() - 1 <= this.getRange()) {
                     System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
                     attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
@@ -63,7 +63,12 @@ public class Paladin extends PersonneMagique {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nAttaque augmentées, vie et armure plus élevées mais portée réduite. Peut se soigner." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nAttaque augmentées, vie et armure plus élevées mais portée réduite.\nGagne 25 de mana par tour.\nPeut se soigner 1 quart de sa vie pour 50 de mana." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Mana : " + this.getMana() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override

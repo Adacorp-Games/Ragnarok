@@ -29,7 +29,11 @@ public class Mage extends Personne {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override

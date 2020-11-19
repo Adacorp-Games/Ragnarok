@@ -93,7 +93,12 @@ public class Necromancien extends PersonneMagique {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nInvocateur de skelettes.\nGagne 25 de mana par tour.\nPossède un vol de vie sur ses attaques.\nPour 100 de mana, rempli les cases voisines libres avec des skelettes." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Mana : " + this.getMana() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override

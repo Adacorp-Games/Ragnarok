@@ -6,14 +6,14 @@ import outerhaven.Case;
 import outerhaven.Equipe;
 
 public class Archer extends Personne {
-
     private int carquois;
     private boolean carquoisEstVide;
+
     public Archer() {
         //  vie armor cost degat range speed)
         super(600, 60, 150, 108, 15, 1);
-        carquoisEstVide = false;
-        carquois = 15;
+        this.carquoisEstVide = false;
+        this.carquois = 15;
     }
 
     public Archer(Equipe team, Case position) {
@@ -50,11 +50,22 @@ public class Archer extends Personne {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée augmentée mais vie, armure et dégâts plus bas.\nNombre de flèches limité à 15 :\nSe bat ensuite au corps-à-corps et fait plus de dégâts." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nPortée augmentée mais vie, armure et dégâts plus basses.\n" +
+                "Se bat au corps-à-corps et fait plus de dégâts une fois les flèches dans \n" +
+                "le carquois épuisées." + "\n" +
+                "- Limite de flèches : " + this.getCarquois() + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override
     public Image getImageFace() {
         return new Image(Archer.class.getResourceAsStream("/Images/Personnes/Archer.png"));
+    }
+
+    public int getCarquois() {
+        return carquois;
     }
 }

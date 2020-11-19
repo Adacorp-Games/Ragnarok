@@ -29,7 +29,11 @@ public class Guerrier extends Personne {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée réduite mais vie, armure et dégâts plus grands." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nPortée réduite mais vie, armure et dégâts plus grands." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override

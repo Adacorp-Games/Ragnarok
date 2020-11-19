@@ -30,7 +30,13 @@ public class Samourai extends PersonneEnergetique {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nPortée et dégats augmentés mais vie et armure plus basses." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nManieur de sabres avec de très bons dégâts et une bonne resistance" + "\n" +
+                "Cumule de l'énergie à chaque déplacement (10) ou attaque (25)." + "\n" +
+                "Peut dépenser 50 points d'énergie pour tripler la prochaine attaque." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégâts : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override

@@ -98,7 +98,12 @@ public class Archimage extends PersonneMagique {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nAttaque augmentées, vie et armure plus élevées mais portée réduite. Peut se soigner." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nAttaque puissante et grande portée mais vie et armure plus basses.\nPeut altérer les cases.\nGagne 25 de mana par tour.\nPeut se téléporter dans une case voisine en cas d'ennemi dans une case\nvoisine. La case sur laquelle il se téléporte et ses cases voisines\nsont gelées et les personne allant dedans ne peuvent rien faire." + "\n" +
+                "- PV : " + this.getHealth() + "\n" +
+                "- Mana : " + this.getMana() + "\n" +
+                "- Armure : " + this.getArmor() + "\n" +
+                "- Dégats : " + this.getDamage() + "\n" +
+                "- Portée : " + this.getRange() + "\n");
     }
 
     @Override
