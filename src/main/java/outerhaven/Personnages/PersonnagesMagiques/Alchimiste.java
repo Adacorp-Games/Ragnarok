@@ -34,10 +34,8 @@ public class Alchimiste extends PersonneMagique{
 
                 // Capacités de l'alchimiste
                 if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
-                    ajouterAlter(pathToEnnemy.get(pathToEnnemy.size() - 1));
-                    for (Case c : pathToEnnemy.get(pathToEnnemy.size() - 1).getCaseVoisines()) {
-                        ajouterAlter(c);
-                    }
+                    ajouterAlter("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
+                    ajouterAlterVoisine("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
                     this.setMana(this.getMana() - 100);
 
                 } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
@@ -49,15 +47,6 @@ public class Alchimiste extends PersonneMagique{
                 }
                 // System.out.println("Vie restante de la cible " + getHealth());
             }
-        }
-    }
-
-    public void ajouterAlter(Case c) {
-        if (c.getAlteration() == null) {
-            c.setAlteration(new Alteration("poison", 50, 10));
-            Plateau.listeCaseAlterees.add(c);
-        } else {
-            c.getAlteration().setDuree(10);
         }
     }
 

@@ -105,7 +105,7 @@ public class Case {
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
             Plateau.group.getChildren().remove(affichagecontenu);
-            hexagone.setEffect(null);
+            //hexagone.setEffect(null);
         }
     }
 
@@ -113,7 +113,7 @@ public class Case {
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
             Plateau.group.getChildren().remove(affichagecontenu);
-            hexagone.setEffect(null);
+            //hexagone.setEffect(null);
     }
 
     /**
@@ -146,9 +146,9 @@ public class Case {
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
                     group.getChildren().add(affichagecontenu);
-                    InnerShadow ombre = new InnerShadow();
+                    /*InnerShadow ombre = new InnerShadow();
                     ombre.colorProperty().setValue(equipeSelectionne.getCouleur());
-                    hexagone.setEffect(ombre);
+                    hexagone.setEffect(ombre);*/
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }

@@ -215,7 +215,7 @@ public abstract class Personne {
 
         // Création des intérations avec les images dans la barre
         imageperson.setOnMouseEntered((mouseEvent) -> {
-            group.getChildren().add(this.afficherInfo(imageperson.getX(), imageperson.getY()));
+            group.getChildren().add(this.afficherInfo(imageperson.getX(), imageperson.getY() - 105));
         });
         imageperson.setOnMouseExited((mouseEvent) -> {
             group.getChildren().remove(1);
@@ -245,7 +245,7 @@ public abstract class Personne {
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(400 , 150, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(400 , 205, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
