@@ -250,11 +250,6 @@ public class Plateau {
         animationCB.setLayoutX((longeurMax-700)/2);
         animationCB.setLayoutY((largeurMax+220)/2);
         animationCB.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        if (animationCB.isSelected()) {
-            activerAnimation = true;
-        } else {
-            activerAnimation = false;
-        }
 
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
@@ -264,6 +259,11 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
+                    if (animationCB.isSelected()) {
+                        activerAnimation = true;
+                    } else {
+                        activerAnimation = false;
+                    }
                     lancerScenePlateau();
                 }
             }
@@ -277,6 +277,11 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
+                    if (animationCB.isSelected()) {
+                        activerAnimation = true;
+                    } else {
+                        activerAnimation = false;
+                    }
                     lancerScenePlateau();
                 }
             }
@@ -290,6 +295,11 @@ public class Plateau {
             }
             if (aire > 0) {
                 group.getChildren().clear();
+                if (animationCB.isSelected()) {
+                    activerAnimation = true;
+                } else {
+                    activerAnimation = false;
+                }
                 lancerScenePlateau();
             }
         });
@@ -351,7 +361,7 @@ public class Plateau {
         reset.setLayoutY(130);
         reset.setOnMouseClicked(mouseEvent -> {
             setStatusPartie(false);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().clear();
                 personnages.clear();
                 morts.clear();
@@ -381,7 +391,7 @@ public class Plateau {
         reStrat.setLayoutY(70);
         reStrat.setOnMouseClicked(mouseEvent -> {
             setStatusPartie(false);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().remove(0, group.getChildren().size());
                 personnages.clear();
                 morts.clear();

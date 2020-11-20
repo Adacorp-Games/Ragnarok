@@ -40,6 +40,7 @@ public abstract class Personne {
     private int speed;          // Nombre de case qu'il parcourt chaque tour
     private Equipe team;        // Equipe de la personne
     public static boolean barreVisible = false;
+    public Case casePrecedente;
     private ImageView imageperson = new ImageView(this.getImageFace());
     private Case position;
     private String status = "normal";
@@ -102,6 +103,15 @@ public abstract class Personne {
      * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente avec une animation
      */
     public void deplacer(Case fin) {
+
+        // Debbug pathfinding
+        if (casePrecedente != null) {
+            System.out.println(this.getName() + " case précédente : " + casePrecedente.toString());
+        }
+        this.setCasePrecedente(this.getPosition());
+        System.out.println(this.getName() + " case actuelle : " + casePrecedente.toString());
+        System.out.println(this.getName() + " case prochaine : " + fin.toString());
+
         if (!isActiverAnimation()) {
             Case casePrecedente = this.getPosition();
             this.setPosition(fin);
@@ -111,6 +121,7 @@ public abstract class Personne {
                 this.afficherSanteEtNom();
             }
         } else {
+            double fps = 15;
             fin.getContenu().add(this);
             Case casePrecedente = this.position;
             Group affichageCaseprecedente = this.affichagePersonnage();
@@ -119,22 +130,22 @@ public abstract class Personne {
             casePrecedente.seVider();
             AtomicReference<Double> x = new AtomicReference<>(affichageCaseprecedente.getLayoutX());
             AtomicReference<Double> y = new AtomicReference<>(affichageCaseprecedente.getLayoutY());
-            double xVec = (casePrecedente.getPosX() - fin.getPosX()) / 20;
-            double yVec = (casePrecedente.getPosY() - fin.getPosY()) / 20;
+            double xVec = (casePrecedente.getPosX() - fin.getPosX()) / fps;
+            double yVec = (casePrecedente.getPosY() - fin.getPosY()) / fps;
             AtomicInteger count = new AtomicInteger(0);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps / 20), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps / fps), ev -> {
                 x.set(x.get() - xVec);
                 y.set(y.get() - yVec);
                 affichageCaseprecedente.setLayoutX(x.get());
                 affichageCaseprecedente.setLayoutY(y.get());
                 count.getAndIncrement();
-                if (count.get() == 20) {
+                if (count.get() == fps) {
                     group.getChildren().remove(affichageCaseprecedente);
                     this.position = fin;
                     deplacementFinal(casePrecedente, fin);
                 }
             }));
-            timeline.setCycleCount(20);
+            timeline.setCycleCount(15);
             timeline.play();
         }
     }
@@ -508,6 +519,14 @@ public abstract class Personne {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Case getCasePrecedente() {
+        return casePrecedente;
+    }
+
+    public void setCasePrecedente(Case casePrecedente) {
+        this.casePrecedente = casePrecedente;
     }
 
     @Override

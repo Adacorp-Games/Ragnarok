@@ -59,7 +59,7 @@ public class Necromancien extends PersonneMagique {
                         c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
                         c.getContenu().get(0).afficherSanteEtNom();
                         Plateau.group.getChildren().add(c.getAffichagecontenu());
-                        c.getHexagone().setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+                        //c.getHexagone().setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
                         //this.setMana(this.getMana() - 25);
                     }
                 //}

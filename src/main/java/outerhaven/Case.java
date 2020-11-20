@@ -355,33 +355,46 @@ public class Case {
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         try {
-            boolean ajout =false;
-            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty() || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr].getContenu().get(0) == personne) {
+            boolean ajout = false;
+            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty()
+                    || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().get(0) == personne) {
                 // Si la case est vide
-                if(!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])){
+                if (!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])) {
                     for (int i = 0; i < caseVoisines.size() ; i++) {
-                        for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
-                            if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
+                        for (int j = 0; j < tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.size(); j++) {
+                            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i)
+                                    && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j).getContenu().isEmpty()
+                                    && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr] != this.getContenu().get(0).getCasePrecedente()) {
                                 chemin.add(caseVoisines.get(i));
-                                ajout=true;
+                                ajout = true;
                             }
                         }
                     }
                 }
-                chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() +  yIncr]);
+                chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr]);
             } else {
                 // Si la case est utilisé
                 for (int i = 0; i < caseVoisines.size() ; i++) {
-                    for (int j = 0; j < tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.size(); j++) {
-                        if (tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i) && tableauCase[this.getCoordonnee()[0] +  xIncr][this.donneYpourTab() +  yIncr].caseVoisines.get(j).getContenu().isEmpty()) {
+                    for (int j = 0; j < tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.size(); j++) {
+                        if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i)
+                                && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j).getContenu().isEmpty()
+                                && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr] != this.getContenu().get(0).getCasePrecedente()) {
                             chemin.add(caseVoisines.get(i));
-                            ajout=true;
+                            ajout = true;
+                        }
+                    }
+                }
+                if (!ajout) {
+                    for (Case c : this.getCaseVoisines()) {
+                        if (c != this.getContenu().get(0).getCasePrecedente() && c.getContenu().isEmpty()) {
+                            chemin.add(c);
+                            ajout = true;
                         }
                     }
                 }
             }
-            if(!ajout){
-                bloqué= false;
+            if (!ajout) {
+                bloqué = false;
             }
         } catch(Exception e) {
             // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
@@ -410,14 +423,14 @@ public class Case {
      * Permet d'arrondir un nombre au 0.5 près (utile car (int) arrondi à la decimal inferieur
      */
     private int arrondir(double nombre) {
-        if (Math.abs(nombre - (int)nombre) > 0.6) {
+        if (Math.abs(nombre - (int) nombre) > 0.6) {
             if (nombre < 0) {
                 return (int) nombre - 1;
             } else {
                 return (int) nombre + 1 ;
             }
         } else {
-            return (int)nombre;
+            return (int) nombre;
         }
     }
 
