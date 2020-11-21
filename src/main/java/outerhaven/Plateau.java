@@ -6,7 +6,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -78,6 +77,7 @@ public class Plateau {
     public static Equipe equipeSelectionne;
     public static boolean statusPartie = false;
     public static boolean activerAnimation = false;
+    public static boolean activerEnchere = false;
     /**
      * Interface utile au plateau à mettre à jour durant une partie
      */
@@ -261,6 +261,44 @@ public class Plateau {
                 animationBT.setText("Animations : NON");
             }
         });
+        animationBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        animationBT.setOnMouseExited(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(null);
+            }
+        });
+
+        // Demande l'utilisation des enchères
+        Button enchereBT = new Button("Enchères : NON");
+        enchereBT.setMinSize(120,50);
+        enchereBT.setLayoutX((longeurMax - 700) / 2 + 130);
+        enchereBT.setLayoutY((largeurMax + 220) / 2);
+        enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        enchereBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerEnchere) {
+                activerEnchere = true;
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                enchereBT.setText("Enchères : OUI");
+            } else {
+                activerEnchere = false;
+                enchereBT.setEffect(null);
+                enchereBT.setText("Enchères : NON");
+            }
+        });
+        enchereBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        enchereBT.setOnMouseExited(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(null);
+            }
+        });
 
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
@@ -270,7 +308,9 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    lancerScenePlateau();
+                    if (!activerEnchere) {
+                        lancerScenePlateau();
+                    }
                 }
             }
         });
@@ -283,7 +323,9 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    lancerScenePlateau();
+                    if (!activerEnchere) {
+                        lancerScenePlateau();
+                    }
                 }
             }
         });
@@ -296,21 +338,16 @@ public class Plateau {
             }
             if (aire > 0) {
                 group.getChildren().clear();
-                lancerScenePlateau();
+                if (!activerEnchere) {
+                    lancerScenePlateau();
+                }
             }
         });
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
 
-        //ajout de toute ces interfaces dans le group
-        group.getChildren().addAll(animationBT, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
-        /*group.getChildren().add(animationCB);
-        group.getChildren().add(infoNB);
-        group.getChildren().add(nbCase);
-        group.getChildren().add(infoArgent);
-        group.getChildren().add(nbArgent);
-        group.getChildren().add(start);
-        group.getChildren().add(quitter);*/
+        // Ajout de toute ces interfaces dans le group
+        group.getChildren().addAll(animationBT, enchereBT, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
     }
 
     /**
@@ -359,16 +396,11 @@ public class Plateau {
             setStatusPartie(false);
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().clear();
-                personnages.clear();
-                morts.clear();
-                listeCase.clear();
-                invocationAttente.clear();
-                getE1().getTeam().clear();
-                getE2().getTeam().clear();
-                scene.setFill(Color.WHITE);
+                this.cleanPlateau();
                 this.lancerPartie();
-                aire = 0;
+                this.aire = 0;
                 argentPartie = 0;
+                activerAnimation = false;
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -389,14 +421,8 @@ public class Plateau {
             setStatusPartie(false);
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().remove(0, group.getChildren().size());
-                personnages.clear();
-                morts.clear();
-                listeCase.clear();
-                invocationAttente.clear();
-                getE1().getTeam().clear();
-                getE2().getTeam().clear();
-                scene.setFill(Color.WHITE);
-                lancerScenePlateau();
+                this.cleanPlateau();
+                this.lancerScenePlateau();
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -470,8 +496,7 @@ public class Plateau {
                 scene.setFill(Color.WHITE);
             }
         });
-        boutonGame.getChildren().add(play);
-        boutonGame.getChildren().add(labelPlay);
+        boutonGame.getChildren().addAll(play, labelPlay);
         return boutonGame;
     }
 
@@ -490,14 +515,14 @@ public class Plateau {
     private Button vitesseX2() {
         Button vitesseX2 = new Bouton().creerBouton("x2");
         vitesseX2.setLayoutX(270);
-        vitesseX2.setLayoutY(vitesseX1().getLayoutY()+60);
+        vitesseX2.setLayoutY(vitesseX1().getLayoutY() + 60);
         return vitesseX2;
     }
 
     private Button vitesseX3() {
         Button vitesseX3 = new Bouton().creerBouton("x3");
         vitesseX3.setLayoutX(270);
-        vitesseX3.setLayoutY(vitesseX2().getLayoutY()+60);
+        vitesseX3.setLayoutY(vitesseX2().getLayoutY() + 60);
         return vitesseX3;
     }
 
@@ -532,17 +557,13 @@ public class Plateau {
         menu.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(exit)) {
                 try {
-                    group.getChildren().add(reset);
-                    group.getChildren().add(reStart);
-                    group.getChildren().add(exit);
+                    group.getChildren().addAll(reset, reStart, exit);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().remove(reset);
-                    group.getChildren().remove(reStart);
-                    group.getChildren().remove(exit);
+                    group.getChildren().removeAll(reset, reStart, exit);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -576,25 +597,21 @@ public class Plateau {
         vitesse.setOnMouseClicked(mouseEvent-> {
             if (!group.getChildren().contains(x1)) {
                 try {
-                    group.getChildren().add(x1);
-                    group.getChildren().add(x2);
-                    group.getChildren().add(x3);
+                    group.getChildren().addAll(x1, x2, x3);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().remove(x1);
-                    group.getChildren().remove(x2);
-                    group.getChildren().remove(x3);
+                    group.getChildren().removeAll(x1, x2, x3);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        group.getChildren().add(vitesse);
         boutonPausePlay();
         afficheBarVie();
+        group.getChildren().add(vitesse);
         group.getChildren().add(menu);
     }
 
@@ -689,6 +706,19 @@ public class Plateau {
     }
 
     /**
+     * Méthode qui va nettoyer le plteau en cas de reset/restart
+     */
+    public void cleanPlateau() {
+        personnages.clear();
+        morts.clear();
+        listeCase.clear();
+        invocationAttente.clear();
+        getE1().getTeam().clear();
+        getE2().getTeam().clear();
+        scene.setFill(Color.WHITE);
+    }
+
+    /**
      * cette section contient tout les getters et setters de Plateau
      */
     public static boolean getStatusPartie() {
@@ -701,6 +731,10 @@ public class Plateau {
 
     public static boolean isActiverAnimation() {
         return activerAnimation;
+    }
+
+    public static boolean isActiverEnchere() {
+        return activerEnchere;
     }
 
     public static void setStatusPartie(boolean statusPartie) {
