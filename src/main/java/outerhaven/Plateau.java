@@ -163,6 +163,13 @@ public class Plateau {
         primary.setScene(scene);
     }
 
+    public void lancerSceneEnchere() {
+        Button quitter = boutonExit();
+        quitter.setLayoutY(10);
+        group.getChildren().addAll(quitter);
+        primary.setScene(scene);
+    }
+
     /**
      * Méthode permettant à chaque case de connaitre ses cases voisines
      */
@@ -310,6 +317,8 @@ public class Plateau {
                     group.getChildren().clear();
                     if (!activerEnchere) {
                         lancerScenePlateau();
+                    } else {
+                        lancerSceneEnchere();
                     }
                 }
             }
@@ -325,6 +334,8 @@ public class Plateau {
                     group.getChildren().clear();
                     if (!activerEnchere) {
                         lancerScenePlateau();
+                    } else {
+                        lancerSceneEnchere();
                     }
                 }
             }
@@ -340,6 +351,8 @@ public class Plateau {
                 group.getChildren().clear();
                 if (!activerEnchere) {
                     lancerScenePlateau();
+                } else {
+                    lancerSceneEnchere();
                 }
             }
         });
@@ -401,6 +414,7 @@ public class Plateau {
                 this.aire = 0;
                 argentPartie = 0;
                 activerAnimation = false;
+                activerEnchere = false;
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
