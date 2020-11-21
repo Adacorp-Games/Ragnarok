@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * La classe Plateau va principalement generer le plateau et son interface, ainsi que les parametres necessaire au fonctionnement du jeu et au interaction
+ * La classe Plateau va principalement générer le plateau et son interface, ainsi que les paramètres nécessaire au fonctionnement du jeu et au interaction
  */
 
 public class Plateau {
@@ -35,14 +35,14 @@ public class Plateau {
     public static Group group = new Group();
     public static Scene scene = new Scene(group);
     double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     /**
      * Aire du plateau && taille en px d'une case
      */
     private int aire;
     public static double taille;
     /**
-     * Liste de personnes presentes sur le plateau
+     * Liste de personnes présentes sur le plateau
      */
     public static ArrayList<Personne> personnages = new ArrayList<>();
     /**
@@ -50,11 +50,11 @@ public class Plateau {
      */
     public static ArrayList<Personne> morts = new ArrayList<>();
     /**
-     * Liste d'invocation en attente pour les futurs innuté à ajouté pour le prochain tour
+     * Liste d'invocation en attente pour les futurs unités à ajouter pour le prochain tour
      */
     public static ArrayList<Personne> invocationAttente = new ArrayList<>();
     /**
-     * Liste/tableau des cases (alterées ou non) dans le plateau
+     * Liste/tableau des cases (altérées ou non) dans le plateau
      */
     public static ArrayList<Case> listeCase = new ArrayList<>();
     public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
@@ -65,13 +65,13 @@ public class Plateau {
     public static Equipe e1 = new Equipe(Color.RED);
     public static Equipe e2 = new Equipe(Color.BLUE);
     /**
-     * Informations concernants une partie en cours
+     * Informations sur une partie en cours
      */
     public static int argentPartie = 0;
     public static int temps = 500;
     public static int nbTour = 0;
     /**
-     * Status de certains parametre utiles pour le fonctionnement du jeu
+     * Status de certains paramètre utiles pour le fonctionnement du jeu
      */
     public static Personne personneSelectionne;
     public static Equipe equipeSelectionne;
@@ -85,29 +85,29 @@ public class Plateau {
     private static Group nbPersonne = new Group();
 
     public Plateau(Stage primary) {
-        // Le contructeur n'as besoin que de la fenetre du main pour se lancer
+        // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
         Plateau.primary = primary;
     }
 
     public void lancerPartie() {
-        // Lance une partie en ajoutant la scene et le groupe dans la fentre principale
+        // Lance une partie en ajoutant la scene et le groupe dans la fenêtre principale
         interfaceDebut();
         primary.setScene(scene);
         primary.show();
     }
 
     /**
-     * lancerScenePlateau() genere le plateau d'hexagone en fonction de :
+     * lancerScenePlateau() génère le plateau d'hexagone en fonction de :
      * - l'aire
-     * - la taille de l'ecran de l'utilisateur
-     * La methode auras aussi pour but d'incorporer les Cases creent dans listeCase et tableauCase en leur donnant des coordoné x et y
-     * Elle ajoute aussi des interface en plus comme le menus, ses boutons d'interactions, l'argent du joueur et le nb de personnage dans chaque equipes
+     * - la taille de l'écran de l'utilisateur
+     * La methode auras aussi pour but d'incorporer les Cases créent dans listeCase et tableauCase en leur donnant des coordonnés x et y
+     * Elle ajoute aussi des interface en plus comme le menus, ses boutons d'interactions, l'argent du joueur et le nb de personnage dans chaque équipes
      */
     public void lancerScenePlateau() {
         // Ajuste la taille d'une case et le taille du tableau case
         taille = 1000/Math.sqrt(aire);
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
-        // Les hexagones se chevauchent par ligne, le but de se boolean est de decaler chaque ligne pour permettre ce chevauchement
+        // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
         int ligne = 0;
@@ -117,13 +117,13 @@ public class Plateau {
             if (!decalage) {
                 double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
-                    // On definie les cases d'une ligne
-                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
-                    Case hexago = new Case(ligne, j - (ligne/2));
+                    // On définie les cases d'une ligne
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
+                    Case hexagone = new Case(ligne, j - (ligne/2));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
-                    tableauCase[ligne][j] = hexago;
-                    listeCase.add(hexago);
-                    group.getChildren().add(hexago.afficherCase(posX, posY, taille));
+                    tableauCase[ligne][j] = hexagone;
+                    listeCase.add(hexagone);
+                    group.getChildren().add(hexagone.afficherCase(posX, posY, taille));
                     i++;
                 }
                 decalage = true;
@@ -131,13 +131,13 @@ public class Plateau {
             } else {
                 double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
                 for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
-                    // On definie les cases d'une ligne
-                    double posX = longeurMax/2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille/2;
-                    Case hexago = new Case(ligne, j - ((ligne)/2 + 1));
+                    // On définie les cases d'une ligne
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille/2;
+                    Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
-                    tableauCase[ligne][j] = hexago;
-                    listeCase.add(hexago);
-                    group.getChildren().add(hexago.afficherCase(posX, posY, taille));
+                    tableauCase[ligne][j] = hexagone;
+                    listeCase.add(hexagone);
+                    group.getChildren().add(hexagone.afficherCase(posX, posY, taille));
                     i++;
                 }
                 decalage = false;
@@ -146,7 +146,7 @@ public class Plateau {
         }
         // Initialisation des cases voisines
         initVoisins();
-        // Creation et incorporation d'une slide barre + boutton
+        // Creation et incorporation d'une slide barre + bouton
         ajouteLeMenu();
         // Creation et incorporation d'information sur les équipes
         afficherNbPersonne();
@@ -214,14 +214,14 @@ public class Plateau {
      * Interface avant la generation du plateau
      * on ajoute ici les boutons :
      * Start (pour lancer la partie)
-     * Quitter (pour arreter le jeu)
+     * Quitter (pour arrêter le jeu)
      * Une entrée pour l'aire du plateau
-     * Une entrée pour l'argent des equipes
+     * Une entrée pour l'argent des équipes
      * (avec tout les texte qui vont avec)
      */
     private void interfaceDebut() {
         Button start = new Button("START");
-        start.setLayoutX((longeurMax-700)/2);
+        start.setLayoutX((longueurMax -700)/2);
         start.setLayoutY((largeurMax-200)/2);
         start.setMinSize(700,200);
         start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
@@ -230,23 +230,23 @@ public class Plateau {
 
         // Ajout de textes
         Text infoNB = new Text("Entrez le nombre de cases du plateau :");
-        infoNB.setLayoutX((longeurMax-700)/2);
+        infoNB.setLayoutX((longueurMax -700)/2);
         infoNB.setLayoutY((largeurMax-300)/2-20);
 
         Text infoArgent = new Text("Entrez la limite d'argent pour chaque équipe : (vide = pas de limite)");
-        infoArgent.setLayoutX((longeurMax-700)/2);
+        infoArgent.setLayoutX((longueurMax -700)/2);
         infoArgent.setLayoutY((largeurMax-450)/2-20);
 
         // Entrée de l'aire du plateau
         TextField nbCase = new TextField();
-        nbCase.setLayoutX((longeurMax-700)/2);
+        nbCase.setLayoutX((longueurMax -700)/2);
         nbCase.setLayoutY((largeurMax-280)/2-20);
         nbCase.setMinSize(100,50);
         nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
         // Entrée de l'argent
         TextField nbArgent = new TextField();
-        nbArgent.setLayoutX((longeurMax-700)/2);
+        nbArgent.setLayoutX((longueurMax -700)/2);
         nbArgent.setLayoutY((largeurMax-430)/2-20);
         nbArgent.setMinSize(100,50);
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -254,7 +254,7 @@ public class Plateau {
         // Demande l'utilisation des animations
         Button animationBT = new Button("Animations : NON");
         animationBT.setMinSize(120,50);
-        animationBT.setLayoutX((longeurMax - 700) / 2);
+        animationBT.setLayoutX((longueurMax - 700) / 2);
         animationBT.setLayoutY((largeurMax + 220) / 2);
         animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         animationBT.setOnMouseClicked(mouseEvent -> {
@@ -282,7 +282,7 @@ public class Plateau {
         // Demande l'utilisation des enchères
         Button enchereBT = new Button("Enchères : NON");
         enchereBT.setMinSize(120,50);
-        enchereBT.setLayoutX((longeurMax - 700) / 2 + 130);
+        enchereBT.setLayoutX((longueurMax - 700) / 2 + 130);
         enchereBT.setLayoutY((largeurMax + 220) / 2);
         enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         enchereBT.setOnMouseClicked(mouseEvent -> {
@@ -374,14 +374,14 @@ public class Plateau {
     }
 
     /**
-     * equipeSelectionne devient l'équipe en parametre
+     * equipeSelectionne devient l'équipe en paramètre
      */
     public static void incorporeEquipe(Equipe equipe) {
         equipeSelectionne = equipe;
     }
 
     /**
-    * Cette section contiendras les boutons du Plateau, on retrouveras le systeme de tour plus tard
+    * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard
     */
 
     /**
@@ -428,10 +428,10 @@ public class Plateau {
      * @return le bouton ReStart
      */
     private Button boutonReStart() {
-        Button reStrat = new Bouton().creerBouton("Restart");
-        reStrat.setLayoutX(10);
-        reStrat.setLayoutY(70);
-        reStrat.setOnMouseClicked(mouseEvent -> {
+        Button reStart = new Bouton().creerBouton("Restart");
+        reStart.setLayoutX(10);
+        reStart.setLayoutY(70);
+        reStart.setOnMouseClicked(mouseEvent -> {
             setStatusPartie(false);
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().remove(0, group.getChildren().size());
@@ -441,12 +441,12 @@ public class Plateau {
             timeline.play();
             //Plateau.personneSelectionné = null;
         });
-        return reStrat;
+        return reStart;
     }
 
     /**
      * Crée un bouton PausePlay:
-     * gere l'etat et l'avancement du jeu
+     * gere l'état et l'avancement du jeu
      * @return un groupe contenant les boutons Play et Pause
      */
     private Group boutonPausePlay() {
@@ -515,7 +515,7 @@ public class Plateau {
     }
 
     /**
-     * Crée des boutons modifiants la vitesse d'execution d'un tour en millisecondes
+     * Crée des boutons modifiants la vitesse d'exécution d'un tour en millisecondes
      * @return les boutons de vitesse
      */
     private Button vitesseX1() {
@@ -545,7 +545,7 @@ public class Plateau {
      */
     private void afficheBarVie() {
         Button barVie = new Bouton().creerBouton("Afficher barres de vie");
-        barVie.setLayoutX(longeurMax - 150);
+        barVie.setLayoutX(longueurMax - 150);
         barVie.setLayoutY(10);
         barVie.setOnMouseClicked(mouseEvent -> {
             if (!personnages.isEmpty()){
@@ -559,7 +559,7 @@ public class Plateau {
     }
 
     /**
-     * Menu contenant tout les boutons précédants et l'ajout au groupe général
+     * Menu contenant tout les boutons précédents et l'ajout au groupe général
      */
     private void ajouteLeMenu() {
         Button menu = new Bouton().creerBouton("Menu");
@@ -663,7 +663,7 @@ public class Plateau {
 
             // Gestion de l'ordre d'action des personnages
             Collections.shuffle(personnages);
-            // Fait combattre les peronnages non contenu dans mort
+            // Fait combattre les personnages non contenu dans mort
             for (Personne personnage : personnages) {
                 if (personnage.getHealth() <= 0) {
                     morts.add(personnage);
@@ -720,7 +720,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode qui va nettoyer le plteau en cas de reset/restart
+     * Méthode qui va nettoyer le plateau en cas de reset / restart
      */
     public void cleanPlateau() {
         personnages.clear();
@@ -733,15 +733,8 @@ public class Plateau {
     }
 
     /**
-     * cette section contient tout les getters et setters de Plateau
+     * Cette section contient tout les getters et setters de Plateau
      */
-    public static boolean getStatusPartie() {
-        return statusPartie;
-    }
-
-    public static Group getNbPersonne() {
-        return nbPersonne;
-    }
 
     public static boolean isActiverAnimation() {
         return activerAnimation;
