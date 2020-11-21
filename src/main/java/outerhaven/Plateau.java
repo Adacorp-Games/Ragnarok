@@ -245,11 +245,22 @@ public class Plateau {
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
         // Demande l'utilisation des animations
-        CheckBox animationCB = new CheckBox();
-        animationCB.setSelected(true);
-        animationCB.setLayoutX((longeurMax-700)/2);
-        animationCB.setLayoutY((largeurMax+220)/2);
-        animationCB.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        Button animationBT = new Button("Animations : NON");
+        animationBT.setMinSize(120,50);
+        animationBT.setLayoutX((longeurMax - 700) / 2);
+        animationBT.setLayoutY((largeurMax + 220) / 2);
+        animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        animationBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerAnimation) {
+                activerAnimation = true;
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                animationBT.setText("Animations : OUI");
+            } else {
+                activerAnimation = false;
+                animationBT.setEffect(null);
+                animationBT.setText("Animations : NON");
+            }
+        });
 
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
@@ -259,11 +270,6 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (animationCB.isSelected()) {
-                        activerAnimation = true;
-                    } else {
-                        activerAnimation = false;
-                    }
                     lancerScenePlateau();
                 }
             }
@@ -277,11 +283,6 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (animationCB.isSelected()) {
-                        activerAnimation = true;
-                    } else {
-                        activerAnimation = false;
-                    }
                     lancerScenePlateau();
                 }
             }
@@ -295,11 +296,6 @@ public class Plateau {
             }
             if (aire > 0) {
                 group.getChildren().clear();
-                if (animationCB.isSelected()) {
-                    activerAnimation = true;
-                } else {
-                    activerAnimation = false;
-                }
                 lancerScenePlateau();
             }
         });
@@ -307,7 +303,7 @@ public class Plateau {
         quitter.setLayoutY(10);
 
         //ajout de toute ces interfaces dans le group
-        group.getChildren().addAll(animationCB, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
+        group.getChildren().addAll(animationBT, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
         /*group.getChildren().add(animationCB);
         group.getChildren().add(infoNB);
         group.getChildren().add(nbCase);
