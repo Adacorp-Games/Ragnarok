@@ -113,8 +113,8 @@ public class Plateau {
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
         Evenements.setActiverEvenement(false);
-        Evenements.setFréquenceEvenement(20);
-        Evenements.setPourcentageEvenement(20);
+        Evenements.setFréquenceEvenement(25);
+        Evenements.setPourcentageEvenement(10);
 
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;

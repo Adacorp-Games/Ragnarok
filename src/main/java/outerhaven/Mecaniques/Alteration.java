@@ -72,6 +72,8 @@ public class Alteration {
             p.setHealth(p.getMaxHealth());
         } else if (this.effet == "freeze" && p.getClass() != Archimage.class) {
             p.prendreDégâts(this.puissance * 2);
+        } else if (this.effet == "void") {
+            p.prendreDégâts(p.getHealth());
         }
     }
 
