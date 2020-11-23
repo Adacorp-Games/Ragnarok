@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
@@ -25,13 +24,11 @@ public class Necromancien extends PersonneMagique {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
-            p.setHealth(p.getHealth() - totalDamage);
+            p.prendreDégâts(totalDamage);
 
             // Vol en vie à la cible le montant de dégâts infligés
             if (this.getHealth() < this.getMaxHealth() - totalDamage) {
-                this.setHealth(this.getHealth() + totalDamage);
-            } else if (this.getHealth() < this.getMaxHealth()) {
-                this.setHealth(getHealth());
+                this.soigner(totalDamage);
             }
 
             if (p.getHealth() <= 0) {

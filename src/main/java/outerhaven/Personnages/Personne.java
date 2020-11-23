@@ -92,7 +92,7 @@ public abstract class Personne {
         double damageMultiplier = damage / (damage + armor / 5);
         double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
-            p.setHealth(p.getHealth() - totalDamage);
+            p.prendreDégâts(totalDamage);
             if (p.getHealth() <= 0) {
                 System.out.println(p.getName() + " est mort !");
             }
@@ -434,6 +434,22 @@ public abstract class Personne {
             ligne++;
         }
         scan.close();
+    }
+
+    /**
+     * Méthode permettant de prendre des dégâts
+     * @param dégâts que l'on va enlever à la cible
+     */
+    public void prendreDégâts(double dégâts) {
+        this.setHealth(this.getHealth() - dégâts);
+    }
+
+    /**
+     * Méthode qui permet à une personne d'avoir sa vie soignée
+     * @param vie que l'on veut soigner
+     */
+    public void soigner(double vie) {
+        this.setHealth(this.getHealth() + vie);
     }
 
     /**

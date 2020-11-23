@@ -60,13 +60,13 @@ public class Alteration {
      */
     public void appliquerEffet(Personne p) {
         if (this.effet == "poison" && p.getClass() != Alchimiste.class) {
-            p.setHealth(p.getHealth() - this.puissance * 5);
+            p.prendreDégâts(this.puissance * 5);
         } else if (this.effet == "heal" && this.equipe == p.getTeam() && p.getHealth() <= p.getMaxHealth() - this.puissance * 5) {
-            p.setHealth(p.getHealth() + this.puissance * 5);
+            p.soigner(this.puissance * 5);
         } else if (this.effet == "heal" && this.equipe == p.getTeam() && p.getHealth() > p.getMaxHealth() - this.puissance * 5) {
             p.setHealth(p.getMaxHealth());
         } else if (this.effet == "freeze" && p.getClass() != Archimage.class) {
-            p.setHealth(p.getHealth() - this.puissance * 2);
+            p.prendreDégâts(this.puissance * 2);
         }
     }
 

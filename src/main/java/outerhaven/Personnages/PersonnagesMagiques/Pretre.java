@@ -19,8 +19,10 @@ public class Pretre extends PersonneMagique {
     }
 
     public void action() {
-        // Gagne de la mana chaque tour
+        // Gagne de la mana chaque tour et se soigne
         this.gainMana();
+        this.soigner(200);
+
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
         if (this.getPosition().nbVoisinsLibres() == 0) {
             System.out.println(this.getName() + " patiente");

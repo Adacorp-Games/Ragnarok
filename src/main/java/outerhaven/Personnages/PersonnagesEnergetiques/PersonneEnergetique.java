@@ -47,10 +47,10 @@ public abstract class PersonneEnergetique extends Personne {
         if (this.getTeam() != p.getTeam()) {
             // Si son énergie est au dessus de 50 son attaque a ses dégâts triplés
             if (this.getEnergie() >= 50) {
-                p.setHealth(p.getHealth() - totalDamage * 3);
+                p.prendreDégâts(totalDamage * 3);
                 this.setEnergie(this.getEnergie() - 50);
             } else {
-                p.setHealth(p.getHealth() - totalDamage);
+                p.prendreDégâts(totalDamage);
             }
             if (p.getHealth() <= 0) {
                 System.out.println(p.getName() + " est mort !");
