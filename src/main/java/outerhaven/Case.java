@@ -1,7 +1,7 @@
 package outerhaven;
 
 import javafx.scene.Group;
-import javafx.scene.effect.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import outerhaven.Interface.Effets;
+import outerhaven.Mecaniques.Alteration;
 import outerhaven.Personnages.Personne;
 import static outerhaven.Plateau.*;
 
@@ -431,6 +433,16 @@ public class Case {
             }
         } else {
             return (int) nombre;
+        }
+    }
+
+    public void ajouterAlter(String effet, int puissance, int duree) {
+        if (this.getAlteration() == null) {
+            this.setAlteration(new Alteration(effet, puissance, duree));
+            this.getHexagone().setEffect(new Effets().putInnerShadow(Color.BLACK));
+            Plateau.listeCaseAlterees.add(this);
+        } else {
+            this.getAlteration().setDuree(duree);
         }
     }
 

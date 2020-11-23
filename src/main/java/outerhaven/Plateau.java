@@ -18,6 +18,8 @@ import javafx.util.Duration;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
+import outerhaven.Mecaniques.Alteration;
+import outerhaven.Mecaniques.Evenements;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
@@ -34,8 +36,8 @@ public class Plateau {
     private static Stage primary;
     public static Group group = new Group();
     public static Scene scene = new Scene(group);
-    double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     /**
      * Aire du plateau && taille en px d'une case
      */
@@ -83,6 +85,7 @@ public class Plateau {
      */
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
+    private Evenements event = new Evenements(new Alteration("poison", 50, 20));
 
     public Plateau(Stage primary) {
         // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
@@ -107,6 +110,12 @@ public class Plateau {
         // Ajuste la taille d'une case et le taille du tableau case
         taille = 1000/Math.sqrt(aire);
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
+
+        // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
+        Evenements.setActiverEvenement(false);
+        Evenements.setFréquenceEvenement(20);
+        Evenements.setPourcentageEvenement(20);
+
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -637,6 +646,12 @@ public class Plateau {
         if(!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
             nbTour++;
             System.out.println("Tour : " + nbTour);
+
+            // Gestion des événements aléatoires
+            if (Evenements.activerEvenement == true) {
+                event.generationEvenements();
+            }
+
 
             // Gestion des invocations
             personnages.addAll(invocationAttente);

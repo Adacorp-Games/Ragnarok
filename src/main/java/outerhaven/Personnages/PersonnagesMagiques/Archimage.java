@@ -2,11 +2,9 @@ package outerhaven.Personnages.PersonnagesMagiques;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
-import outerhaven.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
-import outerhaven.Plateau;
 
 import java.util.ArrayList;
 

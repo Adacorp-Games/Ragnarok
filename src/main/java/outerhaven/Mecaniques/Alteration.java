@@ -1,10 +1,13 @@
-package outerhaven;
+package outerhaven.Mecaniques;
 
 import javafx.scene.image.Image;
+import outerhaven.Case;
+import outerhaven.Equipe;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.PersonneMagique;
 import outerhaven.Personnages.Personne;
+import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
@@ -46,6 +49,8 @@ public class Alteration {
             this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
         } else if (effet == "freeze") {
             this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
+        } else if (effet == "void") {
+            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonBlock.png"));
         }
     }
 

@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import outerhaven.Alteration;
+import outerhaven.Mecaniques.Alteration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
