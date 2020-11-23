@@ -57,7 +57,7 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        this.casePrecedente=position;
+        this.casePrecedente = position;
         if (this.getClass() != Mort.class) {
             personnages.add(this);
         }
@@ -73,7 +73,7 @@ public abstract class Personne {
         this.range = range;
         this.speed = speed;
         this.team = team;
-        this.casePrecedente=position;
+        this.casePrecedente = position;
         if (this.getClass() != Mort.class) {
             personnages.add(this);
             this.team.getTeam().add(this);
@@ -85,7 +85,7 @@ public abstract class Personne {
         this(health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setContenu(this);
-        this.casePrecedente=position;
+        this.casePrecedente = position;
     }
 
     /**

@@ -652,7 +652,6 @@ public class Plateau {
                 event.generationEvenements();
             }
 
-
             // Gestion des invocations
             personnages.addAll(invocationAttente);
             invocationAttente.clear();
