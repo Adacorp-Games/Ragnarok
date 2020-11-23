@@ -356,56 +356,53 @@ public class Case {
      * @param personne
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
-        try {
-            boolean ajout = false;
-            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().isEmpty()
-                    || tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].getContenu().get(0) == personne) {
-                // Si la case est vide
-                if (!caseVoisines.contains(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr])) {
-                    for (int i = 0; i < caseVoisines.size() ; i++) {
-                        for (int j = 0; j < tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.size(); j++) {
-                            if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i)
-                                    && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j).getContenu().isEmpty()
-                                    && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr] != this.getContenu().get(0).getCasePrecedente()) {
+            try {
+                boolean ajout = false;
+                Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
+                if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
+                    // Si la case est vide
+                    if (!caseVoisines.contains(c)) {
+                        for (int i = 0; i < caseVoisines.size(); i++) {
+                            for (int j = 0; j < c.caseVoisines.size(); j++) {
+                                if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && c.caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
+                                    chemin.add(caseVoisines.get(i));
+                                    ajout = true;
+                                }
+                            }
+                        }
+                    }
+                    chemin.add(c);
+                } else {
+                    // Si la case est utilisé
+                    for (int i = 0; i < caseVoisines.size(); i++) {
+                        for (int j = 0; j < c.caseVoisines.size(); j++) {
+                            if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
                                 chemin.add(caseVoisines.get(i));
                                 ajout = true;
                             }
                         }
                     }
-                }
-                chemin.add(tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr]);
-            } else {
-                // Si la case est utilisé
-                for (int i = 0; i < caseVoisines.size() ; i++) {
-                    for (int j = 0; j < tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.size(); j++) {
-                        if (tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j) == caseVoisines.get(i)
-                                && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr].caseVoisines.get(j).getContenu().isEmpty()
-                                && tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr] != this.getContenu().get(0).getCasePrecedente()) {
-                            chemin.add(caseVoisines.get(i));
-                            ajout = true;
+                    if (!ajout) {
+                        for (Case c2 : caseVoisines) {
+                            if (c2.getContenu().isEmpty() && c2 != this.getContenu().get(0).getCasePrecedente()) {
+                                chemin.add(c2);
+                                ajout = true;
+                            }
+
                         }
                     }
                 }
                 if (!ajout) {
-                    for (Case c : this.getCaseVoisines()) {
-                        if (c != this.getContenu().get(0).getCasePrecedente() && c.getContenu().isEmpty()) {
-                            chemin.add(c);
-                            ajout = true;
-                        }
-                    }
+                    bloqué = false;
+                }
+            } catch (Exception e) {
+                // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
+                try {
+                    testCase(chemin, xIncr - 1, yIncr, personne);
+                } catch (Exception e2) {
+                    testCase(chemin, xIncr + 1, yIncr, personne);
                 }
             }
-            if (!ajout) {
-                bloqué = false;
-            }
-        } catch(Exception e) {
-            // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
-            try {
-                testCase(chemin,xIncr - 1, yIncr, personne);
-            } catch(Exception e2) {
-                testCase(chemin,xIncr + 1, yIncr, personne);
-            }
-        }
     }
 
     /**
