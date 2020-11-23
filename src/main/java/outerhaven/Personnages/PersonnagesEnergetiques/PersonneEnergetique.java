@@ -61,20 +61,6 @@ public abstract class PersonneEnergetique extends Personne {
         this.gainEnergie();
     }
 
-    /**
-     * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente et l'affichant la nouvelle
-     */
-    public void deplacer(Case c) {
-        this.setEnergie(this.getEnergie() + 10);
-        Case casePrecedente = this.getPosition();
-        this.setPosition(c);
-        c.rentrePersonnage(this);
-        casePrecedente.seVider();
-        if (Personne.barreVisible) {
-            this.afficherSanteEtNom();
-        }
-    }
-
     // Affichage santé et nom et mana
 
     public Group afficherSante() {
@@ -126,8 +112,8 @@ public abstract class PersonneEnergetique extends Personne {
     }
 
     public void gainEnergie() {
-        if (this.getEnergie() < this.getEnergieMax() - 25) {
-            this.setEnergie(this.getEnergie() + 25);
+        if (this.getEnergie() < this.getEnergieMax() - 30) {
+            this.setEnergie(this.getEnergie() + 30);
         } else if (this.getEnergie() < this.getEnergieMax()) {
             this.setEnergie(this.getEnergieMax());
         }
