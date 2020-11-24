@@ -48,7 +48,7 @@ public class Necromancien extends PersonneMagique {
                 System.out.println(this.getName() + " patiente");
 
                 // Invocation de morts dans les cases libres autour de lui
-            } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0) {
+            } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0 && this.getCooldown() >= 3) {
                 //while (this.getMana() > 0) {
                     for (Case c : this.getPosition().voisinsLibres(true)) {
                         // Remplissage des cases voisinnes vides par des morts
@@ -60,8 +60,9 @@ public class Necromancien extends PersonneMagique {
                         //this.setMana(this.getMana() - 25);
                     }
                 //}
-                // Décrémentation de son mana après le sort lancé
-                this.setMana(this.getMana() - 100);
+                    // Décrémentation de son mana après le sort lancé
+                    this.setMana(this.getMana() - 100);
+                    this.setCooldown(0);
 
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));

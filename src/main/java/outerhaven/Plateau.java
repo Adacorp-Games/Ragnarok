@@ -684,13 +684,15 @@ public class Plateau {
                 }
                 if (!morts.contains(personnage)) {
                     personnage.getAlteration();
+                    personnage.gainCD();
+                    personnage.clearStatus();
                     if (personnage.getPosition().getAlteration() != null) {
                         if (personnage.getPosition().getAlteration().getEffet() == "freeze" && personnage.getClass() == Archimage.class) {
                             personnage.action();
-                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze") {
+                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze" || personnage.getStatus() == "normal") {
                             personnage.action();
                         }
-                    } else {
+                    } else if (personnage.getStatus() == "normal") {
                         personnage.action();
                     }
                 }

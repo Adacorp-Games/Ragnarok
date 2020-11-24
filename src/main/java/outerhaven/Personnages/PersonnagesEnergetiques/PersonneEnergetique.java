@@ -49,6 +49,9 @@ public abstract class PersonneEnergetique extends Personne {
             if (this.getEnergie() >= 50) {
                 p.prendreDégâts(totalDamage * 3);
                 this.setEnergie(this.getEnergie() - 50);
+                if (this.getCooldown() >= 5) {
+                    p.stun(2);
+                }
             } else {
                 p.prendreDégâts(totalDamage);
             }

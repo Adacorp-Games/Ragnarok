@@ -43,7 +43,9 @@ public abstract class Personne {
     public Case casePrecedente;
     private ImageView imageperson = new ImageView(this.getImageFace());
     private Case position;
+    private int cooldown = 0;
     private String status = "normal";
+    private int duréeStatus = 0;
 
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
@@ -450,6 +452,24 @@ public abstract class Personne {
     }
 
     /**
+     * Permet d'étourdir une cible
+     * @param durée en nombre de tour du stun
+     */
+    public void stun(int durée) {
+        this.setStatus("stun");
+        this.setDuréeStatus(durée);
+    }
+
+    public void clearStatus() {
+        if (duréeStatus > 0) {
+            this.duréeStatus--;
+            if (duréeStatus == 0) {
+                this.setStatus("normal");
+            }
+        }
+    }
+
+    /**
      * Getters et setters divers
      */
     public String getName() {
@@ -516,6 +536,26 @@ public abstract class Personne {
         } else {
             return e1;
         }
+    }
+
+    public void gainCD() {
+        this.cooldown++;
+    }
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public int getDuréeStatus() {
+        return duréeStatus;
+    }
+
+    public void setDuréeStatus(int duréeStatus) {
+        this.duréeStatus = duréeStatus;
     }
 
     public ImageView getImageperson() {
