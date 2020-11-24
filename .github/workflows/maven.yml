@@ -28,8 +28,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PIERREANTOINE_KEY }}
       with:
-        tag_name: ${{GITHUB_RUN_NUMBER}}
-        release_name: Release ${{GITHUB_RUN_NUMBER}}
+        tag_name: ${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
     - name: Upload Release Asset
@@ -42,13 +42,3 @@ jobs:
         asset_path: ./Lancement/ragnarok.jar
         asset_name: ragnarok.jar
         asset_content_type: application/java-archive
-
-#  publish-job:
-#   runs-on: ubuntu-latest
-#   needs: [build]
-#   steps:
-#    - run: mkdir staging && cp Lancement/ragnarok.jar staging
-#    - uses: actions/upload-artifact@v1
-#      with:
-#        name: ragnarok.jar
-#        path: staging
