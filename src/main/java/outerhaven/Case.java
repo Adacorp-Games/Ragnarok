@@ -343,7 +343,8 @@ public class Case {
         while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && bloqué) {
             xIncr = xIncr + Avancementx;
             yIncr = yIncr + Avanvementy;
-            testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne,false);
+            //testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne, false);
+            testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne);
         }
         return chemin;
     }
@@ -355,7 +356,7 @@ public class Case {
      * @param yIncr
      * @param personne
      */
-    /*
+
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
             try {
                 boolean ajout = false;
@@ -395,62 +396,62 @@ public class Case {
                     testCase(chemin, xIncr + 1, yIncr, personne);
                 }
             }
-    }*/
+    }
 
-
-     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
-            try {
-                boolean ajout = false;
-                Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
-                if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
-                    // Si la case est vide
-                    if (!caseVoisines.contains(c)) {
-                        for (int i = 0; i < caseVoisines.size(); i++) {
-                            for (int j = 0; j < c.caseVoisines.size(); j++) {
-                                if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && c.caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
-                                    chemin.add(caseVoisines.get(i));
-                                    ajout = true;
-                                }
-                            }
-                        }
-                    }
-                    chemin.add(c);
-                } else {
-                    // Si la case est utilisé
+    /*public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
+        try {
+            boolean ajout = false;
+            Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
+            if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
+                // Si la case est vide
+                if (!caseVoisines.contains(c)) {
                     for (int i = 0; i < caseVoisines.size(); i++) {
                         for (int j = 0; j < c.caseVoisines.size(); j++) {
-                            if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
+                            if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && c.caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
                                 chemin.add(caseVoisines.get(i));
                                 ajout = true;
                             }
                         }
                     }
-                    if (!ajout) {
-                        for (Case c2 : caseVoisines) {
-                            if (c2.getContenu().isEmpty() && c2 != this.getContenu().get(0).getCasePrecedente()) {
-                                chemin.add(c2);
-                                ajout = true;
-                            }
-
+                }
+                chemin.add(c);
+            } else {
+                // Si la case est utilisé
+                for (int i = 0; i < caseVoisines.size(); i++) {
+                    for (int j = 0; j < c.caseVoisines.size(); j++) {
+                        if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
+                            chemin.add(caseVoisines.get(i));
+                            ajout = true;
                         }
                     }
                 }
                 if (!ajout) {
-                    bloqué = false;
-                }
-            } catch (Exception e) {
-                // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
-                if (!erreur) {
-                    try {
-                        testCase(chemin, xIncr - 1, yIncr, personne, true);
-                    } catch (Exception e2) {
-                        testCase(chemin, xIncr + 1, yIncr, personne, true);
+                    for (Case c2 : caseVoisines) {
+                        if (c2.getContenu().isEmpty() && c2 != this.getContenu().get(0).getCasePrecedente()) {
+                            chemin.add(c2);
+                            ajout = true;
+                        }
+
                     }
-                }else {
-                    bloqué=false;
                 }
             }
-    }
+            if (!ajout) {
+                bloqué = false;
+            }
+        } catch (Exception e) {
+            // L'enchainement de try et du à l'erreur possible lors des bordures du tableau de case (coté droit et coté gauche)
+            if (!erreur) {
+                try {
+                    testCase(chemin, xIncr - 1, yIncr, personne, true);
+                } catch (Exception e2) {
+                    testCase(chemin, xIncr + 1, yIncr, personne, true);
+                }
+            } else {
+                bloqué=false;
+            }
+        }
+    }*/
+
     /**
      * Cette méthode convertie les coordonnées X Y d'une case (allant de -racine(aire) à +racine(aire)) en coordonné valable pour le tableau (allant de 0 à tableauCase.length)
      * @return

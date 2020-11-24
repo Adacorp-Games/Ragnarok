@@ -28,11 +28,11 @@ public class Paladin extends PersonneMagique {
                 System.out.println(this.getName() + " patiente");
 
                 // Se soigne si il possède de la mana
-            } else if (this.getMana() > 150 && this.getHealth() < this.getMaxHealth()/4) {
-                this.setHealth(this.getHealth() + getMaxHealth()/4);
+            } else if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
+                this.soigner(getMaxHealth()/4);
                 this.setMana(this.getMana() - 150);
 
-            } else if (this.getMana() > 150 && this.getHealth() >= this.getMaxHealth()/4) {
+            } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth()/4) {
                 this.setHealth(getMaxHealth());
                 this.setMana(this.getMana() - 150);
 
