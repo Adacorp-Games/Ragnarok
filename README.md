@@ -1,6 +1,6 @@
 # Ragnarok
 
-# <img src="ressources/logo.jpeg" width="15%" style="margin:auto;display:block;"/>Projet S3
+# <img src="ressources/Images/logo.jpeg" width="15%" style="margin:auto;display:block;"/>Projet S3
 ### IUT Montpellier-Sète – Département Informatique
 * **Cours de CPOA :** [M3105](http://cache.media.enseignementsup-recherche.gouv.fr/file/25/09/7/PPN_INFORMATIQUE_256097.pdf) - support [ici](https://github.com/IUTInfoMontp-M3105/Ressources)
 * **Tuteur :** [Matthieu Rosenfeld](mailto:matthieu.rosenfeld@gmail.com)
