@@ -29,7 +29,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PIERREANTOINE_KEY }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: Release $GITHUB_RUN_ID
         draft: false
         prerelease: false
     - name: Upload Release Asset
