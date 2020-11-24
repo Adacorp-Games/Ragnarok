@@ -28,7 +28,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PIERREANTOINE_KEY }}
       with:
-        tag_name: ${{ github.ref }}
+        tag_name: $GITHUB_RUN_ID
         release_name: Release $GITHUB_RUN_ID
         draft: false
         prerelease: false
