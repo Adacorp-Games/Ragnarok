@@ -343,7 +343,7 @@ public class Case {
         while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && bloqué) {
             xIncr = xIncr + Avancementx;
             yIncr = yIncr + Avanvementy;
-            testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne);
+            testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne,false);
         }
         return chemin;
     }
@@ -355,6 +355,7 @@ public class Case {
      * @param yIncr
      * @param personne
      */
+    /*
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
             try {
                 boolean ajout = false;
@@ -394,10 +395,10 @@ public class Case {
                     testCase(chemin, xIncr + 1, yIncr, personne);
                 }
             }
-    }
+    }*/
 
-    /*
-    * public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
+
+     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
             try {
                 boolean ajout = false;
                 Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
@@ -439,13 +440,17 @@ public class Case {
                 }
             } catch (Exception e) {
                 // L'enchainement de try et du à l'erreur possible lors des bordures du tabelau de case (coté droit et coté gauche)
-                try {
-                    testCase(chemin, xIncr - 1, yIncr, personne);
-                } catch (Exception e2) {
-                    testCase(chemin, xIncr + 1, yIncr, personne);
+                if (!erreur) {
+                    try {
+                        testCase(chemin, xIncr - 1, yIncr, personne, true);
+                    } catch (Exception e2) {
+                        testCase(chemin, xIncr + 1, yIncr, personne, true);
+                    }
+                }else {
+                    bloqué=false;
                 }
             }
-    }*/
+    }
     /**
      * Cette méthode convertie les coordonnées X Y d'une case (allant de -racine(aire) à +racine(aire)) en coordonné valable pour le tableau (allant de 0 à tableauCase.length)
      * @return
