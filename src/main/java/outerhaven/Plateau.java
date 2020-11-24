@@ -19,7 +19,7 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
-import outerhaven.Mecaniques.Evenements;
+import outerhaven.Mecaniques.Evenement;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class Plateau {
      */
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
-    private Evenements event = new Evenements(new Alteration("poison", 50, 20));
+    private Evenement event = new Evenement(new Alteration("poison", 50, 20));
 
     public Plateau(Stage primary) {
         // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
@@ -112,9 +112,9 @@ public class Plateau {
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
-        Evenements.setActiverEvenement(false);
-        Evenements.setFréquenceEvenement(25);
-        Evenements.setPourcentageEvenement(10);
+        Evenement.setActiverEvenement(false);
+        Evenement.setFréquenceEvenement(25);
+        Evenement.setPourcentageEvenement(10);
 
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
@@ -648,7 +648,7 @@ public class Plateau {
             System.out.println("Tour : " + nbTour);
 
             // Gestion des événements aléatoires
-            if (Evenements.activerEvenement == true) {
+            if (Evenement.activerEvenement == true) {
                 event.generationEvenements();
             }
 

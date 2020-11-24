@@ -5,7 +5,7 @@
 * **Cours de CPOA :** [M3105](http://cache.media.enseignementsup-recherche.gouv.fr/file/25/09/7/PPN_INFORMATIQUE_256097.pdf) - support [ici](https://github.com/IUTInfoMontp-M3105/Ressources)
 * **Tuteur :** [Matthieu Rosenfeld](mailto:matthieu.rosenfeld@gmail.com)
 * **Etudiants :** [Alexandre Bousquet](mailto:alexandre.bousquet01@etu.umontpellier.fr), [Ilyes Achalhy](mailto:ilyes.achalhi@etu.umontpellier.fr), [Hamza Ikiou](mailto:hamza.ikiou@etu.umontpellier.fr), [Pierre-Antoine Cheron](mailto:pierre-antoine.cheron@etu.umontpellier.fr), [Julien Atchy Dalama](mailto:julien.atchy-dalama@etu.umontpellier.fr)
-* Le [sujet du projet](ressources/sujet.PNG).
+* Le [sujet du projet](ressources/Images/sujet.PNG).
 
 ### Sujet : Simulateur de batailles automatique
 

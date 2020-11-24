@@ -3,13 +3,13 @@ package outerhaven.Mecaniques;
 import outerhaven.Case;
 import outerhaven.Plateau;
 
-public class Evenements {
+public class Evenement {
     public static boolean activerEvenement = false;
     public static int pourcentageEvenement;
     public static double fréquenceEvenement;
     Alteration alteration;
 
-    public Evenements(Alteration alteration) {
+    public Evenement(Alteration alteration) {
         this.alteration = alteration;
     }
 
@@ -25,14 +25,14 @@ public class Evenements {
     }
 
     public static void setActiverEvenement(boolean activerEvenement) {
-        Evenements.activerEvenement = activerEvenement;
+        Evenement.activerEvenement = activerEvenement;
     }
 
     public static void setPourcentageEvenement(int pourcentageEvenement) {
-        Evenements.pourcentageEvenement = pourcentageEvenement;
+        Evenement.pourcentageEvenement = pourcentageEvenement;
     }
 
     public static void setFréquenceEvenement(double fréquenceEvenement) {
-        Evenements.fréquenceEvenement = fréquenceEvenement;
+        Evenement.fréquenceEvenement = fréquenceEvenement;
     }
 }
