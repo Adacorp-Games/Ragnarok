@@ -10,12 +10,12 @@ import outerhaven.Plateau;
 public class Mort extends Personne {
 
     public Mort() {
-        super(500, 0, 50, 100, 1, 1);
+        super(300, 0, 70, 100, 1, 1);
         Plateau.invocationAttente.add(this);
     }
 
     public Mort(Equipe team, Case position) {
-        super(500, 0, 50, 100, 1, 1, team, position);
+        super(300, 0, 70, 100, 1, 1, team, position);
         Plateau.invocationAttente.add(this);
         this.getTeam().getTeam().add(this);
     }

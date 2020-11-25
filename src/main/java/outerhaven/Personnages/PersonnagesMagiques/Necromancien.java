@@ -13,11 +13,12 @@ import java.util.ArrayList;
 public class Necromancien extends PersonneMagique {
 
     public Necromancien() {
-        super(2000, 50, 1000, 100, 4, 1, 100);
+        super(800, 50, 1000, 100, 4, 1, 100);
+        // super(2000, 50, 1000, 100, 4, 1, 100);
     }
 
     public Necromancien(Equipe team, Case position) {
-        super(2000, 50, 1000, 100, 4, 1, team, position, 100);
+        super(800, 50, 1000, 100, 4, 1, team, position, 100);
     }
 
     public void attaquer(Personne p) {
