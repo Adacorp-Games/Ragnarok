@@ -689,7 +689,7 @@ public class Plateau {
                     if (personnage.getPosition().getAlteration() != null) {
                         if (personnage.getPosition().getAlteration().getEffet() == "freeze" && personnage.getClass() == Archimage.class) {
                             personnage.action();
-                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze" || personnage.getStatus() == "normal") {
+                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze" && personnage.getStatus() == "normal") {
                             personnage.action();
                         }
                     } else if (personnage.getStatus() == "normal") {
