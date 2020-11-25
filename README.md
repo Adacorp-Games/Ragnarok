@@ -9,7 +9,18 @@
 
 ### Sujet : Simulateur de batailles automatique
 
-### Lancer le projet
+## Lancer le projet
+
+Nécessite Java installé sur le système.
+Dans la section "Releases", télécharger la dernière version du fichier "ragnarok.jar"
+Il suffit de double-cliquer sur le fichier dans votre ordinateur et il devrait s'éxecuter avec java.
+
+### Build from source / compiler à partir de la source
+
+Pour générer le .jar :
+```bash
+mvn package
+```
 
 Executer le .jar dans "Lancement/ragnarok.jar".
 
@@ -21,10 +32,7 @@ java -jar ./Lancement/ragnarok.jar
 _(depuis le repertoire du projet)_
 
 
-Pour generer le .jar si il n'est pas à jour :
-```bash
-mvn package
-```
+
 
 ### Phase 1 : Analyse
 
