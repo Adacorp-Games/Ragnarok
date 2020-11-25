@@ -11,11 +11,13 @@ import java.util.ArrayList;
 public class Paladin extends PersonneMagique {
 
     public Paladin() {
-        super(3000, 1000, 300, 300, 1, 1, 100);
+        //   vie    armor cost degat rnge speed  magie)
+        super(3000, 250, 300, 300,    1,   1,   100);
+        // super(3000, 1000, 300, 300,    1,   1,   100);
     }
 
     public Paladin(Equipe team, Case position) {
-        super(3000, 1000, 300, 300, 1, 1, team, position, 100);
+        super(3000, 250, 300, 300, 1, 1, team, position, 100);
     }
 
     public void action() {
