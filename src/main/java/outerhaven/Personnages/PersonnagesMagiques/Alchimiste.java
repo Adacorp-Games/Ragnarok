@@ -11,11 +11,12 @@ import java.util.ArrayList;
 public class Alchimiste extends PersonneMagique{
 
     public Alchimiste() {
-        super(2000, 50, 400, 150, 4, 1, 100);
+        //    vie  armr cst  dg rnge spd)
+        super(1000, 80, 650, 150, 4, 1, 100);
     }
 
     public Alchimiste(Equipe team, Case position) {
-        super(2000, 50, 400, 150, 4, 1, team, position, 100);
+        super(1000, 80, 650, 150, 4, 1, team, position, 150);
     }
 
     public void action() {
