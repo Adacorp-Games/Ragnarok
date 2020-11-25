@@ -2,3 +2,4 @@
 *.dll
 /target
 .idea/
+dependency-reduced-pom.xml
