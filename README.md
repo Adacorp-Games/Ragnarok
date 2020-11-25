@@ -25,7 +25,7 @@ mvn package
 Executer le .jar dans "Lancement/ragnarok.jar".
 
 
-Exemple en cli :
+Exemple en cli (command-line interface où en français, interface en ligne de commande):
 ```bash
 java -jar ./Lancement/ragnarok.jar
 ```
