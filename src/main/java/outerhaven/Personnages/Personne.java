@@ -181,22 +181,14 @@ public abstract class Personne {
      */
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
-        if (this.position.nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
+        ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+        if (pathToEnnemy.size() - 1 <= range) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
         } else {
-            if (position.pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
-            } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= range) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(speed));
-                }
-            }
+            System.out.println(this.getName() + " se déplace");
+            deplacer(pathToEnnemy.get(speed));
         }
     }
 

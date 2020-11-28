@@ -51,6 +51,7 @@ public class Necromancien extends PersonneMagique {
                 // Invocation de morts dans les cases libres autour de lui
             } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0 && this.getCooldown() >= 3) {
                 //while (this.getMana() > 0) {
+                System.out.println("Invoque");
                     for (Case c : this.getPosition().voisinsLibres(true)) {
                         // Remplissage des cases voisinnes vides par des morts
                         c.getContenu().add(new Mort(this.getTeam(), c));

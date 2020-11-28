@@ -240,6 +240,32 @@ public class Case {
     }
 
     /**
+     * Algo récursif qui a pour bu de retourner la taille d'un block de personnages de même equipes
+     * @param block qui est une Arraylist contenant toutes les cases du block
+     * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
+     * @return le return n'est recuperer qu'une seule fois: quand le parcour final est finis
+     */
+    private ArrayList<Case> tailleBlock(ArrayList<Case> block, ArrayList<Case> caseVu){
+        if(this.contenu.isEmpty()){
+            caseVu.add(this);
+        }
+        else{
+            if(this.contenu.get(0).getTeam()==block.get(0).getContenu().get(0).getTeam()){
+                block.add(this);
+                for (Case c:this.caseVoisines) {
+                    if(!block.contains(c) && !caseVu.contains(c)) {
+                        c.tailleBlock(block, caseVu);
+                    }
+                }
+            }
+            else{
+                caseVu.add(this);
+            }
+        }
+        return block;
+    }
+
+    /**
      * Permet d'afficher visuellement les case voisines
      * @param longueur : portée d'affichage en case voisine
      * @param status : afficher ou non
