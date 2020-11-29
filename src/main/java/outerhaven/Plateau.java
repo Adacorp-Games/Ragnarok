@@ -112,6 +112,7 @@ public class Plateau {
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
+
         Evenement.setActiverEvenement(false);
         Evenement.setFréquenceEvenement(25);
         Evenement.setPourcentageEvenement(10);
@@ -219,6 +220,14 @@ public class Plateau {
         afficherNbPersonne();
     }
 
+    public void sceneSuivante() {
+        if (activerEnchere == true) {
+            lancerSceneEnchere();
+        } else {
+            lancerScenePlateau();
+        }
+    }
+
     /**
      * Interface avant la generation du plateau
      * on ajoute ici les boutons :
@@ -259,62 +268,6 @@ public class Plateau {
         nbArgent.setLayoutY((largeurMax-430)/2-20);
         nbArgent.setMinSize(100,50);
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-
-        // Demande l'utilisation des animations
-        Button animationBT = new Button("Animations : NON");
-        animationBT.setMinSize(120,50);
-        animationBT.setLayoutX((longueurMax - 700) / 2);
-        animationBT.setLayoutY((largeurMax + 220) / 2);
-        animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        animationBT.setOnMouseClicked(mouseEvent -> {
-            if (!activerAnimation) {
-                activerAnimation = true;
-                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-                animationBT.setText("Animations : OUI");
-            } else {
-                activerAnimation = false;
-                animationBT.setEffect(null);
-                animationBT.setText("Animations : NON");
-            }
-        });
-        animationBT.setOnMouseEntered(mouseEvent -> {
-            if (!activerAnimation) {
-                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-            }
-        });
-        animationBT.setOnMouseExited(mouseEvent -> {
-            if (!activerAnimation) {
-                animationBT.setEffect(null);
-            }
-        });
-
-        // Demande l'utilisation des enchères
-        Button enchereBT = new Button("Enchères : NON");
-        enchereBT.setMinSize(120,50);
-        enchereBT.setLayoutX((longueurMax - 700) / 2 + 130);
-        enchereBT.setLayoutY((largeurMax + 220) / 2);
-        enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        enchereBT.setOnMouseClicked(mouseEvent -> {
-            if (!activerEnchere) {
-                activerEnchere = true;
-                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-                enchereBT.setText("Enchères : OUI");
-            } else {
-                activerEnchere = false;
-                enchereBT.setEffect(null);
-                enchereBT.setText("Enchères : NON");
-            }
-        });
-        enchereBT.setOnMouseEntered(mouseEvent -> {
-            if (!activerEnchere) {
-                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-            }
-        });
-        enchereBT.setOnMouseExited(mouseEvent -> {
-            if (!activerEnchere) {
-                enchereBT.setEffect(null);
-            }
-        });
 
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
@@ -365,11 +318,12 @@ public class Plateau {
                 }
             }
         });
+        ajouteLesModes();
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
 
         // Ajout de toute ces interfaces dans le group
-        group.getChildren().addAll(animationBT, enchereBT, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
+        group.getChildren().addAll(/*animationBT, enchereBT, */infoNB, nbCase, infoArgent, nbArgent, start, quitter);
     }
 
     /**
@@ -392,6 +346,99 @@ public class Plateau {
     /**
     * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard
     */
+
+    private Button boutonAnimation() {
+        // Demande l'utilisation des animations
+        Button animationBT = new Button("Animations : NON");
+        animationBT.setMinSize(120,50);
+        animationBT.setLayoutX((longueurMax - 700) / 2);
+        animationBT.setLayoutY((largeurMax + 220) / 2);
+        animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        animationBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerAnimation) {
+                activerAnimation = true;
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                animationBT.setText("Animations : OUI");
+            } else {
+                activerAnimation = false;
+                animationBT.setEffect(null);
+                animationBT.setText("Animations : NON");
+            }
+        });
+        animationBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        animationBT.setOnMouseExited(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(null);
+            }
+        });
+        return animationBT;
+    }
+
+    private Button boutonEnchere() {
+        // Demande l'utilisation des enchères
+        Button enchereBT = new Button("Enchères : NON");
+        enchereBT.setMinSize(120,50);
+        enchereBT.setLayoutX((longueurMax - 700) / 2 + 130);
+        enchereBT.setLayoutY((largeurMax + 220) / 2);
+        enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        enchereBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerEnchere) {
+                activerEnchere = true;
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                enchereBT.setText("Enchères : OUI");
+            } else {
+                activerEnchere = false;
+                enchereBT.setEffect(null);
+                enchereBT.setText("Enchères : NON");
+            }
+        });
+        enchereBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        enchereBT.setOnMouseExited(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(null);
+            }
+        });
+        return enchereBT;
+    }
+
+    private Button boutonEvenement() {
+        // Demande l'utilisation des évènements aléatoires
+        Button eventBT = new Button("Enchères : NON");
+        eventBT.setMinSize(120,50);
+        eventBT.setLayoutX((longueurMax - 700) / 2 + 130);
+        eventBT.setLayoutY((largeurMax + 220) / 2);
+        eventBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        eventBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerEnchere) {
+                activerEnchere = true;
+                eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                eventBT.setText("Enchères : OUI");
+            } else {
+                activerEnchere = false;
+                eventBT.setEffect(null);
+                eventBT.setText("Enchères : NON");
+            }
+        });
+        eventBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerEnchere) {
+                eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        eventBT.setOnMouseExited(mouseEvent -> {
+            if (!activerEnchere) {
+                eventBT.setEffect(null);
+            }
+        });
+        return eventBT;
+    }
 
     /**
      * Crée un bouton Exit
@@ -565,6 +612,36 @@ public class Plateau {
             }
         });
         group.getChildren().add(barVie);
+    }
+
+    /**
+     * Menu contenant tout les boutons précédents et l'ajout au groupe général
+     */
+    private void ajouteLesModes() {
+        Button modes = new Bouton().creerBouton("Options");
+        modes.setLayoutX(140);
+        modes.setLayoutY(10);
+
+        Button animation = boutonAnimation();
+        Button enchere = boutonEnchere();
+        Button event = boutonEvenement();
+
+        modes.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(animation)) {
+                try {
+                    group.getChildren().addAll(animation, enchere, event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().removeAll(animation, enchere, event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        group.getChildren().add(modes);
     }
 
     /**
