@@ -21,27 +21,21 @@ public class Pretre extends PersonneMagique {
     public void action() {
         // Gagne de la mana chaque tour et se soigne
         this.gainMana();
-        this.soigner(200);
+        this.soigner(300);
 
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        if (this.getPosition().nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
+        
+        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+        if (pathToEnnemy.size() - 1 <= this.getRange()) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
         } else {
-            if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
-            } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= this.getRange()) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(this.getSpeed()));
-                }
-                // System.out.println("Vie restante de la cible " + getHealth());
-            }
+            System.out.println(this.getName() + " se déplace");
+            deplacer(pathToEnnemy.get(this.getSpeed()));
         }
+        // System.out.println("Vie restante de la cible " + getHealth());
+
 
         // Soigne les cases voisines
         ajouterAlter("heal", 60, 1, this.getPosition(), this.getTeam());

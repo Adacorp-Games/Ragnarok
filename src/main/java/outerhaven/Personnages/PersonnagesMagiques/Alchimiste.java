@@ -22,31 +22,23 @@ public class Alchimiste extends PersonneMagique{
     public void action() {
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        if (this.getPosition().nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
+        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+
+        // Capacités de l'alchimiste
+        if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
+            ajouterAlter("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
+            ajouterAlterVoisine("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
+            this.setMana(this.getMana() - 100);
+
+        } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
         } else {
-            if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
-            } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-
-                // Capacités de l'alchimiste
-                if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
-                    ajouterAlter("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
-                    ajouterAlterVoisine("poison", 50, 10, pathToEnnemy.get(pathToEnnemy.size() - 1), this.getTeam());
-                    this.setMana(this.getMana() - 100);
-
-                } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(this.getSpeed()));
-                }
-                // System.out.println("Vie restante de la cible " + getHealth());
-            }
+            System.out.println(this.getName() + " se déplace");
+            deplacer(pathToEnnemy.get(this.getSpeed()));
         }
+        // System.out.println("Vie restante de la cible " + getHealth());
     }
 
     @Override

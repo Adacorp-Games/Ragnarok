@@ -440,7 +440,11 @@ public abstract class Personne {
      * @param vie que l'on veut soigner
      */
     public void soigner(double vie) {
-        this.setHealth(this.getHealth() + vie);
+        if (this.getHealth() <= this.getMaxHealth() - vie) {
+            this.setHealth(this.getHealth() + vie);
+        } else if (this.getHealth() > this.getMaxHealth() - vie) {
+            this.setHealth(this.getMaxHealth());
+        }
     }
 
     /**
