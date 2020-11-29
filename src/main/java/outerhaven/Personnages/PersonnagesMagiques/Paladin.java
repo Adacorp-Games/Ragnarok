@@ -14,6 +14,10 @@ public class Paladin extends PersonneMagique {
         super(health, armor, cost, damage, range, speed, mana);
     }
 
+    public Paladin(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position, double mana) {
+        super(health, armor, cost, damage, range, speed, team, position, mana);
+    }
+
     public Paladin() {
         //   vie    armor cost degat rnge speed  magie)
         super(3000, 250, 300, 300, 1, 1, 100);

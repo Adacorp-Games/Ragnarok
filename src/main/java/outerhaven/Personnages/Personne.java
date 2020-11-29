@@ -448,6 +448,14 @@ public abstract class Personne {
     }
 
     /**
+     * Méthode qui permet à une personne de devenir plus résistante sur le plateau
+     * @param armure qu'on veut augmenter
+     */
+    public void seRenforce(double armure) {
+        this.setArmor(this.getArmor() + armure);
+    }
+
+    /**
      * Permet d'étourdir une cible
      * @param durée en nombre de tour du stun
      */
@@ -552,6 +560,10 @@ public abstract class Personne {
 
     public void setDuréeStatus(int duréeStatus) {
         this.duréeStatus = duréeStatus;
+    }
+
+    public void setArmor(double armor) {
+        this.armor = armor;
     }
 
     public ImageView getImageperson() {
