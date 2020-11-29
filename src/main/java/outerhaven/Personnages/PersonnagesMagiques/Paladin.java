@@ -10,9 +10,13 @@ import java.util.ArrayList;
 
 public class Paladin extends PersonneMagique {
 
+    public Paladin(double health, double armor, double cost, int damage, int range, int speed, double mana) {
+        super(health, armor, cost, damage, range, speed, mana);
+    }
+
     public Paladin() {
         //   vie    armor cost degat rnge speed  magie)
-        super(3000, 250, 300, 300,    1,   1,   100);
+        super(3000, 250, 300, 300, 1, 1, 100);
         // super(3000, 1000, 300, 300,    1,   1,   100);
     }
 

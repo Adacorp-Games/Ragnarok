@@ -112,10 +112,8 @@ public class Plateau {
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
-
-        Evenement.setActiverEvenement(false);
-        Evenement.setFréquenceEvenement(25);
-        Evenement.setPourcentageEvenement(10);
+        Evenement.setFréquenceEvenement(15);
+        Evenement.setPourcentageEvenement(15);
 
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
@@ -411,29 +409,29 @@ public class Plateau {
 
     private Button boutonEvenement() {
         // Demande l'utilisation des évènements aléatoires
-        Button eventBT = new Button("Enchères : NON");
+        Button eventBT = new Button("Évènements : NON");
         eventBT.setMinSize(120,50);
-        eventBT.setLayoutX((longueurMax - 700) / 2 + 130);
+        eventBT.setLayoutX((longueurMax - 700) / 2 + 260);
         eventBT.setLayoutY((largeurMax + 220) / 2);
         eventBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         eventBT.setOnMouseClicked(mouseEvent -> {
-            if (!activerEnchere) {
-                activerEnchere = true;
+            if (!Evenement.activerEvenement) {
+                Evenement.activerEvenement = true;
                 eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-                eventBT.setText("Enchères : OUI");
+                eventBT.setText("Évènements : OUI");
             } else {
-                activerEnchere = false;
+                Evenement.activerEvenement = false;
                 eventBT.setEffect(null);
-                eventBT.setText("Enchères : NON");
+                eventBT.setText("Évènements : NON");
             }
         });
         eventBT.setOnMouseEntered(mouseEvent -> {
-            if (!activerEnchere) {
+            if (!Evenement.activerEvenement) {
                 eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
             }
         });
         eventBT.setOnMouseExited(mouseEvent -> {
-            if (!activerEnchere) {
+            if (!Evenement.activerEvenement) {
                 eventBT.setEffect(null);
             }
         });
