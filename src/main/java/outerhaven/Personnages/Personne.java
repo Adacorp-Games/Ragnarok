@@ -512,6 +512,10 @@ public abstract class Personne {
         return team;
     }
 
+    public void setTeam(Equipe team) {
+        this.team = team;
+    }
+
     public int getRange() {
         return range;
     }

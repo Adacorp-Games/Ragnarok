@@ -1,5 +1,6 @@
 package outerhaven.Mecaniques;
 
+import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ public class Enchere {
     public static ArrayList<Enchere> listeEnchere = new ArrayList<>();
     private Personne produit;
     private double prixMinimal;
+    private Equipe equipeGagnante;
     private boolean status;
 
     public Enchere(Personne produit) {
@@ -18,13 +20,8 @@ public class Enchere {
 
     public void cloreEnchere() {
         this.setStatus(false);
+        this.getProduit().setTeam(this.getEquipeGagnante());
         Enchere.listeEnchere.remove(this);
-    }
-
-    public void augmenterEnchere(double prix) {
-        if (prix > this.getPrixMinimal()) {
-            this.setPrixMinimal(this.getPrixMinimal() + prix);
-        }
     }
 
     public static ArrayList<Enchere> getListeEnchere() {
@@ -45,6 +42,14 @@ public class Enchere {
 
     public double getPrixMinimal() {
         return prixMinimal;
+    }
+
+    public Equipe getEquipeGagnante() {
+        return equipeGagnante;
+    }
+
+    public void setEquipeGagnante(Equipe equipeGagnante) {
+        this.equipeGagnante = equipeGagnante;
     }
 
     public void setPrixMinimal(double prixMinimal) {

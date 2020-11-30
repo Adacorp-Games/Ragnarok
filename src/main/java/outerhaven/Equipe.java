@@ -1,6 +1,7 @@
 package outerhaven;
 
 import javafx.scene.paint.Color;
+import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import static outerhaven.Plateau.barre;
@@ -29,6 +30,22 @@ public class Equipe {
         this.argent = 0;
     }
 
+    public void augmenterEnchere(double prix, Enchere e) {
+        if (prix > e.getPrixMinimal()) {
+            e.setPrixMinimal(e.getPrixMinimal() + prix);
+            e.setEquipeGagnante(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder affichage = new StringBuilder("Equipe : " + "\n");
+        for (Personne p : team) {
+            affichage.append(p.toString());
+        }
+        return affichage.toString();
+    }
+
     /**
      * cette section contient tout les getters et setters de Equipe
      */
@@ -47,15 +64,6 @@ public class Equipe {
 
     public void setNbPersonne() {
         Plateau.updateNbPersonne();
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder affichage = new StringBuilder("Equipe : " + "\n");
-        for (Personne p : team) {
-            affichage.append(p.toString());
-        }
-        return affichage.toString();
     }
 
     public void setArgent(double argent) {
