@@ -226,7 +226,7 @@ public abstract class Personne {
             Plateau.personneSelectionne = this;
             if (equipeSelectionne != null) {
                 imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                for (Personne p : barre.getListClasse()) {
+                for (Personne p : barre.getListeClasse()) {
                     if (personneSelectionne == p) {
                         p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                     } else {

@@ -21,6 +21,7 @@ import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
+import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
@@ -210,6 +211,8 @@ public class Plateau {
         // Tests enchères
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
         Enchere.ajouterEnchere(new Enchere(new Necromancien()));
+        Enchere.ajouterEnchere(new Enchere(new Alchimiste()));
+        personnages.clear();
 
         AtomicInteger i = new AtomicInteger();
         Group infosEnchere = new Group();
@@ -220,24 +223,24 @@ public class Plateau {
         prix.setY(cadre.getY() + 35);
         prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
 
-        Button boutonEncherir = new Bouton().creerBouton("Se coucher");
-        boutonEncherir.setLayoutX(terminerEnchere.getLayoutX() + 130);
-        boutonEncherir.setLayoutY(terminerEnchere.getLayoutY());
+        Button boutonSeCoucher = new Bouton().creerBouton("Se coucher");
+        boutonSeCoucher.setLayoutX(terminerEnchere.getLayoutX() + 130);
+        boutonSeCoucher.setLayoutY(terminerEnchere.getLayoutY());
 
-        group.getChildren().addAll(boutonEncherir, cadre, prix);
+        group.getChildren().addAll(boutonSeCoucher, cadre, prix);
 
-        boutonEncherir.setOnMouseClicked(mouseEvent -> {
+        boutonSeCoucher.setOnMouseClicked(mouseEvent -> {
             Enchere.getListeEnchere().get(i.get()).cloreEnchere();
             if (i.get() < Enchere.getListeEnchere().size() - 1) {
-                group.getChildren().removeAll(boutonEncherir, cadre, prix);
+                group.getChildren().removeAll(boutonSeCoucher, cadre, prix);
                 infosEnchere.getChildren().clear();
                 i.getAndIncrement();
                 infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(i.get()).afficherInformations(), Enchere.getListeEnchere().get(i.get()).getProduit().getImagePersonPosition(500, 500));
                 Enchere.getListeEnchere().get(i.get()).afficherInformations();
                 prix.setText(0 + " €");
-                group.getChildren().addAll(boutonEncherir, cadre, prix);
+                group.getChildren().addAll(boutonSeCoucher, cadre, prix);
             } else {
-                group.getChildren().remove(boutonEncherir);
+                group.getChildren().remove(boutonSeCoucher);
             }
         });
 

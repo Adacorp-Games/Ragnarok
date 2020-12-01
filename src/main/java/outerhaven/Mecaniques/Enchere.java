@@ -2,8 +2,10 @@ package outerhaven.Mecaniques;
 
 import javafx.scene.Group;
 import outerhaven.Equipe;
+import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
+import static outerhaven.Equipe.*;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,11 @@ public class Enchere {
     public void cloreEnchere() {
         this.setStatus(false);
         this.getProduit().setTeam(this.getEquipeGagnante());
+        if (this.getEquipeGagnante() == Plateau.getE1()) {
+            BarrePersonnage.listeEquipe1.add(this.getProduit());
+        } else {
+            BarrePersonnage.listeEquipe2.add(this.getProduit());
+        }
         //Enchere.listeEnchere.remove(this);
     }
 

@@ -22,29 +22,29 @@ public class BarrePersonnage {
     private final Group groupBarre = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    public ArrayList<Personne> listClasse = new ArrayList<>();
-    private static final ArrayList<Personne> listEquipe1 = new ArrayList<>();
-    private static final ArrayList<Personne> ListEquipe2 = new ArrayList<>();
+    public ArrayList<Personne> listeClasse = new ArrayList<>();
+    public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
+    public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
     private final Group argentGroup = new Group();
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
-        listClasse.add(new Guerrier());
-        listClasse.add(new Archer());
-        listClasse.add(new Mage());
-        listClasse.add(new Paladin());
-        listClasse.add(new Necromancien());
-        listClasse.add(new Alchimiste());
-        listClasse.add(new Archimage());
-        listClasse.add(new Pretre());
-        listClasse.add(new Samourai());
-        for (int i = 0; i < listClasse.size(); i++) {
+        listeClasse.add(new Guerrier());
+        listeClasse.add(new Archer());
+        listeClasse.add(new Mage());
+        listeClasse.add(new Paladin());
+        listeClasse.add(new Necromancien());
+        listeClasse.add(new Alchimiste());
+        listeClasse.add(new Archimage());
+        listeClasse.add(new Pretre());
+        listeClasse.add(new Samourai());
+        for (int i = 0; i < listeClasse.size(); i++) {
             personnages.remove(0);
         }
         interfaceBarre();
     }
 
-    private void genererBarre(ArrayList<Personne> list){
+    private void genererBarre(ArrayList<Personne> list) {
         Rectangle barre = new Rectangle();
         barre.setWidth(longeurMax - 20);
         barre.setHeight(200);
@@ -61,31 +61,29 @@ public class BarrePersonnage {
     }
 
     private void interfaceBarre() {
-        if(!activerEnchere) {
-            genererBarre(listClasse);
-        }else {
+        if (!activerEnchere) {
+            genererBarre(listeClasse);
+        } else {
             majBarreEnchere();
         }
     }
 
-    private void majBarreEnchere(){
+    private void majBarreEnchere() {
         groupBarre.getChildren().clear();
-        if(equipeSelectionne==e1){
-            genererBarre(listEquipe1);
-        }else {
-            genererBarre(ListEquipe2);
+        if (equipeSelectionne == e1) {
+            genererBarre(listeEquipe1);
+        } else {
+            genererBarre(listeEquipe2);
         }
     }
 
-    public void ajouterClass(Personne personne){
-        if(personne.getTeam()==e1){
-            listEquipe1.add(personne);
-            majBarreEnchere();
+    public void ajouterClass(Personne personne) {
+        if (personne.getTeam() == e1){
+            listeEquipe1.add(personne);
+        } else {
+            listeEquipe2.add(personne);
         }
-        else{
-            ListEquipe2.add(personne);
-            majBarreEnchere();
-        }
+        majBarreEnchere();
     }
 
     /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
@@ -108,7 +106,7 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE1());
             equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
-            for (Personne p : listClasse) {
+            for (Personne p : listeClasse) {
                 if (personneSelectionne == p) {
                     p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                 } else {
@@ -131,7 +129,7 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE2());
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
-            for (Personne p : listClasse) {
+            for (Personne p : listeClasse) {
                 if (personneSelectionne == p) {
                     p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                 } else {
@@ -191,7 +189,7 @@ public class BarrePersonnage {
         return argentGroup;
     }
 
-    public ArrayList<Personne> getListClasse() {
-        return listClasse;
+    public ArrayList<Personne> getListeClasse() {
+        return listeClasse;
     }
 }
