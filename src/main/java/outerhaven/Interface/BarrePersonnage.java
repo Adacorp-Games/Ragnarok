@@ -19,11 +19,13 @@ import java.util.ArrayList;
 
 public class BarrePersonnage {
 
-    private Group group = new Group();
+    private final Group groupBarre = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public ArrayList<Personne> listClasse = new ArrayList<>();
-    private Group argentGroup = new Group();
+    private static final ArrayList<Personne> listEquipe1 = new ArrayList<>();
+    private static final ArrayList<Personne> ListEquipe2 = new ArrayList<>();
+    private final Group argentGroup = new Group();
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
@@ -39,22 +41,50 @@ public class BarrePersonnage {
         for (int i = 0; i < listClasse.size(); i++) {
             personnages.remove(0);
         }
-        genereBarre();
+        interfaceBarre();
     }
 
-    public void genereBarre() {
+    private void genererBarre(ArrayList<Personne> list){
         Rectangle barre = new Rectangle();
-        barre.setWidth(longeurMax-20);
+        barre.setWidth(longeurMax - 20);
         barre.setHeight(200);
         barre.setX(10);
         barre.setY(largeurMax - barre.getHeight());
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
         barre.setFill(Color.LIGHTGRAY);
-        group.getChildren().add(barre);
-        group.getChildren().add(boutonEquipe());
-        for (int i = 0; i < listClasse.size(); i++) {
-            group.getChildren().add(listClasse.get(i).affichagePersonnageBarre(i));
+        groupBarre.getChildren().add(barre);
+        groupBarre.getChildren().add(boutonEquipe());
+        for (int i = 0; i < list.size(); i++) {
+            groupBarre.getChildren().add(list.get(i).affichagePersonnageBarre(i));
+        }
+    }
+
+    private void interfaceBarre() {
+        if(!activerEnchere) {
+            genererBarre(listClasse);
+        }else {
+            majBarreEnchere();
+        }
+    }
+
+    private void majBarreEnchere(){
+        groupBarre.getChildren().clear();
+        if(equipeSelectionne==e1){
+            genererBarre(listEquipe1);
+        }else {
+            genererBarre(ListEquipe2);
+        }
+    }
+
+    public void ajouterClass(Personne personne){
+        if(personne.getTeam()==e1){
+            listEquipe1.add(personne);
+            majBarreEnchere();
+        }
+        else{
+            ListEquipe2.add(personne);
+            majBarreEnchere();
         }
     }
 
@@ -154,7 +184,7 @@ public class BarrePersonnage {
     }
 
     public Group returnBarre() {
-        return group;
+        return groupBarre;
     }
 
     public Group getArgentGroup() {
