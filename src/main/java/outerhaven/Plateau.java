@@ -201,12 +201,11 @@ public class Plateau {
         cadre.setX(largeurMax/2);
         cadre.setY(10);*/
 
-        Rectangle cadre = new Rectangle(225, 50, Color.LIGHTGRAY);
+        Rectangle cadre = new Rectangle(225, 48, Color.LIGHTGRAY);
         cadre.setStroke(Color.BLACK);
         cadre.setStrokeWidth(2);
-        cadre.setX(largeurMax/2);
-        cadre.setY(10);
-
+        cadre.setX(terminerEnchere.getLayoutX() + 262);
+        cadre.setY(11);
 
         // Tests enchères
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));

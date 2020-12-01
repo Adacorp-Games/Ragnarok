@@ -5,7 +5,6 @@ import outerhaven.Equipe;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
-import static outerhaven.Equipe.*;
 
 import java.util.ArrayList;
 
