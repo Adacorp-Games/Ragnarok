@@ -1,7 +1,9 @@
 package outerhaven.Mecaniques;
 
+import javafx.scene.Group;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
+import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
@@ -21,7 +23,11 @@ public class Enchere {
     public void cloreEnchere() {
         this.setStatus(false);
         this.getProduit().setTeam(this.getEquipeGagnante());
-        Enchere.listeEnchere.remove(this);
+        //Enchere.listeEnchere.remove(this);
+    }
+
+    public Group afficherInformations() {
+        return this.getProduit().afficherInfo(500, 500);
     }
 
     public static ArrayList<Enchere> getListeEnchere() {

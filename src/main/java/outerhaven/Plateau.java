@@ -19,11 +19,15 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
+import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
+import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
+import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * La classe Plateau va principalement générer le plateau et son interface, ainsi que les paramètres nécessaire au fonctionnement du jeu et au interaction
@@ -112,8 +116,8 @@ public class Plateau {
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
-        Evenement.setFréquenceEvenement(15);
-        Evenement.setPourcentageEvenement(15);
+        Evenement.setFréquenceEvenement(10);
+        Evenement.setPourcentageEvenement(20);
 
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
@@ -164,6 +168,14 @@ public class Plateau {
             getE2().setArgent(argentPartie);
             group.getChildren().add(barre.getArgentGroup());
         }
+
+        // Tests brouillard de guerre
+        /*for (int k = 0; k < listeCase.size(); k++) {
+            if (k > aire/2) {
+                listeCase.get(k).getHexagone().setImage(Case.hexagone_imgBlock);
+            }
+        }*/
+
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
         group.getChildren().add(boutonPausePlay());
@@ -172,9 +184,77 @@ public class Plateau {
     }
 
     public void lancerSceneEnchere() {
-        Button quitter = boutonExit();
-        quitter.setLayoutY(10);
-        group.getChildren().addAll(quitter);
+        Button terminerEnchere = new Bouton().creerBouton("Terminer");
+        terminerEnchere.setLayoutX(140);
+        terminerEnchere.setLayoutY(10);
+
+        terminerEnchere.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().clear();
+            activerEnchere = false;
+            sceneSuivante();
+        });
+
+        /*Rectangle cadre = new Rectangle(600, 300, Color.LIGHTGRAY);
+        cadre.setStroke(Color.BLACK);
+        cadre.setStrokeWidth(2);
+        cadre.setX(largeurMax/2);
+        cadre.setY(10);*/
+
+        Rectangle cadre = new Rectangle(225, 50, Color.LIGHTGRAY);
+        cadre.setStroke(Color.BLACK);
+        cadre.setStrokeWidth(2);
+        cadre.setX(largeurMax/2);
+        cadre.setY(10);
+
+
+        // Tests enchères
+        Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
+        Enchere.ajouterEnchere(new Enchere(new Necromancien()));
+
+        AtomicInteger i = new AtomicInteger();
+        Group infosEnchere = new Group();
+        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(i.get()).afficherInformations(), Enchere.getListeEnchere().get(i.get()).getProduit().getImagePersonPosition(500, 500));
+
+        Text prix = new Text(0 + " €");
+        prix.setX(cadre.getX() + 10);
+        prix.setY(cadre.getY() + 35);
+        prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
+
+        Button boutonEncherir = new Bouton().creerBouton("Se coucher");
+        boutonEncherir.setLayoutX(terminerEnchere.getLayoutX() + 130);
+        boutonEncherir.setLayoutY(terminerEnchere.getLayoutY());
+
+        group.getChildren().addAll(boutonEncherir, cadre, prix);
+
+        boutonEncherir.setOnMouseClicked(mouseEvent -> {
+            Enchere.getListeEnchere().get(i.get()).cloreEnchere();
+            if (i.get() < Enchere.getListeEnchere().size() - 1) {
+                group.getChildren().removeAll(boutonEncherir, cadre, prix);
+                infosEnchere.getChildren().clear();
+                i.getAndIncrement();
+                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(i.get()).afficherInformations(), Enchere.getListeEnchere().get(i.get()).getProduit().getImagePersonPosition(500, 500));
+                Enchere.getListeEnchere().get(i.get()).afficherInformations();
+                prix.setText(0 + " €");
+                group.getChildren().addAll(boutonEncherir, cadre, prix);
+            } else {
+                group.getChildren().remove(boutonEncherir);
+            }
+        });
+
+        TextField encherirField = new TextField();
+        encherirField.setLayoutX(cadre.getX());
+        encherirField.setLayoutY(cadre.getY() + 60);
+        encherirField.setMinSize(100,50);
+        encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        encherirField.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                prix.setText(getIntFromTextField(encherirField) + " €");
+            }
+        });
+
+        // Creation et incorporation d'une slide barre + bouton
+        ajouteLeMenu();
+        group.getChildren().addAll(terminerEnchere, encherirField, infosEnchere/*, prix*/);
         primary.setScene(scene);
     }
 
@@ -191,15 +271,15 @@ public class Plateau {
      * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe
      */
     public static void afficherNbPersonne() {
-        Rectangle barre = new Rectangle(200 , 60, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(210 , 70, Color.LIGHTGRAY);
         barre.setX(10);
         barre.setY(400);
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
 
-        Text title = new Text("Nombre de personne par équipe");
-        title.setX(barre.getX() + 23);
-        title.setY(barre.getY() + 15);
+        Text title = new Text("Nombre de personnes par équipe");
+        title.setX(barre.getX() + 10);
+        title.setY(barre.getY() + 20);
 
         Text equipes = new Text( "Equipe 1 : " + getE1().getNbPersonne() + "\n" + "Equipe 2 : " + getE2().getNbPersonne());
         equipes.setX(title.getX());
@@ -275,11 +355,7 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (!activerEnchere) {
-                        lancerScenePlateau();
-                    } else {
-                        lancerSceneEnchere();
-                    }
+                    sceneSuivante();
                 }
             }
         });
@@ -292,11 +368,7 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (!activerEnchere) {
-                        lancerScenePlateau();
-                    } else {
-                        lancerSceneEnchere();
-                    }
+                    sceneSuivante();
                 }
             }
         });
@@ -309,11 +381,7 @@ public class Plateau {
             }
             if (aire > 0) {
                 group.getChildren().clear();
-                if (!activerEnchere) {
-                    lancerScenePlateau();
-                } else {
-                    lancerSceneEnchere();
-                }
+                sceneSuivante();
             }
         });
         ajouteLesModes();
@@ -707,9 +775,11 @@ public class Plateau {
                 }
             }
         });
-        boutonPausePlay();
-        afficheBarVie();
-        group.getChildren().add(vitesse);
+        if (!activerEnchere) {
+            boutonPausePlay();
+            afficheBarVie();
+            group.getChildren().add(vitesse);
+        }
         group.getChildren().add(menu);
     }
 
@@ -814,6 +884,7 @@ public class Plateau {
      * Méthode qui va nettoyer le plateau en cas de reset / restart
      */
     public void cleanPlateau() {
+        nbTour = 0;
         personnages.clear();
         morts.clear();
         listeCase.clear();

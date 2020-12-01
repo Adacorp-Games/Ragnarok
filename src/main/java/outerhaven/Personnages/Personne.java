@@ -247,7 +247,7 @@ public abstract class Personne {
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(400 , 205, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(410 , 205, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
@@ -572,6 +572,14 @@ public abstract class Personne {
 
     public ImageView getImageperson() {
         return imageperson;
+    }
+
+    public ImageView getImagePersonPosition(int x, int y) {
+        ImageView imagePosition = new ImageView();
+        imagePosition.setImage(this.getImageFace());
+        imagePosition.setX(x);
+        imagePosition.setY(y);
+        return imagePosition;
     }
 
     public void setImageperson(ImageView imageperson) {
