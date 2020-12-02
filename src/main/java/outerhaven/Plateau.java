@@ -21,10 +21,12 @@ import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
+import outerhaven.Personnages.PersonnagesEnergetiques.Samourai;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
+import outerhaven.Personnages.PersonnagesPrime.NecromancienPrime;
 import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
@@ -210,8 +212,10 @@ public class Plateau {
 
         // Tests enchères
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
-        Enchere.ajouterEnchere(new Enchere(new Necromancien()));
+        Enchere.ajouterEnchere(new Enchere(new NecromancienPrime()));
         Enchere.ajouterEnchere(new Enchere(new AlchimistePrime()));
+        Enchere.ajouterEnchere(new Enchere(new Samourai()));
+        Collections.shuffle(Enchere.getListeEnchere());
         personnages.clear();
 
         AtomicInteger i = new AtomicInteger();
@@ -231,7 +235,7 @@ public class Plateau {
 
         boutonSeCoucher.setOnMouseClicked(mouseEvent -> {
             Enchere.getListeEnchere().get(i.get()).cloreEnchere();
-            if (i.get() < Enchere.getListeEnchere().size() - 1) {
+            if (i.get() < 2) {
                 group.getChildren().removeAll(boutonSeCoucher, cadre, prix);
                 infosEnchere.getChildren().clear();
                 i.getAndIncrement();
