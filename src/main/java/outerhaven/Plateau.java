@@ -24,6 +24,7 @@ import outerhaven.Mecaniques.Evenement;
 import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
+import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
 import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
@@ -143,7 +144,7 @@ public class Plateau {
                 ligne++;
             } else {
                 double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
-                for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
+                for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
                     double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille/2;
                     Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
@@ -172,7 +173,7 @@ public class Plateau {
 
         // Tests brouillard de guerre
         /*for (int k = 0; k < listeCase.size(); k++) {
-            if (k > aire/2) {
+            if (k >= aire/2) {
                 listeCase.get(k).getHexagone().setImage(Case.hexagone_imgBlock);
             }
         }*/
@@ -210,7 +211,7 @@ public class Plateau {
         // Tests enchères
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
         Enchere.ajouterEnchere(new Enchere(new Necromancien()));
-        Enchere.ajouterEnchere(new Enchere(new Alchimiste()));
+        Enchere.ajouterEnchere(new Enchere(new AlchimistePrime()));
         personnages.clear();
 
         AtomicInteger i = new AtomicInteger();

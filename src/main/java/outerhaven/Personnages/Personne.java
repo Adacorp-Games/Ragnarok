@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
+import outerhaven.Personnages.Invocations.Lich;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
@@ -60,7 +61,7 @@ public abstract class Personne {
         this.range = range;
         this.speed = speed;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class) {
+        if (this.getClass() != Mort.class && this.getClass() != Lich.class) {
             personnages.add(this);
         }
     }
@@ -76,7 +77,7 @@ public abstract class Personne {
         this.speed = speed;
         this.team = team;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class) {
+        if (this.getClass() != Mort.class && this.getClass() != Lich.class) {
             personnages.add(this);
             this.team.getTeam().add(this);
         }
@@ -247,7 +248,7 @@ public abstract class Personne {
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(410 , 205, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(425 , 205, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);

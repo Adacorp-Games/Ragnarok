@@ -33,11 +33,6 @@ public abstract class PersonneEnergetique extends Personne {
         this.energieMax = 100;
     }
 
-    public abstract Personne personneNouvelle(Equipe team, Case position);
-    public abstract Text getinfoTitleText();
-    public abstract Text getinfoDescText();
-    public abstract Image getImageFace();
-
     /**
      * Méthode qui permet d'attaquer le personnage mit en parametre s'il est d'une équipe différente
      */

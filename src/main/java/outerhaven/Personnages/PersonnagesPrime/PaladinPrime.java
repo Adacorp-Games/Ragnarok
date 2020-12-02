@@ -7,16 +7,15 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.PersonnagesMagiques.Paladin;
 import outerhaven.Personnages.Personne;
 
-public class PaladinPrime extends Paladin {
-    private static int primeMultiplier = 2;
+public class PaladinPrime extends PersonnagePrime {
 
     public PaladinPrime() {
         //   vie    armor cost degat rnge speed  magie)
-        super(3000 * primeMultiplier, 250 * primeMultiplier, 300 * primeMultiplier, 300 * primeMultiplier, 1, 1, 100 * primeMultiplier);
+        super(3000 * getPrimeMultiplier(), 250 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 1, 1, 100 * getPrimeMultiplier());
     }
 
     public PaladinPrime(Equipe team, Case position) {
-        super(3000 * primeMultiplier, 250 * primeMultiplier, 300 * primeMultiplier, 300 * primeMultiplier, 1, 1, team, position, 100 * primeMultiplier);
+        super(3000 * getPrimeMultiplier(), 250 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 1, 1, team, position, 100 * getPrimeMultiplier());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class PaladinPrime extends Paladin {
 
     @Override
     public Image getImageFace() {
-        return new Image(Paladin.class.getResourceAsStream("/Images/Personnes/PaladinPrime.png"));
+        return new Image(PaladinPrime.class.getResourceAsStream("/Images/Personnes/PaladinPrime.png"));
     }
 
     /**
