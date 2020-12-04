@@ -177,7 +177,7 @@ public class Plateau {
 
         // Tests brouillard de guerre
         /*for (int k = 0; k < listeCase.size(); k++) {
-            if (k >= aire/2) {
+            if (k >= listeCase.size()/2) {
                 listeCase.get(k).getHexagone().setImage(Case.hexagone_imgBlock);
             }
         }*/
@@ -322,7 +322,7 @@ public class Plateau {
     }
 
     public void sceneSuivante() {
-        if (activerEnchere == true && enchereTerminee == false) {
+        if (activerEnchere && !enchereTerminee) {
             lancerSceneEnchere();
         } else {
             lancerScenePlateau();
@@ -560,6 +560,7 @@ public class Plateau {
                 argentPartie = 0;
                 activerAnimation = false;
                 activerEnchere = false;
+                enchereTerminee = false;
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;

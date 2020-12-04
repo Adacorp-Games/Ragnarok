@@ -82,13 +82,19 @@ public class Case {
             this.posX = X;
             this.posY = Y + taille/5;
             // Lorsqu'une souris sort de la case
-            hexagone.setOnMouseEntered((mouseEvent) -> hexagone.setImage(hexagone_img2));
+            hexagone.setOnMouseEntered((mouseEvent) -> {
+                if (hexagone.getImage() != hexagone_imgBlock) {
+                    hexagone.setImage(hexagone_img2);
+                }
+            });
             // Lorsqu'une souris sort de la case (en fonction de l'altération)
             hexagone.setOnMouseExited((mouseEvent) -> {
                 if (this.getAlteration() != null) {
                     hexagone.setImage(this.getAlteration().getImage());
                 } else {
-                    hexagone.setImage(hexagone_img1);
+                    if (hexagone.getImage() != hexagone_imgBlock) {
+                        hexagone.setImage(hexagone_img1);
+                    }
                 }
             });
             // Lorsque l'on clique sur la souris
@@ -145,7 +151,7 @@ public class Case {
     public void interactionHex() {
         if (!statusPartie) {
             // Vérifie si il y a bien un personnage sélectionné dans une équipe et que la case vide est vide
-            if (personneSelectionne != null && equipeSelectionne != null && contenu.isEmpty()) {
+            if (personneSelectionne != null && equipeSelectionne != null && contenu.isEmpty() && this.hexagone.getImage() != hexagone_imgBlock) {
                 // Vérifie si l'utilisateur à assez d'argent
                 if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
                     // Met à jour l'affichage, la liste des personnages sur le plateau et dans les équipes
@@ -289,15 +295,19 @@ public class Case {
         this.getHexagone().setImage(voisin);
         if (longueur == 1) {
             for (Case c : this.getCaseVoisines()) {
-                if (!c.estOccupe()) {
-                    c.getHexagone().setImage(voisin);
+                if (c.hexagone.getImage() != hexagone_imgBlock) {
+                    if (!c.estOccupe()) {
+                        c.getHexagone().setImage(voisin);
+                    }
                 }
             }
         } else {
             for (Case c : this.getCaseVoisines()) {
-                if (!c.estOccupe()) {
-                    c.getHexagone().setImage(voisin);
-                    c.afficherCaseVoisines(longueur - 1, status);
+                if (c.hexagone.getImage() != hexagone_imgBlock) {
+                    if (!c.estOccupe()) {
+                        c.getHexagone().setImage(voisin);
+                        c.afficherCaseVoisines(longueur - 1, status);
+                    }
                 }
             }
         }

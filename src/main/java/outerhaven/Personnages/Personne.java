@@ -235,20 +235,6 @@ public abstract class Personne {
                         p.getImageperson().setEffect(null);
                     }
                 }
-                for (Personne p : BarrePersonnage.listeEquipe1) {
-                    if (personneSelectionne == p) {
-                        p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                    } else {
-                        p.getImageperson().setEffect(null);
-                    }
-                }
-                for (Personne p : BarrePersonnage.listeEquipe2) {
-                    if (personneSelectionne == p) {
-                        p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                    } else {
-                        p.getImageperson().setEffect(null);
-                    }
-                }
             }
         });
         group.getChildren().add(imageperson);

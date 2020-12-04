@@ -99,6 +99,7 @@ public class BarrePersonnage {
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
     public Group boutonEquipe() {
         Group groupEquipeButton = new Group();
+
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe1.setLayoutX(10);
@@ -110,6 +111,11 @@ public class BarrePersonnage {
         equipe2.setLayoutX(120);
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
+
+        if (!enchereTerminee) {
+            equipeSelectionne = Plateau.getE1();
+            equipe1.setEffect(new Effets().putInnerShadow(Plateau.getE1().getCouleur()));
+        }
 
         /*if (isActiverEnchere() && personnages.size() != 0) {
             TextField encherirFieldE1 = new TextField();
@@ -153,6 +159,9 @@ public class BarrePersonnage {
             if (activerEnchere) {
                 majBarreEnchere();
                 personneSelectionne = null;
+                for (Personne p : BarrePersonnage.listeEquipe1) {
+                    p.getImageperson().setEffect(null);
+                }
             }
         });
 
@@ -180,6 +189,9 @@ public class BarrePersonnage {
             if (activerEnchere) {
                 majBarreEnchere();
                 personneSelectionne = null;
+                for (Personne p : BarrePersonnage.listeEquipe2) {
+                    p.getImageperson().setEffect(null);
+                }
             }
         });
 
