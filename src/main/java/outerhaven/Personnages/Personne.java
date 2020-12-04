@@ -12,6 +12,7 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Lich;
 import outerhaven.Personnages.Invocations.Mort;
@@ -234,6 +235,20 @@ public abstract class Personne {
                         p.getImageperson().setEffect(null);
                     }
                 }
+                for (Personne p : BarrePersonnage.listeEquipe1) {
+                    if (personneSelectionne == p) {
+                        p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
+                    } else {
+                        p.getImageperson().setEffect(null);
+                    }
+                }
+                for (Personne p : BarrePersonnage.listeEquipe2) {
+                    if (personneSelectionne == p) {
+                        p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
+                    } else {
+                        p.getImageperson().setEffect(null);
+                    }
+                }
             }
         });
         group.getChildren().add(imageperson);
@@ -323,7 +338,7 @@ public abstract class Personne {
 
         // Cliquer sur l'image hors partie permet de supprimer la personne
         person.setOnMouseClicked((mouseEvent) -> {
-            if (!statusPartie) {
+            if (!statusPartie && !activerEnchere) {
                 if (argentPartie != 0) {
                     position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + this.getCost());
                 }

@@ -1,16 +1,21 @@
 package outerhaven.Interface;
+
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
 import outerhaven.Personnages.PersonnagesEnergetiques.*;
 import outerhaven.Personnages.PersonnagesMagiques.*;
-import outerhaven.Personnages.PersonnagesPrime.*;
+import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
+import outerhaven.Personnages.PersonnagesPrime.NecromancienPrime;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -20,10 +25,10 @@ import java.util.ArrayList;
 
 public class BarrePersonnage {
 
-    private final Group groupBarre = new Group();
+    private static final Group groupBarre = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    public ArrayList<Personne> listeClasse = new ArrayList<>();
+    public static ArrayList<Personne> listeClasse = new ArrayList<>();
     public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
     public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
     private final Group argentGroup = new Group();
@@ -39,6 +44,8 @@ public class BarrePersonnage {
         listeClasse.add(new Archimage());
         listeClasse.add(new Pretre());
         listeClasse.add(new Samourai());
+        listeEquipe1.addAll(listeClasse);
+        listeEquipe2.addAll(listeClasse);
         //listeClasse.add(new NecromancienPrime());
         for (int i = 0; i < listeClasse.size(); i++) {
             personnages.remove(0);
@@ -90,7 +97,8 @@ public class BarrePersonnage {
 
     /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
-    private Group boutonEquipe() {
+    public Group boutonEquipe() {
+        Group groupEquipeButton = new Group();
         Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe1.setLayoutX(10);
@@ -103,6 +111,33 @@ public class BarrePersonnage {
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
 
+        /*if (isActiverEnchere() && personnages.size() != 0) {
+            TextField encherirFieldE1 = new TextField();
+            encherirFieldE1.setLayoutX(equipe1.getLayoutX());
+            encherirFieldE1.setLayoutY(equipe1.getLayoutY() - 130);
+            encherirFieldE1.setMinSize(100,50);
+            encherirFieldE1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+            encherirFieldE1.setOnKeyReleased(key -> {
+                if (key.getCode() == KeyCode.ENTER) {
+                    Plateau.getE1().augmenterEnchere(getIntFromTextField(encherirFieldE1), Enchere.getListeEnchere().get(idEnchere.get()));
+                }
+            });
+
+            TextField encherirFieldE2 = new TextField();
+            encherirFieldE2.setLayoutX(equipe2.getLayoutX());
+            encherirFieldE2.setLayoutY(equipe2.getLayoutY() - 130);
+            encherirFieldE2.setMinSize(100,50);
+            encherirFieldE2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+            encherirFieldE2.setOnKeyReleased(key -> {
+                if (key.getCode() == KeyCode.ENTER) {
+                    Plateau.getE2().augmenterEnchere(getIntFromTextField(encherirFieldE2), Enchere.getListeEnchere().get(idEnchere.get()));
+                }
+            });
+
+            groupEquipeButton.getChildren().add(encherirFieldE1);
+            groupEquipeButton.getChildren().add(encherirFieldE2);
+        }*/
+
         // Actions sur les boutons d'équipes
         equipe1.setOnMouseClicked(mouseEvent -> {
             Plateau.incorporeEquipe(Plateau.getE1());
@@ -114,6 +149,10 @@ public class BarrePersonnage {
                 } else {
                     p.getImageperson().setEffect(null);
                 }
+            }
+            if (activerEnchere) {
+                majBarreEnchere();
+                personneSelectionne = null;
             }
         });
 
@@ -138,6 +177,10 @@ public class BarrePersonnage {
                     p.getImageperson().setEffect(null);
                 }
             }
+            if (activerEnchere) {
+                majBarreEnchere();
+                personneSelectionne = null;
+            }
         });
 
         equipe2.setOnMouseEntered(mouseEvent -> {
@@ -150,7 +193,6 @@ public class BarrePersonnage {
             }
         });
 
-        Group groupEquipeButton = new Group();
 
         if (!statusPartie) {
             groupEquipeButton.getChildren().add(equipe1);

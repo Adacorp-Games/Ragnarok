@@ -45,7 +45,7 @@ public class AlchimistePrime extends PersonnagePrime {
 
     @Override
     public Personne personneNouvelle(Equipe team,Case position) {
-        return new PaladinPrime(team,position);
+        return new AlchimistePrime(team,position);
     }
 
     @Override

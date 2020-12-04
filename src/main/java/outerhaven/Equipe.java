@@ -32,7 +32,7 @@ public class Equipe {
 
     public void augmenterEnchere(double prix, Enchere e) {
         if (prix > e.getPrixMinimal()) {
-            e.setPrixMinimal(e.getPrixMinimal() + prix);
+            e.setPrixMinimal(prix);
             e.setEquipeGagnante(this);
         }
     }

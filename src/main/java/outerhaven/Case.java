@@ -163,7 +163,7 @@ public class Case {
                 }
             }
             // Cas où l'utilisateur cherche à vider une case
-            else if ((personneSelectionne != null && equipeSelectionne != null) || (personneSelectionne == null && !contenu.isEmpty())) {
+            else if (((personneSelectionne != null && equipeSelectionne != null) || (personneSelectionne == null && !contenu.isEmpty())) && !activerEnchere) {
                 if (argentPartie != 0) {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }

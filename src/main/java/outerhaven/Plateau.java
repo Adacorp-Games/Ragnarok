@@ -88,6 +88,8 @@ public class Plateau {
     public static boolean statusPartie = false;
     public static boolean activerAnimation = false;
     public static boolean activerEnchere = false;
+    public static boolean enchereTerminee = false;
+    public static AtomicInteger idEnchere = new AtomicInteger();
     /**
      * Interface utile au plateau à mettre à jour durant une partie
      */
@@ -194,7 +196,7 @@ public class Plateau {
 
         terminerEnchere.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
-            activerEnchere = false;
+            enchereTerminee = true;
             sceneSuivante();
         });
 
@@ -218,14 +220,28 @@ public class Plateau {
         Collections.shuffle(Enchere.getListeEnchere());
         personnages.clear();
 
-        AtomicInteger i = new AtomicInteger();
         Group infosEnchere = new Group();
-        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(i.get()).afficherInformations(), Enchere.getListeEnchere().get(i.get()).getProduit().getImagePersonPosition(500, 500));
+        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(500, 500));
 
-        Text prix = new Text(0 + " €");
+        Text prix = new Text(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
         prix.setX(cadre.getX() + 10);
         prix.setY(cadre.getY() + 35);
         prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
+
+        TextField encherirField = new TextField();
+        encherirField.setLayoutX(cadre.getX());
+        encherirField.setLayoutY(cadre.getY() + 130);
+        encherirField.setMinSize(100,50);
+        encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        encherirField.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                if (equipeSelectionne != null) {
+                    Plateau.equipeSelectionne.augmenterEnchere(getIntFromTextField(encherirField), Enchere.getListeEnchere().get(idEnchere.get()));
+                    prix.setText(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
+                    prix.setEffect(new Effets().putInnerShadow(Enchere.getListeEnchere().get(idEnchere.get()).getEquipeGagnante().getCouleur()));
+                }
+            }
+        });
 
         Button boutonSeCoucher = new Bouton().creerBouton("Se coucher");
         boutonSeCoucher.setLayoutX(terminerEnchere.getLayoutX() + 130);
@@ -234,13 +250,13 @@ public class Plateau {
         group.getChildren().addAll(boutonSeCoucher, cadre, prix);
 
         boutonSeCoucher.setOnMouseClicked(mouseEvent -> {
-            Enchere.getListeEnchere().get(i.get()).cloreEnchere();
-            if (i.get() < 2) {
+            Enchere.getListeEnchere().get(idEnchere.get()).cloreEnchere();
+            if (idEnchere.get() < 2) {
                 group.getChildren().removeAll(boutonSeCoucher, cadre, prix);
                 infosEnchere.getChildren().clear();
-                i.getAndIncrement();
-                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(i.get()).afficherInformations(), Enchere.getListeEnchere().get(i.get()).getProduit().getImagePersonPosition(500, 500));
-                Enchere.getListeEnchere().get(i.get()).afficherInformations();
+                idEnchere.getAndIncrement();
+                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(500, 500));
+                Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations();
                 prix.setText(0 + " €");
                 group.getChildren().addAll(boutonSeCoucher, cadre, prix);
             } else {
@@ -248,7 +264,7 @@ public class Plateau {
             }
         });
 
-        TextField encherirField = new TextField();
+        /*TextField encherirField = new TextField();
         encherirField.setLayoutX(cadre.getX());
         encherirField.setLayoutY(cadre.getY() + 60);
         encherirField.setMinSize(100,50);
@@ -257,11 +273,11 @@ public class Plateau {
             if (key.getCode() == KeyCode.ENTER) {
                 prix.setText(getIntFromTextField(encherirField) + " €");
             }
-        });
+        });*/
 
         // Creation et incorporation d'une slide barre + bouton
         ajouteLeMenu();
-        group.getChildren().addAll(terminerEnchere, encherirField, infosEnchere/*, prix*/);
+        group.getChildren().addAll(terminerEnchere, encherirField, infosEnchere, barre.boutonEquipe()/*, prix*/);
         primary.setScene(scene);
     }
 
@@ -306,7 +322,7 @@ public class Plateau {
     }
 
     public void sceneSuivante() {
-        if (activerEnchere == true) {
+        if (activerEnchere == true && enchereTerminee == false) {
             lancerSceneEnchere();
         } else {
             lancerScenePlateau();
@@ -782,7 +798,7 @@ public class Plateau {
                 }
             }
         });
-        if (!activerEnchere) {
+        if (!activerEnchere || enchereTerminee) {
             boutonPausePlay();
             afficheBarVie();
             group.getChildren().add(vitesse);
