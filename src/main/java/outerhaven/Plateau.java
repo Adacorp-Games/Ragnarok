@@ -175,13 +175,6 @@ public class Plateau {
             group.getChildren().add(barre.getArgentGroup());
         }
 
-        // Tests brouillard de guerre
-        /*for (int k = 0; k < listeCase.size(); k++) {
-            if (k >= listeCase.size()/2) {
-                listeCase.get(k).getHexagone().setImage(Case.hexagone_imgBlock);
-            }
-        }*/
-
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
         group.getChildren().add(boutonPausePlay());
@@ -216,7 +209,6 @@ public class Plateau {
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
         Enchere.ajouterEnchere(new Enchere(new NecromancienPrime()));
         Enchere.ajouterEnchere(new Enchere(new AlchimistePrime()));
-        Enchere.ajouterEnchere(new Enchere(new Samourai()));
         Collections.shuffle(Enchere.getListeEnchere());
         personnages.clear();
 
@@ -620,6 +612,16 @@ public class Plateau {
                     Plateau.scene.setCursor(Cursor.DEFAULT);
                     //Plateau.personneSelectionné = null;
                     //Plateau.incorporeEquipe(null);
+
+                    if (activerEnchere) {
+                        for (Case c : listeCase) {
+                            c.getHexagone().setImage(Case.hexagone_img1);
+                        }
+                        for (Personne p : personnages) {
+
+                        }
+                    }
+
                 }
                 tour();
             } else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
@@ -916,6 +918,33 @@ public class Plateau {
         getE1().getTeam().clear();
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
+    }
+
+    public static void brouillard() {
+        if (equipeSelectionne == getE1()) {
+            // Tests brouillard de guerre
+            for (int i = 0; i < listeCase.size(); i++) {
+                if (i >= listeCase.size()/2) {
+                    listeCase.get(i).getHexagone().setImage(Case.hexagone_imgBlock);
+                    if (!listeCase.get(i).getContenu().isEmpty()) {
+                        listeCase.get(i).getContenu().get(0).getImageperson().setOpacity(1);
+                    }
+                } else {
+                    listeCase.get(i).getHexagone().setImage(Case.hexagone_img1);
+                }
+            }
+        } else {
+            for (int i = 0; i < listeCase.size(); i++) {
+                if (i < listeCase.size()/2) {
+                    listeCase.get(i).getHexagone().setImage(Case.hexagone_imgBlock);
+                    if (!listeCase.get(i).getContenu().isEmpty()) {
+                        listeCase.get(i).getContenu().get(0).getImageperson().setOpacity(1);
+                    }
+                } else {
+                    listeCase.get(i).getHexagone().setImage(Case.hexagone_img1);
+                }
+            }
+        }
     }
 
     /**

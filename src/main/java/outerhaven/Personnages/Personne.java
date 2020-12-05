@@ -286,7 +286,9 @@ public abstract class Personne {
      */
     public Group affichagePersonnage() {
         Group group = new Group();
-        group.setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+        if (!activerEnchere) {
+            group.setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+        }
         group.getChildren().add(this.afficherImageFace());
         return group;
     }
@@ -467,9 +469,9 @@ public abstract class Personne {
     }
 
     public void clearStatus() {
-        if (duréeStatus > 0) {
+        if (this.duréeStatus > 0) {
             this.duréeStatus--;
-            if (duréeStatus == 0) {
+            if (this.duréeStatus == 0) {
                 this.setStatus("normal");
             }
         }

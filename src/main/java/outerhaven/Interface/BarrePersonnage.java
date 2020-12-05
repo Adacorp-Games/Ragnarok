@@ -47,9 +47,10 @@ public class BarrePersonnage {
         listeEquipe1.addAll(listeClasse);
         listeEquipe2.addAll(listeClasse);
         //listeClasse.add(new NecromancienPrime());
-        for (int i = 0; i < listeClasse.size(); i++) {
+        /*for (int i = 0; i < listeClasse.size(); i++) {
             personnages.remove(0);
-        }
+        }*/
+        personnages.clear();
         interfaceBarre();
     }
 
@@ -79,7 +80,7 @@ public class BarrePersonnage {
 
     private void majBarreEnchere() {
         groupBarre.getChildren().clear();
-        if (equipeSelectionne == e1) {
+        if (equipeSelectionne == Plateau.getE1()) {
             genererBarre(listeEquipe1);
         } else {
             genererBarre(listeEquipe2);
@@ -87,7 +88,7 @@ public class BarrePersonnage {
     }
 
     public void ajouterClass(Personne personne) {
-        if (personne.getTeam() == e1){
+        if (personne.getTeam() == Plateau.getE1()){
             listeEquipe1.add(personne);
         } else {
             listeEquipe2.add(personne);
@@ -157,7 +158,10 @@ public class BarrePersonnage {
                 }
             }
             if (activerEnchere) {
-                majBarreEnchere();
+                if (enchereTerminee) {
+                    majBarreEnchere();
+                }
+                Plateau.brouillard();
                 personneSelectionne = null;
                 for (Personne p : BarrePersonnage.listeEquipe1) {
                     p.getImageperson().setEffect(null);
@@ -187,7 +191,10 @@ public class BarrePersonnage {
                 }
             }
             if (activerEnchere) {
-                majBarreEnchere();
+                if (enchereTerminee) {
+                    majBarreEnchere();
+                }
+                Plateau.brouillard();
                 personneSelectionne = null;
                 for (Personne p : BarrePersonnage.listeEquipe2) {
                     p.getImageperson().setEffect(null);

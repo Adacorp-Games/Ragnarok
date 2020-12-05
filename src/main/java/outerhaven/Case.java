@@ -256,20 +256,18 @@ public class Case {
      * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
      * @return le return n'est récupéré qu'une seule fois : quand le parcours final est finis
      */
-    private ArrayList<Case> tailleBlock(ArrayList<Case> block, ArrayList<Case> caseVu){
-        if(this.contenu.isEmpty()){
+    private ArrayList<Case> tailleBlock(ArrayList<Case> block, ArrayList<Case> caseVu) {
+        if (this.contenu.isEmpty()) {
             caseVu.add(this);
-        }
-        else{
-            if(this.contenu.get(0).getTeam()==block.get(0).getContenu().get(0).getTeam()){
+        } else {
+            if (this.contenu.get(0).getTeam() == block.get(0).getContenu().get(0).getTeam()) {
                 block.add(this);
-                for (Case c:this.caseVoisines) {
-                    if(!block.contains(c) && !caseVu.contains(c)) {
+                for (Case c : this.caseVoisines) {
+                    if (!block.contains(c) && !caseVu.contains(c)) {
                         c.tailleBlock(block, caseVu);
                     }
                 }
-            }
-            else{
+            } else {
                 caseVu.add(this);
             }
         }
@@ -292,18 +290,16 @@ public class Case {
                 voisin = hexagone_img1;
             }
         }
-        this.getHexagone().setImage(voisin);
-        if (longueur == 1) {
-            for (Case c : this.getCaseVoisines()) {
-                if (c.hexagone.getImage() != hexagone_imgBlock) {
+        if (this.getHexagone().getImage() != hexagone_imgBlock) {
+            this.getHexagone().setImage(voisin);
+            if (longueur == 1) {
+                for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe()) {
                         c.getHexagone().setImage(voisin);
                     }
                 }
-            }
-        } else {
-            for (Case c : this.getCaseVoisines()) {
-                if (c.hexagone.getImage() != hexagone_imgBlock) {
+            } else {
+                for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe()) {
                         c.getHexagone().setImage(voisin);
                         c.afficherCaseVoisines(longueur - 1, status);
