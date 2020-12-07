@@ -2,20 +2,15 @@ package outerhaven.Interface;
 
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
-import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
 import outerhaven.Personnages.PersonnagesEnergetiques.*;
 import outerhaven.Personnages.PersonnagesMagiques.*;
-import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
-import outerhaven.Personnages.PersonnagesPrime.NecromancienPrime;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
@@ -54,6 +49,12 @@ public class BarrePersonnage {
         interfaceBarre();
     }
 
+    public void reset(){
+        groupBarre.getChildren().clear();
+        listeEquipe1.clear();
+        listeEquipe2.clear();
+    }
+
     private void genererBarre(ArrayList<Personne> list) {
         Rectangle barre = new Rectangle();
         barre.setWidth(longeurMax - 20);
@@ -78,7 +79,7 @@ public class BarrePersonnage {
         }
     }
 
-    private void majBarreEnchere() {
+    public void majBarreEnchere() {
         groupBarre.getChildren().clear();
         if (equipeSelectionne == Plateau.getE1()) {
             genererBarre(listeEquipe1);
@@ -112,6 +113,10 @@ public class BarrePersonnage {
         equipe2.setLayoutX(120);
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
+
+        if(equipeSelectionne==e1){
+            equipe1.setEffect(Bouton.effectE1);
+        }
 
         if (!enchereTerminee) {
             equipeSelectionne = Plateau.getE1();

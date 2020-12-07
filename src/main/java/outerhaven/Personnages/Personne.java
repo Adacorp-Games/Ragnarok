@@ -3,6 +3,7 @@ package outerhaven.Personnages;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -320,6 +321,9 @@ public abstract class Personne {
         person.setFitWidth(taille/2);
         person.setX(position.getPosX() + taille/3);
         person.setY(position.getPosY() - taille/20);
+        InnerShadow ombre = new InnerShadow();
+        ombre.colorProperty().setValue(getTeam().getCouleur());
+       person.setEffect(ombre);
 
         Group group = new Group();
         group.getChildren().add(person);
@@ -354,10 +358,13 @@ public abstract class Personne {
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
         SanteNom.getChildren().addAll(afficherSante(), afficherNom());
-        if (barreVisible) {
+        if (barreVisible && !position.verifNoir()) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
         } else if(!barreVisible && group.getChildren().contains(SanteNom)) {
+            supprimerSanteEtNom();
+        }
+        else if(position.verifNoir()){
             supprimerSanteEtNom();
         }
     }

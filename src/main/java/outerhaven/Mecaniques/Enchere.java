@@ -26,7 +26,8 @@ public class Enchere {
         this.getProduit().setTeam(this.getEquipeGagnante());
         if (this.getEquipeGagnante() == Plateau.getE1()) {
             BarrePersonnage.listeEquipe1.add(this.getProduit());
-        } else {
+        }
+        else if(this.getEquipeGagnante()!=null) {
             BarrePersonnage.listeEquipe2.add(this.getProduit());
         }
         //Enchere.listeEnchere.remove(this);

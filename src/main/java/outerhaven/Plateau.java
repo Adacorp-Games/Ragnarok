@@ -21,10 +21,7 @@ import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
-import outerhaven.Personnages.PersonnagesEnergetiques.Samourai;
-import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
-import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
 import outerhaven.Personnages.PersonnagesPrime.NecromancienPrime;
 import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
@@ -124,7 +121,6 @@ public class Plateau {
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
         Evenement.setFréquenceEvenement(10);
         Evenement.setPourcentageEvenement(20);
-
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -174,7 +170,11 @@ public class Plateau {
             getE2().setArgent(argentPartie);
             group.getChildren().add(barre.getArgentGroup());
         }
-
+        if(enchereTerminee){
+            equipeSelectionne=e1;
+            brouillard();
+            barre.majBarreEnchere();
+        }
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
         group.getChildren().add(boutonPausePlay());
@@ -652,11 +652,16 @@ public class Plateau {
             boutonGame.getChildren().remove(pause);
             boutonGame.getChildren().add(play);
             setStatusPartie(false);
-            if (!group.getChildren().contains(barre.returnBarre())) {
-                group.getChildren().add(barre.returnBarre());
-                //group.getChildren().add(boutonEquipe());
-                scene.setFill(Color.WHITE);
-            }
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), ev ->{
+                brouillard();
+                if (!group.getChildren().contains(barre.returnBarre())) {
+                    group.getChildren().add(barre.returnBarre());
+                    //group.getChildren().add(boutonEquipe());
+                    scene.setFill(Color.WHITE);
+                }
+            }));
+            timeline.play();
+
         });
         boutonGame.getChildren().addAll(play, labelPlay);
         return boutonGame;
@@ -699,7 +704,9 @@ public class Plateau {
             if (!personnages.isEmpty()){
                 Personne.barreVisible = !Personne.barreVisible;
                 for (Personne personnage : personnages) {
-                    personnage.afficherSanteEtNom();
+                    if(!personnage.getPosition().verifNoir()) {
+                        personnage.afficherSanteEtNom();
+                    }
                 }
             }
         });
@@ -818,6 +825,10 @@ public class Plateau {
             nbTour++;
             System.out.println("Tour : " + nbTour);
 
+            for (Case c:listeCase) {
+                c.devenirBlanc();
+            }
+
             // Gestion des événements aléatoires
             if (Evenement.activerEvenement == true) {
                 event.generationEvenements();
@@ -918,6 +929,7 @@ public class Plateau {
         getE1().getTeam().clear();
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
+        barre.reset();
     }
 
     public static void brouillard() {
@@ -925,23 +937,27 @@ public class Plateau {
             // Tests brouillard de guerre
             for (int i = 0; i < listeCase.size(); i++) {
                 if (i >= listeCase.size()/2) {
-                    listeCase.get(i).getHexagone().setImage(Case.hexagone_imgBlock);
-                    if (!listeCase.get(i).getContenu().isEmpty()) {
-                        listeCase.get(i).getContenu().get(0).getImageperson().setOpacity(1);
+                    if(listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam()!=e1) {
+                        listeCase.get(i).devenirNoir();
+                    }
+                    else{
+                        listeCase.get(i).devenirBlanc();
                     }
                 } else {
-                    listeCase.get(i).getHexagone().setImage(Case.hexagone_img1);
+                    listeCase.get(i).devenirBlanc();
                 }
             }
         } else {
             for (int i = 0; i < listeCase.size(); i++) {
                 if (i < listeCase.size()/2) {
-                    listeCase.get(i).getHexagone().setImage(Case.hexagone_imgBlock);
-                    if (!listeCase.get(i).getContenu().isEmpty()) {
-                        listeCase.get(i).getContenu().get(0).getImageperson().setOpacity(1);
+                    if(listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam()!=e2) {
+                        listeCase.get(i).devenirNoir();
+                    }
+                    else{
+                        listeCase.get(i).devenirBlanc();
                     }
                 } else {
-                    listeCase.get(i).getHexagone().setImage(Case.hexagone_img1);
+                    listeCase.get(i).devenirBlanc();
                 }
             }
         }

@@ -8,6 +8,7 @@ import java.util.Collections;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -129,12 +130,40 @@ public class Case {
             //hexagone.setEffect(null);
     }
 
+    public void devenirBlanc(){
+        if(alteration==null) {
+            hexagone.setImage(hexagone_img1);
+        }
+        else{
+            hexagone.setImage(alteration.getImage());
+        }
+        if(!group.getChildren().contains(affichagecontenu) && !contenu.isEmpty()) {
+            rentrePersonnage(contenu.get(0));
+        }
+    }
+    public void devenirNoir(){
+        group.getChildren().remove(affichagecontenu);
+        hexagone.setImage(hexagone_imgBlock);
+        if(!contenu.isEmpty()){
+            contenu.get(0).afficherSanteEtNom();
+        }
+    }
+    public boolean verifNoir(){
+        if(hexagone.getImage() == hexagone_imgBlock){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     /**
      * Ajoute un personnage dans une case si il veut s'y déplacer
      * @param personne
      */
     public void rentrePersonnage(Personne personne) {
-        if (!estOccupe()) {
+        if (!estOccupe() || contenu.get(0)==personne) {
+            contenu.clear();
             contenu.add(personne);
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
@@ -294,13 +323,13 @@ public class Case {
             this.getHexagone().setImage(voisin);
             if (longueur == 1) {
                 for (Case c : this.getCaseVoisines()) {
-                    if (!c.estOccupe()) {
+                    if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
                         c.getHexagone().setImage(voisin);
                     }
                 }
             } else {
                 for (Case c : this.getCaseVoisines()) {
-                    if (!c.estOccupe()) {
+                    if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
                         c.getHexagone().setImage(voisin);
                         c.afficherCaseVoisines(longueur - 1, status);
                     }
