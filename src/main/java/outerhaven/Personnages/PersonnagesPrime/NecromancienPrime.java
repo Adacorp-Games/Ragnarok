@@ -5,23 +5,24 @@ import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Invocations.Lich;
-import outerhaven.Personnages.PersonnagesPrime.PersonnagePrime;
+import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
-public class NecromancienPrime extends PersonnagePrime {
+public class NecromancienPrime extends Necromancien {
 
     public NecromancienPrime() {
-        super(800 * getPrimeMultiplier(), 50 * getPrimeMultiplier(), 1000 * getPrimeMultiplier(), 100 * getPrimeMultiplier(), 4 * getPrimeMultiplier(), 1, 100 * getPrimeMultiplier());
-        // super(2000, 50, 1000, 100, 4, 1, 100);
+        this.augmenterStats(2);
     }
 
     public NecromancienPrime(Equipe team, Case position) {
-        super(800 * getPrimeMultiplier(), 50 * getPrimeMultiplier(), 1000 * getPrimeMultiplier(), 100 * getPrimeMultiplier(), 4 * getPrimeMultiplier(), 1, team, position, 100 * getPrimeMultiplier());
+        super(team, position);
+        this.augmenterStats(2);
     }
 
+    @Override
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;
@@ -39,6 +40,7 @@ public class NecromancienPrime extends PersonnagePrime {
         }
     }
 
+    @Override
     public void action() {
         // Gagne de la mana chaque tour
         this.gainMana();
@@ -74,6 +76,7 @@ public class NecromancienPrime extends PersonnagePrime {
         }
     }
 
+    @Override
     public void invocation() {
         for (Case c : this.getPosition().voisinsLibres(true)) {
             // Remplissage des cases voisines vides par des invocations

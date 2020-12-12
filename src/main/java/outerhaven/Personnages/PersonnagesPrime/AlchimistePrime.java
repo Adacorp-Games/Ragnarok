@@ -4,20 +4,23 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
-public class AlchimistePrime extends PersonnagePrime {
+public class AlchimistePrime extends Alchimiste {
 
     public AlchimistePrime() {
-        super(1000 * getPrimeMultiplier(), 80 * getPrimeMultiplier(), 650 * getPrimeMultiplier(), 150 * getPrimeMultiplier(), 4 * getPrimeMultiplier(), 1, 100 * getPrimeMultiplier());
+        this.augmenterStats(2);
     }
 
     public AlchimistePrime(Equipe team, Case position) {
-        super(1000 * getPrimeMultiplier(), 80 * getPrimeMultiplier(), 650 * getPrimeMultiplier(), 150 * getPrimeMultiplier(), 4 * getPrimeMultiplier(), 1, team, position, 150 * getPrimeMultiplier());
+        super(team, position);
+        this.augmenterStats(2);
     }
 
+    @Override
     public void action() {
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
@@ -44,7 +47,7 @@ public class AlchimistePrime extends PersonnagePrime {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
+    public Personne personneNouvelle(Equipe team, Case position) {
         return new AlchimistePrime(team,position);
     }
 

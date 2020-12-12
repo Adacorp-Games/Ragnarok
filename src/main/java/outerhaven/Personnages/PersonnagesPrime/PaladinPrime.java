@@ -7,15 +7,15 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.PersonnagesMagiques.Paladin;
 import outerhaven.Personnages.Personne;
 
-public class PaladinPrime extends PersonnagePrime {
+public class PaladinPrime extends Paladin {
 
     public PaladinPrime() {
-        //   vie    armor cost degat rnge speed  magie)
-        super(3000 * getPrimeMultiplier(), 250 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 1, 1, 100 * getPrimeMultiplier());
+        this.augmenterStats(2);
     }
 
     public PaladinPrime(Equipe team, Case position) {
-        super(3000 * getPrimeMultiplier(), 250 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 300 * getPrimeMultiplier(), 1, 1, team, position, 100 * getPrimeMultiplier());
+        super(team, position);
+        this.augmenterStats(2);
     }
 
     @Override

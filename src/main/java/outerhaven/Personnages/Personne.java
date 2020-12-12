@@ -466,6 +466,17 @@ public abstract class Personne {
         this.setArmor(this.getArmor() + armure);
     }
 
+    public void augmenterStats(double multiplicateur) {
+        this.health *= multiplicateur;
+        this.maxHealth *= multiplicateur;
+        this.damage *= multiplicateur;
+        this.armor *= multiplicateur;
+        if (this.range != 1) {
+            this.range *= multiplicateur;
+        }
+        this.cost *= multiplicateur;
+    }
+
     /**
      * Permet d'étourdir une cible
      * @param durée en nombre de tour du stun

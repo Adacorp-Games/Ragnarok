@@ -8,16 +8,13 @@ import java.util.Collections;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
-import outerhaven.Personnages.PersonnagesPrime.PersonnagePrime;
 import outerhaven.Personnages.Personne;
 
 import static outerhaven.Interface.BarrePersonnage.listeEquipe1;
