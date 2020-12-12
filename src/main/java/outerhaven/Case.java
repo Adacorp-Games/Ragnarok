@@ -259,27 +259,6 @@ public class Case {
     }
 
     /**
-     * Cherche les voisins d'une case pour les mettre dans voisinCase en début de partie
-     */
-    public void trouverVoisin() {
-        // Vérifie toutes les cases en fonction de leurs cordonnées
-        for (Case c : listeCase) {
-            if ((c.getCoordonnee()[1] == this.getCoordonnee()[1] - 1
-                    || c.getCoordonnee()[1] == this.getCoordonnee()[1] + 1) && c.getCoordonnee()[0] == getCoordonnee()[0]) {
-                caseVoisines.add(c);
-            }
-            if ((c.getCoordonnee()[0] == this.getCoordonnee()[0] - 1
-                    || c.getCoordonnee()[0] == this.getCoordonnee()[0] + 1) && c.getCoordonnee()[1] == getCoordonnee()[1]) {
-                caseVoisines.add(c);
-            }
-            if ((c.getCoordonnee()[0] == this.getCoordonnee()[0] - 1 && c.getCoordonnee()[1] == this.getCoordonnee()[1] + 1)
-                    || (c.getCoordonnee()[0] == getCoordonnee()[0] + 1 && c.getCoordonnee()[1] == getCoordonnee()[1] - 1)) {
-                caseVoisines.add(c);
-            }
-        }
-    }
-
-    /**
      * Algo récursif qui a pour bu de retourner la taille d'un block de personnages de même équipes
      * @param block qui est une Arraylist contenant toutes les cases du block
      * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
@@ -368,6 +347,26 @@ public class Case {
     public int nbVoisinsLibres() {
         return voisinsLibres(true).size();
     }
+    /**
+     * Cherche les voisins d'une case pour les mettre dans voisinCase en début de partie
+     */
+    public void trouverVoisin() {
+        // Vérifie toutes les cases en fonction de leurs cordonnées
+        for (Case c : listeCase) {
+            if ((c.getCoordonnee()[1] == this.getCoordonnee()[1] - 1
+                    || c.getCoordonnee()[1] == this.getCoordonnee()[1] + 1) && c.getCoordonnee()[0] == getCoordonnee()[0]) {
+                caseVoisines.add(c);
+            }
+            if ((c.getCoordonnee()[0] == this.getCoordonnee()[0] - 1
+                    || c.getCoordonnee()[0] == this.getCoordonnee()[0] + 1) && c.getCoordonnee()[1] == getCoordonnee()[1]) {
+                caseVoisines.add(c);
+            }
+            if ((c.getCoordonnee()[0] == this.getCoordonnee()[0] - 1 && c.getCoordonnee()[1] == this.getCoordonnee()[1] + 1)
+                    || (c.getCoordonnee()[0] == getCoordonnee()[0] + 1 && c.getCoordonnee()[1] == getCoordonnee()[1] - 1)) {
+                caseVoisines.add(c);
+            }
+        }
+    }
 
     /**
      * Trouves le personnage ennemie le plus proche d'une case grâce à un calcul de norme vectoriel
@@ -414,6 +413,7 @@ public class Case {
         }
         return chemin;
     }
+
 
     /**
      * Va chercher dans tableauCase et la tester pour savoir si elle peut être ajouté à un trajet

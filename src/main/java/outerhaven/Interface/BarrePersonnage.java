@@ -1,11 +1,14 @@
 package outerhaven.Interface;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
@@ -155,23 +158,7 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE1());
             equipe1.setEffect(Bouton.effectE1);
             equipe2.setEffect(null);
-            for (Personne p : listeClasse) {
-                if (personneSelectionne == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                } else {
-                    p.getImageperson().setEffect(null);
-                }
-            }
-            if (activerEnchere) {
-                if (enchereTerminee) {
-                    majBarreEnchere();
-                }
-                Plateau.brouillard();
-                personneSelectionne = null;
-                for (Personne p : BarrePersonnage.listeEquipe1) {
-                    p.getImageperson().setEffect(null);
-                }
-            }
+            lancementAnimation();
         });
 
         equipe1.setOnMouseEntered(mouseEvent -> {
@@ -188,23 +175,7 @@ public class BarrePersonnage {
             Plateau.incorporeEquipe(Plateau.getE2());
             equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
             equipe1.setEffect(null);
-            for (Personne p : listeClasse) {
-                if (personneSelectionne == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                } else {
-                    p.getImageperson().setEffect(null);
-                }
-            }
-            if (activerEnchere) {
-                if (enchereTerminee) {
-                    majBarreEnchere();
-                }
-                Plateau.brouillard();
-                personneSelectionne = null;
-                for (Personne p : BarrePersonnage.listeEquipe2) {
-                    p.getImageperson().setEffect(null);
-                }
-            }
+            lancementAnimation();
         });
 
         equipe2.setOnMouseEntered(mouseEvent -> {
@@ -229,6 +200,55 @@ public class BarrePersonnage {
         return groupEquipeButton;
     }
 
+    private void lancementAnimation(){
+        if(enchereTerminee){
+            final double[] incr = {0.99};
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
+                group.setOpacity(incr[0]);
+                incr[0] = incr[0] - 0.01;
+            }));
+            timeline.setCycleCount(100);
+            timeline.setOnFinished(actionEvent -> mecaniqueBouton());
+            timeline.play();
+        }else{
+            mecaniqueBouton();
+        }
+    }
+
+
+
+    private void mecaniqueBouton() {
+        for (Personne p : listeClasse) {
+            if (personneSelectionne == p) {
+                p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
+            } else {
+                p.getImageperson().setEffect(null);
+            }
+        }
+        if (activerEnchere) {
+            if (enchereTerminee) {
+                majBarreEnchere();
+            }
+            Plateau.brouillard();
+            personneSelectionne = null;
+            for (Personne p : BarrePersonnage.listeEquipe()) {
+                p.getImageperson().setEffect(null);
+            }
+        }
+        if(enchereTerminee) {
+            final double[] incr = {0.01};
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
+                group.setOpacity(incr[0]);
+                incr[0] = incr[0] + 0.01;
+            }));
+            timeline.setCycleCount(100);
+            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(2000), ev -> {
+                timeline.play();
+            }));
+            timeline2.play();
+        }
+    }
+
     public void afficherArgentEquipes() {
         Text argentEquipe1 = new Text(getE1().getArgent() + " €");
         argentEquipe1.setX(10);
@@ -246,6 +266,15 @@ public class BarrePersonnage {
         if (argentPartie > 0) {
             argentGroup.getChildren().clear();
             afficherArgentEquipes();
+        }
+    }
+
+    public static ArrayList<Personne> listeEquipe() {
+        if(equipeSelectionne==e1){
+            return listeEquipe1;
+        }
+        else{
+            return listeEquipe2;
         }
     }
 

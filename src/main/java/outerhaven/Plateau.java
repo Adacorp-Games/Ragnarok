@@ -129,10 +129,10 @@ public class Plateau {
         while (i < aire) {
             // On entre dans une ligne
             if (!decalage) {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
+                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99;
                     Case hexagone = new Case(ligne, j - (ligne/2));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     tableauCase[ligne][j] = hexagone;
@@ -143,10 +143,10 @@ public class Plateau {
                 decalage = true;
                 ligne++;
             } else {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
+                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille/2;
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille/2;
                     Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     tableauCase[ligne][j] = hexagone;
