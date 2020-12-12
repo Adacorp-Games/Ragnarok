@@ -173,7 +173,6 @@ public class Plateau {
         if(enchereTerminee){
             equipeSelectionne=e1;
             brouillard();
-            barre.majBarreEnchere();
         }
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
@@ -317,6 +316,7 @@ public class Plateau {
         if (activerEnchere && !enchereTerminee) {
             lancerSceneEnchere();
         } else {
+            barre.interfaceBarre();
             lancerScenePlateau();
         }
     }

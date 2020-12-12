@@ -216,7 +216,7 @@ public abstract class Personne {
         imageperson.setFitHeight(130);
         imageperson.setFitWidth(100);
         imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
-        imageperson.setX(200 + i * (imageperson.getFitWidth() + 50));
+        imageperson.setX(50 + i * (imageperson.getFitWidth() + 50));
 
         // Création des intérations avec les images dans la barre
         imageperson.setOnMouseEntered((mouseEvent) -> {

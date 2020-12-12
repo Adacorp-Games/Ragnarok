@@ -33,29 +33,30 @@ public class BarrePersonnage {
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
-        listeClasse.add(new Guerrier());
-        listeClasse.add(new Archer());
-        listeClasse.add(new Mage());
-        listeClasse.add(new Paladin());
-        listeClasse.add(new Necromancien());
-        listeClasse.add(new Alchimiste());
-        listeClasse.add(new Archimage());
-        listeClasse.add(new Pretre());
-        listeClasse.add(new Samourai());
-        listeEquipe1.addAll(listeClasse);
-        listeEquipe2.addAll(listeClasse);
-        //listeClasse.add(new NecromancienPrime());
-        /*for (int i = 0; i < listeClasse.size(); i++) {
-            personnages.remove(0);
-        }*/
-        personnages.clear();
+        if(listeClasse.isEmpty()) {
+            listeClasse.add(new Guerrier());
+            listeClasse.add(new Archer());
+            listeClasse.add(new Mage());
+            listeClasse.add(new Paladin());
+            listeClasse.add(new Necromancien());
+            listeClasse.add(new Alchimiste());
+            listeClasse.add(new Archimage());
+            listeClasse.add(new Pretre());
+            listeClasse.add(new Samourai());
+            listeEquipe1.addAll(listeClasse);
+            listeEquipe2.addAll(listeClasse);
+            personnages.clear();
+        }
         interfaceBarre();
     }
 
     public void reset(){
         groupBarre.getChildren().clear();
         listeEquipe1.clear();
+        listeEquipe1.addAll(listeClasse);
         listeEquipe2.clear();
+        listeEquipe2.addAll(listeClasse);
+
     }
 
     private void genererBarre(ArrayList<Personne> list) {
@@ -74,7 +75,7 @@ public class BarrePersonnage {
         }
     }
 
-    private void interfaceBarre() {
+    public void interfaceBarre() {
         if (!activerEnchere) {
             genererBarre(listeClasse);
         } else {
@@ -214,8 +215,6 @@ public class BarrePersonnage {
             mecaniqueBouton();
         }
     }
-
-
 
     private void mecaniqueBouton() {
         for (Personne p : listeClasse) {
