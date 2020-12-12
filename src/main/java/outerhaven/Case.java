@@ -14,9 +14,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
+import outerhaven.Personnages.PersonnagesPrime.PersonnagePrime;
 import outerhaven.Personnages.Personne;
+
+import static outerhaven.Interface.BarrePersonnage.listeEquipe1;
 import static outerhaven.Plateau.*;
 
 /**
@@ -194,13 +198,28 @@ public class Case {
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
+                    if(personneSelectionne.getClass().getName().contains("Prime")){
+                        try {
+                            for (Personne p : listeEquipe1) {
+                                if (p.getClass().getName().equals(personneSelectionne.getClass().getName())) {
+                                    listeEquipe1.remove(p);
+                                    personneSelectionne = null;
+                                    barre.majBarreEnchere();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
                     equipeSelectionne.setNbPersonne();
                 }
             }
             // Cas où l'utilisateur cherche à vider une case
-            else if (((personneSelectionne != null && equipeSelectionne != null) || (personneSelectionne == null && !contenu.isEmpty())) && !activerEnchere) {
+            else if (((personneSelectionne != null && equipeSelectionne != null) || (personneSelectionne == null && !contenu.isEmpty()))) {
                 if (argentPartie != 0) {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
+                }
+                if(contenu.get(0).getClass().getName().contains("Prime")){
+                    listeEquipe1.add(contenu.get(0));
+                    barre.majBarreEnchere();
                 }
                 seVider();
                 equipeSelectionne.setNbPersonne();
