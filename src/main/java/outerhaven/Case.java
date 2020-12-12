@@ -94,7 +94,7 @@ public class Case {
             });
             // Lorsqu'une souris sort de la case (en fonction de l'altération)
             hexagone.setOnMouseExited((mouseEvent) -> {
-                if (this.getAlteration() != null) {
+                if (this.getAlteration() != null && hexagone.getImage() != hexagone_imgBlock) {
                     hexagone.setImage(this.getAlteration().getImage());
                 } else {
                     if (hexagone.getImage() != hexagone_imgBlock) {
