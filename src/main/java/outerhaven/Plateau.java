@@ -257,6 +257,8 @@ public class Plateau {
                 infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(500, 500));
                 Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations();
                 prix.setText(0 + " €");
+                encherirField.setText("");
+                prix.setEffect(null);
                 group.getChildren().addAll(boutonSeCoucher, cadre, prix);
             } else {
                 group.getChildren().remove(boutonSeCoucher);
