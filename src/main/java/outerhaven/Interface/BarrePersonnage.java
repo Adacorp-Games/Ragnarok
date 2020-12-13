@@ -201,8 +201,8 @@ public class BarrePersonnage {
         return groupEquipeButton;
     }
 
-    private void lancementAnimation(){
-        if(enchereTerminee){
+    private void lancementAnimation() {
+        if (enchereTerminee) {
             final double[] incr = {0.99};
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
                 group.setOpacity(incr[0]);
@@ -211,7 +211,7 @@ public class BarrePersonnage {
             timeline.setCycleCount(100);
             timeline.setOnFinished(actionEvent -> mecaniqueBouton());
             timeline.play();
-        }else{
+        } else {
             mecaniqueBouton();
         }
     }
@@ -234,7 +234,7 @@ public class BarrePersonnage {
                 p.getImageperson().setEffect(null);
             }
         }
-        if(enchereTerminee) {
+        if (enchereTerminee) {
             final double[] incr = {0.01};
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
                 group.setOpacity(incr[0]);
@@ -269,10 +269,9 @@ public class BarrePersonnage {
     }
 
     public static ArrayList<Personne> listeEquipe() {
-        if(equipeSelectionne==e1){
+        if (equipeSelectionne == e1) {
             return listeEquipe1;
-        }
-        else{
+        } else {
             return listeEquipe2;
         }
     }

@@ -4,7 +4,8 @@ import javafx.scene.paint.Color;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
-import static outerhaven.Plateau.barre;
+
+import static outerhaven.Plateau.*;
 
 /**
  * Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
@@ -34,6 +35,12 @@ public class Equipe {
         if (prix > e.getPrixMinimal()) {
             e.setPrixMinimal(prix);
             e.setEquipeGagnante(this);
+            this.setArgent(this.getArgent() - prix);
+            if (equipeSelectionne == getE1()) {
+                getE2().setArgent(argentPartie);
+            } else {
+                getE1().setArgent(argentPartie);
+            }
         }
     }
 

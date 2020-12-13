@@ -22,9 +22,7 @@ import outerhaven.Mecaniques.Alteration;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
-import outerhaven.Personnages.PersonnagesPrime.AlchimistePrime;
-import outerhaven.Personnages.PersonnagesPrime.NecromancienPrime;
-import outerhaven.Personnages.PersonnagesPrime.PaladinPrime;
+import outerhaven.Personnages.PersonnagesPrime.*;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -166,12 +164,14 @@ public class Plateau {
         afficherNbPersonne();
         // On affiche l'argent si elle n'est pas infini (rien d'écrit)
         if (argentPartie > 0) {
-            getE1().setArgent(argentPartie);
-            getE2().setArgent(argentPartie);
+            if (!activerEnchere) {
+                getE1().setArgent(argentPartie);
+                getE2().setArgent(argentPartie);
+            }
             group.getChildren().add(barre.getArgentGroup());
         }
-        if(enchereTerminee){
-            equipeSelectionne=e1;
+        if (enchereTerminee) {
+            equipeSelectionne = e1;
             brouillard();
         }
         // On ajoute toutes les interfaces
@@ -185,6 +185,12 @@ public class Plateau {
         Button terminerEnchere = new Bouton().creerBouton("Terminer");
         terminerEnchere.setLayoutX(140);
         terminerEnchere.setLayoutY(10);
+
+        if (argentPartie > 0) {
+            getE1().setArgent(argentPartie);
+            getE2().setArgent(argentPartie);
+            group.getChildren().add(barre.getArgentGroup());
+        }
 
         terminerEnchere.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
@@ -208,6 +214,8 @@ public class Plateau {
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
         Enchere.ajouterEnchere(new Enchere(new NecromancienPrime()));
         Enchere.ajouterEnchere(new Enchere(new AlchimistePrime()));
+        Enchere.ajouterEnchere(new Enchere(new PretrePrime()));
+        Enchere.ajouterEnchere(new Enchere(new ArchimagePrime()));
         Collections.shuffle(Enchere.getListeEnchere());
         personnages.clear();
 
@@ -226,7 +234,7 @@ public class Plateau {
         encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         encherirField.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
-                if (equipeSelectionne != null) {
+                if (equipeSelectionne != null && getIntFromTextField(encherirField) <= equipeSelectionne.getArgent()) {
                     Plateau.equipeSelectionne.augmenterEnchere(getIntFromTextField(encherirField), Enchere.getListeEnchere().get(idEnchere.get()));
                     prix.setText(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
                     prix.setEffect(new Effets().putInnerShadow(Enchere.getListeEnchere().get(idEnchere.get()).getEquipeGagnante().getCouleur()));
@@ -314,6 +322,9 @@ public class Plateau {
 
     public void sceneSuivante() {
         if (activerEnchere && !enchereTerminee) {
+            if (argentPartie == 0) {
+                argentPartie = 10000;
+            }
             lancerSceneEnchere();
         } else {
             barre.interfaceBarre();
@@ -575,6 +586,7 @@ public class Plateau {
                 group.getChildren().remove(0, group.getChildren().size());
                 this.cleanPlateau();
                 this.lancerScenePlateau();
+                //barre = new BarrePersonnage();
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -830,7 +842,7 @@ public class Plateau {
             }
 
             // Gestion des événements aléatoires
-            if (Evenement.activerEvenement == true) {
+            if (Evenement.activerEvenement) {
                 event.generationEvenements();
             }
 
@@ -936,7 +948,7 @@ public class Plateau {
         if (equipeSelectionne == getE1()) {
             // Tests brouillard de guerre
             for (int i = 0; i < listeCase.size(); i++) {
-                if (i >= listeCase.size()/2) {
+                if (i >= listeCase.size() / 2) {
                     if(listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam()!=e1) {
                         listeCase.get(i).devenirNoir();
                     }
@@ -950,10 +962,9 @@ public class Plateau {
         } else {
             for (int i = 0; i < listeCase.size(); i++) {
                 if (i < listeCase.size()/2) {
-                    if(listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam()!=e2) {
+                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e2) {
                         listeCase.get(i).devenirNoir();
-                    }
-                    else{
+                    } else {
                         listeCase.get(i).devenirBlanc();
                     }
                 } else {
