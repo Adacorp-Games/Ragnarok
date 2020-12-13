@@ -15,6 +15,7 @@ import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
+import outerhaven.Personnages.Invocations.Invocation;
 import outerhaven.Personnages.Invocations.Lich;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
@@ -63,7 +64,7 @@ public abstract class Personne {
         this.range = range;
         this.speed = speed;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class && this.getClass() != Lich.class) {
+        if (!(this instanceof Invocation)) {
             personnages.add(this);
         }
     }
@@ -79,7 +80,7 @@ public abstract class Personne {
         this.speed = speed;
         this.team = team;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class && this.getClass() != Lich.class) {
+        if (!(this instanceof Invocation)) {
             personnages.add(this);
             this.team.getTeam().add(this);
         }

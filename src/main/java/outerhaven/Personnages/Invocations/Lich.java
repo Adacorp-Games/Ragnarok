@@ -7,19 +7,17 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
-public class Lich extends Personne {
+public class Lich extends Invocation {
 
     public Lich() {
         super(600, 0, 140, 200, 3, 1);
-        Plateau.invocationAttente.add(this);
     }
 
     public Lich(Equipe team, Case position) {
         super(600, 0, 140, 200, 3, 1, team, position);
-        Plateau.invocationAttente.add(this);
-        this.getTeam().getTeam().add(this);
     }
 
+    @Override
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;

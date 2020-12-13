@@ -7,17 +7,14 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
-public class Mort extends Personne {
+public class Mort extends Invocation {
 
     public Mort() {
         super(300, 0, 70, 100, 1, 1);
-        Plateau.invocationAttente.add(this);
     }
 
     public Mort(Equipe team, Case position) {
         super(300, 0, 70, 100, 1, 1, team, position);
-        Plateau.invocationAttente.add(this);
-        this.getTeam().getTeam().add(this);
     }
 
     @Override
