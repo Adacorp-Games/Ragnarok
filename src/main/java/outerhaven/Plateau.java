@@ -667,7 +667,9 @@ public class Plateau {
             boutonGame.getChildren().add(play);
             setStatusPartie(false);
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), ev ->{
-                brouillard();
+                if (activerEnchere) {
+                    brouillard();
+                }
                 if (!group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().add(barre.returnBarre());
                     //group.getChildren().add(boutonEquipe());
