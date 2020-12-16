@@ -26,15 +26,14 @@ public class Enchere {
         this.getProduit().setTeam(this.getEquipeGagnante());
         if (this.getEquipeGagnante() == Plateau.getE1()) {
             BarrePersonnage.listeEquipe1.add(this.getProduit());
-        }
-        else if(this.getEquipeGagnante()!=null) {
+        } else if (this.getEquipeGagnante() != null) {
             BarrePersonnage.listeEquipe2.add(this.getProduit());
         }
         //Enchere.listeEnchere.remove(this);
     }
 
     public Group afficherInformations() {
-        return this.getProduit().afficherInfo(500, 500);
+        return this.getProduit().afficherInfo(700, 500);
     }
 
     public static ArrayList<Enchere> getListeEnchere() {

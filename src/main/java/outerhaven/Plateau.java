@@ -85,6 +85,7 @@ public class Plateau {
     public static boolean activerEnchere = false;
     public static boolean enchereTerminee = false;
     public static AtomicInteger idEnchere = new AtomicInteger();
+    public static Text prix = new Text();
     /**
      * Interface utile au plateau à mettre à jour durant une partie
      */
@@ -207,8 +208,10 @@ public class Plateau {
         Rectangle cadre = new Rectangle(225, 48, Color.LIGHTGRAY);
         cadre.setStroke(Color.BLACK);
         cadre.setStrokeWidth(2);
-        cadre.setX(terminerEnchere.getLayoutX() + 262);
-        cadre.setY(11);
+        /*cadre.setX(terminerEnchere.getLayoutX() + 262);
+        cadre.setY(11);*/
+        cadre.setX(700);
+        cadre.setY(290);
 
         // Tests enchères
         Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
@@ -220,16 +223,19 @@ public class Plateau {
         personnages.clear();
 
         Group infosEnchere = new Group();
-        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(500, 500));
+        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(1200, 375));
 
-        Text prix = new Text(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
+        prix.setText(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
         prix.setX(cadre.getX() + 10);
         prix.setY(cadre.getY() + 35);
         prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
 
         TextField encherirField = new TextField();
-        encherirField.setLayoutX(cadre.getX());
+        /*encherirField.setLayoutX(cadre.getX());
         encherirField.setLayoutY(cadre.getY() + 130);
+        encherirField.setMinSize(100,50);*/
+        encherirField.setLayoutX(699);
+        encherirField.setLayoutY(567);
         encherirField.setMinSize(100,50);
         encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         encherirField.setOnKeyReleased(key -> {
@@ -254,7 +260,7 @@ public class Plateau {
                 group.getChildren().removeAll(boutonSeCoucher, cadre, prix);
                 infosEnchere.getChildren().clear();
                 idEnchere.getAndIncrement();
-                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(500, 500));
+                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(1200, 375));
                 Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations();
                 prix.setText(0 + " €");
                 encherirField.setText("");
@@ -944,6 +950,7 @@ public class Plateau {
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
         barre.reset();
+        prix.setText("");
     }
 
     public static void brouillard() {
@@ -951,10 +958,9 @@ public class Plateau {
             // Tests brouillard de guerre
             for (int i = 0; i < listeCase.size(); i++) {
                 if (i >= listeCase.size() / 2) {
-                    if(listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam()!=e1) {
+                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e1) {
                         listeCase.get(i).devenirNoir();
-                    }
-                    else{
+                    } else {
                         listeCase.get(i).devenirBlanc();
                     }
                 } else {
@@ -963,7 +969,7 @@ public class Plateau {
             }
         } else {
             for (int i = 0; i < listeCase.size(); i++) {
-                if (i < listeCase.size()/2) {
+                if (i < listeCase.size() / 2) {
                     if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e2) {
                         listeCase.get(i).devenirNoir();
                     } else {
