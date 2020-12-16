@@ -566,6 +566,7 @@ public class Plateau {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().clear();
                 this.cleanPlateau();
+                barre.reset();
                 this.lancerPartie();
                 this.aire = 0;
                 argentPartie = 0;
@@ -594,7 +595,8 @@ public class Plateau {
                 group.getChildren().remove(0, group.getChildren().size());
                 this.cleanPlateau();
                 this.lancerScenePlateau();
-                //barre = new BarrePersonnage();
+                barre = new BarrePersonnage();
+                barre.majBarreEnchere();
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -951,7 +953,6 @@ public class Plateau {
         getE1().getTeam().clear();
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
-        barre.reset();
         prix.setText("");
     }
 
