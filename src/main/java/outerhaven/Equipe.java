@@ -33,14 +33,14 @@ public class Equipe {
 
     public void augmenterEnchere(double prix, Enchere e) {
         if (prix > e.getPrixMinimal()) {
-            e.setPrixMinimal(prix);
-            e.setEquipeGagnante(this);
             this.setArgent(this.getArgent() - prix);
             if (equipeSelectionne == getE1()) {
-                getE2().setArgent(argentPartie);
+                getE2().setArgent(getE2().getArgent() + e.getPrixMinimal());
             } else {
-                getE1().setArgent(argentPartie);
+                getE1().setArgent(getE1().getArgent() + e.getPrixMinimal());
             }
+            e.setPrixMinimal(prix);
+            e.setEquipeGagnante(this);
         }
     }
 
