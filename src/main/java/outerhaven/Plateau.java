@@ -171,6 +171,7 @@ public class Plateau {
             }
             group.getChildren().add(barre.getArgentGroup());
         }
+        personneSelectionne = null;
         if (enchereTerminee) {
             equipeSelectionne = e1;
             barre.majBarreEnchere();
