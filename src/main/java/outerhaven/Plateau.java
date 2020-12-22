@@ -173,6 +173,7 @@ public class Plateau {
         }
         if (enchereTerminee) {
             equipeSelectionne = e1;
+            barre.majBarreEnchere();
             brouillard();
         }
         // On ajoute toutes les interfaces
