@@ -926,7 +926,9 @@ public class Plateau {
             // Change l'interface car nous somme en jeu
             if (e1.getTeam().isEmpty() || e2.getTeam().isEmpty()) {
                 setStatusPartie(false);
-                brouillard();
+                if(activerEnchere) {
+                    brouillard();
+                }
                 scene.setFill(Color.WHITE);
                 group.getChildren().remove(boutonPausePlay());
                 group.getChildren().add(boutonPausePlay());

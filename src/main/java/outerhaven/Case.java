@@ -229,8 +229,11 @@ public class Case {
             // Cas ou l'utilisateur ne respecte aucune condition
             else {
                 Text attention = new Text();
-                if(activerEnchere){
+                if(activerEnchere && contenu.isEmpty()){
                     attention.setText("Veuillez sélectionner un personnage");
+                }
+                else if (activerEnchere){
+                    attention.setText("Vous n'avez pouvais pas enlever combattant du plateau");
                 }
                 else {
                     attention.setText("Veuillez sélectionner une équipe et un personnage");
