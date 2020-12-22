@@ -136,7 +136,7 @@ public abstract class Personne {
             double xVec = (casePrecedente.getPosX() - fin.getPosX()) / fps;
             double yVec = (casePrecedente.getPosY() - fin.getPosY()) / fps;
             AtomicInteger count = new AtomicInteger(0);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps / fps), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis((temps-100) / fps), ev -> {
                 x.set(x.get() - xVec);
                 y.set(y.get() - yVec);
                 affichageCaseprecedente.setLayoutX(x.get());
