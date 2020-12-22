@@ -120,7 +120,7 @@ public class Case {
             }
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
-            Plateau.group.getChildren().remove(affichagecontenu);
+            group.getChildren().remove(affichagecontenu);
             //hexagone.setEffect(null);
         }
     }
@@ -128,7 +128,7 @@ public class Case {
     public void seViderPourAnimation(){
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
-            Plateau.group.getChildren().remove(affichagecontenu);
+            group.getChildren().remove(affichagecontenu);
             //hexagone.setEffect(null);
     }
 
@@ -169,7 +169,7 @@ public class Case {
             contenu.add(personne);
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
-            Plateau.group.getChildren().add(affichagecontenu);
+            group.getChildren().add( (int) taille + 5 ,affichagecontenu);
             /*InnerShadow ombre = new InnerShadow();
             ombre.colorProperty().setValue(contenu.get(0).getTeam().getCouleur());
             hexagone.setEffect(ombre);*/
@@ -189,7 +189,7 @@ public class Case {
                     contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
-                    group.getChildren().add(affichagecontenu);
+                    group.getChildren().add((int) taille + 5,affichagecontenu);
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
@@ -233,7 +233,7 @@ public class Case {
                     attention.setText("Veuillez sélectionner un personnage");
                 }
                 else if (activerEnchere){
-                    attention.setText("Vous n'avez pouvais pas enlever combattant du plateau");
+                    attention.setText("Vous ne pouvez pas enlever combattant du plateau");
                 }
                 else {
                     attention.setText("Veuillez sélectionner une équipe et un personnage");
@@ -242,7 +242,7 @@ public class Case {
                 attention.setY(posY);
                 attention.underlineProperty().setValue(true);
                 attention.setFill(Color.RED);
-                Plateau.group.getChildren().add(attention);
+                group.getChildren().add(attention);
                 Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1500), ev -> Plateau.group.getChildren().remove(attention)));
                 timeline.play();
             }
