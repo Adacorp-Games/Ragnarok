@@ -18,6 +18,7 @@ import outerhaven.Mecaniques.Alteration;
 import outerhaven.Personnages.Personne;
 
 import static outerhaven.Interface.BarrePersonnage.listeEquipe1;
+import static outerhaven.Interface.BarrePersonnage.listeEquipe2;
 import static outerhaven.Plateau.*;
 
 /**
@@ -189,17 +190,21 @@ public class Case {
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
                     group.getChildren().add(affichagecontenu);
-                    /*InnerShadow ombre = new InnerShadow();
-                    ombre.colorProperty().setValue(equipeSelectionne.getCouleur());
-                    hexagone.setEffect(ombre);*/
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
                     if(personneSelectionne.getClass().getName().contains("Prime")){
                         try {
-                            for (Personne p : listeEquipe1) {
+                            ArrayList<Personne> listeEquipe = new ArrayList<>();
+                            if(equipeSelectionne==e1){
+                                listeEquipe = listeEquipe1;
+                            }
+                            else{
+                                listeEquipe = listeEquipe2;
+                            }
+                            for (Personne p : listeEquipe) {
                                 if (p.getClass().getName().equals(personneSelectionne.getClass().getName())) {
-                                    listeEquipe1.remove(p);
+                                    listeEquipe.remove(p);
                                     personneSelectionne = null;
                                     barre.majBarreEnchere();
                                 }
