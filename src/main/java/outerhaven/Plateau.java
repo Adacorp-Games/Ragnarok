@@ -84,6 +84,7 @@ public class Plateau {
     public static boolean activerAnimation = false;
     public static boolean activerEnchere = false;
     public static boolean enchereTerminee = false;
+    public static boolean activerDijkstra = false;
     public static AtomicInteger idEnchere = new AtomicInteger();
     public static Text prix = new Text();
     /**

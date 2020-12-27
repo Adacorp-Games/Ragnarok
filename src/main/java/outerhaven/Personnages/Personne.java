@@ -183,25 +183,14 @@ public abstract class Personne {
     /**
      * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer
      */
-    /*public void action() {
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (pathToEnnemy.size() - 1 <= range) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(speed));
-        }
-    }*/
-
-    /**
-     * Action basique de toute personne en fonction de la distance avec sa cible la plus proche avec l'algorithme de Dijkstra
-     */
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathDijkstra());
+        ArrayList<Case> pathToEnnemy;
+        if (activerDijkstra) {
+            pathToEnnemy = position.pathDijkstra();
+        } else {
+            pathToEnnemy = position.pathToPerso(getOtherTeam());
+        }
         System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
         if (pathToEnnemy.size() - 1 <= range) {
             System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
