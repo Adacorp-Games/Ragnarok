@@ -25,7 +25,7 @@ public class BarrePersonnage {
 
     private static final Group groupBarre = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static ArrayList<Personne> listeClasse = new ArrayList<>();
     public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
     public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
@@ -56,12 +56,11 @@ public class BarrePersonnage {
         listeEquipe1.addAll(listeClasse);
         listeEquipe2.clear();
         listeEquipe2.addAll(listeClasse);
-
     }
 
     private void genererBarre(ArrayList<Personne> list) {
         Rectangle barre = new Rectangle();
-        barre.setWidth(longeurMax - 20);
+        barre.setWidth(longueurMax - 20);
         barre.setHeight(200);
         barre.setX(10);
         barre.setY(largeurMax - barre.getHeight());
@@ -118,7 +117,7 @@ public class BarrePersonnage {
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
 
-        if(equipeSelectionne==e1){
+        if (equipeSelectionne == e1) {
             equipe1.setEffect(Bouton.effectE1);
         }
 

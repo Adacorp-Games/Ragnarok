@@ -2,9 +2,7 @@ package outerhaven;
 
 import javafx.scene.Group;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -454,24 +452,12 @@ public class Case {
      */
 
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
-            try {
-                boolean ajout = false;
-                Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
-                if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
-                    // Si la case est vide
-                    if (!caseVoisines.contains(c)) {
-                        for (int i = 0; i < caseVoisines.size(); i++) {
-                            for (int j = 0; j < c.caseVoisines.size(); j++) {
-                                if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
-                                    chemin.add(caseVoisines.get(i));
-                                    ajout = true;
-                                }
-                            }
-                        }
-                    }
-                    chemin.add(c);
-                } else {
-                    // Si la case est utilisé
+        try {
+            boolean ajout = false;
+            Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
+            if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
+                // Si la case est vide
+                if (!caseVoisines.contains(c)) {
                     for (int i = 0; i < caseVoisines.size(); i++) {
                         for (int j = 0; j < c.caseVoisines.size(); j++) {
                             if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
@@ -481,17 +467,29 @@ public class Case {
                         }
                     }
                 }
-                if (!ajout) {
-                    bloqué = false;
-                }
-            } catch (Exception e) {
-                // L'enchainement de try et du à l'erreur possible lors des bordures du tableau de case (coté droit et coté gauche)
-                try {
-                    testCase(chemin, xIncr - 1, yIncr, personne);
-                } catch (Exception e2) {
-                    testCase(chemin, xIncr + 1, yIncr, personne);
+                chemin.add(c);
+            } else {
+                // Si la case est utilisé
+                for (int i = 0; i < caseVoisines.size(); i++) {
+                    for (int j = 0; j < c.caseVoisines.size(); j++) {
+                        if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
+                            chemin.add(caseVoisines.get(i));
+                            ajout = true;
+                        }
+                    }
                 }
             }
+            if (!ajout) {
+                bloqué = false;
+            }
+        } catch (Exception e) {
+            // L'enchainement de try et du à l'erreur possible lors des bordures du tableau de case (coté droit et coté gauche)
+            try {
+                testCase(chemin, xIncr - 1, yIncr, personne);
+            } catch (Exception e2) {
+                testCase(chemin, xIncr + 1, yIncr, personne);
+            }
+        }
     }
 
     /*public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
@@ -586,6 +584,33 @@ public class Case {
         }
     }
 
+    public Case pathDijkstra() {
+        Case ret = this;
+        LinkedList<Case> file = new LinkedList<>();
+        file.add(this);
+        HashMap<Case, Case> depuis = new HashMap<>();
+        for (int i = 0; i < listeCase.size() - 1; i++) {
+            depuis.put(listeCase.get(i), null);
+        }
+        while (!file.isEmpty()) {
+            Case v = file.pollFirst();
+            for (Case u : v.getCaseVoisines()) {
+                if (!u.getContenu().isEmpty() && u.getEquipeContenu() != this.getEquipeContenu()) {
+                    depuis.replace(u, v);
+                    ret = u;
+                    while (depuis.get(u) != this) {
+                        ret = depuis.get(u);
+                    }
+                    return ret;
+                } else if (!u.estOccupe() && depuis.get(u) == null) {
+                    file.addLast(u);
+                    depuis.replace(u, v);
+                }
+            }
+        }
+        return ret;
+    }
+
     /**
      * Autre pathToPerso et PathToPersoAux à partir d'un algo récurant (fonctionnel mais beaucoup moins performant)
      */
@@ -676,6 +701,10 @@ public class Case {
 
     public Alteration getAlteration() {
         return alteration;
+    }
+
+    public Equipe getEquipeContenu() {
+        return this.getContenu().get(0).getTeam();
     }
 
     /**
