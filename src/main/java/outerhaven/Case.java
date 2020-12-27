@@ -584,23 +584,31 @@ public class Case {
         }
     }
 
-    public Case pathDijkstra() {
-        Case ret = this;
+    public ArrayList<Case> pathDijkstra() {
+        ArrayList<Case> ret = new ArrayList<>();
         LinkedList<Case> file = new LinkedList<>();
         file.add(this);
         HashMap<Case, Case> depuis = new HashMap<>();
         for (int i = 0; i < listeCase.size() - 1; i++) {
             depuis.put(listeCase.get(i), null);
         }
+        System.out.println("Case initiale : " + this);
+        System.out.println(depuis);
         while (!file.isEmpty()) {
             Case v = file.pollFirst();
             for (Case u : v.getCaseVoisines()) {
+                System.out.println("Case visitée : " + u);
                 if (!u.getContenu().isEmpty() && u.getEquipeContenu() != this.getEquipeContenu()) {
+                    System.out.println("Ennemi trouvé en case : " + u);
+                    System.out.println(depuis);
                     depuis.replace(u, v);
-                    ret = u;
+                    ret.add(u);
                     while (depuis.get(u) != this) {
-                        ret = depuis.get(u);
+                        System.out.println("Retour : " + u);
+                        ret.add(depuis.get(u));
                     }
+                    Collections.reverse(ret);
+                    System.out.println("Chemin : " + ret);
                     return ret;
                 } else if (!u.estOccupe() && depuis.get(u) == null) {
                     file.addLast(u);
@@ -608,6 +616,7 @@ public class Case {
                 }
             }
         }
+        Collections.reverse(ret);
         return ret;
     }
 
