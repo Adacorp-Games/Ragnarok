@@ -606,7 +606,9 @@ public class Case {
                     while (depuis.get(u) != this) {
                         System.out.println("Retour : " + u);
                         ret.add(depuis.get(u));
+                        u = depuis.get(u);
                     }
+                    ret.add(this);
                     Collections.reverse(ret);
                     System.out.println("Chemin : " + ret);
                     return ret;
