@@ -186,6 +186,7 @@ public abstract class Personne {
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
         ArrayList<Case> pathToEnnemy;
+        activerDijkstra = false;
         if (activerDijkstra) {
             pathToEnnemy = position.pathDijkstra();
         } else {
