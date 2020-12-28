@@ -607,6 +607,13 @@ public class Plateau {
                 activerEnchere = false;
                 enchereTerminee = false;
                 activerDijkstra = false;
+                equipeSelectionne = null;
+                personneSelectionne = null;
+                barre.equipe1.setEffect(null);
+                barre.equipe2.setEffect(null);
+                for (Personne p : barre.getListeClasse()) {
+                    p.getImageperson().setEffect(null);
+                }
                 idEnchere.getAndSet(0);
                 Collections.shuffle(Enchere.getListeEnchere());
             }));
@@ -910,7 +917,7 @@ public class Plateau {
             nbTour++;
             System.out.println("Tour : " + nbTour);
 
-            for (Case c:listeCase) {
+            for (Case c : listeCase) {
                 c.devenirBlanc();
             }
 
@@ -985,7 +992,7 @@ public class Plateau {
             // Change l'interface car nous somme en jeu
             if (e1.getTeam().isEmpty() || e2.getTeam().isEmpty()) {
                 setStatusPartie(false);
-                if(activerEnchere) {
+                if (activerEnchere) {
                     brouillard();
                 }
                 scene.setFill(Color.WHITE);

@@ -179,7 +179,6 @@ public abstract class Personne {
         }
     }*/
 
-
     /**
      * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer
      */
@@ -237,8 +236,8 @@ public abstract class Personne {
             group.getChildren().remove(1);
         });
         imageperson.setOnMouseClicked((mouseEvent) -> {
-            Plateau.personneSelectionne = this;
             if (equipeSelectionne != null) {
+                Plateau.personneSelectionne = this;
                 imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                 for (Personne p : barre.getListeClasse()) {
                     if (personneSelectionne == p) {

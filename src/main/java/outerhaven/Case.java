@@ -123,36 +123,35 @@ public class Case {
         }
     }
 
-    public void seViderPourAnimation(){
-            contenu.get(0).supprimerSanteEtNom();
-            contenu.remove(0);
-            group.getChildren().remove(affichagecontenu);
-            //hexagone.setEffect(null);
+    public void seViderPourAnimation() {
+        contenu.get(0).supprimerSanteEtNom();
+        contenu.remove(0);
+        group.getChildren().remove(affichagecontenu);
+        //hexagone.setEffect(null);
     }
 
-    public void devenirBlanc(){
-        if(alteration==null) {
+    public void devenirBlanc() {
+        if (alteration == null) {
             hexagone.setImage(hexagone_img1);
-        }
-        else{
+        } else {
             hexagone.setImage(alteration.getImage());
-        }
-        if(!group.getChildren().contains(affichagecontenu) && !contenu.isEmpty()) {
+        } if (!group.getChildren().contains(affichagecontenu) && !contenu.isEmpty()) {
             rentrePersonnage(contenu.get(0));
         }
     }
-    public void devenirNoir(){
+
+    public void devenirNoir() {
         group.getChildren().remove(affichagecontenu);
         hexagone.setImage(hexagone_imgBlock);
-        if(!contenu.isEmpty()){
+        if (!contenu.isEmpty()) {
             contenu.get(0).afficherSanteEtNom();
         }
     }
+
     public boolean verifNoir(){
-        if(hexagone.getImage() == hexagone_imgBlock){
+        if (hexagone.getImage() == hexagone_imgBlock) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
@@ -404,6 +403,7 @@ public class Case {
         int depth = 10000000;
         Personne laPlusProche = null;
         for (Personne personnage : personnages) {
+            //if (!this.contenu.isEmpty() && this.contenu.get(0) != personnage) {
             if (this.contenu.get(0) != personnage) {
                 int x = (personnage.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
                 int y = (personnage.getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
@@ -596,7 +596,7 @@ public class Case {
         while (!file.isEmpty()) {
             Case v = file.pollFirst();
             for (Case u : v.getCaseVoisines()) {
-                System.out.println("Case visitée : " + u);
+                //System.out.println("Case visitée : " + u);
                 if (!u.getContenu().isEmpty() && u.getEquipeContenu() != this.getEquipeContenu()) {
                     System.out.println("Ennemi trouvé en case : " + u);
                     System.out.println(depuis);
@@ -604,6 +604,9 @@ public class Case {
                     ret.add(u);
                     while (depuis.get(u) != this) {
                         System.out.println("Retour : " + u);
+                        if (u == null) {
+                            break;
+                        }
                         ret.add(depuis.get(u));
                         u = depuis.get(u);
                     }
