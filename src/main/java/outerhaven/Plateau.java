@@ -21,6 +21,7 @@ import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
+import outerhaven.Mecaniques.Sauvegarde;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.PersonnagesPrime.*;
 import outerhaven.Personnages.Personne;
@@ -199,6 +200,7 @@ public class Plateau {
         terminerEnchere.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
             enchereTerminee = true;
+            barre.setSave(new Sauvegarde());
             sceneSuivante();
         });
 
@@ -638,6 +640,15 @@ public class Plateau {
                 group.getChildren().remove(0, group.getChildren().size());
                 this.cleanPlateau();
                 this.lancerScenePlateau();
+
+                // Chargement de la sauvegarde faite à la fin des enchères
+                if (activerEnchere) {
+                    getE1().setArgent(BarrePersonnage.getSave().getArgentE1());
+                    getE2().setArgent(BarrePersonnage.getSave().getArgentE2());
+                    BarrePersonnage.listeEquipe1 = BarrePersonnage.getSave().getListeClasseE1();
+                    BarrePersonnage.listeEquipe2 = BarrePersonnage.getSave().getListeClasseE2();
+                }
+
                 barre = new BarrePersonnage();
                 barre.majBarreEnchere();
                 barre.cleanEffects();

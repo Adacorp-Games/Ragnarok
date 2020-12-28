@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+import outerhaven.Mecaniques.Sauvegarde;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
@@ -27,11 +28,12 @@ public class BarrePersonnage {
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static ArrayList<Personne> listeClasse = new ArrayList<>();
-    public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
-    public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
+    public static ArrayList<Personne> listeEquipe1 = new ArrayList<>();
+    public static ArrayList<Personne> listeEquipe2 = new ArrayList<>();
     private final Group argentGroup = new Group();
     public Button equipe1 = new Button("Equipe 1");
     public Button equipe2 = new Button("Equipe 2");
+    private static Sauvegarde save;
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici <-------------------------------------------
@@ -272,6 +274,14 @@ public class BarrePersonnage {
 
     public ArrayList<Personne> getListeClasse() {
         return listeClasse;
+    }
+
+    public static Sauvegarde getSave() {
+        return save;
+    }
+
+    public static void setSave(Sauvegarde save) {
+        BarrePersonnage.save = save;
     }
 
     public Button getButtonTeamSelect() {
