@@ -11,11 +11,12 @@ import java.util.ArrayList;
 public class Pretre extends PersonneMagique {
 
     public Pretre() {
-        super(2000, 50, 500, 100, 2, 1, 100);
+        //    vie  armr cst  dg rnge spd)
+        super(700, 50, 350, 110, 2, 1, 100);
     }
 
     public Pretre(Equipe team, Case position) {
-        super(2000, 50, 500, 100, 2, 1, team, position, 100);
+        super(700, 50, 350, 100, 2, 1, team, position, 100);
     }
 
     public void action() {
