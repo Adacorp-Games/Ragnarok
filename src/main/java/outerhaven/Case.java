@@ -186,10 +186,7 @@ public class Case {
                     contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
-
-                    // TODO : Corriger ici !
                     group.getChildren().add(listeCase.size() + 5, affichagecontenu);
-
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
