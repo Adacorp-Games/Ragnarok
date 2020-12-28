@@ -1,10 +1,8 @@
 package outerhaven.Personnages.PersonnagesEnergetiques;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
@@ -39,6 +37,7 @@ public abstract class PersonneEnergetique extends Personne {
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;
+        seRenforce(5);
         if (this.getTeam() != p.getTeam()) {
             // Si son énergie est au dessus de 50 son attaque a ses dégâts triplés
             if (this.getEnergie() >= 50) {

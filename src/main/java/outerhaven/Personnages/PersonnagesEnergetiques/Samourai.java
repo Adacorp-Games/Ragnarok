@@ -11,11 +11,11 @@ import outerhaven.Personnages.Personne;
 public class Samourai extends PersonneEnergetique {
 
     public Samourai() {
-        super(2000, 50, 500, 100, 2, 1);
+        super(2000, 50, 500, 100, 1, 1);
     }
 
     public Samourai(Equipe team, Case position) {
-        super(2000, 50, 500, 100, 2, 1, team, position);
+        super(2000, 50, 500, 100, 1, 1, team, position);
     }
 
     @Override
