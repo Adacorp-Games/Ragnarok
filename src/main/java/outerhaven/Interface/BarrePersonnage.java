@@ -34,7 +34,7 @@ public class BarrePersonnage {
     public Button equipe2 = new Button("Equipe 2");
 
     public BarrePersonnage() {
-        // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
+        // Ajoutez les nouvelles Classe personnages ici <-------------------------------------------
         if (listeClasse.isEmpty()) {
             listeClasse.add(new Guerrier());
             listeClasse.add(new Archer());
@@ -45,6 +45,8 @@ public class BarrePersonnage {
             listeClasse.add(new Archimage());
             listeClasse.add(new Pretre());
             listeClasse.add(new Samourai());
+
+            // Configuration des listes de personnages pour chaque équipe
             listeEquipe1.addAll(listeClasse);
             listeEquipe2.addAll(listeClasse);
             personnages.clear();
@@ -120,38 +122,6 @@ public class BarrePersonnage {
         if (equipeSelectionne == e1) {
             equipe1.setEffect(Bouton.effectE1);
         }
-
-        /*if (!enchereTerminee) {
-            equipeSelectionne = Plateau.getE1();
-            equipe1.setEffect(new Effets().putInnerShadow(Plateau.getE1().getCouleur()));
-        }*/
-
-        /*if (isActiverEnchere() && personnages.size() != 0) {
-            TextField encherirFieldE1 = new TextField();
-            encherirFieldE1.setLayoutX(equipe1.getLayoutX());
-            encherirFieldE1.setLayoutY(equipe1.getLayoutY() - 130);
-            encherirFieldE1.setMinSize(100,50);
-            encherirFieldE1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-            encherirFieldE1.setOnKeyReleased(key -> {
-                if (key.getCode() == KeyCode.ENTER) {
-                    Plateau.getE1().augmenterEnchere(getIntFromTextField(encherirFieldE1), Enchere.getListeEnchere().get(idEnchere.get()));
-                }
-            });
-
-            TextField encherirFieldE2 = new TextField();
-            encherirFieldE2.setLayoutX(equipe2.getLayoutX());
-            encherirFieldE2.setLayoutY(equipe2.getLayoutY() - 130);
-            encherirFieldE2.setMinSize(100,50);
-            encherirFieldE2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-            encherirFieldE2.setOnKeyReleased(key -> {
-                if (key.getCode() == KeyCode.ENTER) {
-                    Plateau.getE2().augmenterEnchere(getIntFromTextField(encherirFieldE2), Enchere.getListeEnchere().get(idEnchere.get()));
-                }
-            });
-
-            groupEquipeButton.getChildren().add(encherirFieldE1);
-            groupEquipeButton.getChildren().add(encherirFieldE2);
-        }*/
 
         // Actions sur les boutons d'équipes
 
@@ -309,6 +279,21 @@ public class BarrePersonnage {
             return equipe1;
         } else {
             return equipe2;
+        }
+    }
+
+    public void cleanEffects() {
+        if (!activerEnchere) {
+            for (Personne p : this.getListeClasse()) {
+                p.getImageperson().setEffect(null);
+            }
+        } else {
+            for (Personne p : listeEquipe1) {
+                p.getImageperson().setEffect(null);
+            }
+            for (Personne p : listeEquipe2) {
+                p.getImageperson().setEffect(null);
+            }
         }
     }
 }

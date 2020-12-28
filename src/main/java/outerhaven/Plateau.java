@@ -640,6 +640,7 @@ public class Plateau {
                 this.lancerScenePlateau();
                 barre = new BarrePersonnage();
                 barre.majBarreEnchere();
+                barre.cleanEffects();
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
