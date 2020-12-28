@@ -58,11 +58,6 @@ public abstract class PersonneMagique extends Personne {
         }
     }
 
-    public abstract Personne personneNouvelle(Equipe team, Case position);
-    public abstract Text getinfoTitleText();
-    public abstract Text getinfoDescText();
-    public abstract Image getImageFace();
-
     // Affichage santé et nom et mana
 
     public Group afficherSante() {

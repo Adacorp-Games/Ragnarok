@@ -3,6 +3,7 @@ package outerhaven.Personnages;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -12,7 +13,10 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
+import outerhaven.Personnages.Invocations.Invocation;
+import outerhaven.Personnages.Invocations.Lich;
 import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
@@ -60,7 +64,7 @@ public abstract class Personne {
         this.range = range;
         this.speed = speed;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class) {
+        if (!(this instanceof Invocation)) {
             personnages.add(this);
         }
     }
@@ -76,7 +80,7 @@ public abstract class Personne {
         this.speed = speed;
         this.team = team;
         this.casePrecedente = position;
-        if (this.getClass() != Mort.class) {
+        if (!(this instanceof Invocation)) {
             personnages.add(this);
             this.team.getTeam().add(this);
         }
@@ -132,7 +136,7 @@ public abstract class Personne {
             double xVec = (casePrecedente.getPosX() - fin.getPosX()) / fps;
             double yVec = (casePrecedente.getPosY() - fin.getPosY()) / fps;
             AtomicInteger count = new AtomicInteger(0);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps / fps), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis((temps-100) / fps), ev -> {
                 x.set(x.get() - xVec);
                 y.set(y.get() - yVec);
                 affichageCaseprecedente.setLayoutX(x.get());
@@ -181,21 +185,24 @@ public abstract class Personne {
      */
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
-        if (this.position.nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
-        } else {
-            if (position.pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
+        ArrayList<Case> pathToEnnemy;
+        if (activerDijkstra) {
+            if (this.position.nbVoisinsLibres() > 0) {
+                pathToEnnemy = position.pathDijkstra();
             } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(position.pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= range) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(speed));
-                }
+                pathToEnnemy = position.pathToPerso(getOtherTeam());
+            }
+        } else {
+            pathToEnnemy = position.pathToPerso(getOtherTeam());
+        }
+        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+        if (!activerDijkstra || (activerDijkstra && pathToEnnemy.size() > 0)) {
+            if (pathToEnnemy.size() - 1 <= range) {
+                System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+                attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+            } else {
+                System.out.println(this.getName() + " se déplace");
+                deplacer(pathToEnnemy.get(speed));
             }
         }
     }
@@ -221,11 +228,10 @@ public abstract class Personne {
         imageperson.setFitHeight(130);
         imageperson.setFitWidth(100);
         imageperson.setY(Screen.getPrimary().getVisualBounds().getHeight() - 160);
-        imageperson.setX(200 + i * (imageperson.getFitWidth() + 50));
-
+        imageperson.setX(50 + i * (imageperson.getFitWidth() + 50));
         // Création des intérations avec les images dans la barre
         imageperson.setOnMouseEntered((mouseEvent) -> {
-            group.getChildren().add(this.afficherInfo(imageperson.getX(), imageperson.getY() - 105));
+            group.getChildren().add(afficherInfo(imageperson.getX(), imageperson.getY() - 105));
         });
         imageperson.setOnMouseExited((mouseEvent) -> {
             group.getChildren().remove(1);
@@ -234,7 +240,7 @@ public abstract class Personne {
             Plateau.personneSelectionne = this;
             if (equipeSelectionne != null) {
                 imageperson.setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                for (Personne p : barre.getListClasse()) {
+                for (Personne p : barre.getListeClasse()) {
                     if (personneSelectionne == p) {
                         p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
                     } else {
@@ -255,7 +261,7 @@ public abstract class Personne {
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(400 , 205, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(425 , 205, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
@@ -292,7 +298,9 @@ public abstract class Personne {
      */
     public Group affichagePersonnage() {
         Group group = new Group();
-        group.setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+        if (!activerEnchere) {
+            group.setEffect(new Effets().putInnerShadow(this.getTeam().getCouleur()));
+        }
         group.getChildren().add(this.afficherImageFace());
         return group;
     }
@@ -324,13 +332,16 @@ public abstract class Personne {
         person.setFitWidth(taille/2);
         person.setX(position.getPosX() + taille/3);
         person.setY(position.getPosY() - taille/20);
+        InnerShadow ombre = new InnerShadow();
+        ombre.colorProperty().setValue(getTeam().getCouleur());
+       person.setEffect(ombre);
 
         Group group = new Group();
         group.getChildren().add(person);
 
         // Cliquer sur l'image hors partie permet de supprimer la personne
         person.setOnMouseClicked((mouseEvent) -> {
-            if (!statusPartie) {
+            if (!statusPartie && !activerEnchere) {
                 if (argentPartie != 0) {
                     position.getContenu().get(0).getTeam().setArgent(position.getContenu().get(0).getTeam().getArgent() + this.getCost());
                 }
@@ -358,10 +369,13 @@ public abstract class Personne {
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
         SanteNom.getChildren().addAll(afficherSante(), afficherNom());
-        if (barreVisible) {
+        if (barreVisible && !position.verifNoir()) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
         } else if(!barreVisible && group.getChildren().contains(SanteNom)) {
+            supprimerSanteEtNom();
+        }
+        else if(position.verifNoir()){
             supprimerSanteEtNom();
         }
     }
@@ -448,7 +462,30 @@ public abstract class Personne {
      * @param vie que l'on veut soigner
      */
     public void soigner(double vie) {
-        this.setHealth(this.getHealth() + vie);
+        if (this.getHealth() <= this.getMaxHealth() - vie) {
+            this.setHealth(this.getHealth() + vie);
+        } else if (this.getHealth() > this.getMaxHealth() - vie) {
+            this.setHealth(this.getMaxHealth());
+        }
+    }
+
+    /**
+     * Méthode qui permet à une personne de devenir plus résistante sur le plateau
+     * @param armure qu'on veut augmenter
+     */
+    public void seRenforce(double armure) {
+        this.setArmor(this.getArmor() + armure);
+    }
+
+    public void augmenterStats(double multiplicateur) {
+        this.health *= multiplicateur;
+        this.maxHealth *= multiplicateur;
+        this.damage *= multiplicateur;
+        this.armor *= multiplicateur;
+        if (this.range != 1) {
+            this.range *= multiplicateur;
+        }
+        this.cost *= multiplicateur;
     }
 
     /**
@@ -461,9 +498,9 @@ public abstract class Personne {
     }
 
     public void clearStatus() {
-        if (duréeStatus > 0) {
+        if (this.duréeStatus > 0) {
             this.duréeStatus--;
-            if (duréeStatus == 0) {
+            if (this.duréeStatus == 0) {
                 this.setStatus("normal");
             }
         }
@@ -506,6 +543,10 @@ public abstract class Personne {
 
     public Equipe getTeam() {
         return team;
+    }
+
+    public void setTeam(Equipe team) {
+        this.team = team;
     }
 
     public int getRange() {
@@ -558,8 +599,20 @@ public abstract class Personne {
         this.duréeStatus = duréeStatus;
     }
 
+    public void setArmor(double armor) {
+        this.armor = armor;
+    }
+
     public ImageView getImageperson() {
         return imageperson;
+    }
+
+    public ImageView getImagePersonPosition(int x, int y) {
+        ImageView imagePosition = new ImageView();
+        imagePosition.setImage(this.getImageFace());
+        imagePosition.setX(x);
+        imagePosition.setY(y);
+        return imagePosition;
     }
 
     public void setImageperson(ImageView imageperson) {

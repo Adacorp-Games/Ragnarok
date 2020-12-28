@@ -1,9 +1,12 @@
 package outerhaven;
 
 import javafx.scene.paint.Color;
+import outerhaven.Interface.Effets;
+import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
-import static outerhaven.Plateau.barre;
+
+import static outerhaven.Plateau.*;
 
 /**
  * Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
@@ -29,6 +32,31 @@ public class Equipe {
         this.argent = 0;
     }
 
+    public void augmenterEnchere(double prix, Enchere e) {
+        if (prix > e.getPrixMinimal()) {
+            this.setArgent(this.getArgent() - prix);
+            if (equipeSelectionne == getE1()) {
+                getE2().setArgent(getE2().getArgent() + e.getPrixMinimal());
+            } else {
+                getE1().setArgent(getE1().getArgent() + e.getPrixMinimal());
+            }
+            e.setPrixMinimal(prix);
+            e.setEquipeGagnante(this);
+            barre.getButtonTeamSelect().setEffect(null);
+            equipeSelectionne = Equipe.getOtherTeam();
+            barre.getButtonTeamSelect().setEffect(new Effets().putInnerShadow(Plateau.equipeSelectionne.getCouleur()));
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder affichage = new StringBuilder("Equipe : " + "\n");
+        for (Personne p : team) {
+            affichage.append(p.toString());
+        }
+        return affichage.toString();
+    }
+
     /**
      * cette section contient tout les getters et setters de Equipe
      */
@@ -49,15 +77,6 @@ public class Equipe {
         Plateau.updateNbPersonne();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder affichage = new StringBuilder("Equipe : " + "\n");
-        for (Personne p : team) {
-            affichage.append(p.toString());
-        }
-        return affichage.toString();
-    }
-
     public void setArgent(double argent) {
         this.argent = argent;
         barre.updateArgentEquipes();
@@ -65,5 +84,13 @@ public class Equipe {
 
     public double getArgent() {
         return argent;
+    }
+
+    public static Equipe getOtherTeam() {
+        if (equipeSelectionne == getE1()) {
+            return getE2();
+        } else {
+            return getE1();
+        }
     }
 }

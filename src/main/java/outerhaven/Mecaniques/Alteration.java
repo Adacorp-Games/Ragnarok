@@ -42,15 +42,15 @@ public class Alteration {
         this.puissance = puissance;
         this.duree = duree;
         if (effet == "poison") {
-            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonToxic.png"));
+            this.image = Case.hexagone_imgPoison;
         } else if (effet == "manaVore") {
-            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonManaVore.png"));
+            this.image = Case.hexagone_imgManaVore;
         } else if (effet == "heal") {
-            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
+            this.image = Case.hexagone_imgHeal;
         } else if (effet == "freeze") {
-            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
+            this.image = Case.hexagone_imgFreeze;
         } else if (effet == "void") {
-            this.image = new Image(Alteration.class.getResourceAsStream("/Images/Cases/hexagonBlock.png"));
+            this.image = Case.hexagone_imgBlock;
         }
     }
 

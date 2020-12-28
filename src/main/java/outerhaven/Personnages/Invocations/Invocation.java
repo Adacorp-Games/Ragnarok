@@ -7,7 +7,7 @@ import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
-public class Invocation extends Personne {
+public abstract class Invocation extends Personne {
     public Invocation(double health, double armor, double cost, int damage, int range, int speed) {
         super(health, armor, cost, damage, range, speed);
         Plateau.invocationAttente.add(this);

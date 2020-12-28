@@ -1,28 +1,30 @@
-package outerhaven.Personnages.PersonnagesMagiques;
+package outerhaven.Personnages.PersonnagesPrime;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
+import outerhaven.Personnages.PersonnagesMagiques.Pretre;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
-public class Pretre extends PersonneMagique {
+public class PretrePrime extends Pretre {
 
-    public Pretre() {
-        //    vie  armr cst  dg rnge spd)
-        super(700, 50, 350, 110, 2, 1, 100);
+    public PretrePrime() {
+        this.augmenterStats(2);
     }
 
-    public Pretre(Equipe team, Case position) {
-        super(700, 50, 350, 100, 2, 1, team, position, 100);
+    public PretrePrime(Equipe team, Case position) {
+        super(team, position);
+        this.augmenterStats(2);
     }
 
     public void action() {
         // Gagne de la mana chaque tour et se soigne
         this.gainMana();
-        this.soigner(300);
+        this.soigner(500);
 
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
 
@@ -38,31 +40,32 @@ public class Pretre extends PersonneMagique {
         // System.out.println("Vie restante de la cible " + getHealth());
 
         // Soigne les cases voisines
-        ajouterAlter("heal", 60, 1, this.getPosition(), this.getTeam());
+        ajouterAlter("heal", 70, 1, this.getPosition(), this.getTeam());
         for (Case c1 : this.getPosition().getCaseVoisines()) {
-            ajouterAlter("heal", 60, 1, c1, this.getTeam());
+            ajouterAlter("heal", 70, 1, c1, this.getTeam());
         }
 
         // Utilisation du mana
         soignerAOE();
     }
 
+    @Override
     public void soignerAOE() {
         if (this.getMana() >= 200) {
             for (Case c1 : this.getPosition().getCaseVoisines()) {
-                ajouterAlter("heal", 100, 1, c1, this.getTeam());
+                ajouterAlter("heal", 150, 1, c1, this.getTeam());
             }
         }
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Pretre(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new PretrePrime(team,position);
     }
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Prêtre (" + this.getCost() + " €) :\n");
+        return new Text("PrêtrePrime (" + this.getCost() + " €) :\n");
     }
 
     @Override
@@ -79,6 +82,6 @@ public class Pretre extends PersonneMagique {
 
     @Override
     public Image getImageFace() {
-        return new Image(Pretre.class.getResourceAsStream("/Images/Personnes/Priest.png"));
+        return new Image(PretrePrime.class.getResourceAsStream("/Images/Personnes/PriestPrime.png"));
     }
 }

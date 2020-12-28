@@ -10,9 +10,17 @@ import java.util.ArrayList;
 
 public class Paladin extends PersonneMagique {
 
+    public Paladin(double health, double armor, double cost, int damage, int range, int speed, double mana) {
+        super(health, armor, cost, damage, range, speed, mana);
+    }
+
+    public Paladin(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position, double mana) {
+        super(health, armor, cost, damage, range, speed, team, position, mana);
+    }
+
     public Paladin() {
         //   vie    armor cost degat rnge speed  magie)
-        super(3000, 250, 300, 300,    1,   1,   100);
+        super(3000, 250, 300, 300, 1, 1, 100);
         // super(3000, 1000, 300, 300,    1,   1,   100);
     }
 
@@ -23,33 +31,27 @@ public class Paladin extends PersonneMagique {
     public void action() {
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        if (this.getPosition().nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
+
+        // Se soigne si il possède de la mana
+        if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
+            this.soigner(getMaxHealth()/4);
+            this.setMana(this.getMana() - 150);
+
+        } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth()/4) {
+            this.setHealth(getMaxHealth());
+            this.setMana(this.getMana() - 150);
+
         } else {
-            if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
-
-                // Se soigne si il possède de la mana
-            } else if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
-                this.soigner(getMaxHealth()/4);
-                this.setMana(this.getMana() - 150);
-
-            } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth()/4) {
-                this.setHealth(getMaxHealth());
-                this.setMana(this.getMana() - 150);
-
+            ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
+            System.out.println("Taille du chemin vers l'ennemi le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+            if (pathToEnnemy.size() - 1 <= this.getRange()) {
+                System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+                attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
             } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemi le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= this.getRange()) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(this.getSpeed()));
-                }
-                // System.out.println("Vie restante de la cible " + getHealth());
+                System.out.println(this.getName() + " se déplace");
+                deplacer(pathToEnnemy.get(this.getSpeed()));
             }
+            // System.out.println("Vie restante de la cible " + getHealth());
         }
     }
 

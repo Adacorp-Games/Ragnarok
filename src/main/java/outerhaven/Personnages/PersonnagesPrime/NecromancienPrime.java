@@ -1,26 +1,28 @@
-package outerhaven.Personnages.PersonnagesMagiques;
+package outerhaven.Personnages.PersonnagesPrime;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Personnages.Invocations.Mort;
+import outerhaven.Personnages.Invocations.Lich;
+import outerhaven.Personnages.PersonnagesMagiques.Necromancien;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
-public class Necromancien extends PersonneMagique {
+public class NecromancienPrime extends Necromancien {
 
-    public Necromancien() {
-        super(800, 50, 1000, 100, 4, 1, 100);
-        // super(2000, 50, 1000, 100, 4, 1, 100);
+    public NecromancienPrime() {
+        this.augmenterStats(2);
     }
 
-    public Necromancien(Equipe team, Case position) {
-        super(800, 50, 1000, 100, 4, 1, team, position, 100);
+    public NecromancienPrime(Equipe team, Case position) {
+        super(team, position);
+        this.augmenterStats(2);
     }
 
+    @Override
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;
@@ -38,6 +40,7 @@ public class Necromancien extends PersonneMagique {
         }
     }
 
+    @Override
     public void action() {
         // Gagne de la mana chaque tour
         this.gainMana();
@@ -54,9 +57,9 @@ public class Necromancien extends PersonneMagique {
                 System.out.println("Invoque");
                 invocation();
                 //}
-                    // Décrémentation de son mana après le sort lancé
-                    this.setMana(this.getMana() - 100);
-                    this.setCooldown(0);
+                // Décrémentation de son mana après le sort lancé
+                this.setMana(this.getMana() - 100);
+                this.setCooldown(0);
 
             } else {
                 ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
@@ -73,10 +76,11 @@ public class Necromancien extends PersonneMagique {
         }
     }
 
+    @Override
     public void invocation() {
         for (Case c : this.getPosition().voisinsLibres(true)) {
             // Remplissage des cases voisines vides par des invocations
-            c.getContenu().add(new Mort(this.getTeam(), c));
+            c.getContenu().add(new Lich(this.getTeam(), c));
             c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
             c.getContenu().get(0).afficherSanteEtNom();
             Plateau.group.getChildren().add(c.getAffichagecontenu());
@@ -85,17 +89,17 @@ public class Necromancien extends PersonneMagique {
 
     @Override
     public Personne personneNouvelle(Equipe team,Case position) {
-        return new Necromancien(team,position);
+        return new NecromancienPrime(team,position);
     }
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Nécromancien (" + this.getCost() + " €) :\n");
+        return new Text("NécromancienPrime (" + this.getCost() + " €) :\n");
     }
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nInvocateur de skelettes.\nGagne 25 de mana par tour.\nPossède un vol de vie sur ses attaques.\nPour 100 de mana, rempli les cases voisines libres avec des skelettes." + "\n" +
+        return new Text("\nInvocateur de liches.\nGagne 25 de mana par tour.\nPossède un vol de vie sur ses attaques.\nPour 100 de mana, rempli les cases voisines libres avec des liches." + "\n" +
                 "- PV : " + this.getHealth() + "\n" +
                 "- Mana : " + this.getMana() + "\n" +
                 "- Armure : " + this.getArmor() + "\n" +
@@ -105,6 +109,6 @@ public class Necromancien extends PersonneMagique {
 
     @Override
     public Image getImageFace() {
-        return new Image(Necromancien.class.getResourceAsStream("/Images/Personnes/Necromancer.png"));
+        return new Image(NecromancienPrime.class.getResourceAsStream("/Images/Personnes/NecromancerPrime.png"));
     }
 }

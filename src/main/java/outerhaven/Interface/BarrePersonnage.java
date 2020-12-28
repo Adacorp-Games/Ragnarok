@@ -1,14 +1,18 @@
 package outerhaven.Interface;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import outerhaven.Personnages.Archer;
 import outerhaven.Personnages.Guerrier;
 import outerhaven.Personnages.Mage;
-import outerhaven.Personnages.PersonnagesEnergetiques.Samourai;
+import outerhaven.Personnages.PersonnagesEnergetiques.*;
 import outerhaven.Personnages.PersonnagesMagiques.*;
 import outerhaven.Personnages.Personne;
 import outerhaven.Plateau;
@@ -19,76 +23,155 @@ import java.util.ArrayList;
 
 public class BarrePersonnage {
 
-    private Group group = new Group();
+    private static final Group groupBarre = new Group();
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    public ArrayList<Personne> listClasse = new ArrayList<>();
-    private Group argentGroup = new Group();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public static ArrayList<Personne> listeClasse = new ArrayList<>();
+    public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
+    public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
+    private final Group argentGroup = new Group();
+    public Button equipe1 = new Button("Equipe 1");
+    public Button equipe2 = new Button("Equipe 2");
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
-        listClasse.add(new Guerrier());
-        listClasse.add(new Archer());
-        listClasse.add(new Mage());
-        listClasse.add(new Paladin());
-        listClasse.add(new Necromancien());
-        listClasse.add(new Alchimiste());
-        listClasse.add(new Archimage());
-        listClasse.add(new Pretre());
-        listClasse.add(new Samourai());
-        for (int i = 0; i < listClasse.size(); i++) {
-            personnages.remove(0);
+        if (listeClasse.isEmpty()) {
+            listeClasse.add(new Guerrier());
+            listeClasse.add(new Archer());
+            listeClasse.add(new Mage());
+            listeClasse.add(new Paladin());
+            listeClasse.add(new Necromancien());
+            listeClasse.add(new Alchimiste());
+            listeClasse.add(new Archimage());
+            listeClasse.add(new Pretre());
+            listeClasse.add(new Samourai());
+            listeEquipe1.addAll(listeClasse);
+            listeEquipe2.addAll(listeClasse);
+            personnages.clear();
         }
-        genereBarre();
+        interfaceBarre();
     }
 
-    public void genereBarre() {
+    public void reset(){
+        groupBarre.getChildren().clear();
+        listeEquipe1.clear();
+        listeEquipe1.addAll(listeClasse);
+        listeEquipe2.clear();
+        listeEquipe2.addAll(listeClasse);
+    }
+
+    private void genererBarre(ArrayList<Personne> list) {
         Rectangle barre = new Rectangle();
-        barre.setWidth(longeurMax-20);
+        barre.setWidth(longueurMax - 20);
         barre.setHeight(200);
         barre.setX(10);
         barre.setY(largeurMax - barre.getHeight());
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
         barre.setFill(Color.LIGHTGRAY);
-        group.getChildren().add(barre);
-        group.getChildren().add(boutonEquipe());
-        for (int i = 0; i < listClasse.size(); i++) {
-            group.getChildren().add(listClasse.get(i).affichagePersonnageBarre(i));
+        groupBarre.getChildren().add(barre);
+        groupBarre.getChildren().add(boutonEquipe());
+        for (int i = 0; i < list.size(); i++) {
+            groupBarre.getChildren().add(list.get(i).affichagePersonnageBarre(i));
         }
+    }
+
+    public void interfaceBarre() {
+        if (!activerEnchere) {
+            genererBarre(listeClasse);
+        } else {
+            majBarreEnchere();
+        }
+    }
+
+    public void majBarreEnchere() {
+        groupBarre.getChildren().clear();
+        if (equipeSelectionne == Plateau.getE1()) {
+            genererBarre(listeEquipe1);
+        } else {
+            genererBarre(listeEquipe2);
+        }
+    }
+
+    public void ajouterClass(Personne personne) {
+        if (personne.getTeam() == Plateau.getE1()){
+            listeEquipe1.add(personne);
+        } else {
+            listeEquipe2.add(personne);
+        }
+        majBarreEnchere();
     }
 
     /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
     barre de personnage les boutons d'équipes lorsque l'on lance la partie */
-    private Group boutonEquipe() {
-        Button equipe1 = new Button("Equipe 1");
+    public Group boutonEquipe() {
+        Group groupEquipeButton = new Group();
+
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(780);
         equipe1.setMinSize(100, 50);
 
-        Button equipe2 = new Button("Equipe 2");
         equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe2.setLayoutX(120);
         equipe2.setLayoutY(780);
         equipe2.setMinSize(100, 50);
 
-        // Actions sur les boutons d'équipes
-        equipe1.setOnMouseClicked(mouseEvent -> {
-            Plateau.incorporeEquipe(Plateau.getE1());
+        if (equipeSelectionne == e1) {
             equipe1.setEffect(Bouton.effectE1);
-            equipe2.setEffect(null);
-            for (Personne p : listClasse) {
-                if (personneSelectionne == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                } else {
-                    p.getImageperson().setEffect(null);
+        }
+
+        /*if (!enchereTerminee) {
+            equipeSelectionne = Plateau.getE1();
+            equipe1.setEffect(new Effets().putInnerShadow(Plateau.getE1().getCouleur()));
+        }*/
+
+        /*if (isActiverEnchere() && personnages.size() != 0) {
+            TextField encherirFieldE1 = new TextField();
+            encherirFieldE1.setLayoutX(equipe1.getLayoutX());
+            encherirFieldE1.setLayoutY(equipe1.getLayoutY() - 130);
+            encherirFieldE1.setMinSize(100,50);
+            encherirFieldE1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+            encherirFieldE1.setOnKeyReleased(key -> {
+                if (key.getCode() == KeyCode.ENTER) {
+                    Plateau.getE1().augmenterEnchere(getIntFromTextField(encherirFieldE1), Enchere.getListeEnchere().get(idEnchere.get()));
                 }
+            });
+
+            TextField encherirFieldE2 = new TextField();
+            encherirFieldE2.setLayoutX(equipe2.getLayoutX());
+            encherirFieldE2.setLayoutY(equipe2.getLayoutY() - 130);
+            encherirFieldE2.setMinSize(100,50);
+            encherirFieldE2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+            encherirFieldE2.setOnKeyReleased(key -> {
+                if (key.getCode() == KeyCode.ENTER) {
+                    Plateau.getE2().augmenterEnchere(getIntFromTextField(encherirFieldE2), Enchere.getListeEnchere().get(idEnchere.get()));
+                }
+            });
+
+            groupEquipeButton.getChildren().add(encherirFieldE1);
+            groupEquipeButton.getChildren().add(encherirFieldE2);
+        }*/
+
+        // Actions sur les boutons d'équipes
+
+        equipe1.setOnMouseClicked(mouseEvent -> {
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                Plateau.incorporeEquipe(Plateau.getE1());
+                equipe1.setEffect(Bouton.effectE1);
+                equipe2.setEffect(null);
+                lancementAnimation();
             }
         });
 
         equipe1.setOnMouseEntered(mouseEvent -> {
-            equipe1.setEffect(Bouton.effectE1);
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                equipe1.setEffect(Bouton.effectE1);
+            }
         });
 
         equipe1.setOnMouseExited(mouseEvent -> {
@@ -98,20 +181,22 @@ public class BarrePersonnage {
         });
 
         equipe2.setOnMouseClicked(mouseEvent -> {
-            Plateau.incorporeEquipe(Plateau.getE2());
-            equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
-            equipe1.setEffect(null);
-            for (Personne p : listClasse) {
-                if (personneSelectionne == p) {
-                    p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
-                } else {
-                    p.getImageperson().setEffect(null);
-                }
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                Plateau.incorporeEquipe(Plateau.getE2());
+                equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
+                equipe1.setEffect(null);
+                lancementAnimation();
             }
         });
 
         equipe2.setOnMouseEntered(mouseEvent -> {
-            equipe2.setEffect(Bouton.effectE2);
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                equipe2.setEffect(Bouton.effectE2);
+            }
         });
 
         equipe2.setOnMouseExited(mouseEvent -> {
@@ -120,7 +205,6 @@ public class BarrePersonnage {
             }
         });
 
-        Group groupEquipeButton = new Group();
 
         if (!statusPartie) {
             groupEquipeButton.getChildren().add(equipe1);
@@ -131,6 +215,53 @@ public class BarrePersonnage {
         }
 
         return groupEquipeButton;
+    }
+
+    private void lancementAnimation() {
+        if (enchereTerminee) {
+            final double[] incr = {0.99};
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
+                group.setOpacity(incr[0]);
+                incr[0] = incr[0] - 0.01;
+            }));
+            timeline.setCycleCount(100);
+            timeline.setOnFinished(actionEvent -> mecaniqueBouton());
+            timeline.play();
+        } else {
+            mecaniqueBouton();
+        }
+    }
+
+    private void mecaniqueBouton() {
+        for (Personne p : listeClasse) {
+            if (personneSelectionne == p) {
+                p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
+            } else {
+                p.getImageperson().setEffect(null);
+            }
+        }
+        if (activerEnchere) {
+            if (enchereTerminee) {
+                majBarreEnchere();
+            }
+            Plateau.brouillard();
+            personneSelectionne = null;
+            for (Personne p : BarrePersonnage.listeEquipe()) {
+                p.getImageperson().setEffect(null);
+            }
+        }
+        if (enchereTerminee) {
+            final double[] incr = {0.01};
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), ev -> {
+                group.setOpacity(incr[0]);
+                incr[0] = incr[0] + 0.01;
+            }));
+            timeline.setCycleCount(100);
+            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(2000), ev -> {
+                timeline.play();
+            }));
+            timeline2.play();
+        }
     }
 
     public void afficherArgentEquipes() {
@@ -153,15 +284,31 @@ public class BarrePersonnage {
         }
     }
 
+    public static ArrayList<Personne> listeEquipe() {
+        if (equipeSelectionne == e1) {
+            return listeEquipe1;
+        } else {
+            return listeEquipe2;
+        }
+    }
+
     public Group returnBarre() {
-        return group;
+        return groupBarre;
     }
 
     public Group getArgentGroup() {
         return argentGroup;
     }
 
-    public ArrayList<Personne> getListClasse() {
-        return listClasse;
+    public ArrayList<Personne> getListeClasse() {
+        return listeClasse;
+    }
+
+    public Button getButtonTeamSelect() {
+        if (equipeSelectionne == e1) {
+            return equipe1;
+        } else {
+            return equipe2;
+        }
     }
 }

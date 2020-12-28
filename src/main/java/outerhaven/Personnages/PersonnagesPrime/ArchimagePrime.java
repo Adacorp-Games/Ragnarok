@@ -1,23 +1,26 @@
-package outerhaven.Personnages.PersonnagesMagiques;
+package outerhaven.Personnages.PersonnagesPrime;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
+import outerhaven.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
-public class Archimage extends PersonneMagique {
-    public Archimage() {
-        //    vie  armr cst  dg rnge spd)
-        super(1200, 60, 800, 450, 8, 1, 100);
+public class ArchimagePrime extends Archimage {
+
+    public ArchimagePrime() {
+        this.augmenterStats(2);
     }
 
-    public Archimage(Equipe team, Case position) {
-        super(1200, 60, 800, 450, 8, 1, team, position, 110);
+    public ArchimagePrime(Equipe team, Case position) {
+        super(team, position);
+        this.augmenterStats(2);
     }
 
+    @Override
     public void action() {
         this.gainMana();
         boolean danger = false;
@@ -41,8 +44,8 @@ public class Archimage extends PersonneMagique {
         if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
 
             // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
-            ajouterAlter("freeze",50,10,this.getPosition(), this.getTeam());
-            ajouterAlterVoisine("freeze",50,10,this.getPosition(), this.getTeam());
+            ajouterAlter("freeze",60,15,this.getPosition(), this.getTeam());
+            ajouterAlterVoisine("freeze",60,15,this.getPosition(), this.getTeam());
 
             // Cherche un voisin libre et un voisin libre du voisin libre si possible
             Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
@@ -66,13 +69,13 @@ public class Archimage extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Archimage(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new ArchimagePrime(team,position);
     }
 
     @Override
     public Text getinfoTitleText() {
-        return new Text("Archimage (" + this.getCost() + " €) :\n");
+        return new Text("ArchimagePrime (" + this.getCost() + " €) :\n");
     }
 
     @Override
@@ -87,6 +90,6 @@ public class Archimage extends PersonneMagique {
 
     @Override
     public Image getImageFace() {
-        return new Image(Archimage.class.getResourceAsStream("/Images/Personnes/Archimage.png"));
+        return new Image(ArchimagePrime.class.getResourceAsStream("/Images/Personnes/ArchimagePrime.png"));
     }
 }

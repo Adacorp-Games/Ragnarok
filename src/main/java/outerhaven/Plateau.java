@@ -19,11 +19,14 @@ import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alteration;
+import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
 import outerhaven.Personnages.PersonnagesMagiques.Archimage;
+import outerhaven.Personnages.PersonnagesPrime.*;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * La classe Plateau va principalement générer le plateau et son interface, ainsi que les paramètres nécessaire au fonctionnement du jeu et au interaction
@@ -80,6 +83,10 @@ public class Plateau {
     public static boolean statusPartie = false;
     public static boolean activerAnimation = false;
     public static boolean activerEnchere = false;
+    public static boolean enchereTerminee = false;
+    public static boolean activerDijkstra = false;
+    public static AtomicInteger idEnchere = new AtomicInteger();
+    public static Text prix = new Text();
     /**
      * Interface utile au plateau à mettre à jour durant une partie
      */
@@ -112,10 +119,8 @@ public class Plateau {
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
-        Evenement.setActiverEvenement(false);
-        Evenement.setFréquenceEvenement(25);
-        Evenement.setPourcentageEvenement(10);
-
+        Evenement.setFréquenceEvenement(10);
+        Evenement.setPourcentageEvenement(20);
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -124,10 +129,10 @@ public class Plateau {
         while (i < aire) {
             // On entre dans une ligne
             if (!decalage) {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
+                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille;
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99;
                     Case hexagone = new Case(ligne, j - (ligne/2));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     tableauCase[ligne][j] = hexagone;
@@ -138,10 +143,10 @@ public class Plateau {
                 decalage = true;
                 ligne++;
             } else {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * ligne/4;
-                for (int j = 0; j < Math.sqrt(aire)+1 ; j++) {
+                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
+                for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille - taille/2;
+                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille/2;
                     Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     tableauCase[ligne][j] = hexagone;
@@ -161,9 +166,17 @@ public class Plateau {
         afficherNbPersonne();
         // On affiche l'argent si elle n'est pas infini (rien d'écrit)
         if (argentPartie > 0) {
-            getE1().setArgent(argentPartie);
-            getE2().setArgent(argentPartie);
+            if (!activerEnchere) {
+                getE1().setArgent(argentPartie);
+                getE2().setArgent(argentPartie);
+            }
             group.getChildren().add(barre.getArgentGroup());
+        }
+        personneSelectionne = null;
+        if (enchereTerminee) {
+            equipeSelectionne = e1;
+            barre.majBarreEnchere();
+            brouillard();
         }
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
@@ -173,9 +186,105 @@ public class Plateau {
     }
 
     public void lancerSceneEnchere() {
-        Button quitter = boutonExit();
-        quitter.setLayoutY(10);
-        group.getChildren().addAll(quitter);
+        Button terminerEnchere = new Bouton().creerBouton("Terminer");
+        terminerEnchere.setLayoutX(140);
+        terminerEnchere.setLayoutY(10);
+
+        if (argentPartie > 0) {
+            getE1().setArgent(argentPartie);
+            getE2().setArgent(argentPartie);
+            group.getChildren().add(barre.getArgentGroup());
+        }
+
+        terminerEnchere.setOnMouseClicked(mouseEvent -> {
+            group.getChildren().clear();
+            enchereTerminee = true;
+            sceneSuivante();
+        });
+
+        Rectangle cadre = new Rectangle(225, 48, Color.LIGHTGRAY);
+        cadre.setStroke(Color.BLACK);
+        cadre.setStrokeWidth(2);
+        cadre.setX(700);
+        cadre.setY(290);
+
+        // Tests enchères
+        Enchere.ajouterEnchere(new Enchere(new PaladinPrime()));
+        Enchere.ajouterEnchere(new Enchere(new NecromancienPrime()));
+        Enchere.ajouterEnchere(new Enchere(new AlchimistePrime()));
+        Enchere.ajouterEnchere(new Enchere(new PretrePrime()));
+        Enchere.ajouterEnchere(new Enchere(new ArchimagePrime()));
+        Collections.shuffle(Enchere.getListeEnchere());
+        personnages.clear();
+
+        Group infosEnchere = new Group();
+        infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(1200, 375));
+
+        prix.setText(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
+        prix.setX(cadre.getX() + 10);
+        prix.setY(cadre.getY() + 35);
+        prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
+
+        TextField encherirField = new TextField();
+        /*encherirField.setLayoutX(cadre.getX());
+        encherirField.setLayoutY(cadre.getY() + 130);
+        encherirField.setMinSize(100,50);*/
+        encherirField.setLayoutX(699);
+        encherirField.setLayoutY(567);
+        encherirField.setMinSize(100,50);
+        encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        encherirField.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                if (equipeSelectionne != null && getIntFromTextField(encherirField) <= equipeSelectionne.getArgent()) {
+                    Plateau.equipeSelectionne.augmenterEnchere(getIntFromTextField(encherirField), Enchere.getListeEnchere().get(idEnchere.get()));
+                    prix.setText(Enchere.getListeEnchere().get(idEnchere.get()).getPrixMinimal() + " €");
+                    prix.setEffect(new Effets().putInnerShadow(Enchere.getListeEnchere().get(idEnchere.get()).getEquipeGagnante().getCouleur()));
+                }
+            }
+        });
+
+        Button boutonSeCoucher = new Bouton().creerBouton("Se coucher");
+        boutonSeCoucher.setLayoutX(terminerEnchere.getLayoutX() + 130);
+        boutonSeCoucher.setLayoutY(terminerEnchere.getLayoutY());
+
+        group.getChildren().addAll(boutonSeCoucher, cadre, prix);
+
+        boutonSeCoucher.setOnMouseClicked(mouseEvent -> {
+            Enchere.getListeEnchere().get(idEnchere.get()).cloreEnchere();
+            if (idEnchere.get() < 2) {
+                group.getChildren().removeAll(boutonSeCoucher, cadre, prix);
+                infosEnchere.getChildren().clear();
+                idEnchere.getAndIncrement();
+                infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(1200, 375));
+                Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations();
+                prix.setText(0 + " €");
+                encherirField.setText("");
+                prix.setEffect(null);
+                group.getChildren().addAll(boutonSeCoucher, cadre, prix);
+                barre.equipe1.setEffect(null);
+                barre.equipe2.setEffect(null);
+                equipeSelectionne = null;
+            } else {
+                group.getChildren().clear();
+                enchereTerminee = true;
+                sceneSuivante();
+            }
+        });
+
+        /*TextField encherirField = new TextField();
+        encherirField.setLayoutX(cadre.getX());
+        encherirField.setLayoutY(cadre.getY() + 60);
+        encherirField.setMinSize(100,50);
+        encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        encherirField.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                prix.setText(getIntFromTextField(encherirField) + " €");
+            }
+        });*/
+
+        // Creation et incorporation d'une slide barre + bouton
+        ajouteLeMenu();
+        group.getChildren().addAll(terminerEnchere, encherirField, infosEnchere, barre.boutonEquipe()/*, prix*/);
         primary.setScene(scene);
     }
 
@@ -192,15 +301,15 @@ public class Plateau {
      * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe
      */
     public static void afficherNbPersonne() {
-        Rectangle barre = new Rectangle(200 , 60, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(210 , 70, Color.LIGHTGRAY);
         barre.setX(10);
         barre.setY(400);
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
 
-        Text title = new Text("Nombre de personne par équipe");
-        title.setX(barre.getX() + 23);
-        title.setY(barre.getY() + 15);
+        Text title = new Text("Nombre de personnes par équipe");
+        title.setX(barre.getX() + 10);
+        title.setY(barre.getY() + 20);
 
         Text equipes = new Text( "Equipe 1 : " + getE1().getNbPersonne() + "\n" + "Equipe 2 : " + getE2().getNbPersonne());
         equipes.setX(title.getX());
@@ -217,6 +326,18 @@ public class Plateau {
     public static void updateNbPersonne() {
         nbPersonne.getChildren().clear();
         afficherNbPersonne();
+    }
+
+    public void sceneSuivante() {
+        if (activerEnchere && !enchereTerminee) {
+            if (argentPartie == 0) {
+                argentPartie = 10000;
+            }
+            lancerSceneEnchere();
+        } else {
+            barre.interfaceBarre();
+            lancerScenePlateau();
+        }
     }
 
     /**
@@ -260,62 +381,6 @@ public class Plateau {
         nbArgent.setMinSize(100,50);
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
-        // Demande l'utilisation des animations
-        Button animationBT = new Button("Animations : NON");
-        animationBT.setMinSize(120,50);
-        animationBT.setLayoutX((longueurMax - 700) / 2);
-        animationBT.setLayoutY((largeurMax + 220) / 2);
-        animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        animationBT.setOnMouseClicked(mouseEvent -> {
-            if (!activerAnimation) {
-                activerAnimation = true;
-                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-                animationBT.setText("Animations : OUI");
-            } else {
-                activerAnimation = false;
-                animationBT.setEffect(null);
-                animationBT.setText("Animations : NON");
-            }
-        });
-        animationBT.setOnMouseEntered(mouseEvent -> {
-            if (!activerAnimation) {
-                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-            }
-        });
-        animationBT.setOnMouseExited(mouseEvent -> {
-            if (!activerAnimation) {
-                animationBT.setEffect(null);
-            }
-        });
-
-        // Demande l'utilisation des enchères
-        Button enchereBT = new Button("Enchères : NON");
-        enchereBT.setMinSize(120,50);
-        enchereBT.setLayoutX((longueurMax - 700) / 2 + 130);
-        enchereBT.setLayoutY((largeurMax + 220) / 2);
-        enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        enchereBT.setOnMouseClicked(mouseEvent -> {
-            if (!activerEnchere) {
-                activerEnchere = true;
-                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-                enchereBT.setText("Enchères : OUI");
-            } else {
-                activerEnchere = false;
-                enchereBT.setEffect(null);
-                enchereBT.setText("Enchères : NON");
-            }
-        });
-        enchereBT.setOnMouseEntered(mouseEvent -> {
-            if (!activerEnchere) {
-                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
-            }
-        });
-        enchereBT.setOnMouseExited(mouseEvent -> {
-            if (!activerEnchere) {
-                enchereBT.setEffect(null);
-            }
-        });
-
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 aire = getIntFromTextField(nbCase);
@@ -324,11 +389,7 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (!activerEnchere) {
-                        lancerScenePlateau();
-                    } else {
-                        lancerSceneEnchere();
-                    }
+                    sceneSuivante();
                 }
             }
         });
@@ -341,11 +402,7 @@ public class Plateau {
                 }
                 if (aire > 0) {
                     group.getChildren().clear();
-                    if (!activerEnchere) {
-                        lancerScenePlateau();
-                    } else {
-                        lancerSceneEnchere();
-                    }
+                    sceneSuivante();
                 }
             }
         });
@@ -358,18 +415,17 @@ public class Plateau {
             }
             if (aire > 0) {
                 group.getChildren().clear();
-                if (!activerEnchere) {
-                    lancerScenePlateau();
-                } else {
-                    lancerSceneEnchere();
-                }
+                sceneSuivante();
             }
         });
+
+        ajouteLesModes();
+        ajouteLesOptions();
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
 
         // Ajout de toute ces interfaces dans le group
-        group.getChildren().addAll(animationBT, enchereBT, infoNB, nbCase, infoArgent, nbArgent, start, quitter);
+        group.getChildren().addAll(/*animationBT, enchereBT, */infoNB, nbCase, infoArgent, nbArgent, start, quitter);
     }
 
     /**
@@ -392,6 +448,130 @@ public class Plateau {
     /**
     * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard
     */
+
+    private Button boutonAnimation() {
+        // Demande l'utilisation des animations
+        Button animationBT = new Button("Animations : NON");
+        animationBT.setMinSize(120,50);
+        animationBT.setLayoutX(140);
+        animationBT.setLayoutY(70);
+        animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        animationBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerAnimation) {
+                activerAnimation = true;
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                animationBT.setText("Animations : OUI");
+            } else {
+                activerAnimation = false;
+                animationBT.setEffect(null);
+                animationBT.setText("Animations : NON");
+            }
+        });
+        animationBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        animationBT.setOnMouseExited(mouseEvent -> {
+            if (!activerAnimation) {
+                animationBT.setEffect(null);
+            }
+        });
+        return animationBT;
+    }
+
+    private Button boutonEnchere() {
+        // Demande l'utilisation des enchères
+        Button enchereBT = new Button("Enchères : NON");
+        enchereBT.setMinSize(120,50);
+        enchereBT.setLayoutX(140);
+        enchereBT.setLayoutY(130);
+        enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        enchereBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerEnchere) {
+                activerEnchere = true;
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                enchereBT.setText("Enchères : OUI");
+            } else {
+                activerEnchere = false;
+                enchereBT.setEffect(null);
+                enchereBT.setText("Enchères : NON");
+            }
+        });
+        enchereBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        enchereBT.setOnMouseExited(mouseEvent -> {
+            if (!activerEnchere) {
+                enchereBT.setEffect(null);
+            }
+        });
+        return enchereBT;
+    }
+
+    private Button boutonEvenement() {
+        // Demande l'utilisation des évènements aléatoires
+        Button eventBT = new Button("Évènements : NON");
+        eventBT.setMinSize(120,50);
+        eventBT.setLayoutX(140);
+        eventBT.setLayoutY(190);
+        eventBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        eventBT.setOnMouseClicked(mouseEvent -> {
+            if (!Evenement.activerEvenement) {
+                Evenement.activerEvenement = true;
+                eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                eventBT.setText("Évènements : OUI");
+            } else {
+                Evenement.activerEvenement = false;
+                eventBT.setEffect(null);
+                eventBT.setText("Évènements : NON");
+            }
+        });
+        eventBT.setOnMouseEntered(mouseEvent -> {
+            if (!Evenement.activerEvenement) {
+                eventBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        eventBT.setOnMouseExited(mouseEvent -> {
+            if (!Evenement.activerEvenement) {
+                eventBT.setEffect(null);
+            }
+        });
+        return eventBT;
+    }
+
+    private Button boutonDijkstra() {
+        // Demande l'utilisation des évènements aléatoires
+        Button dijkstraBT = new Button("Dijkstra : NON");
+        dijkstraBT.setMinSize(120,50);
+        dijkstraBT.setLayoutX(270);
+        dijkstraBT.setLayoutY(70);
+        dijkstraBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        dijkstraBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerDijkstra) {
+                activerDijkstra = true;
+                dijkstraBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                dijkstraBT.setText("Dijkstra : OUI");
+            } else {
+                activerDijkstra = false;
+                dijkstraBT.setEffect(null);
+                dijkstraBT.setText("Dijkstra : NON");
+            }
+        });
+        dijkstraBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerDijkstra) {
+                dijkstraBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        dijkstraBT.setOnMouseExited(mouseEvent -> {
+            if (!activerDijkstra) {
+                dijkstraBT.setEffect(null);
+            }
+        });
+        return dijkstraBT;
+    }
 
     /**
      * Crée un bouton Exit
@@ -419,11 +599,16 @@ public class Plateau {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300), ev -> {
                 group.getChildren().clear();
                 this.cleanPlateau();
+                barre.reset();
                 this.lancerPartie();
                 this.aire = 0;
                 argentPartie = 0;
                 activerAnimation = false;
                 activerEnchere = false;
+                enchereTerminee = false;
+                activerDijkstra = false;
+                idEnchere.getAndSet(0);
+                Collections.shuffle(Enchere.getListeEnchere());
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -446,6 +631,8 @@ public class Plateau {
                 group.getChildren().remove(0, group.getChildren().size());
                 this.cleanPlateau();
                 this.lancerScenePlateau();
+                barre = new BarrePersonnage();
+                barre.majBarreEnchere();
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -483,6 +670,16 @@ public class Plateau {
                     Plateau.scene.setCursor(Cursor.DEFAULT);
                     //Plateau.personneSelectionné = null;
                     //Plateau.incorporeEquipe(null);
+
+                    if (activerEnchere) {
+                        for (Case c : listeCase) {
+                            c.getHexagone().setImage(Case.hexagone_img1);
+                        }
+                        for (Personne p : personnages) {
+
+                        }
+                    }
+
                 }
                 tour();
             } else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
@@ -513,11 +710,18 @@ public class Plateau {
             boutonGame.getChildren().remove(pause);
             boutonGame.getChildren().add(play);
             setStatusPartie(false);
-            if (!group.getChildren().contains(barre.returnBarre())) {
-                group.getChildren().add(barre.returnBarre());
-                //group.getChildren().add(boutonEquipe());
-                scene.setFill(Color.WHITE);
-            }
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), ev ->{
+                if (activerEnchere) {
+                    brouillard();
+                }
+                if (!group.getChildren().contains(barre.returnBarre())) {
+                    group.getChildren().add(barre.returnBarre());
+                    //group.getChildren().add(boutonEquipe());
+                    scene.setFill(Color.WHITE);
+                }
+            }));
+            timeline.play();
+
         });
         boutonGame.getChildren().addAll(play, labelPlay);
         return boutonGame;
@@ -560,11 +764,68 @@ public class Plateau {
             if (!personnages.isEmpty()){
                 Personne.barreVisible = !Personne.barreVisible;
                 for (Personne personnage : personnages) {
-                    personnage.afficherSanteEtNom();
+                    if(!personnage.getPosition().verifNoir()) {
+                        personnage.afficherSanteEtNom();
+                    }
                 }
             }
         });
         group.getChildren().add(barVie);
+    }
+
+    /**
+     * Menu contenant tout les boutons précédents et l'ajout au groupe général
+     */
+    private void ajouteLesModes() {
+        Button modes = new Bouton().creerBouton("Modes");
+        modes.setLayoutX(140);
+        modes.setLayoutY(10);
+
+        Button animation = boutonAnimation();
+        Button enchere = boutonEnchere();
+        Button event = boutonEvenement();
+
+        modes.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(animation)) {
+                try {
+                    group.getChildren().addAll(animation, enchere, event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().removeAll(animation, enchere, event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        group.getChildren().add(modes);
+    }
+
+    private void ajouteLesOptions() {
+        Button options = new Bouton().creerBouton("Options");
+        options.setLayoutX(270);
+        options.setLayoutY(10);
+
+        Button dijkstra = boutonDijkstra();
+
+        options.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(dijkstra)) {
+                try {
+                    group.getChildren().addAll(dijkstra);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().removeAll(dijkstra);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        group.getChildren().add(options);
     }
 
     /**
@@ -632,9 +893,11 @@ public class Plateau {
                 }
             }
         });
-        boutonPausePlay();
-        afficheBarVie();
-        group.getChildren().add(vitesse);
+        if (!activerEnchere || enchereTerminee) {
+            boutonPausePlay();
+            afficheBarVie();
+            group.getChildren().add(vitesse);
+        }
         group.getChildren().add(menu);
     }
 
@@ -647,8 +910,12 @@ public class Plateau {
             nbTour++;
             System.out.println("Tour : " + nbTour);
 
+            for (Case c:listeCase) {
+                c.devenirBlanc();
+            }
+
             // Gestion des événements aléatoires
-            if (Evenement.activerEvenement == true) {
+            if (Evenement.activerEvenement) {
                 event.generationEvenements();
             }
 
@@ -718,6 +985,9 @@ public class Plateau {
             // Change l'interface car nous somme en jeu
             if (e1.getTeam().isEmpty() || e2.getTeam().isEmpty()) {
                 setStatusPartie(false);
+                if(activerEnchere) {
+                    brouillard();
+                }
                 scene.setFill(Color.WHITE);
                 group.getChildren().remove(boutonPausePlay());
                 group.getChildren().add(boutonPausePlay());
@@ -739,6 +1009,7 @@ public class Plateau {
      * Méthode qui va nettoyer le plateau en cas de reset / restart
      */
     public void cleanPlateau() {
+        nbTour = 0;
         personnages.clear();
         morts.clear();
         listeCase.clear();
@@ -746,6 +1017,36 @@ public class Plateau {
         getE1().getTeam().clear();
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
+        prix.setText("");
+    }
+
+    public static void brouillard() {
+        if (equipeSelectionne == getE1()) {
+            // Tests brouillard de guerre
+            for (int i = 0; i < listeCase.size(); i++) {
+                if (i >= listeCase.size() / 2) {
+                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e1) {
+                        listeCase.get(i).devenirNoir();
+                    } else {
+                        listeCase.get(i).devenirBlanc();
+                    }
+                } else {
+                    listeCase.get(i).devenirBlanc();
+                }
+            }
+        } else {
+            for (int i = 0; i < listeCase.size(); i++) {
+                if (i < listeCase.size() / 2) {
+                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e2) {
+                        listeCase.get(i).devenirNoir();
+                    } else {
+                        listeCase.get(i).devenirBlanc();
+                    }
+                } else {
+                    listeCase.get(i).devenirBlanc();
+                }
+            }
+        }
     }
 
     /**
