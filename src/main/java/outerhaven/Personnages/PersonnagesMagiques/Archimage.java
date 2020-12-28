@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 public class Archimage extends PersonneMagique {
     public Archimage() {
-        super(2000, 0, 500, 300, 8, 1, 100);
+        //    vie  armr cst  dg rnge spd)
+        super(1200, 60, 800, 450, 8, 1, 100);
     }
 
     public Archimage(Equipe team, Case position) {
-        super(2000, 0, 500, 300, 8, 1, team, position, 100);
+        super(1200, 60, 800, 450, 8, 1, team, position, 110);
     }
 
     public void action() {
