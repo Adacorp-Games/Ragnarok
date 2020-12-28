@@ -187,17 +187,19 @@ public class Case {
                     contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
                     affichagecontenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
-                    group.getChildren().add((int) taille + 5,affichagecontenu);
+
+                    // TODO : Corriger ici !
+                    group.getChildren().add((int) taille + 5, affichagecontenu);
+
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
-                    if(personneSelectionne.getClass().getName().contains("Prime")){
+                    if (personneSelectionne.getClass().getName().contains("Prime")) {
                         try {
                             ArrayList<Personne> listeEquipe = new ArrayList<>();
-                            if(equipeSelectionne==e1){
+                            if (equipeSelectionne == e1) {
                                 listeEquipe = listeEquipe1;
-                            }
-                            else{
+                            } else {
                                 listeEquipe = listeEquipe2;
                             }
                             for (Personne p : listeEquipe) {
@@ -217,7 +219,7 @@ public class Case {
                 if (argentPartie != 0) {
                     contenu.get(0).getTeam().setArgent(contenu.get(0).getTeam().getArgent() + contenu.get(0).getCost());
                 }
-                if(contenu.get(0).getClass().getName().contains("Prime")){
+                if (contenu.get(0).getClass().getName().contains("Prime")) {
                     listeEquipe1.add(contenu.get(0));
                     barre.majBarreEnchere();
                 }
@@ -227,13 +229,11 @@ public class Case {
             // Cas ou l'utilisateur ne respecte aucune condition
             else {
                 Text attention = new Text();
-                if(activerEnchere && contenu.isEmpty()){
+                if (activerEnchere && contenu.isEmpty()) {
                     attention.setText("Veuillez sélectionner un personnage");
-                }
-                else if (activerEnchere){
+                } else if (activerEnchere) {
                     attention.setText("Vous ne pouvez pas enlever combattant du plateau");
-                }
-                else {
+                } else {
                     attention.setText("Veuillez sélectionner une équipe et un personnage");
                 }
                 attention.setX(posX);
@@ -282,8 +282,7 @@ public class Case {
 
     @Override
     public String toString() {
-        return "Case {" + Arrays.toString(coordonnee) +
-                '}';
+        return "Case {" + Arrays.toString(coordonnee) + '}';
     }
 
     /**

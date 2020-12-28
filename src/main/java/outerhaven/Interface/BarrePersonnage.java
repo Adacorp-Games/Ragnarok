@@ -30,10 +30,12 @@ public class BarrePersonnage {
     public static final ArrayList<Personne> listeEquipe1 = new ArrayList<>();
     public static final ArrayList<Personne> listeEquipe2 = new ArrayList<>();
     private final Group argentGroup = new Group();
+    public Button equipe1 = new Button("Equipe 1");
+    public Button equipe2 = new Button("Equipe 2");
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici                           <-------------------------------------------
-        if(listeClasse.isEmpty()) {
+        if (listeClasse.isEmpty()) {
             listeClasse.add(new Guerrier());
             listeClasse.add(new Archer());
             listeClasse.add(new Mage());
@@ -105,13 +107,11 @@ public class BarrePersonnage {
     public Group boutonEquipe() {
         Group groupEquipeButton = new Group();
 
-        Button equipe1 = new Button("Equipe 1");
         equipe1.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe1.setLayoutX(10);
         equipe1.setLayoutY(780);
         equipe1.setMinSize(100, 50);
 
-        Button equipe2 = new Button("Equipe 2");
         equipe2.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold");
         equipe2.setLayoutX(120);
         equipe2.setLayoutY(780);
@@ -121,10 +121,10 @@ public class BarrePersonnage {
             equipe1.setEffect(Bouton.effectE1);
         }
 
-        if (!enchereTerminee) {
+        /*if (!enchereTerminee) {
             equipeSelectionne = Plateau.getE1();
             equipe1.setEffect(new Effets().putInnerShadow(Plateau.getE1().getCouleur()));
-        }
+        }*/
 
         /*if (isActiverEnchere() && personnages.size() != 0) {
             TextField encherirFieldE1 = new TextField();
@@ -154,15 +154,24 @@ public class BarrePersonnage {
         }*/
 
         // Actions sur les boutons d'équipes
+
         equipe1.setOnMouseClicked(mouseEvent -> {
-            Plateau.incorporeEquipe(Plateau.getE1());
-            equipe1.setEffect(Bouton.effectE1);
-            equipe2.setEffect(null);
-            lancementAnimation();
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                Plateau.incorporeEquipe(Plateau.getE1());
+                equipe1.setEffect(Bouton.effectE1);
+                equipe2.setEffect(null);
+                lancementAnimation();
+            }
         });
 
         equipe1.setOnMouseEntered(mouseEvent -> {
-            equipe1.setEffect(Bouton.effectE1);
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                equipe1.setEffect(Bouton.effectE1);
+            }
         });
 
         equipe1.setOnMouseExited(mouseEvent -> {
@@ -172,14 +181,22 @@ public class BarrePersonnage {
         });
 
         equipe2.setOnMouseClicked(mouseEvent -> {
-            Plateau.incorporeEquipe(Plateau.getE2());
-            equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
-            equipe1.setEffect(null);
-            lancementAnimation();
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                Plateau.incorporeEquipe(Plateau.getE2());
+                equipe2.setEffect(new Effets().putInnerShadow(Plateau.getE2().getCouleur()));
+                equipe1.setEffect(null);
+                lancementAnimation();
+            }
         });
 
         equipe2.setOnMouseEntered(mouseEvent -> {
-            equipe2.setEffect(Bouton.effectE2);
+            if ((activerEnchere && !enchereTerminee && equipeSelectionne == null)
+                    || (!activerEnchere)
+                    || (enchereTerminee)) {
+                equipe2.setEffect(Bouton.effectE2);
+            }
         });
 
         equipe2.setOnMouseExited(mouseEvent -> {
@@ -285,5 +302,13 @@ public class BarrePersonnage {
 
     public ArrayList<Personne> getListeClasse() {
         return listeClasse;
+    }
+
+    public Button getButtonTeamSelect() {
+        if (equipeSelectionne == e1) {
+            return equipe1;
+        } else {
+            return equipe2;
+        }
     }
 }

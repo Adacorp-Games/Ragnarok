@@ -1,6 +1,7 @@
 package outerhaven;
 
 import javafx.scene.paint.Color;
+import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Personnages.Personne;
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class Equipe {
             }
             e.setPrixMinimal(prix);
             e.setEquipeGagnante(this);
+            barre.getButtonTeamSelect().setEffect(null);
+            equipeSelectionne = Equipe.getOtherTeam();
+            barre.getButtonTeamSelect().setEffect(new Effets().putInnerShadow(Plateau.equipeSelectionne.getCouleur()));
         }
     }
 
@@ -80,5 +84,13 @@ public class Equipe {
 
     public double getArgent() {
         return argent;
+    }
+
+    public static Equipe getOtherTeam() {
+        if (equipeSelectionne == getE1()) {
+            return getE2();
+        } else {
+            return getE1();
+        }
     }
 }

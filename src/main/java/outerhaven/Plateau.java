@@ -202,17 +202,9 @@ public class Plateau {
             sceneSuivante();
         });
 
-        /*Rectangle cadre = new Rectangle(600, 300, Color.LIGHTGRAY);
-        cadre.setStroke(Color.BLACK);
-        cadre.setStrokeWidth(2);
-        cadre.setX(largeurMax/2);
-        cadre.setY(10);*/
-
         Rectangle cadre = new Rectangle(225, 48, Color.LIGHTGRAY);
         cadre.setStroke(Color.BLACK);
         cadre.setStrokeWidth(2);
-        /*cadre.setX(terminerEnchere.getLayoutX() + 262);
-        cadre.setY(11);*/
         cadre.setX(700);
         cadre.setY(290);
 
@@ -269,8 +261,13 @@ public class Plateau {
                 encherirField.setText("");
                 prix.setEffect(null);
                 group.getChildren().addAll(boutonSeCoucher, cadre, prix);
+                barre.equipe1.setEffect(null);
+                barre.equipe2.setEffect(null);
+                equipeSelectionne = null;
             } else {
-                group.getChildren().remove(boutonSeCoucher);
+                group.getChildren().clear();
+                enchereTerminee = true;
+                sceneSuivante();
             }
         });
 
@@ -421,7 +418,9 @@ public class Plateau {
                 sceneSuivante();
             }
         });
+
         ajouteLesModes();
+        ajouteLesOptions();
         Button quitter = boutonExit();
         quitter.setLayoutY(10);
 
@@ -454,8 +453,8 @@ public class Plateau {
         // Demande l'utilisation des animations
         Button animationBT = new Button("Animations : NON");
         animationBT.setMinSize(120,50);
-        animationBT.setLayoutX((longueurMax - 700) / 2);
-        animationBT.setLayoutY((largeurMax + 220) / 2);
+        animationBT.setLayoutX(140);
+        animationBT.setLayoutY(70);
         animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         animationBT.setOnMouseClicked(mouseEvent -> {
             if (!activerAnimation) {
@@ -485,8 +484,8 @@ public class Plateau {
         // Demande l'utilisation des enchères
         Button enchereBT = new Button("Enchères : NON");
         enchereBT.setMinSize(120,50);
-        enchereBT.setLayoutX((longueurMax - 700) / 2 + 130);
-        enchereBT.setLayoutY((largeurMax + 220) / 2);
+        enchereBT.setLayoutX(140);
+        enchereBT.setLayoutY(130);
         enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         enchereBT.setOnMouseClicked(mouseEvent -> {
             if (!activerEnchere) {
@@ -516,8 +515,8 @@ public class Plateau {
         // Demande l'utilisation des évènements aléatoires
         Button eventBT = new Button("Évènements : NON");
         eventBT.setMinSize(120,50);
-        eventBT.setLayoutX((longueurMax - 700) / 2 + 260);
-        eventBT.setLayoutY((largeurMax + 220) / 2);
+        eventBT.setLayoutX(140);
+        eventBT.setLayoutY(190);
         eventBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         eventBT.setOnMouseClicked(mouseEvent -> {
             if (!Evenement.activerEvenement) {
@@ -541,6 +540,37 @@ public class Plateau {
             }
         });
         return eventBT;
+    }
+
+    private Button boutonDijkstra() {
+        // Demande l'utilisation des évènements aléatoires
+        Button dijkstraBT = new Button("Dijkstra : NON");
+        dijkstraBT.setMinSize(120,50);
+        dijkstraBT.setLayoutX(270);
+        dijkstraBT.setLayoutY(70);
+        dijkstraBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        dijkstraBT.setOnMouseClicked(mouseEvent -> {
+            if (!activerDijkstra) {
+                activerDijkstra = true;
+                dijkstraBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                dijkstraBT.setText("Dijkstra : OUI");
+            } else {
+                activerDijkstra = false;
+                dijkstraBT.setEffect(null);
+                dijkstraBT.setText("Dijkstra : NON");
+            }
+        });
+        dijkstraBT.setOnMouseEntered(mouseEvent -> {
+            if (!activerDijkstra) {
+                dijkstraBT.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        dijkstraBT.setOnMouseExited(mouseEvent -> {
+            if (!activerDijkstra) {
+                dijkstraBT.setEffect(null);
+            }
+        });
+        return dijkstraBT;
     }
 
     /**
@@ -576,6 +606,9 @@ public class Plateau {
                 activerAnimation = false;
                 activerEnchere = false;
                 enchereTerminee = false;
+                activerDijkstra = false;
+                idEnchere.getAndSet(0);
+                Collections.shuffle(Enchere.getListeEnchere());
             }));
             timeline.play();
             //Plateau.personneSelectionné = null;
@@ -744,7 +777,7 @@ public class Plateau {
      * Menu contenant tout les boutons précédents et l'ajout au groupe général
      */
     private void ajouteLesModes() {
-        Button modes = new Bouton().creerBouton("Options");
+        Button modes = new Bouton().creerBouton("Modes");
         modes.setLayoutX(140);
         modes.setLayoutY(10);
 
@@ -768,6 +801,31 @@ public class Plateau {
             }
         });
         group.getChildren().add(modes);
+    }
+
+    private void ajouteLesOptions() {
+        Button options = new Bouton().creerBouton("Options");
+        options.setLayoutX(270);
+        options.setLayoutY(10);
+
+        Button dijkstra = boutonDijkstra();
+
+        options.setOnMouseClicked(mouseEvent -> {
+            if (!group.getChildren().contains(dijkstra)) {
+                try {
+                    group.getChildren().addAll(dijkstra);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    group.getChildren().removeAll(dijkstra);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        group.getChildren().add(options);
     }
 
     /**
