@@ -166,7 +166,7 @@ public class Case {
             contenu.add(personne);
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
-            group.getChildren().add( (int) taille + 5 ,affichagecontenu);
+            group.getChildren().add( listeCase.size() + 5 ,affichagecontenu);
             /*InnerShadow ombre = new InnerShadow();
             ombre.colorProperty().setValue(contenu.get(0).getTeam().getCouleur());
             hexagone.setEffect(ombre);*/
@@ -188,7 +188,7 @@ public class Case {
                     contenu.get(0).afficherSanteEtNom();
 
                     // TODO : Corriger ici !
-                    group.getChildren().add((int) taille + 5, affichagecontenu);
+                    group.getChildren().add(listeCase.size() + 5, affichagecontenu);
 
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
