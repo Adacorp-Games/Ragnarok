@@ -3,1045 +3,604 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="1559.0493402482232" y="1608.0">outerhaven.Plateau</node>
-    <node x="3193.510452374422" y="677.5">outerhaven.Personnages.PersonnagesMagiques.Paladin</node>
-    <node x="1408.2387796027497" y="1147.5">outerhaven.Mecaniques.Evenement</node>
-    <node x="2272.4334224598924" y="655.5">outerhaven.Personnages.PersonnagesMagiques.Necromancien</node>
-    <node x="1864.549742840453" y="399.0">outerhaven.Personnages.PersonnagesMagiques.Alchimiste</node>
-    <node x="3116.3232155738388" y="3546.0">outerhaven.Personnages.Personne</node>
-    <node x="728.9488636363633" y="5080.0">outerhaven.Personnages.PersonnagesEnergetiques.Samourai</node>
-    <node x="704.1988636363633" y="4854.5">outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique</node>
-    <node x="1408.5959224598928" y="4865.5">outerhaven.Personnages.Mage</node>
-    <node x="2199.6000891265594" y="114.0">outerhaven.Personnages.PersonnagesMagiques.PersonneMagique</node>
-    <node x="0.0" y="7012.0">outerhaven.Personnages.PersonnagesPrime.ArchimagePrime</node>
-    <node x="1043.9488636363633" y="4865.5">outerhaven.Personnages.Guerrier</node>
-    <node x="1979.0924463430692" y="1180.5">outerhaven.Personnages.PersonnagesPrime.AlchimistePrime</node>
-    <node x="4525.832662027515" y="4843.5">outerhaven.Personnages.PersonnagesMagiques.Pretre</node>
-    <node x="2564.0924463430692" y="1180.5">outerhaven.Interface.Bouton</node>
-    <node x="2327.6000891265594" y="0.0">outerhaven.Interface.Effets</node>
-    <node x="1406.2387796027497" y="622.0">outerhaven.Mecaniques.Alteration</node>
-    <node x="3177.0732155738388" y="1180.5">outerhaven.Personnages.PersonnagesPrime.PaladinPrime</node>
-    <node x="4131.453588994299" y="4832.0">outerhaven.Personnages.Archer</node>
-    <node x="2065.9719650626753" y="3099.0">outerhaven.Equipe</node>
-    <node x="1556.5123800857968" y="5311.0">outerhaven.Interface.BarrePersonnage</node>
-    <node x="649.1790467524638" y="7045.5">outerhaven.Mecaniques.Obstacle</node>
-    <node x="3523.6458966866066" y="677.5">outerhaven.Personnages.Invocations.Lich</node>
-    <node x="3827.453588994299" y="410.0">outerhaven.Personnages.Invocations.Mort</node>
-    <node x="276.4488636363633" y="4854.5">outerhaven.Personnages.PersonnagesMagiques.Archimage</node>
-    <node x="4725.837049679315" y="7001.0">outerhaven.Personnages.PersonnagesPrime.PretrePrime</node>
-    <node x="2271.0924463430692" y="1158.5">outerhaven.Personnages.PersonnagesPrime.NecromancienPrime</node>
-    <node x="2843.8424463430692" y="1136.0">outerhaven.Mecaniques.Enchere</node>
-    <node x="518.6790467524638" y="6005.0">outerhaven.Case</node>
+    <node x="2192.748120300752" y="0.0">outerhaven.Plateau</node>
+    <node x="972.2481203007519" y="1476.0">outerhaven.Personnages.PersonnagesMagiques.Paladin</node>
+    <node x="1209.0" y="1923.0">outerhaven.Mecaniques.Evenement</node>
+    <node x="1264.248120300752" y="1454.0">outerhaven.Personnages.PersonnagesMagiques.Necromancien</node>
+    <node x="680.2481203007519" y="1476.0">outerhaven.Personnages.PersonnagesMagiques.Alchimiste</node>
+    <node x="932.7481203007519" y="121.66666666666667">outerhaven.Personnages.Personne</node>
+    <node x="1804.0" y="1923.0">outerhaven.Mecaniques.Sauvegarde</node>
+    <node x="0.0" y="1487.0">outerhaven.Personnages.PersonnagesEnergetiques.Samourai</node>
+    <node x="36.0" y="1238.5">outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique</node>
+    <node x="1291.748120300752" y="1249.5">outerhaven.Personnages.Mage</node>
+    <node x="944.7481203007519" y="1227.5">outerhaven.Personnages.PersonnagesMagiques.PersonneMagique</node>
+    <node x="388.2481203007519" y="1713.0">outerhaven.Personnages.PersonnagesPrime.ArchimagePrime</node>
+    <node x="680.2481203007519" y="1713.0">outerhaven.Personnages.PersonnagesPrime.AlchimistePrime</node>
+    <node x="648.4981203007519" y="1249.5">outerhaven.Personnages.Guerrier</node>
+    <node x="1503.0" y="1923.0">outerhaven.Interface.Bouton</node>
+    <node x="1556.248120300752" y="1465.0">outerhaven.Personnages.PersonnagesMagiques.Pretre</node>
+    <node x="2227.0" y="1923.0">outerhaven.Interface.Effets</node>
+    <node x="306.0" y="1923.0">outerhaven.Mecaniques.Alteration</node>
+    <node x="972.2481203007519" y="1713.0">outerhaven.Personnages.PersonnagesPrime.PaladinPrime</node>
+    <node x="1583.748120300752" y="1216.0">outerhaven.Personnages.Archer</node>
+    <node x="896.0" y="1923.0">outerhaven.Equipe</node>
+    <node x="0.0" y="1923.0">outerhaven.Interface.BarrePersonnage</node>
+    <node x="2062.0" y="1923.0">outerhaven.Mecaniques.Obstacle</node>
+    <node x="1875.748120300752" y="1238.5">outerhaven.Personnages.Invocations.Lich</node>
+    <node x="356.4981203007519" y="1249.5">outerhaven.Personnages.Invocations.Mort</node>
+    <node x="388.2481203007519" y="1476.0">outerhaven.Personnages.PersonnagesMagiques.Archimage</node>
+    <node x="1556.248120300752" y="1702.0">outerhaven.Personnages.PersonnagesPrime.PretrePrime</node>
+    <node x="1264.248120300752" y="1691.0">outerhaven.Personnages.PersonnagesPrime.NecromancienPrime</node>
+    <node x="604.0" y="1923.0">outerhaven.Mecaniques.Enchere</node>
+    <node x="2495.748120300752" y="0.0">outerhaven.Case</node>
   </nodes>
   <notes />
   <edges>
     <edge source="outerhaven.Plateau" target="outerhaven.Interface.BarrePersonnage">
-      <point x="-30.352941176470722" y="665.5" />
-      <point x="1657.6963990717525" y="3069.0" />
-      <point x="1326.4488636363633" y="3069.0" />
-      <point x="1326.4488636363633" y="5241.0" />
-      <point x="1640.9535565563851" y="5241.0" />
-      <point x="-46.05882352941171" y="-237.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PaladinPrime" target="outerhaven.Personnages.Personne">
-      <point x="34.0" y="71.5" />
-      <point x="3347.0732155738388" y="3406.0" />
-      <point x="3262.2270617276845" y="3406.0" />
-      <point x="5.403846153846189" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.Archer">
-      <point x="61.41176470588243" y="-237.0" />
-      <point x="1748.4241447916793" y="5251.0" />
-      <point x="4199.453588994299" y="5251.0" />
-      <point x="-68.0" y="94.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Sauvegarde" target="outerhaven.Interface.BarrePersonnage">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Case">
-      <point x="-91.05882352941171" y="665.5" />
-      <point x="1596.9905167188115" y="3029.0" />
-      <point x="646.9488636363633" y="3029.0" />
-      <point x="646.9488636363633" y="5845.0" />
-      <point x="686.0881376615548" y="5845.0" />
-      <point x="-23.09090909090901" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesMagiques.Archimage">
-      <point x="-121.41176470588243" y="665.5" />
-      <point x="1566.6375755423408" y="3009.0" />
-      <point x="409.86419696013854" y="3009.0" />
-      <point x="409.86419696013854" y="4812.0" />
-      <point x="435.1155303030298" y="4812.0" />
-      <point x="22.666666666666515" y="-71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Equipe">
-      <point x="54.40000000000009" y="93.5" />
-      <point x="2461.49244634307" y="2989.0" />
-      <point x="2192.527520618231" y="2989.0" />
-      <point x="-7.444444444444343" y="-93.5" />
-    </edge>
-    <edge source="outerhaven.Case" target="outerhaven.Mecaniques.Alteration">
-      <point x="-150.09090909090946" y="-468.0" />
-      <point x="559.0881376615544" y="5955.0" />
-      <point x="232.94886363636306" y="5955.0" />
-      <point x="232.94886363636306" y="946.0" />
-      <point x="1433.3459224598923" y="946.0" />
-      <point x="-99.39285714285734" y="127.0" />
-    </edge>
-    <edge source="outerhaven.Personnages.PersonnagesPrime.PaladinPrime" target="outerhaven.Personnages.PersonnagesMagiques.Paladin">
-      <point x="-68.0" y="-71.5" />
-      <point x="3245.0732155738388" y="1086.0" />
-      <point x="3306.8437857077556" y="1086.0" />
-      <point x="-22.666666666666515" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PaladinPrime" target="outerhaven.Equipe">
-      <point x="-34.0" y="71.5" />
-      <point x="3279.0732155738388" y="1588.0" />
-      <point x="3112.3424463430692" y="1588.0" />
-      <point x="3112.3424463430692" y="3079.0" />
-      <point x="2326.527520618231" y="3079.0" />
-      <point x="126.55555555555566" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Case" target="outerhaven.Mecaniques.Alteration">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Personnages.PersonnagesPrime.PaladinPrime" target="outerhaven.Personnages.PersonnagesMagiques.Paladin">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime" target="outerhaven.Personnages.Personne">
-      <point x="68.0" y="-71.5" />
-      <point x="204.0" y="6971.0" />
-      <point x="146.5308636268055" y="6971.0" />
-      <point x="146.5308636268055" y="5060.0" />
-      <point x="558.9488636363633" y="5060.0" />
-      <point x="558.9488636363633" y="4742.0" />
-      <point x="3138.5074261001546" y="4742.0" />
-      <point x="-118.31578947368416" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.Bouton" target="outerhaven.Interface.Effets">
-      <point x="0.0" y="-71.5" />
-      <point x="2660.0924463430692" y="94.0" />
-      <point x="2470.5167557932264" y="94.0" />
-      <point x="20.41666666666697" y="27.0" />
-    </edge>
-    <edge source="outerhaven.Personnages.Invocations.Mort" target="outerhaven.Plateau">
-      <point x="-77.71428571428578" y="60.5" />
-      <point x="3885.739303280013" y="592.0" />
-      <point x="2559.095922459893" y="592.0" />
-      <point x="2559.095922459893" y="1056.0" />
-      <point x="1925.8459224598928" y="1056.0" />
-      <point x="1925.8459224598928" y="1458.0" />
-      <point x="1688.0493402482232" y="1458.0" />
-      <point x="0.0" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Case" target="outerhaven.Personnages.Personne">
-      <point x="103.90909090909099" y="-468.0" />
-      <point x="813.0881376615548" y="5915.0" />
-      <point x="4482.332662027515" y="5915.0" />
-      <point x="4482.332662027515" y="4782.0" />
-      <point x="3330.7705839948912" y="4782.0" />
-      <point x="73.94736842105249" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Equipe">
-      <point x="99.39285714285734" y="127.0" />
-      <point x="1632.131636745607" y="946.0" />
-      <point x="1936.8459224598928" y="946.0" />
-      <point x="1936.8459224598928" y="3019.0" />
-      <point x="2147.860853951564" y="3019.0" />
-      <point x="-52.11111111111131" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Lich" target="outerhaven.Personnages.Personne">
-      <point x="38.85714285714266" y="71.5" />
-      <point x="3698.503039543749" y="1116.0" />
-      <point x="3723.830965194935" y="1116.0" />
-      <point x="3723.830965194935" y="3456.0" />
-      <point x="3316.2655232661464" y="3456.0" />
-      <point x="59.44230769230762" y="-578.0" />
+      <point x="0.0" y="-71.5" />
+      <point x="120.42857142857156" y="578.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Personnages.Personne">
-      <point x="108.79999999999995" y="93.5" />
-      <point x="2515.8924463430694" y="1468.0" />
-      <point x="3134.1501386507616" y="1468.0" />
-      <point x="3134.1501386507616" y="3366.0" />
-      <point x="3218.996292496915" y="3366.0" />
-      <point x="-37.82692307692332" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Alchimiste" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="68.0" y="-71.5" />
-      <point x="2068.5497428404533" y="369.0" />
-      <point x="2322.2250891265594" y="369.0" />
-      <point x="-40.875" y="82.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.Personne" target="outerhaven.Personnages.Invocations.Lich">
-      <point x="70.25" y="-578.0" />
-      <point x="3327.0732155738388" y="3466.0" />
-      <point x="3734.638657502627" y="3466.0" />
-      <point x="3734.638657502627" y="1116.0" />
-      <point x="3737.360182400892" y="1116.0" />
-      <point x="77.71428571428578" y="71.5" />
-    </edge>
-    <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Personnages.Personne">
-      <point x="117.46428571428578" y="127.0" />
-      <point x="1650.2030653170355" y="936.0" />
-      <point x="3166.5732155738388" y="936.0" />
-      <point x="3166.5732155738388" y="3336.0" />
-      <point x="3251.419369419992" y="3336.0" />
-      <point x="-5.403846153846189" y="-578.0" />
+      <point x="0.0" y="-71.5" />
+      <point x="-65.40000000000009" y="82.5" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Equipe">
-      <point x="34.0" y="71.5" />
-      <point x="2149.0924463430692" y="2999.0" />
-      <point x="2177.638631729342" y="2999.0" />
-      <point x="-22.333333333333485" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Personnages.Personne">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Lich" target="outerhaven.Case">
-      <point x="116.57142857142844" y="71.5" />
-      <point x="3776.217325258035" y="896.0" />
-      <point x="4808.332662027515" y="896.0" />
-      <point x="4808.332662027515" y="5965.0" />
-      <point x="870.8154103888273" y="5965.0" />
-      <point x="161.6363636363635" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Mecaniques.Sauvegarde">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Plateau">
-      <point x="-38.85714285714283" y="93.5" />
-      <point x="2369.5762796027498" y="1026.0" />
-      <point x="1914.8459224598928" y="1026.0" />
-      <point x="1914.8459224598928" y="1448.0" />
-      <point x="1675.763625962509" y="1448.0" />
-      <point x="-12.28571428571422" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesMagiques.Paladin">
-      <point x="92.11764705882342" y="-237.0" />
-      <point x="1779.1300271446203" y="5271.0" />
-      <point x="4424.953588994299" y="5271.0" />
-      <point x="4424.953588994299" y="906.0" />
-      <point x="3442.8437857077556" y="906.0" />
-      <point x="113.33333333333337" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PretrePrime" target="outerhaven.Personnages.PersonnagesMagiques.Pretre">
-      <point x="-68.0" y="-82.5" />
-      <point x="4793.837049679315" y="6961.0" />
-      <point x="4894.948192330545" y="6961.0" />
-      <point x="4894.948192330545" y="5060.0" />
-      <point x="4695.832662027515" y="5060.0" />
-      <point x="34.0" y="82.5" />
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="82.5" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Alchimiste" target="outerhaven.Case">
-      <point x="-116.57142857142844" y="71.5" />
-      <point x="1883.9783142690246" y="582.0" />
-      <point x="698.0957134191303" y="582.0" />
-      <point x="698.0957134191303" y="926.0" />
-      <point x="210.94886363636306" y="926.0" />
-      <point x="210.94886363636306" y="5975.0" />
-      <point x="535.9972285706453" y="5975.0" />
-      <point x="-173.18181818181847" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Mecaniques.Evenement">
-      <point x="-122.85714285714266" y="-665.5" />
-      <point x="1565.1921973910805" y="1458.0" />
-      <point x="1482.9387796027495" y="1458.0" />
-      <point x="-49.80000000000018" y="104.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.Guerrier" target="outerhaven.Case">
-      <point x="-68.0" y="60.5" />
-      <point x="1111.9488636363633" y="5060.0" />
-      <point x="1011.4488636363633" y="5060.0" />
-      <point x="1011.4488636363633" y="5865.0" />
-      <point x="755.3608649342818" y="5865.0" />
-      <point x="46.18181818181802" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="-113.33333333333348" y="-71.5" />
-      <point x="22.666666666666515" y="6961.0" />
-      <point x="102.53086362680551" y="6961.0" />
-      <point x="102.53086362680551" y="299.0" />
-      <point x="2207.7750891265596" y="299.0" />
-      <point x="-155.32499999999982" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Personnages.Guerrier" target="outerhaven.Case">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Paladin" target="outerhaven.Personnages.Personne">
-      <point x="67.99999999999989" y="71.5" />
-      <point x="3397.510452374422" y="916.0" />
-      <point x="3470.380907881531" y="916.0" />
-      <point x="3470.380907881531" y="3426.0" />
-      <point x="3283.8424463430692" y="3426.0" />
-      <point x="27.019230769230944" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Mecaniques.Alteration">
-      <point x="-89.92500000000018" y="82.5" />
-      <point x="2273.175089126559" y="339.0" />
-      <point x="1496.0721129360832" y="339.0" />
-      <point x="1496.0721129360832" y="572.0" />
-      <point x="1532.7387796027497" y="572.0" />
-      <point x="0.0" y="-127.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PretrePrime" target="outerhaven.Case">
-      <point x="-113.33333333333348" y="-82.5" />
-      <point x="4748.503716345982" y="6981.0" />
-      <point x="852.0540467524638" y="6981.0" />
-      <point x="142.875" y="468.0" />
-    </edge>
-    <edge source="outerhaven.Case" target="outerhaven.Interface.Effets">
-      <point x="-184.72727272727298" y="-468.0" />
-      <point x="524.4517740251908" y="5985.0" />
-      <point x="199.94886363636306" y="5985.0" />
-      <point x="199.94886363636306" y="74.0" />
-      <point x="2348.0167557932264" y="74.0" />
-      <point x="-102.08333333333303" y="27.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.Samourai" target="outerhaven.Case">
-      <point x="-68.0" y="60.5" />
-      <point x="796.9488636363633" y="5855.0" />
-      <point x="743.8154103888273" y="5855.0" />
-      <point x="34.63636363636351" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Case" target="outerhaven.Interface.Effets">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PretrePrime" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="113.33333333333348" y="-82.5" />
-      <point x="4975.170383012648" y="6981.0" />
-      <point x="4938.948192330545" y="6981.0" />
-      <point x="4938.948192330545" y="299.0" />
-      <point x="2518.4250891265597" y="299.0" />
-      <point x="155.32500000000027" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime" target="outerhaven.Case">
-      <point x="113.33333333333348" y="-71.5" />
-      <point x="249.33333333333348" y="6981.0" />
-      <point x="566.3040467524638" y="6981.0" />
-      <point x="-142.875" y="468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Personnages.Invocations.Lich">
-      <point x="90.66666666666674" y="-93.5" />
-      <point x="2497.759113009736" y="1096.0" />
-      <point x="3543.074468115178" y="1096.0" />
-      <point x="-116.57142857142844" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Personnages.PersonnagesMagiques.Archimage">
-      <point x="-27.107142857142662" y="127.0" />
-      <point x="1505.631636745607" y="986.0" />
-      <point x="398.86419696013854" y="986.0" />
-      <point x="398.86419696013854" y="4812.0" />
-      <point x="389.78219696969677" y="4812.0" />
-      <point x="-22.666666666666515" y="-71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Evenement" target="outerhaven.Plateau">
-      <point x="99.59999999999991" y="104.5" />
-      <point x="1632.3387796027496" y="1388.0" />
-      <point x="1602.0493402482232" y="1388.0" />
-      <point x="-86.0" y="-665.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Personnages.PersonnagesMagiques.Necromancien">
-      <point x="0.0" y="-93.5" />
-      <point x="2407.0924463430692" y="1046.0" />
-      <point x="2447.2905653170355" y="1046.0" />
-      <point x="38.85714285714289" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Archimage" target="outerhaven.Equipe">
-      <point x="68.0" y="-71.5" />
-      <point x="480.4488636363633" y="4812.0" />
-      <point x="477.2808636268055" y="4812.0" />
-      <point x="477.2808636268055" y="3476.0" />
-      <point x="2094.686250776961" y="3476.0" />
-      <point x="-105.28571428571422" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Personnages.PersonnagesMagiques.Necromancien">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.Samourai" target="outerhaven.Personnages.Personne">
-      <point x="102.0" y="-60.5" />
-      <point x="966.9488636363633" y="5060.0" />
-      <point x="938.0385301326448" y="5060.0" />
-      <point x="938.0385301326448" y="4772.0" />
-      <point x="3182.8758471527863" y="4772.0" />
-      <point x="-73.94736842105249" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.Samourai" target="outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique">
-      <point x="-102.0" y="-60.5" />
-      <point x="762.9488636363633" y="5060.0" />
-      <point x="804.1988636363633" y="5060.0" />
-      <point x="0.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime">
-      <point x="12.28571428571422" y="-665.5" />
-      <point x="1700.3350545339374" y="1478.0" />
-      <point x="2081.0924463430692" y="1478.0" />
-      <point x="-34.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Equipe" target="outerhaven.Interface.Effets">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime">
-      <point x="24.57142857142844" y="-665.5" />
-      <point x="1712.6207688196516" y="1498.0" />
-      <point x="2352.6924463430696" y="1498.0" />
-      <point x="-54.40000000000009" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Personnages.PersonnagesMagiques.Alchimiste">
-      <point x="84.33333333333348" y="-127.0" />
-      <point x="1617.0721129360832" y="602.0" />
-      <point x="1961.6925999833104" y="602.0" />
-      <point x="-38.85714285714266" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Paladin" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="67.99999999999989" y="-71.5" />
-      <point x="3397.510452374422" y="572.0" />
-      <point x="3335.010452374422" y="572.0" />
-      <point x="3335.010452374422" y="359.0" />
-      <point x="2420.3250891265593" y="359.0" />
-      <point x="57.22499999999991" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Case">
-      <point x="-116.57142857142856" y="93.5" />
-      <point x="2291.861993888464" y="1006.0" />
-      <point x="569.9488636363633" y="1006.0" />
-      <point x="569.9488636363633" y="5905.0" />
-      <point x="616.8154103888273" y="5905.0" />
-      <point x="-92.36363636363649" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
-    <edge source="outerhaven.Plateau" target="outerhaven.Equipe">
-      <point x="45.529411764705856" y="665.5" />
-      <point x="1733.578752012929" y="3059.0" />
-      <point x="2088.3052983960088" y="3059.0" />
-      <point x="-111.66666666666652" y="-93.5" />
+    <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Plateau">
-      <point x="0.0" y="93.5" />
-      <point x="2407.0924463430692" y="1508.0" />
-      <point x="1724.9064831053659" y="1508.0" />
-      <point x="36.85714285714266" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Equipe">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Paladin" target="outerhaven.Equipe">
-      <point x="-68.0" y="71.5" />
-      <point x="3261.510452374422" y="1076.0" />
-      <point x="2833.3424463430692" y="1076.0" />
-      <point x="2833.3424463430692" y="3029.0" />
-      <point x="2252.0830761737866" y="3029.0" />
-      <point x="52.11111111111131" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Mecaniques.Sauvegarde">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Archimage" target="outerhaven.Case">
-      <point x="34.0" y="71.5" />
-      <point x="446.4488636363633" y="5050.0" />
-      <point x="458.1790467524638" y="5050.0" />
-      <point x="458.1790467524638" y="5915.0" />
-      <point x="605.2699558433728" y="5915.0" />
-      <point x="-103.90909090909099" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Alchimiste" target="outerhaven.Equipe">
-      <point x="0.0" y="71.5" />
-      <point x="2000.549742840453" y="602.0" />
-      <point x="1968.5924463430692" y="602.0" />
-      <point x="1968.5924463430692" y="3009.0" />
-      <point x="2162.749742840453" y="3009.0" />
-      <point x="-37.22222222222217" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Guerrier" target="outerhaven.Personnages.Personne">
       <point x="0.0" y="-60.5" />
-      <point x="1179.9488636363633" y="4782.0" />
-      <point x="3197.665320836996" y="4782.0" />
-      <point x="-59.15789473684208" y="578.0" />
+      <point x="-40.14285714285711" y="578.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique" target="outerhaven.Personnages.Personne">
-      <point x="75.0" y="-71.5" />
-      <point x="879.1988636363633" y="4762.0" />
-      <point x="3168.0863734685754" y="4762.0" />
-      <point x="-88.73684210526335" y="578.0" />
+      <point x="0.0" y="-71.5" />
+      <point x="-120.42857142857144" y="578.0" />
     </edge>
     <edge source="outerhaven.Equipe" target="outerhaven.Personnages.Personne">
-      <point x="47.85714285714266" y="93.5" />
-      <point x="2247.829107919818" y="3426.0" />
-      <point x="3154.1501386507616" y="3426.0" />
-      <point x="-102.67307692307713" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="90.66666666666652" y="-71.5" />
-      <point x="2205.7591130097358" y="996.0" />
-      <point x="2261.9334224598924" y="996.0" />
-      <point x="2261.9334224598924" y="379.0" />
-      <point x="2338.5750891265593" y="379.0" />
-      <point x="-24.52500000000009" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Obstacle" target="outerhaven.Case">
-      <point x="-30.0" y="-38.0" />
-      <point x="679.1790467524638" y="6981.0" />
-      <point x="661.5540467524638" y="6981.0" />
-      <point x="-47.625" y="468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Equipe" target="outerhaven.Plateau">
-      <point x="-126.55555555555566" y="-93.5" />
-      <point x="2073.4164095071196" y="3069.0" />
-      <point x="1718.402281424694" y="3069.0" />
-      <point x="30.352941176470722" y="665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Case" target="outerhaven.Equipe">
-      <point x="11.545454545454504" y="-468.0" />
-      <point x="720.7245012979183" y="5815.0" />
-      <point x="679.9488636363633" y="5815.0" />
-      <point x="679.9488636363633" y="3486.0" />
-      <point x="2113.829107919818" y="3486.0" />
-      <point x="-86.14285714285734" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Sauvegarde" target="outerhaven.Plateau">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Lich" target="outerhaven.Equipe">
-      <point x="-38.85714285714266" y="71.5" />
-      <point x="3620.7887538294635" y="1116.0" />
-      <point x="3101.3424463430692" y="1116.0" />
-      <point x="3101.3424463430692" y="3069.0" />
-      <point x="2311.638631729342" y="3069.0" />
-      <point x="111.66666666666652" y="-93.5" />
-    </edge>
-    <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesEnergetiques.Samourai">
-      <point x="-107.47058823529414" y="-237.0" />
-      <point x="1579.5417918505027" y="5281.0" />
-      <point x="932.9488636363633" y="5281.0" />
-      <point x="68.0" y="60.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Personnages.Personne">
-      <point x="102.0" y="71.5" />
-      <point x="2217.0924463430692" y="1478.0" />
-      <point x="3123.3424463430692" y="1478.0" />
-      <point x="3123.3424463430692" y="3376.0" />
-      <point x="3208.1886001892235" y="3376.0" />
-      <point x="-48.634615384615245" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Personnages.Invocations.Mort">
-      <point x="90.66666666666669" y="-93.5" />
-      <point x="2499.1000891265594" y="582.0" />
-      <point x="3846.88216042287" y="582.0" />
-      <point x="-116.57142857142856" y="60.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Personnages.Personne">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesEnergetiques.Samourai">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PretrePrime" target="outerhaven.Equipe">
-      <point x="68.0" y="-82.5" />
-      <point x="4929.837049679315" y="6981.0" />
-      <point x="4927.948192330545" y="6981.0" />
-      <point x="4927.948192330545" y="3306.0" />
-      <point x="2324.400536491247" y="3306.0" />
-      <point x="124.42857142857156" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Case" target="outerhaven.Interface.BarrePersonnage">
-      <point x="69.27272727272702" y="-468.0" />
-      <point x="778.4517740251908" y="5885.0" />
-      <point x="1687.0123800857968" y="5885.0" />
-      <point x="0.0" y="237.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesMagiques.Necromancien">
-      <point x="-76.76470588235293" y="-237.0" />
-      <point x="1610.2476742034441" y="5261.0" />
-      <point x="1033.4488636363633" y="5261.0" />
-      <point x="1033.4488636363633" y="1016.0" />
-      <point x="2330.719136745607" y="1016.0" />
-      <point x="-77.7142857142857" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesPrime.PretrePrime">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime" target="outerhaven.Equipe">
-      <point x="-68.0" y="-71.5" />
-      <point x="68.0" y="6971.0" />
-      <point x="113.53086362680551" y="6971.0" />
-      <point x="113.53086362680551" y="3466.0" />
-      <point x="2075.5433936341037" y="3466.0" />
-      <point x="-124.42857142857156" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Personne" target="outerhaven.Plateau">
-      <point x="-81.05769230769238" y="-578.0" />
-      <point x="3175.7655232661464" y="3406.0" />
-      <point x="2344.4719650626753" y="3406.0" />
-      <point x="2344.4719650626753" y="2979.0" />
-      <point x="1779.108163777635" y="2979.0" />
-      <point x="91.05882352941171" y="665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Case">
-      <point x="-81.32142857142844" y="127.0" />
-      <point x="1451.4173510313212" y="956.0" />
-      <point x="243.94886363636306" y="956.0" />
-      <point x="243.94886363636306" y="5945.0" />
-      <point x="570.6335922070089" y="5945.0" />
-      <point x="-138.54545454545496" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Personne" target="outerhaven.Interface.Effets">
-      <point x="135.0961538461538" y="-578.0" />
-      <point x="3391.919369419992" y="3526.0" />
-      <point x="4109.953588994299" y="3526.0" />
-      <point x="4109.953588994299" y="84.0" />
-      <point x="2511.3500891265594" y="84.0" />
-      <point x="61.25" y="27.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Pretre" target="outerhaven.Personnages.Personne">
-      <point x="-102.0" y="-82.5" />
-      <point x="4559.832662027515" y="4752.0" />
-      <point x="3375.139005047523" y="4752.0" />
-      <point x="118.31578947368416" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Pretre" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="102.0" y="-82.5" />
-      <point x="4763.832662027515" y="4812.0" />
-      <point x="4706.832662027515" y="4812.0" />
-      <point x="4706.832662027515" y="319.0" />
-      <point x="2485.7250891265594" y="319.0" />
-      <point x="122.625" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Paladin" target="outerhaven.Case">
-      <point x="-113.33333333333348" y="71.5" />
-      <point x="3216.1771190410886" y="1066.0" />
-      <point x="580.9488636363633" y="1066.0" />
-      <point x="580.9488636363633" y="5895.0" />
-      <point x="628.3608649342818" y="5895.0" />
-      <point x="-80.81818181818198" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Personnages.PersonnagesMagiques.Alchimiste">
-      <point x="-90.66666666666652" y="-71.5" />
-      <point x="2024.4257796764027" y="986.0" />
-      <point x="2183.183422459893" y="986.0" />
-      <point x="2183.183422459893" y="602.0" />
-      <point x="2039.4068856975957" y="602.0" />
-      <point x="38.85714285714266" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Equipe">
-      <point x="77.71428571428572" y="93.5" />
-      <point x="2486.147708174178" y="1046.0" />
-      <point x="2766.5924463430692" y="1046.0" />
-      <point x="2766.5924463430692" y="2999.0" />
-      <point x="2207.4164095071196" y="2999.0" />
-      <point x="7.444444444444343" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Interface.Effets">
-      <point x="0.0" y="-82.5" />
-      <point x="2363.1000891265594" y="94.0" />
-      <point x="2429.6834224598924" y="94.0" />
-      <point x="-20.41666666666697" y="27.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Equipe">
-      <point x="24.52500000000009" y="82.5" />
-      <point x="2387.6250891265595" y="379.0" />
-      <point x="2777.5924463430692" y="379.0" />
-      <point x="2777.5924463430692" y="3009.0" />
-      <point x="2222.3052983960088" y="3009.0" />
-      <point x="22.333333333333485" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Mort" target="outerhaven.Personnages.Personne">
-      <point x="38.85714285714289" y="60.5" />
-      <point x="4002.3107318514417" y="602.0" />
-      <point x="4027.638657502627" y="602.0" />
-      <point x="4027.638657502627" y="3506.0" />
-      <point x="3370.3039848046074" y="3506.0" />
-      <point x="113.48076923076906" y="-578.0" />
+      <point x="0.0" y="-60.5" />
+      <point x="-80.28571428571433" y="578.0" />
     </edge>
     <edge source="outerhaven.Personnages.Archer" target="outerhaven.Equipe">
-      <point x="90.66666666666674" y="-94.0" />
-      <point x="4358.120255660966" y="4812.0" />
-      <point x="4356.911093400064" y="4812.0" />
-      <point x="4356.911093400064" y="3326.0" />
-      <point x="2286.114822205532" y="3326.0" />
-      <point x="86.14285714285688" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesMagiques.Pretre">
-      <point x="122.82352941176464" y="-237.0" />
-      <point x="1809.8359094975617" y="5291.0" />
-      <point x="4446.953588994299" y="5291.0" />
-      <point x="4446.953588994299" y="5060.0" />
-      <point x="4559.832662027515" y="5060.0" />
-      <point x="-102.0" y="82.5" />
-    </edge>
-    <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.Guerrier">
-      <point x="-61.411764705882206" y="-237.0" />
-      <point x="1625.6006153799149" y="5251.0" />
-      <point x="1247.9488636363633" y="5251.0" />
-      <point x="68.0" y="60.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.Mage" target="outerhaven.Equipe">
-      <point x="-90.66666666666674" y="-60.5" />
-      <point x="1453.9292557932258" y="4722.0" />
-      <point x="1337.4488636363633" y="4722.0" />
-      <point x="1337.4488636363633" y="3526.0" />
-      <point x="2190.400536491247" y="3526.0" />
-      <point x="-9.571428571428442" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique" target="outerhaven.Plateau">
-      <point x="-75.0" y="-71.5" />
-      <point x="729.1988636363633" y="4722.0" />
-      <point x="748.6988636363633" y="4722.0" />
-      <point x="748.6988636363633" y="3059.0" />
-      <point x="1642.5199284835173" y="3059.0" />
-      <point x="-45.529411764705856" y="665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Personnages.Mage" target="outerhaven.Equipe">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.Guerrier">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.AlchimistePrime" target="outerhaven.Case">
-      <point x="-102.0" y="71.5" />
-      <point x="2013.0924463430692" y="1468.0" />
-      <point x="613.9488636363633" y="1468.0" />
-      <point x="613.9488636363633" y="5875.0" />
-      <point x="651.4517740251908" y="5875.0" />
-      <point x="-57.727272727272975" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.Mage">
-      <point x="-15.352941176470495" y="-237.0" />
-      <point x="1671.6594389093266" y="5221.0" />
-      <point x="1612.5959224598928" y="5221.0" />
-      <point x="68.0" y="60.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Equipe">
-      <point x="-27.444444444444343" y="116.0" />
-      <point x="2939.898001898625" y="1568.0" />
-      <point x="2924.0775206182307" y="1568.0" />
-      <point x="2924.0775206182307" y="3039.0" />
-      <point x="2266.9719650626753" y="3039.0" />
-      <point x="67.0" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesMagiques.Alchimiste">
-      <point x="-92.11764705882342" y="-237.0" />
-      <point x="1594.8947330269734" y="5271.0" />
-      <point x="1022.4488636363633" y="5271.0" />
-      <point x="1022.4488636363633" y="592.0" />
-      <point x="1922.8354571261673" y="592.0" />
-      <point x="-77.71428571428578" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Personnages.Personne">
-      <point x="116.57142857142856" y="93.5" />
-      <point x="2525.0048510313213" y="926.0" />
-      <point x="3459.5732155738388" y="926.0" />
-      <point x="3459.5732155738388" y="3416.0" />
-      <point x="3273.034754035377" y="3416.0" />
-      <point x="16.211538461538566" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Necromancien" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="-90.66666666666669" y="-93.5" />
-      <point x="2317.766755793226" y="602.0" />
-      <point x="2357.6000891265594" y="602.0" />
-      <point x="2357.6000891265594" y="379.0" />
-      <point x="2354.925089126559" y="379.0" />
-      <point x="-8.175000000000182" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Plateau">
-      <point x="0.0" y="-237.0" />
-      <point x="1687.0123800857968" y="5291.0" />
-      <point x="1691.0959224598928" y="5291.0" />
-      <point x="1691.0959224598928" y="3079.0" />
-      <point x="1688.0493402482232" y="3079.0" />
-      <point x="0.0" y="665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Sauvegarde" target="outerhaven.Personnages.Personne">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Case">
-      <point x="138.9749999999999" y="82.5" />
-      <point x="2502.0750891265593" y="309.0" />
-      <point x="4830.332662027515" y="309.0" />
-      <point x="4830.332662027515" y="5985.0" />
-      <point x="893.9063194797363" y="5985.0" />
-      <point x="184.72727272727252" y="-468.0" />
-    </edge>
-    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Personnages.Personne">
-      <point x="82.33333333333348" y="116.0" />
-      <point x="3049.675779676403" y="1448.0" />
-      <point x="3155.7655232661464" y="1448.0" />
-      <point x="3155.7655232661464" y="3346.0" />
-      <point x="3240.6116771122997" y="3346.0" />
-      <point x="-16.211538461538566" y="-578.0" />
-    </edge>
-    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Interface.BarrePersonnage">
-      <point x="109.77777777777783" y="116.0" />
-      <point x="3077.1202241208475" y="1428.0" />
-      <point x="4413.953588994299" y="1428.0" />
-      <point x="4413.953588994299" y="5261.0" />
-      <point x="1763.77708596815" y="5261.0" />
-      <point x="76.76470588235293" y="-237.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique" target="outerhaven.Case">
-      <point x="-66.66666666666674" y="71.5" />
-      <point x="737.5321969696965" y="5060.0" />
-      <point x="690.9488636363633" y="5060.0" />
-      <point x="690.9488636363633" y="5805.0" />
-      <point x="732.2699558433728" y="5805.0" />
-      <point x="23.09090909090901" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Personnages.Personne">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Interface.BarrePersonnage">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Mage" target="outerhaven.Personnages.Personne">
-      <point x="90.66666666666663" y="-60.5" />
-      <point x="1635.2625891265593" y="4812.0" />
-      <point x="3242.033741889628" y="4812.0" />
-      <point x="-14.789473684210407" y="578.0" />
-    </edge>
-    <edge source="outerhaven.Personnages.Invocations.Lich" target="outerhaven.Plateau">
-      <point x="-77.71428571428578" y="71.5" />
-      <point x="3581.9316109723204" y="1106.0" />
-      <point x="2553.5924463430692" y="1106.0" />
-      <point x="2553.5924463430692" y="1518.0" />
-      <point x="1737.1921973910805" y="1518.0" />
-      <point x="49.14285714285734" y="-665.5" />
+      <point x="0.0" y="-60.5" />
+      <point x="40.14285714285711" y="578.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Mecaniques.Enchere">
-      <point x="86.0" y="-665.5" />
-      <point x="1774.0493402482232" y="1548.0" />
-      <point x="2857.564668565292" y="1548.0" />
-      <point x="-109.77777777777783" y="116.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Pretre" target="outerhaven.Equipe">
-      <point x="-34.0" y="-82.5" />
-      <point x="4627.832662027515" y="4812.0" />
-      <point x="4684.832662027515" y="4812.0" />
-      <point x="4684.832662027515" y="3316.0" />
-      <point x="2305.2576793483895" y="3316.0" />
-      <point x="105.28571428571422" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Case" target="outerhaven.Plateau">
-      <point x="-34.63636363636397" y="-468.0" />
-      <point x="674.5426831160999" y="5855.0" />
-      <point x="635.9488636363633" y="5855.0" />
-      <point x="635.9488636363633" y="3019.0" />
-      <point x="1581.8140461305763" y="3019.0" />
-      <point x="-106.23529411764684" y="665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Mecaniques.Alteration">
-      <point x="-73.71428571428578" y="-665.5" />
-      <point x="1614.3350545339374" y="1398.0" />
-      <point x="1667.7387796027497" y="1398.0" />
-      <point x="1667.7387796027497" y="986.0" />
-      <point x="1559.8459224598923" y="986.0" />
-      <point x="27.107142857142662" y="127.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Archer" target="outerhaven.Personnages.Personne">
-      <point x="-90.66666666666674" y="-94.0" />
-      <point x="4176.786922327632" y="4812.0" />
-      <point x="3286.4021629422596" y="4812.0" />
-      <point x="29.578947368420813" y="578.0" />
+      <point x="0.0" y="-94.0" />
+      <point x="80.28571428571422" y="578.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Mort" target="outerhaven.Case">
-      <point x="116.57142857142867" y="60.5" />
-      <point x="4080.0250175657275" y="602.0" />
-      <point x="4819.332662027515" y="602.0" />
-      <point x="4819.332662027515" y="5975.0" />
-      <point x="882.3608649342818" y="5975.0" />
-      <point x="173.18181818181802" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Personne" target="outerhaven.Equipe">
-      <point x="-124.28846153846189" y="-578.0" />
-      <point x="3132.534754035377" y="3446.0" />
-      <point x="2209.5433936341037" y="3446.0" />
-      <point x="9.571428571428442" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.Bouton" target="outerhaven.Plateau">
-      <point x="0.0" y="71.5" />
-      <point x="2660.0924463430692" y="1538.0" />
-      <point x="1761.763625962509" y="1538.0" />
-      <point x="73.71428571428578" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Personnages.PersonnagesPrime.PaladinPrime">
-      <point x="122.85714285714266" y="-665.5" />
-      <point x="1810.9064831053659" y="1578.0" />
-      <point x="3211.0732155738388" y="1578.0" />
-      <point x="-102.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.Personne">
-      <point x="15.352941176470722" y="-237.0" />
-      <point x="1702.3653212622676" y="5221.0" />
-      <point x="3258.7179524159437" y="5221.0" />
-      <point x="3258.7179524159437" y="4812.0" />
-      <point x="3256.8232155738388" y="4812.0" />
-      <point x="0.0" y="578.0" />
-    </edge>
-    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Plateau">
-      <point x="-54.88888888888869" y="116.0" />
-      <point x="2912.4535574541806" y="1568.0" />
-      <point x="1798.6207688196516" y="1568.0" />
-      <point x="110.57142857142844" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Archer" target="outerhaven.Case">
-      <point x="68.0" y="94.0" />
-      <point x="4335.453588994299" y="5050.0" />
-      <point x="4460.332662027515" y="5050.0" />
-      <point x="4460.332662027515" y="5895.0" />
-      <point x="789.9972285706458" y="5895.0" />
-      <point x="80.81818181818198" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="outerhaven.Mecaniques.Enchere" target="outerhaven.Plateau">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Plateau">
-      <point x="45.17857142857156" y="127.0" />
-      <point x="1577.9173510313212" y="976.0" />
-      <point x="1678.7387796027497" y="976.0" />
-      <point x="1678.7387796027497" y="1408.0" />
-      <point x="1626.6207688196516" y="1408.0" />
-      <point x="-61.42857142857156" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Pretre" target="outerhaven.Case">
-      <point x="-34.0" y="82.5" />
-      <point x="4627.832662027515" y="5955.0" />
-      <point x="859.2699558433728" y="5955.0" />
-      <point x="150.090909090909" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Evenement" target="outerhaven.Case">
-      <point x="-99.59999999999991" y="104.5" />
-      <point x="1433.1387796027498" y="1458.0" />
-      <point x="602.9488636363633" y="1458.0" />
-      <point x="602.9488636363633" y="5885.0" />
-      <point x="639.9063194797363" y="5885.0" />
-      <point x="-69.27272727272748" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Interface.Effets">
-      <point x="107.47058823529414" y="-237.0" />
-      <point x="1794.482968321091" y="5281.0" />
-      <point x="4435.953588994299" y="5281.0" />
-      <point x="4435.953588994299" y="74.0" />
-      <point x="2552.1834224598924" y="74.0" />
-      <point x="102.08333333333303" y="27.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Interface.Bouton">
-      <point x="61.42857142857156" y="-665.5" />
-      <point x="1749.4779116767947" y="1528.0" />
-      <point x="2596.0924463430692" y="1528.0" />
-      <point x="-64.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Equipe" target="outerhaven.Mecaniques.Enchere">
-      <point x="81.88888888888869" y="-93.5" />
-      <point x="2281.860853951564" y="3049.0" />
-      <point x="2967.3424463430692" y="3049.0" />
-      <point x="0.0" y="116.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Archimage" target="outerhaven.Personnages.Personne">
-      <point x="113.33333333333348" y="-71.5" />
-      <point x="525.7821969696968" y="4732.0" />
-      <point x="3123.7179524159437" y="4732.0" />
-      <point x="-133.10526315789457" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Evenement" target="outerhaven.Mecaniques.Alteration">
-      <point x="-62.25" y="-104.5" />
-      <point x="1470.4887796027497" y="996.0" />
-      <point x="1523.7030653170355" y="996.0" />
-      <point x="-9.03571428571422" y="127.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.PersonneEnergetique" target="outerhaven.Equipe">
-      <point x="-25.0" y="-71.5" />
-      <point x="779.1988636363633" y="4722.0" />
-      <point x="759.6988636363633" y="4722.0" />
-      <point x="759.6988636363633" y="3496.0" />
-      <point x="2132.9719650626753" y="3496.0" />
-      <point x="-67.0" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Guerrier" target="outerhaven.Equipe">
-      <point x="-90.66666666666674" y="-60.5" />
-      <point x="1089.2821969696965" y="4722.0" />
-      <point x="1165.9303800953548" y="4722.0" />
-      <point x="1165.9303800953548" y="3516.0" />
-      <point x="2171.2576793483895" y="3516.0" />
-      <point x="-28.71428571428578" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Interface.Bouton">
-      <point x="46.05882352941171" y="-237.0" />
-      <point x="1733.0712036152086" y="5241.0" />
-      <point x="4120.953588994299" y="5241.0" />
-      <point x="4120.953588994299" y="1438.0" />
-      <point x="2724.0924463430692" y="1438.0" />
-      <point x="64.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Interface.Effets">
-      <point x="-36.85714285714266" y="-665.5" />
-      <point x="1651.1921973910805" y="1428.0" />
-      <point x="1841.5959224598928" y="1428.0" />
-      <point x="1841.5959224598928" y="84.0" />
-      <point x="2388.8500891265594" y="84.0" />
-      <point x="-61.25" y="27.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Alchimiste" target="outerhaven.Personnages.Personne">
-      <point x="116.57142857142844" y="71.5" />
-      <point x="2117.1211714118817" y="562.0" />
-      <point x="3513.1458966866066" y="562.0" />
-      <point x="3513.1458966866066" y="3436.0" />
-      <point x="3294.6501386507616" y="3436.0" />
-      <point x="37.82692307692287" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Plateau">
-      <point x="-73.57499999999982" y="82.5" />
-      <point x="2289.5250891265596" y="349.0" />
-      <point x="1854.049742840453" y="349.0" />
-      <point x="1854.049742840453" y="1438.0" />
-      <point x="1663.4779116767947" y="1438.0" />
-      <point x="-24.57142857142844" y="-665.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PretrePrime" target="outerhaven.Personnages.Personne">
-      <point x="22.666666666666515" y="-82.5" />
-      <point x="4884.503716345982" y="6981.0" />
-      <point x="4916.948192330545" y="6981.0" />
-      <point x="4916.948192330545" y="4742.0" />
-      <point x="3389.928478731733" y="4742.0" />
-      <point x="133.10526315789457" y="578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Mage" target="outerhaven.Case">
-      <point x="-68.0" y="60.5" />
-      <point x="1476.5959224598928" y="5060.0" />
-      <point x="1337.4488636363633" y="5060.0" />
-      <point x="1337.4488636363633" y="5875.0" />
-      <point x="766.9063194797363" y="5875.0" />
-      <point x="57.72727272727252" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique" target="outerhaven.Personnages.Personne">
-      <point x="73.57499999999982" y="82.5" />
-      <point x="2436.675089126559" y="349.0" />
-      <point x="3806.1458966866066" y="349.0" />
-      <point x="3806.1458966866066" y="3476.0" />
-      <point x="3337.880907881531" y="3476.0" />
-      <point x="81.05769230769238" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Mecaniques.Alteration" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="-84.33333333333348" y="-127.0" />
-      <point x="1448.4054462694162" y="572.0" />
-      <point x="1485.0721129360832" y="572.0" />
-      <point x="1485.0721129360832" y="329.0" />
-      <point x="2256.8250891265593" y="329.0" />
-      <point x="-106.27500000000009" y="82.5" />
-    </edge>
-    <edge source="outerhaven.Personnages.Personne" target="outerhaven.Personnages.Invocations.Mort">
-      <point x="102.67307692307713" y="-578.0" />
-      <point x="3359.496292496916" y="3496.0" />
-      <point x="3963.453588994299" y="3496.0" />
-      <point x="0.0" y="60.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Interface.BarrePersonnage" target="outerhaven.Personnages.PersonnagesMagiques.Archimage">
-      <point x="-122.82352941176464" y="-237.0" />
-      <point x="1564.1888506740324" y="5291.0" />
-      <point x="591.9488636363633" y="5291.0" />
-      <point x="591.9488636363633" y="5050.0" />
-      <point x="514.4488636363633" y="5050.0" />
-      <point x="102.0" y="71.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesMagiques.Archimage" target="outerhaven.Personnages.PersonnagesMagiques.PersonneMagique">
-      <point x="-113.33333333333348" y="-71.5" />
-      <point x="299.1155303030298" y="4802.0" />
-      <point x="365.86419696013854" y="4802.0" />
-      <point x="365.86419696013854" y="309.0" />
-      <point x="2224.1250891265595" y="309.0" />
-      <point x="-138.9749999999999" y="82.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Personne" target="outerhaven.Case">
-      <point x="59.15789473684208" y="578.0" />
-      <point x="3315.9811103106804" y="4792.0" />
-      <point x="4471.332662027515" y="4792.0" />
-      <point x="4471.332662027515" y="5905.0" />
-      <point x="801.5426831161003" y="5905.0" />
-      <point x="92.36363636363649" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.NecromancienPrime" target="outerhaven.Case">
-      <point x="-108.79999999999995" y="93.5" />
-      <point x="2298.2924463430695" y="1488.0" />
-      <point x="624.9488636363633" y="1488.0" />
-      <point x="624.9488636363633" y="5865.0" />
-      <point x="662.9972285706453" y="5865.0" />
-      <point x="-46.18181818181847" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.ArchimagePrime" target="outerhaven.Personnages.PersonnagesMagiques.Archimage">
-      <point x="-22.666666666666515" y="-71.5" />
-      <point x="113.33333333333348" y="6981.0" />
-      <point x="124.53086362680551" y="6981.0" />
-      <point x="124.53086362680551" y="5040.0" />
-      <point x="310.4488636363633" y="5040.0" />
-      <point x="-102.0" y="71.5" />
+      <point x="0.0" y="-71.5" />
+      <point x="0.0" y="71.5" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesPrime.PaladinPrime" target="outerhaven.Case">
-      <point x="102.0" y="71.5" />
-      <point x="3415.0732155738388" y="1418.0" />
-      <point x="4515.332662027515" y="1418.0" />
-      <point x="4515.332662027515" y="5945.0" />
-      <point x="847.7245012979183" y="5945.0" />
-      <point x="138.5454545454545" y="-468.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.Invocations.Mort" target="outerhaven.Equipe">
-      <point x="-38.85714285714289" y="60.5" />
-      <point x="3924.596446137156" y="602.0" />
-      <point x="2788.5924463430692" y="602.0" />
-      <point x="2788.5924463430692" y="3019.0" />
-      <point x="2237.1941872848975" y="3019.0" />
-      <point x="37.22222222222217" y="-93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Plateau" target="outerhaven.Personnages.Personne">
-      <point x="15.176470588235134" y="665.5" />
-      <point x="1703.2258108364583" y="3079.0" />
-      <point x="1803.6126953291407" y="3079.0" />
-      <point x="1803.6126953291407" y="3456.0" />
-      <point x="3121.7270617276845" y="3456.0" />
-      <point x="-135.0961538461538" y="-578.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="outerhaven.Personnages.PersonnagesEnergetiques.Samourai" target="outerhaven.Equipe">
-      <point x="34.0" y="-60.5" />
-      <point x="898.9488636363633" y="5060.0" />
-      <point x="914.6988636363633" y="5060.0" />
-      <point x="914.6988636363633" y="3506.0" />
-      <point x="2152.1148222055326" y="3506.0" />
-      <point x="-47.85714285714266" y="93.5" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.0925410520456443" x="2499.0" y="3583.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="0.6" x="1265.8333333333335" y="570.8333333333334" />
+  <SelectedNodes>
+    <node>outerhaven.Personnages.Personne</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Methods</Category>

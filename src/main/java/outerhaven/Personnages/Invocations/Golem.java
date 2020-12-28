@@ -28,7 +28,7 @@ public class Golem extends Invocation {
 
     @Override
     public Text getinfoDescText() {
-        return new Text("\nGolem à la vie, armure et dégâts faibles." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
+        return new Text("\nGolem à la vie, armure et aux dégâts très élevés." + "\n" + "PV : " + this.getHealth() + "\n" + "Armure : " + this.getArmor() + "\n" + "Dégats : " + this.getDamage() + "\n");
     }
 
     @Override

@@ -1088,15 +1088,15 @@ public class Plateau {
 
     private void cheats() {
         scene.setOnKeyPressed(key -> {
-            if (key.getCode() == KeyCode.M && argentPartie > 0 && equipeSelectionne != null) {
-                equipeSelectionne.setArgent(equipeSelectionne.getArgent() + 100);
-            }
-
-            if (key.getCode() == KeyCode.V && equipeSelectionne != null) {
-                for (Personne p : personnages) {
-                    if (p.getTeam() == equipeSelectionne) {
-                        p.setHealth(10000);
-                        p.setMaxHealth(10000);
+            if (equipeSelectionne != null && !statusPartie) {
+                if (key.getCode() == KeyCode.M && argentPartie > 0) {
+                    equipeSelectionne.setArgent(equipeSelectionne.getArgent() + 100);
+                } else if (key.getCode() == KeyCode.V) {
+                    for (Personne p : personnages) {
+                        if (p.getTeam() == equipeSelectionne) {
+                            p.setHealth(10000);
+                            p.setMaxHealth(10000);
+                        }
                     }
                 }
             }
