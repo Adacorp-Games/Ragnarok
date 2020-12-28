@@ -532,6 +532,10 @@ public abstract class Personne {
         this.health = health;
     }
 
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
     public Case getPosition() {
         return position;
     }

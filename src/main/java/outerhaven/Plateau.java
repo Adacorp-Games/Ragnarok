@@ -86,6 +86,7 @@ public class Plateau {
     public static boolean activerEnchere = false;
     public static boolean enchereTerminee = false;
     public static boolean activerDijkstra = false;
+    public static boolean activerCheats = false;
     public static AtomicInteger idEnchere = new AtomicInteger();
     public static Text prix = new Text();
     /**
@@ -179,6 +180,7 @@ public class Plateau {
             barre.majBarreEnchere();
             brouillard();
         }
+        if (activerCheats) { cheats(); }
         // On ajoute toutes les interfaces
         group.getChildren().add(nbPersonne);
         group.getChildren().add(boutonPausePlay());
@@ -272,17 +274,6 @@ public class Plateau {
                 sceneSuivante();
             }
         });
-
-        /*TextField encherirField = new TextField();
-        encherirField.setLayoutX(cadre.getX());
-        encherirField.setLayoutY(cadre.getY() + 60);
-        encherirField.setMinSize(100,50);
-        encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-        encherirField.setOnKeyReleased(key -> {
-            if (key.getCode() == KeyCode.ENTER) {
-                prix.setText(getIntFromTextField(encherirField) + " €");
-            }
-        });*/
 
         // Creation et incorporation d'une slide barre + bouton
         ajouteLeMenu();
@@ -575,6 +566,32 @@ public class Plateau {
         return dijkstraBT;
     }
 
+    private Button boutonCheats() {
+        Button button = new Bouton().creerBoutonBool("Cheats", 270, 130);
+        button.setOnMouseClicked(mouseEvent -> {
+            if (!activerCheats) {
+                activerCheats = true;
+                button.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                button.setText("Cheats : OUI");
+            } else {
+                activerCheats = false;
+                button.setEffect(null);
+                button.setText("Cheats : NON");
+            }
+        });
+        button.setOnMouseEntered(mouseEvent -> {
+            if (!activerCheats) {
+                button.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        button.setOnMouseExited(mouseEvent -> {
+            if (!activerCheats) {
+                button.setEffect(null);
+            }
+        });
+        return button;
+    }
+
     /**
      * Crée un bouton Exit
      * @return le bouton Exit
@@ -828,17 +845,18 @@ public class Plateau {
         options.setLayoutY(10);
 
         Button dijkstra = boutonDijkstra();
+        Button cheats = boutonCheats();
 
         options.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(dijkstra)) {
                 try {
-                    group.getChildren().addAll(dijkstra);
+                    group.getChildren().addAll(dijkstra, cheats);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().removeAll(dijkstra);
+                    group.getChildren().removeAll(dijkstra, cheats);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1066,6 +1084,23 @@ public class Plateau {
                 }
             }
         }
+    }
+
+    private void cheats() {
+        scene.setOnKeyPressed(key -> {
+            if (key.getCode() == KeyCode.M && argentPartie > 0 && equipeSelectionne != null) {
+                equipeSelectionne.setArgent(equipeSelectionne.getArgent() + 100);
+            }
+
+            if (key.getCode() == KeyCode.V && equipeSelectionne != null) {
+                for (Personne p : personnages) {
+                    if (p.getTeam() == equipeSelectionne) {
+                        p.setHealth(10000);
+                        p.setMaxHealth(10000);
+                    }
+                }
+            }
+        });
     }
 
     /**

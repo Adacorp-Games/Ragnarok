@@ -28,4 +28,13 @@ public class Bouton {
         });
         return button;
     }
+
+    public Button creerBoutonBool(String texte, int x, int y) {
+        Button button = new Button(texte + " : NON");
+        button.setMinSize(120,50);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        button.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+        return button;
+    }
 }
