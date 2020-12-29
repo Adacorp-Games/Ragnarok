@@ -230,7 +230,7 @@ public abstract class Personne {
         imageperson.setX(50 + i * (imageperson.getFitWidth() + 50));
         // Création des intérations avec les images dans la barre
         imageperson.setOnMouseEntered((mouseEvent) -> {
-            group.getChildren().add(afficherInfo(imageperson.getX(), imageperson.getY() - 105));
+            group.getChildren().add(afficherInfo(imageperson.getX(), imageperson.getY() - 106));
         });
         imageperson.setOnMouseExited((mouseEvent) -> {
             group.getChildren().remove(1);

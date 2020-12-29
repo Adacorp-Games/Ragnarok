@@ -14,7 +14,7 @@ public class Evenement {
     }
 
     public void generationEvenements() {
-        if (Plateau.nbTour%fréquenceEvenement == 0) {
+        if (Plateau.tour % fréquenceEvenement == 0) {
             for (Case c : Plateau.listeCase) {
                 double random = Math.random() * 100;
                 if (random < pourcentageEvenement) {

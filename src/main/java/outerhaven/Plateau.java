@@ -75,7 +75,7 @@ public class Plateau {
      */
     public static int argentPartie = 0;
     public static int temps = 500;
-    public static int nbTour = 0;
+    public static int tour = 0;
     /**
      * Status de certains paramètre utiles pour le fonctionnement du jeu
      */
@@ -94,6 +94,7 @@ public class Plateau {
      */
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
+    private static Group nbTour = new Group();
     private Evenement event = new Evenement(new Alteration("poison", 50, 20));
 
     public Plateau(Stage primary) {
@@ -166,6 +167,7 @@ public class Plateau {
         ajouteLeMenu();
         // Creation et incorporation d'information sur les équipes
         afficherNbPersonne();
+        afficheNbTour();
         // On affiche l'argent si elle n'est pas infini (rien d'écrit)
         if (argentPartie > 0) {
             if (!activerEnchere) {
@@ -180,11 +182,11 @@ public class Plateau {
             barre.majBarreEnchere();
             brouillard();
         }
-        if (activerCheats) { cheats(); }
+        if (activerCheats) {
+            cheats();
+        }
         // On ajoute toutes les interfaces
-        group.getChildren().add(nbPersonne);
-        group.getChildren().add(boutonPausePlay());
-        group.getChildren().add(barre.returnBarre());
+        group.getChildren().addAll(nbPersonne, nbTour, boutonPausePlay(), barre.returnBarre());
         primary.setScene(scene);
     }
 
@@ -230,9 +232,6 @@ public class Plateau {
         prix.setStyle("-fx-font-weight: bold;-fx-font-size: 30");
 
         TextField encherirField = new TextField();
-        /*encherirField.setLayoutX(cadre.getX());
-        encherirField.setLayoutY(cadre.getY() + 130);
-        encherirField.setMinSize(100,50);*/
         encherirField.setLayoutX(699);
         encherirField.setLayoutY(567);
         encherirField.setMinSize(100,50);
@@ -294,9 +293,9 @@ public class Plateau {
      * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe
      */
     public static void afficherNbPersonne() {
-        Rectangle barre = new Rectangle(210 , 70, Color.LIGHTGRAY);
-        barre.setX(10);
-        barre.setY(400);
+        Rectangle barre = new Rectangle(250 , 70, Color.LIGHTGRAY);
+        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
+        barre.setY(10);
         barre.setStroke(Color.BLACK);
         barre.setStrokeWidth(2);
 
@@ -319,6 +318,32 @@ public class Plateau {
     public static void updateNbPersonne() {
         nbPersonne.getChildren().clear();
         afficherNbPersonne();
+    }
+
+    /**
+     * Affiche le tour actuel
+     */
+    private static void afficheNbTour() {
+        Rectangle barre = new Rectangle(50 , 50, Color.LIGHTGRAY);
+        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
+        barre.setY(90);
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
+
+        Text nb = new Text("Tour\n" + tour);
+        nb.setX(barre.getX() + 10);
+        nb.setY(barre.getY() + 20);
+
+        nbTour.getChildren().add(barre);
+        nbTour.getChildren().add(nb);
+    }
+
+    /**
+     * Méthode pour update les compteurs de afficheNbTour()
+     */
+    public static void updateNbTour() {
+        nbTour.getChildren().clear();
+        afficheNbTour();
     }
 
     public void sceneSuivante() {
@@ -637,7 +662,6 @@ public class Plateau {
                 Collections.shuffle(Enchere.getListeEnchere());
             }));
             timeline.play();
-            //Plateau.personneSelectionné = null;
         });
         return reset;
     }
@@ -666,12 +690,18 @@ public class Plateau {
                     BarrePersonnage.listeEquipe2 = BarrePersonnage.getSave().getListeClasseE2();
                 }
 
+                equipeSelectionne = null;
+                personneSelectionne = null;
+                barre.equipe1.setEffect(null);
+                barre.equipe2.setEffect(null);
+                for (Personne p : barre.getListeClasse()) {
+                    p.getImageperson().setEffect(null);
+                }
                 barre = new BarrePersonnage();
                 barre.majBarreEnchere();
                 barre.cleanEffects();
             }));
             timeline.play();
-            //Plateau.personneSelectionné = null;
         });
         return reStart;
     }
@@ -701,18 +731,15 @@ public class Plateau {
                 setStatusPartie(true);
                 if (group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().remove(barre.returnBarre());
-                    //boutonEquipe().getChildren().clear();
                     scene.setFill(Color.DARKGRAY);
                     Plateau.scene.setCursor(Cursor.DEFAULT);
-                    //Plateau.personneSelectionné = null;
-                    //Plateau.incorporeEquipe(null);
 
                     if (activerEnchere) {
                         for (Case c : listeCase) {
                             c.getHexagone().setImage(Case.hexagone_img1);
                         }
-                        for (Personne p : personnages) {
-
+                        for (Personne p : BarrePersonnage.listeClasse) {
+                            p.getImageperson().setEffect(null);
                         }
                     }
 
@@ -794,13 +821,14 @@ public class Plateau {
      */
     private void afficheBarVie() {
         Button barVie = new Bouton().creerBouton("Afficher barres de vie");
-        barVie.setLayoutX(longueurMax - 150);
-        barVie.setLayoutY(10);
+        barVie.setMinSize(190, 50);
+        barVie.setLayoutX(longueurMax - 200);
+        barVie.setLayoutY(90);
         barVie.setOnMouseClicked(mouseEvent -> {
-            if (!personnages.isEmpty()){
+            if (!personnages.isEmpty()) {
                 Personne.barreVisible = !Personne.barreVisible;
                 for (Personne personnage : personnages) {
-                    if(!personnage.getPosition().verifNoir()) {
+                    if (!personnage.getPosition().verifNoir()) {
                         personnage.afficherSanteEtNom();
                     }
                 }
@@ -943,9 +971,10 @@ public class Plateau {
      * que l'utilisateur mette pause
      */
     public void tour() {
-        if(!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
-            nbTour++;
-            System.out.println("Tour : " + nbTour);
+        if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
+            tour++;
+            System.out.println("Tour : " + tour);
+            updateNbTour();
 
             for (Case c : listeCase) {
                 c.devenirBlanc();
@@ -1046,7 +1075,7 @@ public class Plateau {
      * Méthode qui va nettoyer le plateau en cas de reset / restart
      */
     public void cleanPlateau() {
-        nbTour = 0;
+        tour = 0;
         personnages.clear();
         morts.clear();
         listeCase.clear();
