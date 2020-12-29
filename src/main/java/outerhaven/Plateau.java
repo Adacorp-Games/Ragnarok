@@ -204,7 +204,7 @@ public class Plateau {
         terminerEnchere.setOnMouseClicked(mouseEvent -> {
             group.getChildren().clear();
             enchereTerminee = true;
-            barre.setSave(new Sauvegarde());
+            BarrePersonnage.setSave(new Sauvegarde());
             sceneSuivante();
         });
 
@@ -270,6 +270,7 @@ public class Plateau {
             } else {
                 group.getChildren().clear();
                 enchereTerminee = true;
+                BarrePersonnage.setSave(new Sauvegarde());
                 sceneSuivante();
             }
         });
@@ -694,6 +695,10 @@ public class Plateau {
                 personneSelectionne = null;
                 barre.equipe1.setEffect(null);
                 barre.equipe2.setEffect(null);
+                if (activerEnchere) {
+                    equipeSelectionne = e1;
+                    barre.getButtonTeamSelect().setEffect(new Effets().putInnerShadow(Plateau.equipeSelectionne.getCouleur()));
+                }
                 for (Personne p : barre.getListeClasse()) {
                     p.getImageperson().setEffect(null);
                 }
