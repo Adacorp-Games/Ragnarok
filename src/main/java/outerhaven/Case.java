@@ -60,12 +60,12 @@ public class Case {
     public static final Image hexagone_imgHeal = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
     public static final Image hexagone_imgManaVore = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonManaVore.png"));
     public static final Image hexagone_imgFreeze = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
+    private static boolean bloqué;
 
     public Case(int x, int y) {
         coordonnee[0] = x;
         coordonnee[1] = y;
     }
-    private static boolean bloqué;
 
     /**
      * Génère l'affichage d'une case ainsi que ses interactions
@@ -416,23 +416,23 @@ public class Case {
     }
 
     /**
-     * Calcule l'itinéraire d'une case à une autre grace à un système de déplacement vectoriel (déplacement unitaire vectoriel)
+     * Calcule l'itinéraire d'une case à une autre grâce à un système de déplacement vectoriel (déplacement unitaire vectoriel)
      */
     public ArrayList<Case> pathToPersoAux(Personne personne) {
         ArrayList<Case> chemin = new ArrayList<>();
         chemin.add(this);
         int x = (personne.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
         int y = (personne.getPosition().donneYpourTab() - this.donneYpourTab());
-        // Calcule du deplacment unitaire allant de xIncr à AvancementX de 1 en 1
-        double Avancementx =  x/Math.sqrt(x*x+y*y);
-        double Avanvementy =  y/Math.sqrt(x*x+y*y);
+        // Calcule du déplacement unitaire allant de xIncr à AvancementX de 1 en 1
+        final double sqrt = Math.sqrt(x * x + y * y);
+        double avancementX =  x / sqrt;
+        double avancementY =  y / sqrt;
         double xIncr = 0;
         double yIncr = 0;
-        bloqué = true;
-        while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && bloqué) {
-            xIncr = xIncr + Avancementx;
-            yIncr = yIncr + Avanvementy;
-            //testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne, false);
+        bloqué = false;
+        while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && !bloqué) {
+            xIncr = xIncr + avancementX;
+            yIncr = yIncr + avancementY;
             testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne);
         }
         return chemin;
@@ -476,7 +476,7 @@ public class Case {
                 }
             }
             if (!ajout) {
-                bloqué = false;
+                bloqué = true;
             }
         } catch (Exception e) {
             // L'enchainement de try et du à l'erreur possible lors des bordures du tableau de case (coté droit et coté gauche)
