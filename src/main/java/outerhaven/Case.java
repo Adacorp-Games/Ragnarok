@@ -438,7 +438,6 @@ public class Case {
         return chemin;
     }
 
-
     /**
      * Va chercher dans tableauCase et la tester pour savoir si elle peut être ajouté à un trajet
      * @param chemin
@@ -446,7 +445,6 @@ public class Case {
      * @param yIncr
      * @param personne
      */
-
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         try {
             boolean ajout = false;
@@ -543,11 +541,13 @@ public class Case {
     }*/
 
     /**
-     * Cette méthode convertie les coordonnées X Y d'une case (allant de -racine(aire) à +racine(aire)) en coordonné valable pour le tableau (allant de 0 à tableauCase.length)
-     * @return
+     * Cette méthode convertie les coordonnées X et Y d'une case (allant de -racine(aire) à +racine(aire))
+     * en coordonnée valable pour le tableau (allant de 0 à tableauCase.length)
+     * - coordonnee[0] = X
+     * - coordonnee[1] = Y
+     * @return un entier qui correspond à la coordonnée de Y.
      */
     private int donneYpourTab() {
-        // Pour comprendre ce codage, il faut aller dans lancerScenePlateau de Plateau.class
         if (coordonnee[0]%2 == 0) {
             return coordonnee[1] + (coordonnee[0]/2) ;
         } else {
@@ -580,6 +580,10 @@ public class Case {
         }
     }
 
+    /**
+     * Fonction de pathfinding utilisant une version de l'algorithme de Dijkstra très basique.
+     * @return une ArrayList contenant les cases qui compose le chemin le plus court vers l'adversaire le plus proche s'il existe.
+     */
     public ArrayList<Case> pathDijkstra() {
         ArrayList<Case> ret = new ArrayList<>();
         LinkedList<Case> file = new LinkedList<>();
