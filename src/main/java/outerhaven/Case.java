@@ -119,7 +119,6 @@ public class Case {
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
             group.getChildren().remove(affichagecontenu);
-            //hexagone.setEffect(null);
         }
     }
 
@@ -127,7 +126,6 @@ public class Case {
         contenu.get(0).supprimerSanteEtNom();
         contenu.remove(0);
         group.getChildren().remove(affichagecontenu);
-        //hexagone.setEffect(null);
     }
 
     public void devenirBlanc() {
@@ -148,12 +146,8 @@ public class Case {
         }
     }
 
-    public boolean verifNoir(){
-        if (hexagone.getImage() == hexagone_imgBlock) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean verifNoir() {
+        return hexagone.getImage() == hexagone_imgBlock;
     }
 
     /**

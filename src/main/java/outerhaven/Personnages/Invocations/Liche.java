@@ -5,15 +5,14 @@ import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Personnages.Personne;
-import outerhaven.Plateau;
 
-public class Lich extends Invocation {
+public class Liche extends Invocation {
 
-    public Lich() {
+    public Liche() {
         super(600, 0, 140, 200, 3, 1);
     }
 
-    public Lich(Equipe team, Case position) {
+    public Liche(Equipe team, Case position) {
         super(600, 0, 140, 200, 3, 1, team, position);
     }
 
@@ -37,7 +36,7 @@ public class Lich extends Invocation {
 
     @Override
     public Personne personneNouvelle(Equipe team,Case position) {
-        return new Lich(team,position);
+        return new Liche(team,position);
     }
 
     @Override
@@ -52,6 +51,6 @@ public class Lich extends Invocation {
 
     @Override
     public Image getImageFace() {
-        return new Image(Lich.class.getResourceAsStream("/Images/Personnes/Lich.png"));
+        return new Image(Liche.class.getResourceAsStream("/Images/Personnes/Lich.png"));
     }
 }

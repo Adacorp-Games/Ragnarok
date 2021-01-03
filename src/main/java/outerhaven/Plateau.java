@@ -1000,7 +1000,7 @@ public class Plateau {
                     if (c.getAlteration() != null) {
                         c.getAlteration().passeTour();
                     } else {
-                        Alteration.AlterSupr.add(c);
+                        Alteration.AlterSupprimer.add(c);
                     }
                 }
                 Alteration.nettoiCaseAlter();

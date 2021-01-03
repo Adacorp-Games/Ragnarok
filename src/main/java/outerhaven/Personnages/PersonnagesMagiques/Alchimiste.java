@@ -8,7 +8,7 @@ import outerhaven.Personnages.Personne;
 
 import java.util.ArrayList;
 
-public class Alchimiste extends PersonneMagique{
+public class Alchimiste extends PersonneMagique {
 
     public Alchimiste() {
         //    vie  armr cst  dg rnge spd)

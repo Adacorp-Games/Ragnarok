@@ -32,7 +32,7 @@ public abstract class PersonneEnergetique extends Personne {
     }
 
     /**
-     * Méthode qui permet d'attaquer le personnage mit en parametre s'il est d'une équipe différente
+     * Méthode qui permet d'attaquer le personnage mit en paramètre s'il est d'une équipe différente
      */
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);

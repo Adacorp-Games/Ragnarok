@@ -29,7 +29,6 @@ public class Enchere {
         } else if (this.getEquipeGagnante() != null) {
             BarrePersonnage.listeEquipe2.add(this.getProduit());
         }
-        //Enchere.listeEnchere.remove(this);
     }
 
     public Group afficherInformations() {

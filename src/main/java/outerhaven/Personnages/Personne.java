@@ -13,11 +13,8 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Equipe;
-import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Effets;
 import outerhaven.Personnages.Invocations.Invocation;
-import outerhaven.Personnages.Invocations.Lich;
-import outerhaven.Personnages.Invocations.Mort;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
@@ -28,6 +25,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static outerhaven.Plateau.*;
 
+/**
+ * Unité sur le plateau qui appartient à une équipe et se déplace de Case en Case. Elle peut posséder des caractéristiques spéciales.
+ */
 public abstract class Personne {
     private String name; // Stocké dans un tableau.
     /**
@@ -52,7 +52,7 @@ public abstract class Personne {
     private int duréeStatus = 0;
 
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longeurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed) {
         this.name = getRandomName();
@@ -112,7 +112,6 @@ public abstract class Personne {
      * Méthode qui permet de se déplacer dans une case mis en parametre et vidant la case précédente avec une animation
      */
     public void deplacer(Case fin) {
-
         // Debbug pathfinding
         this.setCasePrecedente(this.getPosition());
         if (!isActiverAnimation()) {
@@ -184,28 +183,32 @@ public abstract class Personne {
      */
     public void action() {
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy;
-        //if (activerDijkstra && personnages.size() <= 300) {
-        if (activerDijkstra) {
-            if (this.position.nbVoisinsLibres() > 0) {
-                pathToEnnemy = this.position.pathDijkstra();
-            } else {
-                pathToEnnemy = this.position.pathToPerso(getOtherTeam());
-            }
-        } else {
-            pathToEnnemy = this.position.pathToPerso(getOtherTeam());
-        }
-        if ((activerDijkstra && pathToEnnemy.size() <= 0)) {
-            pathToEnnemy = this.position.pathToPerso(getOtherTeam());
-        }
-        System.out.println("Taille du chemin vers l'ennemis le plus proche (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + ") pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (pathToEnnemy.size() - 1 <= this.range) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+        ArrayList<Case> pathToEnemy = calculerChemin();
+        System.out.println("Taille du chemin vers l'ennemis le plus proche (" + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getName() + ") pour " + this.getName() + " : " + (pathToEnemy.size() - 1));
+        if (pathToEnemy.size() - 1 <= this.range) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+            attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
         } else {
             System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.speed));
+            deplacer(pathToEnemy.get(this.speed));
         }
+    }
+
+    /**
+     * Fonction qui permet d'obtenir le chemin le plus court vers l'adversaire le plus proche en fonction de divers paramètres sur le Plateau.
+     */
+    public ArrayList<Case> calculerChemin() {
+        ArrayList<Case> pathToEnemy;
+        //if (activerDijkstra && personnages.size() <= 300) {
+        if (activerDijkstra && this.position.nbVoisinsLibres() > 0) {
+            pathToEnemy = this.position.pathDijkstra();
+        } else {
+            pathToEnemy = this.position.pathToPerso(getOtherTeam());
+        }
+        if (activerDijkstra && pathToEnemy.size() <= 0) {
+            pathToEnemy = this.position.pathToPerso(getOtherTeam());
+        }
+        return pathToEnemy;
     }
 
     /**
@@ -215,7 +218,7 @@ public abstract class Personne {
     public void waitTEST(long nb) {
         long i = 0;
         for (long j = 0; j < nb; j++) {
-            i = j -i + 5;
+            i = j - i + 5;
         }
     }
 
@@ -272,10 +275,8 @@ public abstract class Personne {
         title.setStyle("-fx-font-weight: bold");
         title.setX(X + 10);
         title.setY(Y - 130);
-        //title.setStyle("-fx-font-style: bold");
 
         Text descrip = this.getinfoDescText();
-        //descrip.getStyleClass().add("textBox");
         descrip.setX(X + 10);
         descrip.setY(Y - 130);
 
@@ -373,10 +374,10 @@ public abstract class Personne {
         if (barreVisible && !position.verifNoir()) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
-        } else if(!barreVisible && group.getChildren().contains(SanteNom)) {
+        } else if (!barreVisible && group.getChildren().contains(SanteNom)) {
             supprimerSanteEtNom();
         }
-        else if(position.verifNoir()){
+        else if (position.verifNoir()) {
             supprimerSanteEtNom();
         }
     }
@@ -405,11 +406,11 @@ public abstract class Personne {
      * @return un groupe contenant la barre de vie pour une personne
      */
     public Group afficherSante() {
-        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
-        Rectangle vie = new Rectangle(taille - 4, taille/10 - 4, Color.RED);
+        Rectangle barre = new Rectangle(taille, taille / 10, Color.BLACK);
+        Rectangle vie = new Rectangle(taille - 4, taille / 10 - 4, Color.RED);
 
         barre.setX(getPosition().getPosX());
-        barre.setY(getPosition().getPosY() + taille/2.2);
+        barre.setY(getPosition().getPosY() + taille / 2.2);
 
         vie.setY(barre.getY() + 2);
         vie.setX(barre.getX() + 2);

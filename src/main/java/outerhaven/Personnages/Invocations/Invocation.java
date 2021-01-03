@@ -44,6 +44,4 @@ public abstract class Invocation extends Personne {
     public Image getImageFace() {
         return null;
     }
-
-
 }

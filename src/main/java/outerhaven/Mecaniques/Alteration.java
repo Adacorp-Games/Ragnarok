@@ -13,29 +13,29 @@ import java.util.ArrayList;
 
 public class Alteration {
     /**
-     * L'image qui changera une case qui sera alterés
+     * L'image qui changera une case qui sera altérée.
      */
     private Image image;
     /**
-     * Nom caracterisant une alteration
+     * Nom caractérisant une alteration.
      */
     private String effet;
     /**
-     * Puissance d'une alteration
+     * Puissance d'une alteration.
      */
     private int puissance;
     /**
-     * Durée en tour d'une alteration
+     * Durée en tour d'une alteration.
      */
     private int duree;
     /**
-     * Equipe a qui appartient l'alteration (pas obligatoire)
+     * Équipe a qui appartient l'altération (pas obligatoire).
      */
     private Equipe equipe;
     /**
-     * Liste d'alteration à supprimer au cours du temps
+     * Liste d'altérations à supprimer au cours du temps.
      */
-    public static ArrayList<Case> AlterSupr = new ArrayList<>();
+    public static ArrayList<Case> AlterSupprimer = new ArrayList<>();
 
     public Alteration(String effet, int puissance, int duree) {
         this.effet = effet;
@@ -60,7 +60,7 @@ public class Alteration {
     }
 
     /**
-     * Applique les effets d'une alteration sur un personnage (par tour)
+     * Applique les effets d'une altération sur un personnage (par tour).
      * @param p
      */
     public void appliquerEffet(Personne p) {
@@ -78,7 +78,7 @@ public class Alteration {
     }
 
     /**
-     * Applique les effets d'un vol de mana sur les PersonneMagique
+     * Applique les effets d'un vol de mana sur les PersonneMagique.
      * @param p est la personne à affecter
      */
     public void appliquerEffet(PersonneMagique p) {
@@ -92,7 +92,7 @@ public class Alteration {
     }
 
     /**
-     * Méthode réduisant la durée de l'altération à chaque tour
+     * Méthode réduisant la durée de l'altération à chaque tour.
      */
     public void passeTour() {
         if (duree > 1) {
@@ -102,22 +102,22 @@ public class Alteration {
                 if (c.getAlteration() == this) {
                     c.setAlteration(null);
                     c.getHexagone().setEffect(null);
-                    AlterSupr.add(c);
+                    AlterSupprimer.add(c);
                 }
             }
         }
     }
 
     /**
-     * Supprime définitivement une alteration
+     * Supprime définitivement une alteration.
      */
     public static void nettoiCaseAlter() {
-        Plateau.listeCaseAlterees.removeAll(AlterSupr);
-        AlterSupr.clear();
+        Plateau.listeCaseAlterees.removeAll(AlterSupprimer);
+        AlterSupprimer.clear();
     }
 
     /**
-     * Cette section contient tout les getters et setters de Alteration
+     * Cette section contient tout les getters et setters de Alteration.
      */
     public Image getImage() {
         return image;

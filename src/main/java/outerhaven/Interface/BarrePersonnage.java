@@ -106,8 +106,10 @@ public class BarrePersonnage {
         majBarreEnchere();
     }
 
-    /* Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que la
-    barre de personnage les boutons d'équipes lorsque l'on lance la partie */
+    /**
+     * Cette fonction est présente dans cette classe car cela nous permet de faire disparaitre en meme temps que
+     * la barre de personnage les boutons d'équipes lorsque l'on lance la partie
+     */
     public Group boutonEquipe() {
         Group groupEquipeButton = new Group();
 
