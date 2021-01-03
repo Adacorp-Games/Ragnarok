@@ -592,8 +592,8 @@ public class Case {
         for (int i = 0; i < listeCase.size() - 1; i++) {
             depuis.put(listeCase.get(i), null);
         }
-        /*System.out.println("Case initiale : " + this);
-        System.out.println(depuis);*/
+        System.out.println("Case initiale : " + this);
+        //System.out.println(depuis);
         while (!file.isEmpty()) {
             Case v = file.pollFirst();
             for (Case u : v.getCaseVoisines()) {
@@ -602,18 +602,14 @@ public class Case {
                     /*System.out.println("Ennemi trouvé en case : " + u);
                     System.out.println(depuis);*/
                     depuis.replace(u, v);
-                    ret.add(u);
-                    while (depuis.get(u) != this) {
-                        //System.out.println("Retour : " + u);
-                        if (u == null) {
-                            break;
-                        }
-                        ret.add(depuis.get(u));
+                    while (u != this && depuis.get(u) != null) {
+                        System.out.println("Retour : " + u);
+                        ret.add(u);
                         u = depuis.get(u);
                     }
                     ret.add(this);
                     Collections.reverse(ret);
-                    //System.out.println("Chemin : " + ret);
+                    System.out.println("Chemin : " + ret);
                     return ret;
                 } else if (!u.estOccupe() && depuis.get(u) == null) {
                     file.addLast(u);
