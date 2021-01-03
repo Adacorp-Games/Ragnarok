@@ -585,40 +585,31 @@ public class Case {
      * @return une ArrayList contenant les cases qui compose le chemin le plus court vers l'adversaire le plus proche s'il existe.
      */
     public ArrayList<Case> pathDijkstra() {
-        ArrayList<Case> ret = new ArrayList<>();
-        LinkedList<Case> file = new LinkedList<>();
+        ArrayList<Case> chemin = new ArrayList<>();     // Chemin vers l'adversaire le plus proche.
+        LinkedList<Case> file = new LinkedList<>();     // File de traitement des cases (FIFO).
         file.add(this);
-        HashMap<Case, Case> depuis = new HashMap<>();
-        for (int i = 0; i < listeCase.size() - 1; i++) {
-            depuis.put(listeCase.get(i), null);
-        }
-        System.out.println("Case initiale : " + this);
-        //System.out.println(depuis);
+        HashMap<Case, Case> depuis = new HashMap<>();   // Collection des cases parcourues et leur case de découverte.
         while (!file.isEmpty()) {
-            Case v = file.pollFirst();
-            for (Case u : v.getCaseVoisines()) {
-                //System.out.println("Case visitée : " + u);
-                if (!u.getContenu().isEmpty() && u.getEquipeContenu() != this.getEquipeContenu()) {
-                    /*System.out.println("Ennemi trouvé en case : " + u);
-                    System.out.println(depuis);*/
-                    depuis.replace(u, v);
-                    while (u != this && depuis.get(u) != null) {
-                        System.out.println("Retour : " + u);
-                        ret.add(u);
-                        u = depuis.get(u);
+            Case v = file.pollFirst();                  // On Sort la première case de la liste.
+            for (Case u : v.getCaseVoisines()) {        // On traite toutes ses cases voisines.
+                if (!u.getContenu().isEmpty() && u.getEquipeContenu() != this.getEquipeContenu()) { // Si la case contient un adversaire.
+                    depuis.put(u, v); // On met la case visitée dans la Collection "depuis" avec la case depuis laquelle on l'a découverte.
+                    // Traçage du chemin inverse car adversaire trouvé (c'est le plus proche).
+                    while (u != this && depuis.get(u) != null) { // Tant qu'on est pas sur la case de départ de l'algorithme.
+                        chemin.add(u);
+                        u = depuis.get(u);          // On remonte le chemin vers son origine : this.
                     }
-                    ret.add(this);
-                    Collections.reverse(ret);
-                    System.out.println("Chemin : " + ret);
-                    return ret;
-                } else if (!u.estOccupe() && depuis.get(u) == null) {
-                    file.addLast(u);
-                    depuis.replace(u, v);
+                    chemin.add(this);
+                    Collections.reverse(chemin);    // Inversion du chemin pour l'avoir dans le bon ordre.
+                    return chemin;                  // On retourne le chemin vers l'adversaire le plus proche.
+                } else if (!u.estOccupe() && !depuis.containsKey(u)) { // Si la case visitée est vide et n'a jamais été visitée.
+                    file.addLast(u);    // On l'ajoute à la fin de la file.
+                    depuis.put(u, v);   // On la met dans la Collection "depuis" avec la case depuis laquelle on l'a découverte.
                 }
             }
         }
-        Collections.reverse(ret);
-        return ret;
+        Collections.reverse(chemin);
+        return chemin; // Si l'algorithme n'a pas trouvé d'adversaire (car il est inaccessible), il retourne un chemin vide.
     }
 
     /**
