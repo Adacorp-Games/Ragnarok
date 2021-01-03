@@ -195,14 +195,15 @@ public abstract class Personne {
             pathToEnnemy = position.pathToPerso(getOtherTeam());
         }
         System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (!activerDijkstra || (activerDijkstra && pathToEnnemy.size() > 0)) {
-            if (pathToEnnemy.size() - 1 <= range) {
-                System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-            } else {
-                System.out.println(this.getName() + " se déplace");
-                deplacer(pathToEnnemy.get(speed));
-            }
+        if (activerDijkstra && pathToEnnemy.size() <= 0) {
+            pathToEnnemy = position.pathToPerso(getOtherTeam());
+        }
+        if (pathToEnnemy.size() - 1 <= range) {
+            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
+            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+        } else {
+            System.out.println(this.getName() + " se déplace");
+            deplacer(pathToEnnemy.get(speed));
         }
     }
 
