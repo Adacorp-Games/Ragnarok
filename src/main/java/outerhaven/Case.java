@@ -122,12 +122,18 @@ public class Case {
         }
     }
 
+    /**
+     * Cette methode permet de vider le contenu affiché d'une cache pour permettre un futur deplacement
+     */
     public void seViderPourAnimation() {
         contenu.get(0).supprimerSanteEtNom();
         contenu.remove(0);
         group.getChildren().remove(affichagecontenu);
     }
 
+    /**
+     * Cette methode est appelée par le brouillard() et permet de rendre visible une case qui a eté caché
+     */
     public void devenirBlanc() {
         if (alteration == null) {
             hexagone.setImage(hexagone_img1);
@@ -138,6 +144,9 @@ public class Case {
         }
     }
 
+    /**
+     * Cette methode est appelée par le brouillard() et permet de rendre caché une case qui est visible
+     */
     public void devenirNoir() {
         group.getChildren().remove(affichagecontenu);
         hexagone.setImage(hexagone_imgBlock);
@@ -145,7 +154,9 @@ public class Case {
             contenu.get(0).afficherSanteEtNom();
         }
     }
-
+    /**
+     * Cette methode est appelée par le brouillard() et permet verifier si une case est cachée
+     */
     public boolean verifNoir() {
         return hexagone.getImage() == hexagone_imgBlock;
     }
@@ -434,10 +445,10 @@ public class Case {
 
     /**
      * Va chercher dans tableauCase et la tester pour savoir si elle peut être ajouté à un trajet
-     * @param chemin
-     * @param xIncr
-     * @param yIncr
-     * @param personne
+     * @param chemin une liste de case qui servira de chemin final
+     * @param xIncr la difference de case en X entre this et la case etudiée
+     * @param yIncr la difference de case en Y entre this et la case etudiée
+     * @param personne ennemie à trouver
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
         try {
@@ -479,7 +490,9 @@ public class Case {
             }
         }
     }
-
+    /**
+     * ancien algo de pathfinding qui lui etait recursive
+     */
     /*public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
         try {
             boolean ajout = false;
@@ -564,6 +577,12 @@ public class Case {
         }
     }
 
+    /**
+     * Permet d'ajouter une alteration à une case
+     * @param effet le nom de l'effet en question
+     * @param puissance l'intensité de cette effet
+     * @param duree la durée de cette effet
+     */
     public void ajouterAlter(String effet, int puissance, int duree) {
         if (this.getAlteration() == null) {
             this.setAlteration(new Alteration(effet, puissance, duree));
