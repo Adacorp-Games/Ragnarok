@@ -32,6 +32,11 @@ public class Equipe {
         this.argent = 0;
     }
 
+    /**
+     * Cette methode permet de gerer les l'augmentation d'enchere au tour par tour, en remboursant et alternant les equipes
+     * @param prix le prix de l'enchere
+     * @param e equipe qui encheri
+     */
     public void augmenterEnchere(double prix, Enchere e) {
         if (prix > e.getPrixMinimal()) {
             this.setArgent(this.getArgent() - prix);
