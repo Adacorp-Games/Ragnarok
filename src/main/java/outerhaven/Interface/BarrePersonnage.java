@@ -22,6 +22,11 @@ import static outerhaven.Plateau.*;
 
 import java.util.ArrayList;
 
+/**
+ * Classe dans laquelle la majorité de l'interface est crée. La barre personnage en elle même est la partie
+ * qui possède les unités achetables pour la batailles ou gagnées lors des enchères.
+ */
+
 public class BarrePersonnage {
 
     private static final Group groupBarre = new Group();
@@ -208,9 +213,9 @@ public class BarrePersonnage {
     private void mecaniqueBouton() {
         for (Personne p : listeClasse) {
             if (personneSelectionne == p) {
-                p.getImageperson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
+                p.getImagePerson().setEffect(new Effets().putInnerShadow(equipeSelectionne.getCouleur()));
             } else {
-                p.getImageperson().setEffect(null);
+                p.getImagePerson().setEffect(null);
             }
         }
         if (activerEnchere) {
@@ -220,7 +225,7 @@ public class BarrePersonnage {
             Plateau.brouillard();
             personneSelectionne = null;
             for (Personne p : BarrePersonnage.listeEquipe()) {
-                p.getImageperson().setEffect(null);
+                p.getImagePerson().setEffect(null);
             }
         }
         if (enchereTerminee) {
@@ -296,14 +301,14 @@ public class BarrePersonnage {
     public void cleanEffects() {
         if (!activerEnchere) {
             for (Personne p : this.getListeClasse()) {
-                p.getImageperson().setEffect(null);
+                p.getImagePerson().setEffect(null);
             }
         } else {
             for (Personne p : listeEquipe1) {
-                p.getImageperson().setEffect(null);
+                p.getImagePerson().setEffect(null);
             }
             for (Personne p : listeEquipe2) {
-                p.getImageperson().setEffect(null);
+                p.getImagePerson().setEffect(null);
             }
         }
     }

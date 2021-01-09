@@ -9,8 +9,9 @@ import outerhaven.Plateau;
 import java.util.ArrayList;
 
 /**
- * Cette Classe permet de modeliser une enchere sur une Personne, elle est utilisé dans plateau losque les encheres sont activées
+ * Cette Classe permet de modéliser une enchère sur une Personne spéciale (Prime), elle est utilisé dans plateau lorsque les enchères sont activées.
  */
+
 public class Enchere{
     public static ArrayList<Enchere> listeEnchere = new ArrayList<>();
     private Personne produit;

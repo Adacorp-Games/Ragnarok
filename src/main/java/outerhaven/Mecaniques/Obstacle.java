@@ -3,8 +3,10 @@ package outerhaven.Mecaniques;
 import outerhaven.Case;
 
 /**
- * classe en cour de developpement
+ * Classe en cour de développement.
+ * Elle aura pour but de permettre de générer des obstacle destructibles ou non sur le Plateau.
  */
+
 public class Obstacle {
     private Case position;
     private double vie;

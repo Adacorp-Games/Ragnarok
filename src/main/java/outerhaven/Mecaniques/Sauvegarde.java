@@ -6,6 +6,11 @@ import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
+/**
+ * Classe permettant de faire une sauvegarde du jeu à un moment précis comme par exemple la fin
+ * des enchères afin de pouvoir retourné à cet état facilement (argent et unités achetées).
+ */
+
 public class Sauvegarde {
     private final double argentE1;
     private final double argentE2;

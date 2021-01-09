@@ -81,7 +81,7 @@ public class Case {
             hexagone.setX(X);
             hexagone.setY(Y + 2000);
             this.posX = X;
-            this.posY = Y + taille/5;
+            this.posY = Y + taille / 5;
             // Lorsqu'une souris sort de la case
             hexagone.setOnMouseEntered((mouseEvent) -> {
                 if (hexagone.getImage() != hexagone_imgBlock) {
@@ -163,18 +163,14 @@ public class Case {
 
     /**
      * Ajoute un personnage dans une case si il veut s'y déplacer
-     * @param personne
      */
     public void rentrePersonnage(Personne personne) {
-        if (!estOccupe() || contenu.get(0)==personne) {
+        if (!estOccupe() || contenu.get(0) == personne) {
             contenu.clear();
             contenu.add(personne);
             affichagecontenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
             group.getChildren().add( listeCase.size() + 5 ,affichagecontenu);
-            /*InnerShadow ombre = new InnerShadow();
-            ombre.colorProperty().setValue(contenu.get(0).getTeam().getCouleur());
-            hexagone.setEffect(ombre);*/
         }
     }
 
@@ -259,7 +255,6 @@ public class Case {
 
     /**
      * Déplace une case en Y
-     * @param image
      */
     private void mouvementY(ImageView image) {
         image.setY(image.getY() - 5);
@@ -375,6 +370,7 @@ public class Case {
     public int nbVoisinsLibres() {
         return voisinsLibres(true).size();
     }
+
     /**
      * Cherche les voisins d'une case pour les mettre dans voisinCase en début de partie
      */
@@ -556,7 +552,7 @@ public class Case {
      */
     private int donneYpourTab() {
         if (coordonnee[0]%2 == 0) {
-            return coordonnee[1] + (coordonnee[0]/2) ;
+            return coordonnee[1] + (coordonnee[0]/2);
         } else {
             return (coordonnee[1] + (coordonnee[0])/2 + 1);
         }

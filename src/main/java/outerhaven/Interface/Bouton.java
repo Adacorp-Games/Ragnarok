@@ -5,6 +5,10 @@ import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import outerhaven.Plateau;
 
+/**
+ * Classe ayant pour but de raccourcir la gestion des boutons (button) provenant de la librairie JavaFX.
+ */
+
 public class Bouton {
     public static Effect innerShadowOrange = new Effets().putInnerShadow(Color.ORANGE);
     public static Effect innerShadowBlack = new Effets().putInnerShadow(Color.BLACK);

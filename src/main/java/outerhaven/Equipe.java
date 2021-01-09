@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import static outerhaven.Plateau.*;
 
 /**
- * Cette classe gere une equipe de personnage, avec une couleur, ainsi que de l'argent
+ * Cette classe gère une équipe de personnage, avec une couleur, ainsi que de l'argent qu'elle pourra dépenser pour enchérir ou acheter des unités sur le plateau.
  */
 
 public class Equipe {
     /**
-     * Liste des personnage quelle contient
+     * Liste des personnage quelle contient.
      */
     private final ArrayList<Personne> team;
     /**
-     * Couleur qui defini une equipe
+     * Couleur qui défini une équipe.
      */
     private final Color couleur;
     /**
-     * Argent que possede l'equipe
+     * Argent que possède l'équipe.
      */
     private double argent;
 
@@ -33,9 +33,9 @@ public class Equipe {
     }
 
     /**
-     * Cette methode permet de gerer les l'augmentation d'enchere au tour par tour, en remboursant et alternant les equipes
-     * @param prix le prix de l'enchere
-     * @param e equipe qui encheri
+     * Cette methode permet de gérer les l'augmentation d'enchère au tour par tour, en remboursant et alternant les équipes.
+     * @param prix le prix de l'enchère.
+     * @param e équipe qui enchéri.
      */
     public void augmenterEnchere(double prix, Enchere e) {
         if (prix > e.getPrixMinimal()) {
@@ -63,7 +63,7 @@ public class Equipe {
     }
 
     /**
-     * cette section contient tout les getters et setters de Equipe
+     * Cette section contient tout les getters et setters de Equipe.
      */
 
     public Color getCouleur() {

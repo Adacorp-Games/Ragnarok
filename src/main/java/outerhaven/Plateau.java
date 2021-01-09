@@ -681,7 +681,7 @@ public class Plateau {
                 barre.equipe1.setEffect(null);
                 barre.equipe2.setEffect(null);
                 for (Personne p : barre.getListeClasse()) {
-                    p.getImageperson().setEffect(null);
+                    p.getImagePerson().setEffect(null);
                 }
                 idEnchere.getAndSet(0);
                 Collections.shuffle(Enchere.getListeEnchere());
@@ -724,7 +724,7 @@ public class Plateau {
                     barre.getButtonTeamSelect().setEffect(new Effets().putInnerShadow(Plateau.equipeSelectionne.getCouleur()));
                 }
                 for (Personne p : barre.getListeClasse()) {
-                    p.getImageperson().setEffect(null);
+                    p.getImagePerson().setEffect(null);
                 }
                 barre = new BarrePersonnage();
                 barre.majBarreEnchere();
@@ -768,7 +768,7 @@ public class Plateau {
                             c.getHexagone().setImage(Case.hexagone_img1);
                         }
                         for (Personne p : BarrePersonnage.listeClasse) {
-                            p.getImageperson().setEffect(null);
+                            p.getImagePerson().setEffect(null);
                         }
                     }
 

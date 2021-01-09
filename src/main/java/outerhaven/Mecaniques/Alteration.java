@@ -12,8 +12,8 @@ import outerhaven.Plateau;
 import java.util.ArrayList;
 
 /**
- * Cette classe aura pour principal but de permettre l'existence d'alteration, celle-ci s'applique sur des cases et agit sur
- * les stats des Personnes qu'elle contient
+ * Cette classe aura pour principal but de permettre l'existence d'altération, celle-ci s'applique sur des cases et agit sur
+ * les statistiques des unités qu'elles contiennent.
  */
 public class Alteration {
     /**

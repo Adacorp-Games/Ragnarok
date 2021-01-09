@@ -3,6 +3,10 @@ package outerhaven.Mecaniques;
 import outerhaven.Case;
 import outerhaven.Plateau;
 
+/**
+ * Classe permettant la présente d'événements aléatoires dans la partie si l'option est activée.
+ */
+
 public class Evenement {
     public static boolean activerEvenement = false;
     public static int pourcentageEvenement;
@@ -14,7 +18,7 @@ public class Evenement {
     }
 
     /**
-     * Cette methode permet de lancer un evenement sur une liste de case aleatoires
+     * Cette methode permet de lancer un événement sur une liste de case aléatoires.
      */
     public void generationEvenements() {
         if (Plateau.tour % fréquenceEvenement == 0) {
