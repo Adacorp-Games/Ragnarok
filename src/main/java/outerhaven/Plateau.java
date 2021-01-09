@@ -190,6 +190,10 @@ public class Plateau {
         primary.setScene(scene);
     }
 
+    /**
+     * Permet de lancer la scene des encheres si le mode enchere est activé,
+     * il gere le systeme de mise et personnage prime misé
+     */
     public void lancerSceneEnchere() {
         Button terminerEnchere = new Bouton().creerBouton("Terminer");
         terminerEnchere.setLayoutX(140);
@@ -347,6 +351,9 @@ public class Plateau {
         afficheNbTour();
     }
 
+    /**
+     * methode permettant de poursuivre les enheres aprés que quelqu'un se couche
+     */
     public void sceneSuivante() {
         if (activerEnchere && !enchereTerminee) {
             if (argentPartie == 0) {
@@ -499,6 +506,11 @@ public class Plateau {
         return animationBT;
     }
 
+    /**
+     * genere boutton pour activer les encheres
+     * @return button affichable
+     */
+
     private Button boutonEnchere() {
         // Demande l'utilisation des enchères
         Button enchereBT = new Button("Enchères : NON");
@@ -530,6 +542,10 @@ public class Plateau {
         return enchereBT;
     }
 
+    /**
+     * genere le bouton pour afficher les evenements
+     * @return button affichable
+     */
     private Button boutonEvenement() {
         // Demande l'utilisation des évènements aléatoires
         Button eventBT = new Button("Évènements : NON");
@@ -561,6 +577,10 @@ public class Plateau {
         return eventBT;
     }
 
+    /**
+     * genere bouton pour utiliser l'algorithme de djikstra
+     * @return button affichage
+     */
     private Button boutonDijkstra() {
         // Demande l'utilisation des évènements aléatoires
         Button dijkstraBT = new Button("Dijkstra : NON");
@@ -592,6 +612,10 @@ public class Plateau {
         return dijkstraBT;
     }
 
+    /**
+     * genere bouton de developpement pour debug
+     * @return button affichable
+     */
     private Button boutonCheats() {
         Button button = new Bouton().creerBoutonBool("Cheats", 270, 130);
         button.setOnMouseClicked(mouseEvent -> {
@@ -872,6 +896,9 @@ public class Plateau {
         group.getChildren().add(modes);
     }
 
+    /**
+     * methode creant un bouton option permettant d'utiliser le Dijkstra
+     */
     private void ajouteLesOptions() {
         Button options = new Bouton().creerBouton("Options");
         options.setLayoutX(270);
@@ -1091,6 +1118,9 @@ public class Plateau {
         prix.setText("");
     }
 
+    /**
+     * affiche ou supprime le brouillard de guerre quant cette methode est appelée
+     */
     public static void brouillard() {
         if (equipeSelectionne == getE1()) {
             // Tests brouillard de guerre
