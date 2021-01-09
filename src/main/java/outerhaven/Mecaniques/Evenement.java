@@ -13,6 +13,9 @@ public class Evenement {
         this.alteration = alteration;
     }
 
+    /**
+     * Cette methode permet de lancer un evenement sur une liste de case aleatoires
+     */
     public void generationEvenements() {
         if (Plateau.tour % fréquenceEvenement == 0) {
             for (Case c : Plateau.listeCase) {
@@ -24,6 +27,9 @@ public class Evenement {
         }
     }
 
+    /**
+     * Cette section contient tout les getters et setters de Evenement
+     */
     public static void setActiverEvenement(boolean activerEvenement) {
         Evenement.activerEvenement = activerEvenement;
     }

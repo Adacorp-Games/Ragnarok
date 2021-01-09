@@ -11,6 +11,10 @@ import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
+/**
+ * Cette classe aura pour principal but de permettre l'existence d'alteration, celle-ci s'applique sur des cases et agit sur
+ * les stats des Personnes qu'elle contient
+ */
 public class Alteration {
     /**
      * L'image qui changera une case qui sera altérée.

@@ -2,6 +2,9 @@ package outerhaven.Mecaniques;
 
 import outerhaven.Case;
 
+/**
+ * classe en cour de developpement
+ */
 public class Obstacle {
     private Case position;
     private double vie;

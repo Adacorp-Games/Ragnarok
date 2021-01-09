@@ -73,6 +73,9 @@ public class Necromancien extends PersonneMagique {
         }
     }
 
+    /**
+     * Methode permettant l'invocation d'unité par le Necromantien
+     */
     public void invocation() {
         for (Case c : this.getPosition().voisinsLibres(true)) {
             // Remplissage des cases voisines vides par des invocations

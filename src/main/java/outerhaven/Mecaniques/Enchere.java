@@ -8,7 +8,10 @@ import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
-public class Enchere {
+/**
+ * Cette Classe permet de modeliser une enchere sur une Personne, elle est utilisé dans plateau losque les encheres sont activées
+ */
+public class Enchere{
     public static ArrayList<Enchere> listeEnchere = new ArrayList<>();
     private Personne produit;
     private double prixMinimal;
@@ -21,6 +24,9 @@ public class Enchere {
         this.status = true;
     }
 
+    /**
+     * methode permettant de clore une enchere une fois fini
+     */
     public void cloreEnchere() {
         this.setStatus(false);
         this.getProduit().setTeam(this.getEquipeGagnante());
@@ -31,6 +37,9 @@ public class Enchere {
         }
     }
 
+    /**
+     * Cette section contient tout les getters et setters de Enchere
+     */
     public Group afficherInformations() {
         return this.getProduit().afficherInfo(700, 500);
     }
