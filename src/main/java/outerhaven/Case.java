@@ -193,7 +193,7 @@ public class Case {
                     }
                     if (personneSelectionne.getClass().getName().contains("Prime")) {
                         try {
-                            ArrayList<Personne> listeEquipe = new ArrayList<>();
+                            ArrayList<Personne> listeEquipe;
                             if (equipeSelectionne == e1) {
                                 listeEquipe = listeEquipe1;
                             } else {
@@ -281,12 +281,13 @@ public class Case {
         return "Case {" + Arrays.toString(coordonnee) + '}';
     }
 
+    /*
     /**
      * Algo récursif qui a pour bu de retourner la taille d'un block de personnages de même équipes
      * @param block qui est une Arraylist contenant toutes les cases du block
      * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
      * @return le return n'est récupéré qu'une seule fois : quand le parcours final est finis
-     */
+     *//*
     private ArrayList<Case> tailleBlock(ArrayList<Case> block, ArrayList<Case> caseVu) {
         if (this.contenu.isEmpty()) {
             caseVu.add(this);
@@ -303,7 +304,7 @@ public class Case {
             }
         }
         return block;
-    }
+    }*/
 
     /**
      * Permet d'afficher visuellement les case voisines
@@ -398,10 +399,10 @@ public class Case {
      */
     public ArrayList<Case> pathToPerso(Equipe e) {
         // La profondeur max possible
-        int depth = 10000000;
+        int depth = listeCase.size();
         Personne laPlusProche = null;
+        //on regarde avec tout les personnages la norme vectoriel qui les separent d'une case
         for (Personne personnage : personnages) {
-            //if (!this.contenu.isEmpty() && this.contenu.get(0) != personnage) {
             if (this.contenu.get(0) != personnage) {
                 int x = (personnage.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
                 int y = (personnage.getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
@@ -422,9 +423,10 @@ public class Case {
     public ArrayList<Case> pathToPersoAux(Personne personne) {
         ArrayList<Case> chemin = new ArrayList<>();
         chemin.add(this);
+        //on calcule la distance en X et en Y entre deux cases
         int x = (personne.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
         int y = (personne.getPosition().donneYpourTab() - this.donneYpourTab());
-        // Calcule du déplacement unitaire allant de xIncr à AvancementX de 1 en 1
+        // Calcule du déplacement unitaire allant de xIncr/yIncr à AvancementX/avancementY de 1 en 1
         final double sqrt = Math.sqrt(x * x + y * y);
         double avancementX =  x / sqrt;
         double avancementY =  y / sqrt;
@@ -453,6 +455,7 @@ public class Case {
             if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
                 // Si la case est vide
                 if (!caseVoisines.contains(c)) {
+                    //on verifie si c est bien une case voisine de la case precedente, si ce n'est pas le cas, on cherche une case voisine commune au deux cases
                     for (int i = 0; i < caseVoisines.size(); i++) {
                         for (int j = 0; j < c.caseVoisines.size(); j++) {
                             if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
@@ -464,7 +467,7 @@ public class Case {
                 }
                 chemin.add(c);
             } else {
-                // Si la case est utilisé
+                // Si la case est utilisé, on cherche une case voisine commune au deux cases
                 for (int i = 0; i < caseVoisines.size(); i++) {
                     for (int j = 0; j < c.caseVoisines.size(); j++) {
                         if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
@@ -474,6 +477,7 @@ public class Case {
                     }
                 }
             }
+            //si l'on de c'est deux boucle for sans ajout d'une case, alors l'unité est bloqué et ne peut pas se deplacer
             if (!ajout) {
                 bloqué = true;
             }
@@ -486,6 +490,8 @@ public class Case {
             }
         }
     }
+
+    /*
     /**
      * ancien algo de pathfinding qui lui etait recursive
      */
@@ -551,9 +557,12 @@ public class Case {
      * @return un entier qui correspond à la coordonnée de Y.
      */
     private int donneYpourTab() {
+        //le codage se differe entre deux lignes
         if (coordonnee[0]%2 == 0) {
+            //quand c'est une ligne paire
             return coordonnee[1] + (coordonnee[0]/2);
         } else {
+            //quand c'est une ligne impaire
             return (coordonnee[1] + (coordonnee[0])/2 + 1);
         }
     }
@@ -621,10 +630,12 @@ public class Case {
         return chemin; // Si l'algorithme n'a pas trouvé d'adversaire (car il est inaccessible), il retourne un chemin vide.
     }
 
+    /*
     /**
      * Autre pathToPerso et PathToPersoAux à partir d'un algo récurant (fonctionnel mais beaucoup moins performant)
      */
-    /*public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
+    /*
+    public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
         if (depth == 0) {
             //si this contient le perso de l'équipe voulue retourne le chemin jusqu'à lui
             if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
