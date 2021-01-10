@@ -435,6 +435,7 @@ public class Case {
         double xIncr = 0;
         double yIncr = 0;
         bloqué = false;
+        // On increment à fois xIncr et yIncr et vérifiant si la case obtenue est valide.
         while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && !bloqué) {
             xIncr = xIncr + avancementX;
             yIncr = yIncr + avancementY;
