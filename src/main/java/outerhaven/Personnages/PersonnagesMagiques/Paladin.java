@@ -28,6 +28,7 @@ public class Paladin extends PersonneMagique {
         super(3000, 250, 300, 300, 1, 1, team, position, 100);
     }
 
+    @Override
     public void action() {
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());

@@ -19,6 +19,7 @@ public class Pretre extends PersonneMagique {
         super(700, 50, 350, 100, 2, 1, team, position, 100);
     }
 
+    @Override
     public void action() {
         // Gagne de la mana chaque tour et se soigne
         this.gainMana();

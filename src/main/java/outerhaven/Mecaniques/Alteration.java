@@ -65,7 +65,7 @@ public class Alteration {
 
     /**
      * Applique les effets d'une altération sur un personnage (par tour).
-     * @param p
+     * @param p esr la Personne a qui on va appliquer l'effet positif ou négatif en fonction de l'altération.
      */
     public void appliquerEffet(Personne p) {
         if (this.effet == "poison" && p.getClass() != Alchimiste.class) {

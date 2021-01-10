@@ -28,10 +28,11 @@ import static outerhaven.Plateau.*;
 /**
  * Unité sur le plateau qui appartient à une équipe et se déplace de Case en Case. Elle peut posséder des caractéristiques spéciales.
  */
+
 public abstract class Personne {
     private final String name; // Stocké dans un tableau.
     /**
-     * Liste des noms stockés dans un fichier texte modifiable par n'importe qui pour ajouter de la personnalisation
+     * Liste des noms stockés dans un fichier texte modifiable par n'importe qui pour ajouter de la personnalisation.
      */
     private static final ArrayList<String> listName = new ArrayList<>();
     private Group SanteNom = new Group();
@@ -177,17 +178,14 @@ public abstract class Personne {
     }*/
 
     /**
-     * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer
+     * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer.
+     * Cette méthode va se complexifier au fur et à mesure que les unités auront des comportements complexes.
      */
     public void action() {
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.position.nbVoisinsLibres());
         ArrayList<Case> pathToEnemy = calculerChemin(); // Calcule le chemin en fonction de plusieurs paramètres.
-        System.out.println("Taille du chemin vers l'ennemis le plus proche (" + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getName() + ") pour " + this.getName() + " : " + (pathToEnemy.size() - 1));
         if (pathToEnemy.size() - 1 <= this.range) { // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0).getHealth() + ")");
             attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
         } else { // Sinon il se déplace pour se rapprocher de lui.
-            System.out.println(this.getName() + " se déplace");
             deplacer(pathToEnemy.get(this.speed));
         }
     }

@@ -19,11 +19,12 @@ public class Alchimiste extends PersonneMagique {
         super(1000, 80, 650, 150, 4, 1, team, position, 150);
     }
 
+    @Override
     public void action() {
         this.gainMana();
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
         ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
+        System.out.println("Taille du chemin vers l'ennemi le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
 
         // Capacités de l'alchimiste
         if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {

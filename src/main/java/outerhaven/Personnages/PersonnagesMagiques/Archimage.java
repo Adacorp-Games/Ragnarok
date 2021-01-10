@@ -18,6 +18,7 @@ public class Archimage extends PersonneMagique {
         super(1200, 60, 800, 450, 8, 1, team, position, 110);
     }
 
+    @Override
     public void action() {
         this.gainMana();
         boolean danger = false;

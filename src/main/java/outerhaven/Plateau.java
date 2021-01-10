@@ -77,7 +77,7 @@ public class Plateau {
     public static int temps = 500;
     public static int tour = 0;
     /**
-     * Status de certains paramètre utiles pour le fonctionnement du jeu
+     * Status de certains paramètre utiles pour le fonctionnement du jeu.
      */
     public static Personne personneSelectionne;
     public static Equipe equipeSelectionne;
@@ -90,7 +90,7 @@ public class Plateau {
     public static AtomicInteger idEnchere = new AtomicInteger();
     public static Text prix = new Text();
     /**
-     * Interface utile au plateau à mettre à jour durant une partie
+     * Interface utile au plateau à mettre à jour durant une partie.
      */
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
@@ -121,9 +121,10 @@ public class Plateau {
         taille = 1000/Math.sqrt(aire);
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
-        // Activation des événements aléatoires (il faut mettre en TRUE), il n'y a pas encore d'interface pour cela c'est plus pour le fun (à ne pas utiliser sur les grandes grilles).
+        // Activation des événements aléatoires
         Evenement.setFréquenceEvenement(10);
         Evenement.setPourcentageEvenement(20);
+
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -191,8 +192,8 @@ public class Plateau {
     }
 
     /**
-     * Permet de lancer la scene des encheres si le mode enchere est activé,
-     * il gere le systeme de mise et personnage prime misé
+     * Permet de lancer la scene des enchères si le mode enchère est activé,
+     * il gere le système de mise et personnage prime misé.
      */
     public void lancerSceneEnchere() {
         Button terminerEnchere = new Bouton().creerBouton("Terminer");
@@ -286,7 +287,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode permettant à chaque case de connaitre ses cases voisines
+     * Méthode permettant à chaque case de connaitre ses cases voisines.
      */
     public void initVoisins() {
         for (Case c : listeCase) {
@@ -295,7 +296,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe
+     * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe.
      */
     public static void afficherNbPersonne() {
         Rectangle barre = new Rectangle(250 , 70, Color.LIGHTGRAY);
@@ -318,7 +319,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode pour update les compteurs de afficherNbPersonne()
+     * Méthode pour update les compteurs de afficherNbPersonne().
      */
     public static void updateNbPersonne() {
         nbPersonne.getChildren().clear();
@@ -326,7 +327,7 @@ public class Plateau {
     }
 
     /**
-     * Affiche le tour actuel
+     * Affiche le tour actuel.
      */
     private static void afficheNbTour() {
         Rectangle barre = new Rectangle(50 , 50, Color.LIGHTGRAY);
@@ -344,7 +345,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode pour update les compteurs de afficheNbTour()
+     * Méthode pour update les compteurs de afficheNbTour().
      */
     public static void updateNbTour() {
         nbTour.getChildren().clear();
@@ -352,7 +353,7 @@ public class Plateau {
     }
 
     /**
-     * methode permettant de poursuivre les enheres aprés que quelqu'un se couche
+     * méthode permettant de poursuivre les enchères après que quelqu'un se couche.
      */
     public void sceneSuivante() {
         if (activerEnchere && !enchereTerminee) {
@@ -455,7 +456,7 @@ public class Plateau {
     }
 
     /**
-     * Fonction transformant un String en entier
+     * Fonction transformant un String en entier.
      * @param textField est le texte qu'on cherche à transformer en entier
      * @return le texte en int s'il contient que des entiers
      */
@@ -465,14 +466,14 @@ public class Plateau {
     }
 
     /**
-     * equipeSelectionne devient l'équipe en paramètre
+     * equipeSelectionne devient l'équipe en paramètre.
      */
     public static void incorporeEquipe(Equipe equipe) {
         equipeSelectionne = equipe;
     }
 
     /**
-    * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard
+    * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard.
     */
 
     private Button boutonAnimation() {
@@ -507,7 +508,7 @@ public class Plateau {
     }
 
     /**
-     * genere boutton pour activer les encheres
+     * Génère le bouton pour activer les enchères.
      * @return button affichable
      */
 
@@ -543,7 +544,7 @@ public class Plateau {
     }
 
     /**
-     * genere le bouton pour afficher les evenements
+     * Génère le bouton pour afficher les évènements.
      * @return button affichable
      */
     private Button boutonEvenement() {
@@ -578,7 +579,7 @@ public class Plateau {
     }
 
     /**
-     * genere bouton pour utiliser l'algorithme de djikstra
+     * Génère bouton pour utiliser l'algorithme de Dijkstra.
      * @return button affichage
      */
     private Button boutonDijkstra() {
@@ -613,7 +614,7 @@ public class Plateau {
     }
 
     /**
-     * genere bouton de developpement pour debug
+     * Génère bouton de développement pour debug.
      * @return button affichable
      */
     private Button boutonCheats() {
@@ -643,7 +644,7 @@ public class Plateau {
     }
 
     /**
-     * Crée un bouton Exit
+     * Crée un bouton Exit.
      * @return le bouton Exit
      */
     private Button boutonExit() {
@@ -655,7 +656,7 @@ public class Plateau {
     }
 
     /**
-     * Crée un bouton Reset:
+     * Crée un bouton Reset.
      * Relance le jeu une nouvelle aire
      * @return le bouton Reset
      */
@@ -692,7 +693,7 @@ public class Plateau {
     }
 
     /**
-     * Crée un bouton ReStart:
+     * Crée un bouton ReStart.
      * Relance le meme plateau
      * @return le bouton ReStart
      */
@@ -736,7 +737,7 @@ public class Plateau {
     }
 
     /**
-     * Crée un bouton PausePlay:
+     * Crée un bouton PausePlay.
      * gere l'état et l'avancement du jeu
      * @return un groupe contenant les boutons Play et Pause
      */
@@ -752,7 +753,6 @@ public class Plateau {
         play.setLayoutX(140);
         play.setLayoutY(10);
         play.setOnMouseClicked(mouseEvent -> {
-            //labelPlay.setText("La partie reprend");
             if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()) {
                 boutonGame.getChildren().remove(labelPause);
                 boutonGame.getChildren().remove(play);
@@ -808,7 +808,6 @@ public class Plateau {
                 }
                 if (!group.getChildren().contains(barre.returnBarre())) {
                     group.getChildren().add(barre.returnBarre());
-                    //group.getChildren().add(boutonEquipe());
                     scene.setFill(Color.WHITE);
                 }
             }));
@@ -820,7 +819,7 @@ public class Plateau {
     }
 
     /**
-     * Crée des boutons modifiants la vitesse d'exécution d'un tour en millisecondes
+     * Crée des boutons modifiants la vitesse d'exécution d'un tour en millisecondes.
      * @return les boutons de vitesse
      */
     private Button vitesseX1() {
@@ -846,7 +845,7 @@ public class Plateau {
     }
 
     /**
-     * Crée un bouton affichant la vie et le nom des personnages
+     * Crée un bouton affichant la vie et le nom des personnages.
      */
     private void afficheBarVie() {
         Button barVie = new Bouton().creerBouton("Afficher barres de vie");
@@ -867,7 +866,7 @@ public class Plateau {
     }
 
     /**
-     * Menu contenant tout les boutons précédents et l'ajout au groupe général
+     * Menu contenant tout les boutons précédents et l'ajout au groupe général.
      */
     private void ajouteLesModes() {
         Button modes = new Bouton().creerBouton("Modes");
@@ -897,7 +896,7 @@ public class Plateau {
     }
 
     /**
-     * methode creant un bouton option permettant d'utiliser le Dijkstra
+     * methode créant un bouton "Options" permettant d'utiliser le Dijkstra et les cheats.
      */
     private void ajouteLesOptions() {
         Button options = new Bouton().creerBouton("Options");
@@ -926,7 +925,7 @@ public class Plateau {
     }
 
     /**
-     * Menu contenant tout les boutons précédents et l'ajout au groupe général
+     * Menu contenant tout les boutons précédents et l'ajout au groupe général.
      */
     private void ajouteLeMenu() {
         Button menu = new Bouton().creerBouton("Menu");
@@ -1000,7 +999,7 @@ public class Plateau {
 
     /**
      * Lance un tour : fait combattre les personnages en fonction d'un certain temps d'attente (vitesse) jusqu'à ce qu'il ne reste qu'une équipe ou
-     * que l'utilisateur mette pause
+     * que l'utilisateur mette pause.
      */
     public void tour() {
         if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
@@ -1104,7 +1103,7 @@ public class Plateau {
     }
 
     /**
-     * Méthode qui va nettoyer le plateau en cas de reset / restart
+     * Méthode qui va nettoyer le plateau en cas de reset / restart.
      */
     public void cleanPlateau() {
         tour = 0;
@@ -1119,7 +1118,7 @@ public class Plateau {
     }
 
     /**
-     * affiche ou supprime le brouillard de guerre quant cette methode est appelée
+     * Affiche ou supprime le brouillard de guerre quand cette méthode est appelée.
      */
     public static void brouillard() {
         if (equipeSelectionne == getE1()) {
@@ -1173,10 +1172,6 @@ public class Plateau {
 
     public static boolean isActiverAnimation() {
         return activerAnimation;
-    }
-
-    public static boolean isActiverEnchere() {
-        return activerEnchere;
     }
 
     public static void setStatusPartie(boolean statusPartie) {

@@ -21,6 +21,7 @@ public class PretrePrime extends Pretre {
         this.augmenterStats(2);
     }
 
+    @Override
     public void action() {
         // Gagne de la mana chaque tour et se soigne
         this.gainMana();
