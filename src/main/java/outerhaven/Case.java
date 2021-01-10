@@ -418,24 +418,27 @@ public class Case {
     }
 
     /**
-     * Calcule l'itinéraire d'une case à une autre grâce à un système de déplacement vectoriel (déplacement unitaire vectoriel)
+     * Calcule l'itinéraire d'une case à une autre grâce à un système de déplacement vectoriel (déplacement unitaire vectoriel).
      */
     public ArrayList<Case> pathToPersoAux(Personne personne) {
         ArrayList<Case> chemin = new ArrayList<>();
         chemin.add(this);
-        //on calcule la distance en X et en Y entre deux cases
+        // On calcule la distance en X et en Y entre la case initiale et la case finale.
         int x = (personne.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
         int y = (personne.getPosition().donneYpourTab() - this.donneYpourTab());
-        // Calcule du déplacement unitaire allant de xIncr/yIncr à AvancementX/avancementY de 1 en 1
+        // Calcule du déplacement unitaire pour AvancementX/avancementY.
         final double sqrt = Math.sqrt(x * x + y * y);
         double avancementX =  x / sqrt;
         double avancementY =  y / sqrt;
+        // xIncr et yIncr seront des variables qui seront incrémentées.
+        // Elles représenteront étape par étape les déplacements en case pour le chemin final.
         double xIncr = 0;
         double yIncr = 0;
         bloqué = false;
         while (chemin.get(chemin.size() - 1).contenu.isEmpty() || chemin.get(chemin.size() - 1).contenu.get(0) != personne && !bloqué) {
             xIncr = xIncr + avancementX;
             yIncr = yIncr + avancementY;
+            // Nous vérifions si une case est valide et peut accueillir une Personne.
             testCase(chemin, arrondir(xIncr), arrondir(yIncr), personne);
         }
         return chemin;
@@ -568,7 +571,7 @@ public class Case {
     }
 
     /**
-     * Permet d'arrondir un nombre au 0.5 près (utile car (int) arrondi à la decimal inférieur
+     * Permet d'arrondir un nombre au 0.5 près (utile car (int) arrondi à la decimal inférieur)
      */
     private int arrondir(double nombre) {
         if (Math.abs(nombre - (int) nombre) > 0.6) {
