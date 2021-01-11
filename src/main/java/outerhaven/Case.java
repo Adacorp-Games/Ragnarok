@@ -316,24 +316,28 @@ public class Case {
         if (status) {
             voisin = hexagone_img2;
         } else {
-            if (this.getAlteration() != null) {
-                voisin = this.getAlteration().getImage();
-            } else {
-                voisin = hexagone_img1;
-            }
+            voisin = hexagone_img1;
         }
         if (this.getHexagone().getImage() != hexagone_imgBlock) {
             this.getHexagone().setImage(voisin);
             if (longueur == 1) {
                 for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
-                        c.getHexagone().setImage(voisin);
+                        if(c.getAlteration()!=null) {
+                            c.getHexagone().setImage(c.getAlteration().getImage());
+                        } else {
+                            c.getHexagone().setImage(voisin);
+                        }
                     }
                 }
             } else {
                 for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
-                        c.getHexagone().setImage(voisin);
+                        if(c.getAlteration()!=null) {
+                            c.getHexagone().setImage(c.getAlteration().getImage());
+                        } else {
+                            c.getHexagone().setImage(voisin);
+                        }
                         c.afficherCaseVoisines(longueur - 1, status);
                     }
                 }
