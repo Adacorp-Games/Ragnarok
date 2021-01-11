@@ -124,7 +124,42 @@ public class Plateau {
         // Paramétrage des événements aléatoires
         Evenement.setFréquenceEvenement(10);
         Evenement.setPourcentageEvenement(20);
+        //generation du plateau
+        genererPlateau();
+        // Initialisation des cases voisines
+        initVoisins();
+        // Creation et incorporation d'une slide barre + bouton
+        ajouteLeMenu();
+        // Creation et incorporation d'information sur les équipes
+        afficherNbPersonne();
+        afficheNbTour();
+        // On affiche l'argent si elle n'est pas infini (rien d'écrit)
+        if (argentPartie > 0) {
+            if (!activerEnchere) {
+                getE1().setArgent(argentPartie);
+                getE2().setArgent(argentPartie);
+            }
+            group.getChildren().add(barre.getArgentGroup());
+        }
+        personneSelectionne = null;
+        if (enchereTerminee) {
+            equipeSelectionne = e1;
+            barre.majBarreEnchere();
+            brouillard();
+        }
+        if (activerCheats) {
+            cheats();
+        }
+        // On ajoute toutes les interfaces
+        group.getChildren().addAll(nbPersonne, nbTour, boutonPausePlay(), barre.returnBarre());
+        primary.setScene(scene);
+    }
 
+    /**
+     * Cette methode a pour but de générer un plateau de case en fonction du l'aire voulu par l'utilisateur.
+     * Elle n'interagit qu'avec des attributs de la classe plateau.
+     */
+    private void genererPlateau(){
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -162,33 +197,6 @@ public class Plateau {
                 ligne++;
             }
         }
-        // Initialisation des cases voisines
-        initVoisins();
-        // Creation et incorporation d'une slide barre + bouton
-        ajouteLeMenu();
-        // Creation et incorporation d'information sur les équipes
-        afficherNbPersonne();
-        afficheNbTour();
-        // On affiche l'argent si elle n'est pas infini (rien d'écrit)
-        if (argentPartie > 0) {
-            if (!activerEnchere) {
-                getE1().setArgent(argentPartie);
-                getE2().setArgent(argentPartie);
-            }
-            group.getChildren().add(barre.getArgentGroup());
-        }
-        personneSelectionne = null;
-        if (enchereTerminee) {
-            equipeSelectionne = e1;
-            barre.majBarreEnchere();
-            brouillard();
-        }
-        if (activerCheats) {
-            cheats();
-        }
-        // On ajoute toutes les interfaces
-        group.getChildren().addAll(nbPersonne, nbTour, boutonPausePlay(), barre.returnBarre());
-        primary.setScene(scene);
     }
 
     /**
