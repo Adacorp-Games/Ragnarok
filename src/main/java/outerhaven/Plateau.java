@@ -113,15 +113,15 @@ public class Plateau {
      * lancerScenePlateau() génère le plateau d'hexagone en fonction de :
      * - l'aire
      * - la taille de l'écran de l'utilisateur
-     * La methode auras aussi pour but d'incorporer les Cases créent dans listeCase et tableauCase en leur donnant des coordonnés x et y
-     * Elle ajoute aussi des interface en plus comme le menus, ses boutons d'interactions, l'argent du joueur et le nb de personnage dans chaque équipes
+     * La methode auras aussi pour but d'incorporer les Cases créent dans listeCase et tableauCase en leur donnant des coordonnés x et y.
+     * Elle ajoute aussi des interface en plus comme le menus, ses boutons d'interactions, l'argent du joueur et le nb de personnage dans chaque équipes.
      */
     public void lancerScenePlateau() {
         // Ajuste la taille d'une case et le taille du tableau case
         taille = 1000/Math.sqrt(aire);
         tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
-        // Activation des événements aléatoires
+        // Paramétrage des événements aléatoires
         Evenement.setFréquenceEvenement(10);
         Evenement.setPourcentageEvenement(20);
 
@@ -147,7 +147,7 @@ public class Plateau {
                 decalage = true;
                 ligne++;
             } else {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
+                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
                     double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille/2;

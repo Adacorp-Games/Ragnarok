@@ -38,37 +38,23 @@ public class Necromancien extends PersonneMagique {
         }
     }
 
+    @Override
     public void action() {
-        // Gagne de la mana chaque tour
-        this.gainMana();
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        if (this.getPosition().nbVoisinsLibres() == 0) {
-            System.out.println(this.getName() + " patiente");
+        this.gainMana(); // Gagne de la mana chaque tour.
+        if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0 && this.getCooldown() >= 3) {
+            // Invocation de morts dans les cases libres autour de lui si cases voisines libres et CD rechargé.
+            invocation();
+            // Décrémentation de son mana après le sort lancé.
+            this.setMana(this.getMana() - 100); // Draine 100 de mana afin de lancer cette invocation.
+            this.setCooldown(0); // Met un CD de 3 tous sur l'invocation.
         } else {
-            if (getPosition().pathToPerso(getOtherTeam()).size() == 0) {
-                System.out.println(this.getName() + " patiente");
-
-                // Invocation de morts dans les cases libres autour de lui
-            } else if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0 && this.getCooldown() >= 3) {
-                //while (this.getMana() > 0) {
-                System.out.println("Invoque");
-                invocation();
-                //}
-                    // Décrémentation de son mana après le sort lancé
-                    this.setMana(this.getMana() - 100);
-                    this.setCooldown(0);
-
+            // Partie usuelle de la méthode action().
+            ArrayList<Case> pathToEnemy = calculerChemin();
+            ArrayList<Case> pathToEnemyD = this.getPosition().pathToPerso(getOtherTeam());
+            if (pathToEnemyD.size() - 1 <= this.getRange()) {
+                attaquer(pathToEnemyD.get(pathToEnemyD.size() - 1).getContenu().get(0));
             } else {
-                ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-                System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-                if (pathToEnnemy.size() - 1 <= this.getRange()) {
-                    System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                    attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-                } else {
-                    System.out.println(this.getName() + " se déplace");
-                    deplacer(pathToEnnemy.get(this.getSpeed()));
-                }
-                // System.out.println("Vie restante de la cible " + getHealth());
+                deplacer(pathToEnemy.get(this.getSpeed()));
             }
         }
     }

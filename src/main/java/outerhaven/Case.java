@@ -68,7 +68,7 @@ public class Case {
     }
 
     /**
-     * Génère l'affichage d'une case ainsi que ses interactions
+     * Génère l'affichage d'une case ainsi que ses interactions.
      * @param X : position en X de l'image
      * @param Y : position en Y de l'image
      * @param taille : taille de l'image pixels
@@ -108,7 +108,7 @@ public class Case {
     }
 
     /**
-     * Methode permettant à une case (this) de se vider, ne plus avoir de contenu
+     * Methode permettant à une case (this) de se vider, ne plus avoir de contenu.
      */
     public void seVider() {
         if (contenu.size() > 0) {
@@ -123,7 +123,7 @@ public class Case {
     }
 
     /**
-     * Cette methode permet de vider le contenu affiché d'une cache pour permettre un futur deplacement
+     * Cette methode permet de vider le contenu affiché d'une cache pour permettre un futur déplacement.
      */
     public void seViderPourAnimation() {
         contenu.get(0).supprimerSanteEtNom();
@@ -132,7 +132,7 @@ public class Case {
     }
 
     /**
-     * Cette methode est appelée par le brouillard() et permet de rendre visible une case qui a eté caché
+     * Cette methode est appelée par le brouillard() et permet de rendre visible une case qui a eté caché.
      */
     public void devenirBlanc() {
         if (alteration == null) {
@@ -145,7 +145,7 @@ public class Case {
     }
 
     /**
-     * Cette methode est appelée par le brouillard() et permet de rendre caché une case qui est visible
+     * Cette methode est appelée par le brouillard() et permet de rendre caché une case qui est visible.
      */
     public void devenirNoir() {
         group.getChildren().remove(affichagecontenu);
@@ -155,14 +155,14 @@ public class Case {
         }
     }
     /**
-     * Cette methode est appelée par le brouillard() et permet verifier si une case est cachée
+     * Cette methode est appelée par le brouillard() et permet verifier si une case est cachée.
      */
     public boolean verifNoir() {
         return hexagone.getImage() == hexagone_imgBlock;
     }
 
     /**
-     * Ajoute un personnage dans une case si il veut s'y déplacer
+     * Ajoute un personnage dans une case si il veut s'y déplacer.
      */
     public void rentrePersonnage(Personne personne) {
         if (!estOccupe() || contenu.get(0) == personne) {
@@ -175,7 +175,7 @@ public class Case {
     }
 
     /**
-     * Gère l'interaction d'une case lorsque l'on clique dessus
+     * Gère l'interaction d'une case lorsque l'on clique dessus.
      */
     public void interactionHex() {
         if (!statusPartie) {
@@ -587,18 +587,18 @@ public class Case {
     }
 
     /**
-     * Permet d'ajouter une alteration à une case
+     * Permet d'ajouter une alteration à une case.
      * @param effet le nom de l'effet en question
      * @param puissance l'intensité de cette effet
-     * @param duree la durée de cette effet
+     * @param durée la durée de cette effet
      */
-    public void ajouterAlter(String effet, int puissance, int duree) {
-        if (this.getAlteration() == null) {
-            this.setAlteration(new Alteration(effet, puissance, duree));
+    public void ajouterAlter(String effet, int puissance, int durée) {
+        if (this.getAlteration() == null) { // Si la case ne possède pas d'altération.
+            this.setAlteration(new Alteration(effet, puissance, durée)); // Ajoute l'altération de case à this.
             this.getHexagone().setEffect(new Effets().putInnerShadow(Color.BLACK));
-            Plateau.listeCaseAlterees.add(this);
-        } else {
-            this.getAlteration().setDuree(duree);
+            Plateau.listeCaseAlterees.add(this); // Ajoute à la case altérée à la liste des cases altérée pour décrémenter la durée.
+        } else if (this.getAlteration().getEffet().equals(effet)) { // Sinon réinitialise sa durée.
+            this.getAlteration().setDuree(durée);
         }
     }
 

@@ -26,7 +26,7 @@ public class Enchere{
     }
 
     /**
-     * methode permettant de clore une enchere une fois fini
+     * Méthode permettant de clore une enchère une fois terminée.
      */
     public void cloreEnchere() {
         this.setStatus(false);
