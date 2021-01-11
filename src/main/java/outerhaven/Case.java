@@ -323,7 +323,7 @@ public class Case {
             if (longueur == 1) {
                 for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
-                        if(c.getAlteration()!=null) {
+                        if (c.getAlteration() != null) {
                             c.getHexagone().setImage(c.getAlteration().getImage());
                         } else {
                             c.getHexagone().setImage(voisin);
@@ -333,7 +333,7 @@ public class Case {
             } else {
                 for (Case c : this.getCaseVoisines()) {
                     if (!c.estOccupe() && c.hexagone.getImage() != hexagone_imgBlock) {
-                        if(c.getAlteration()!=null) {
+                        if (c.getAlteration() != null) {
                             c.getHexagone().setImage(c.getAlteration().getImage());
                         } else {
                             c.getHexagone().setImage(voisin);

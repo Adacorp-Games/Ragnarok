@@ -99,9 +99,9 @@ public class Alteration {
      * Méthode réduisant la durée de l'altération à chaque tour.
      */
     public void passeTour() {
-        if (duree > 1) {
+        if (duree > 1) { // Si la durée est supérieure 1 tour on la décrémente
             duree--;
-        } else {
+        } else { // Sinon on la supprime
             for (Case c : Plateau.listeCaseAlterees) {
                 if (c.getAlteration() == this) {
                     c.setAlteration(null);
