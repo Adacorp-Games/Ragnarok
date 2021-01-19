@@ -1,7 +1,7 @@
 package outerhaven.Mecaniques;
 
 import outerhaven.Interface.BarrePersonnage;
-import outerhaven.Personnages.Personne;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;

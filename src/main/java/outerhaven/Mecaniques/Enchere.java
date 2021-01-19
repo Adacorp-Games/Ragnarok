@@ -3,7 +3,7 @@ package outerhaven.Mecaniques;
 import javafx.scene.Group;
 import outerhaven.Equipe;
 import outerhaven.Interface.BarrePersonnage;
-import outerhaven.Personnages.Personne;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;

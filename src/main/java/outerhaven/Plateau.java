@@ -18,13 +18,15 @@ import javafx.util.Duration;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
-import outerhaven.Mecaniques.Alteration;
+import outerhaven.Mecaniques.Alterations.Alteration;
+import outerhaven.Mecaniques.Alterations.AlterationFreeze;
+import outerhaven.Mecaniques.Alterations.AlterationPoison;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenement;
 import outerhaven.Mecaniques.Sauvegarde;
-import outerhaven.Personnages.PersonnagesMagiques.Archimage;
-import outerhaven.Personnages.PersonnagesPrime.*;
-import outerhaven.Personnages.Personne;
+import outerhaven.Entites.Personnages.PersonnagesMagiques.Archimage;
+import outerhaven.Entites.Personnages.PersonnagesPrime.*;
+import outerhaven.Entites.Personnages.Personne;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -95,7 +97,7 @@ public class Plateau {
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
     private static Group nbTour = new Group();
-    private Evenement event = new Evenement(new Alteration("poison", 50, 20));
+    private Evenement event = new Evenement(new AlterationPoison(50, 20));
 
     public Plateau(Stage primary) {
         // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
@@ -159,7 +161,7 @@ public class Plateau {
      * Cette methode a pour but de générer un plateau de case en fonction du l'aire voulu par l'utilisateur.
      * Elle n'interagit qu'avec des attributs de la classe plateau.
      */
-    private void genererPlateau(){
+    private void genererPlateau() {
         // Les hexagones se chevauchent par ligne, le but de se boolean est de décaler chaque ligne pour permettre ce chevauchement
         boolean decalage = false;
         int i = 0;
@@ -1037,7 +1039,7 @@ public class Plateau {
                         Alteration.AlterSupprimer.add(c);
                     }
                 }
-                Alteration.nettoiCaseAlter();
+                Alteration.nettoieCaseAlter();
             }
 
             // Gestion de l'affichage de barres de vie
@@ -1059,9 +1061,9 @@ public class Plateau {
                     personnage.gainCD();
                     personnage.clearStatus();
                     if (personnage.getPosition().getAlteration() != null) {
-                        if (personnage.getPosition().getAlteration().getEffet() == "freeze" && personnage.getClass() == Archimage.class) {
+                        if (personnage.getPosition().getAlteration() instanceof AlterationFreeze && personnage.getClass() == Archimage.class) {
                             personnage.action();
-                        } else if (personnage.getPosition().getAlteration().getEffet() != "freeze" && personnage.getStatus() == "normal") {
+                        } else if (!(personnage.getPosition().getAlteration() instanceof AlterationFreeze) && personnage.getStatus() == "normal") {
                             personnage.action();
                         }
                     } else if (personnage.getStatus() == "normal") {

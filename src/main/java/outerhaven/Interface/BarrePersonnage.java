@@ -10,12 +10,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Mecaniques.Sauvegarde;
-import outerhaven.Personnages.Archer;
-import outerhaven.Personnages.Guerrier;
-import outerhaven.Personnages.Mage;
-import outerhaven.Personnages.PersonnagesEnergetiques.*;
-import outerhaven.Personnages.PersonnagesMagiques.*;
-import outerhaven.Personnages.Personne;
+import outerhaven.Entites.Personnages.Archer;
+import outerhaven.Entites.Personnages.Guerrier;
+import outerhaven.Entites.Personnages.Mage;
+import outerhaven.Entites.Personnages.PersonnagesEnergetiques.*;
+import outerhaven.Entites.Personnages.PersonnagesMagiques.*;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Plateau;
 
 import static outerhaven.Plateau.*;

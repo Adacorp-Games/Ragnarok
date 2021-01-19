@@ -12,8 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Interface.Effets;
-import outerhaven.Mecaniques.Alteration;
-import outerhaven.Personnages.Personne;
+import outerhaven.Mecaniques.Alterations.Alteration;
+import outerhaven.Entites.Personnages.Personne;
 
 import static outerhaven.Interface.BarrePersonnage.listeEquipe1;
 import static outerhaven.Interface.BarrePersonnage.listeEquipe2;
@@ -287,7 +287,8 @@ public class Case {
      * @param block qui est une Arraylist contenant toutes les cases du block
      * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
      * @return le return n'est récupéré qu'une seule fois : quand le parcours final est finis
-     *//*
+     */
+    /*
     private ArrayList<Case> tailleBlock(ArrayList<Case> block, ArrayList<Case> caseVu) {
         if (this.contenu.isEmpty()) {
             caseVu.add(this);
@@ -592,17 +593,14 @@ public class Case {
 
     /**
      * Permet d'ajouter une alteration à une case.
-     * @param effet le nom de l'effet en question
-     * @param puissance l'intensité de cette effet
-     * @param durée la durée de cette effet
      */
-    public void ajouterAlter(String effet, int puissance, int durée) {
+    public void ajouterAlter(Alteration a) {
         if (this.getAlteration() == null) { // Si la case ne possède pas d'altération.
-            this.setAlteration(new Alteration(effet, puissance, durée)); // Ajoute l'altération de case à this.
+            this.setAlteration(a); // Ajoute l'altération de case à this.
             this.getHexagone().setEffect(new Effets().putInnerShadow(Color.BLACK));
             Plateau.listeCaseAlterees.add(this); // Ajoute à la case altérée à la liste des cases altérée pour décrémenter la durée.
-        } else if (this.getAlteration().getEffet().equals(effet)) { // Sinon réinitialise sa durée.
-            this.getAlteration().setDuree(durée);
+        } else if (this.getAlteration().getClass().equals(a.getClass())) { // Sinon réinitialise sa durée.
+            this.getAlteration().setDuree(a.getDuree());
         }
     }
 
@@ -737,7 +735,7 @@ public class Case {
     }
 
     /**
-     * Méthode permettant de modifier l'altération de this
+     * Méthode permettant de modifier l'altération de this.
      * @param alteration à mettre sur this
      */
     public void setAlteration(Alteration alteration) {

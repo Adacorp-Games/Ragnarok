@@ -3,7 +3,7 @@ package outerhaven;
 import javafx.scene.paint.Color;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Enchere;
-import outerhaven.Personnages.Personne;
+import outerhaven.Entites.Personnages.Personne;
 import java.util.ArrayList;
 
 import static outerhaven.Plateau.*;

@@ -1,6 +1,7 @@
 package outerhaven.Mecaniques;
 
 import outerhaven.Case;
+import outerhaven.Mecaniques.Alterations.Alteration;
 import outerhaven.Plateau;
 
 /**
@@ -25,7 +26,7 @@ public class Evenement {
             for (Case c : Plateau.listeCase) {
                 double random = Math.random() * 100;
                 if (random < pourcentageEvenement) {
-                    c.ajouterAlter(alteration.getEffet(), alteration.getPuissance(), alteration.getDuree());
+                    c.ajouterAlter(alteration);
                 }
             }
         }
