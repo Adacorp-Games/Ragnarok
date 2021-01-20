@@ -20,9 +20,23 @@ public class Chaman extends PersonneMagique {
         super(1500, 50, 1000, 100, 10, 1, team, position, 100);
     }
 
+    /**
+     * Action de toute personneMagique en fonction de la distance avec sa cible la plus proche et de son/ses pouvoir(s).
+     */
+    @Override
+    public void action() {
+        this.gainMana(); // this gagne du mana si this peut effectuer une action.
+        this.genererChemin(); // Créer le chemin vers l'objectif de this (attaquer, protéger un bâtiment ...).
+        if (this.getCooldown() >= 5) {
+            this.pouvoir(); // Utilise le pouvoir de this.
+        } else {
+            this.comportementsBasiques(); // Se déplace ou attaque.
+        }
+    }
+
     @Override
     public void pouvoir() {
-        if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0 && this.getCooldown() >= 5) {
+        if (this.getMana() > 100 && this.getPosition().nbVoisinsLibres() > 0) {
             // Invocation d'un golem dans une case libre autour de lui si cases voisines libres et CD rechargé.
             invocation();
             // Décrémentation de son mana après le sort lancé.
