@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Pretre extends PersonneMagique {
 
     public Pretre() {
-        //    vie  armr cst  dg rnge spd)
         super(700, 50, 350, 110, 2, 1, 100);
     }
 
@@ -22,22 +21,15 @@ public class Pretre extends PersonneMagique {
 
     @Override
     public void action() {
-        // Gagne de la mana chaque tour et se soigne
-        this.gainMana();
+        this.gainMana(); // this gagne du mana si this peut effectuer une action.
+        this.genererChemin(); // Créer le chemin vers l'objectif de this (attaquer, protéger un bâtiment ...).
+        this.comportementsBasiques(); // Se déplace ou attaque.
+        this.pouvoir(); // Utilise le pouvoir de this.
+    }
+
+    @Override
+    public void pouvoir() {
         this.soigner(300);
-
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (pathToEnnemy.size() - 1 <= this.getRange()) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.getSpeed()));
-        }
-        // System.out.println("Vie restante de la cible " + getHealth());
 
         // Soigne les cases voisines
         ajouterAlter(new AlterationHeal(60, 1, this.getTeam()), this.getPosition());

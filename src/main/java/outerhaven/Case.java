@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import outerhaven.Entites.Entite;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alterations.Alteration;
 import outerhaven.Entites.Personnages.Personne;
@@ -22,41 +23,41 @@ import static outerhaven.Plateau.*;
 /**
  * Une case représente un hexagone sur le plateau,
  * elle peut contenir un personnage et être altérée,
- * cette classe contient aussi tout le système de détection permettant ainsi les combats
+ * cette classe contient aussi tout le système de détection permettant ainsi les combats.
  */
 
 public class Case {
     /**
-     * Liste/tableau des cases (altérées ou non) dans le plateau
+     * Liste/tableau des cases (altérées ou non) dans le plateau.
      */
     public static ArrayList<Case> listeCase = new ArrayList<>();
     public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
     public static Case[][] tableauCase;
     /**
-     * Pos X et Pos Y contiennent les coordonnées de la case en px sur l'écran de l'utilisateur
-     * coordonnée contient les coordonnée X -> (0) et Y -> (1) de la case
+     * Pos X et Pos Y contiennent les coordonnées de la case en px sur l'écran de l'utilisateur.
+     * coordonnée contient les coordonnée X -> (0) et Y -> (1) de la case.
      */
     private double posX;
     private double posY;
     private final int[] coordonnee = new int[2];
     /**
-     * caseVoisines contient les cases cases partageant des cotés avec la this (6 max)
+     * caseVoisines contient les cases cases partageant des cotés avec la this (6 max).
      */
     private ArrayList<Case> caseVoisines = new ArrayList<>();
     /**
-     * C'est ce que contient la case, nous avons choisi d'utiliser une liste pour éviter certaine erreur
+     * C'est ce que contient la case, nous avons choisi d'utiliser une liste pour éviter certaine erreur.
      */
     private final ArrayList<Personne> contenu = new ArrayList<>();
     /**
-     * Groupe contenant l'affichage de la case
+     * Groupe contenant l'affichage de la case.
      */
-    private Group affichagecontenu;
+    private Group affichageContenu;
     /**
-     * Contenant l'altération de la case : null si la case n'a rien
+     * Contenant l'altération de la case : null si la case n'a rien.
      */
     private Alteration alteration;
     /**
-     * Contient l'image d'une case --> forme hexagonale
+     * Contient l'image d'une case -> forme hexagonale.
      */
     private ImageView hexagone;
     public static final Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
@@ -124,7 +125,7 @@ public class Case {
             }
             contenu.get(0).supprimerSanteEtNom();
             contenu.remove(0);
-            group.getChildren().remove(affichagecontenu);
+            group.getChildren().remove(affichageContenu);
         }
     }
 
@@ -134,7 +135,7 @@ public class Case {
     public void seViderPourAnimation() {
         contenu.get(0).supprimerSanteEtNom();
         contenu.remove(0);
-        group.getChildren().remove(affichagecontenu);
+        group.getChildren().remove(affichageContenu);
     }
 
     /**
@@ -145,7 +146,7 @@ public class Case {
             hexagone.setImage(hexagone_img1);
         } else {
             hexagone.setImage(alteration.getImage());
-        } if (!group.getChildren().contains(affichagecontenu) && !contenu.isEmpty()) {
+        } if (!group.getChildren().contains(affichageContenu) && !contenu.isEmpty()) {
             rentrePersonnage(contenu.get(0));
         }
     }
@@ -154,7 +155,7 @@ public class Case {
      * Cette methode est appelée par le brouillard() et permet de rendre caché une case qui est visible.
      */
     public void devenirNoir() {
-        group.getChildren().remove(affichagecontenu);
+        group.getChildren().remove(affichageContenu);
         hexagone.setImage(hexagone_imgBlock);
         if (!contenu.isEmpty()) {
             contenu.get(0).afficherSanteEtNom();
@@ -174,9 +175,9 @@ public class Case {
         if (!estOccupe() || contenu.get(0) == personne) {
             contenu.clear();
             contenu.add(personne);
-            affichagecontenu = contenu.get(0).affichagePersonnage();
+            affichageContenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
-            group.getChildren().add( listeCase.size() + 5 ,affichagecontenu);
+            group.getChildren().add( listeCase.size() + 5 , affichageContenu);
         }
     }
 
@@ -191,9 +192,9 @@ public class Case {
                 if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
                     // Met à jour l'affichage, la liste des personnages sur le plateau et dans les équipes
                     contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
-                    affichagecontenu = contenu.get(0).affichagePersonnage();
+                    affichageContenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
-                    group.getChildren().add(listeCase.size() + 5, affichagecontenu);
+                    group.getChildren().add(listeCase.size() + 5, affichageContenu);
                     if (equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) {
                         equipeSelectionne.setArgent(equipeSelectionne.getArgent() - personneSelectionne.getCost());
                     }
@@ -289,7 +290,7 @@ public class Case {
 
     /*
     /**
-     * Algo récursif qui a pour bu de retourner la taille d'un block de personnages de même équipes
+     * Algo récursif qui a pour but de retourner la taille d'un block de personnages de même équipes
      * @param block qui est une Arraylist contenant toutes les cases du block
      * @param caseVu qui est une Arraylist contenant toutes les cases deja parcouru
      * @return le return n'est récupéré qu'une seule fois : quand le parcours final est finis
@@ -412,7 +413,7 @@ public class Case {
         // La profondeur max possible
         int depth = listeCase.size();
         Personne laPlusProche = null;
-        //on regarde avec tout les personnages la norme vectoriel qui les separent d'une case
+        // On regarde avec tout les personnages la norme vectoriel qui les séparent d'une case
         for (Personne personnage : Personne.personnages) {
             if (this.contenu.get(0) != personnage) {
                 int x = (personnage.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
@@ -459,8 +460,8 @@ public class Case {
     /**
      * Va chercher dans tableauCase et la tester pour savoir si elle peut être ajouté à un trajet
      * @param chemin une liste de case qui servira de chemin final
-     * @param xIncr la difference de case en X entre this et la case etudiée
-     * @param yIncr la difference de case en Y entre this et la case etudiée
+     * @param xIncr la difference de case en X entre this et la case étudiée
+     * @param yIncr la difference de case en Y entre this et la case étudiée
      * @param personne ennemie à trouver
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
@@ -470,7 +471,7 @@ public class Case {
             if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
                 // Si la case est vide
                 if (!caseVoisines.contains(c)) {
-                    //on verifie si c est bien une case voisine de la case precedente, si ce n'est pas le cas, on cherche une case voisine commune au deux cases
+                    // on vérifie si c est bien une case voisine de la case précédente, si ce n'est pas le cas, on cherche une case voisine commune au deux cases
                     for (int i = 0; i < caseVoisines.size(); i++) {
                         for (int j = 0; j < c.caseVoisines.size(); j++) {
                             if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty()) {
@@ -492,7 +493,7 @@ public class Case {
                     }
                 }
             }
-            //si l'on de c'est deux boucle for sans ajout d'une case, alors l'unité est bloqué et ne peut pas se deplacer
+            // Si l'on de c'est deux boucle for sans ajout d'une case, alors l'unité est bloqué et ne peut pas se déplacer
             if (!ajout) {
                 bloqué = true;
             }
@@ -506,64 +507,6 @@ public class Case {
         }
     }
 
-    /*
-    /**
-     * ancien algo de pathfinding qui lui etait recursive
-     */
-    /*public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne, boolean erreur) {
-        try {
-            boolean ajout = false;
-            Case c = tableauCase[this.getCoordonnee()[0] + xIncr][this.donneYpourTab() + yIncr];
-            if (c.getContenu().isEmpty() || c.getContenu().get(0) == personne) {
-                // Si la case est vide
-                if (!caseVoisines.contains(c)) {
-                    for (int i = 0; i < caseVoisines.size(); i++) {
-                        for (int j = 0; j < c.caseVoisines.size(); j++) {
-                            if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && c.caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
-                                chemin.add(caseVoisines.get(i));
-                                ajout = true;
-                            }
-                        }
-                    }
-                }
-                chemin.add(c);
-            } else {
-                // Si la case est utilisé
-                for (int i = 0; i < caseVoisines.size(); i++) {
-                    for (int j = 0; j < c.caseVoisines.size(); j++) {
-                        if (c.caseVoisines.get(j) == caseVoisines.get(i) && c.caseVoisines.get(j).getContenu().isEmpty() && caseVoisines.get(i) != this.getContenu().get(0).getCasePrecedente()) {
-                            chemin.add(caseVoisines.get(i));
-                            ajout = true;
-                        }
-                    }
-                }
-                if (!ajout) {
-                    for (Case c2 : caseVoisines) {
-                        if (c2.getContenu().isEmpty() && c2 != this.getContenu().get(0).getCasePrecedente()) {
-                            chemin.add(c2);
-                            ajout = true;
-                        }
-
-                    }
-                }
-            }
-            if (!ajout) {
-                bloqué = false;
-            }
-        } catch (Exception e) {
-            // L'enchainement de try et du à l'erreur possible lors des bordures du tableau de case (coté droit et coté gauche)
-            if (!erreur) {
-                try {
-                    testCase(chemin, xIncr - 1, yIncr, personne, true);
-                } catch (Exception e2) {
-                    testCase(chemin, xIncr + 1, yIncr, personne, true);
-                }
-            } else {
-                bloqué=false;
-            }
-        }
-    }*/
-
     /**
      * Cette méthode convertie les coordonnées X et Y d'une case (allant de -racine(aire) à +racine(aire))
      * en coordonnée valable pour le tableau (allant de 0 à tableauCase.length)
@@ -572,7 +515,7 @@ public class Case {
      * @return un entier qui correspond à la coordonnée de Y.
      */
     private int donneYpourTab() {
-        //le codage se differe entre deux lignes
+        // Le codage se diffère entre deux lignes.
         if (coordonnee[0]%2 == 0) {
             //quand c'est une ligne paire
             return coordonnee[1] + (coordonnee[0]/2);
@@ -642,45 +585,37 @@ public class Case {
         return chemin; // Si l'algorithme n'a pas trouvé d'adversaire (car il est inaccessible), il retourne un chemin vide.
     }
 
-    /*
     /**
-     * Autre pathToPerso et PathToPersoAux à partir d'un algo récurant (fonctionnel mais beaucoup moins performant)
+     * Fonction de pathfinding utilisant une version de l'algorithme de Dijkstra très basique.
+     * @return une ArrayList contenant les cases qui compose le chemin le plus court vers l'entité "e" en paramètre.
      */
-    /*
-    public ArrayList<Case> pathToPersoAux(Equipe equipe, ArrayList<Case> parcours, int depth, int initialdepth) {
-        if (depth == 0) {
-            //si this contient le perso de l'équipe voulue retourne le chemin jusqu'à lui
-            if (!contenu.isEmpty() && contenu.get(0).getTeam() == equipe) {
-                parcours.add(this);
-                return parcours;
-            } else {
-                return new ArrayList<>();
-            }
-        } else {
-            parcours.add(this);
-            for (int i = 0; i < caseVoisines.size() - 1; i++) {
-                if (!parcours.contains(caseVoisines.get(i)) && (caseVoisines.get(i).contenu.isEmpty() || caseVoisines.get(i).contenu.get(0).getTeam() == equipe )) {
-
-                    if (caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth).size() == initialdepth + 1) {
-                        return caseVoisines.get(i).pathToPersoAux(equipe, new ArrayList<Case>(parcours), depth - 1, initialdepth);
+    public ArrayList<Case> pathDijkstra(Entite e) {
+        ArrayList<Case> chemin = new ArrayList<>();     // Chemin vers l'adversaire le plus proche.
+        LinkedList<Case> file = new LinkedList<>();     // File de traitement des cases (FIFO).
+        file.add(this);
+        HashMap<Case, Case> depuis = new HashMap<>();   // Collection des cases parcourues et leur case de découverte.
+        while (!file.isEmpty()) {
+            Case v = file.pollFirst();                  // On Sort la première case de la liste.
+            for (Case u : v.getCaseVoisines()) {        // On traite toutes ses cases voisines.
+                if (!u.estOccupe() && !depuis.containsKey(u)) { // Si la case visitée est vide et n'a jamais été visitée.
+                    file.addLast(u);    // On l'ajoute à la fin de la file.
+                    depuis.put(u, v);   // On la met dans la Collection "depuis" avec la case depuis laquelle on l'a découverte.
+                } else if (!u.getContenu().isEmpty() && u.getContenu().get(0) == e) {
+                    depuis.put(u, v); // On met la case visitée dans la Collection "depuis" avec la case depuis laquelle on l'a découverte.
+                    // Traçage du chemin inverse car adversaire trouvé (c'est le plus proche).
+                    while (u != this && depuis.get(u) != null) { // Tant qu'on est pas sur la case de départ de l'algorithme.
+                        chemin.add(u);
+                        u = depuis.get(u);          // On remonte le chemin vers son origine : this.
                     }
+                    chemin.add(this);
+                    Collections.reverse(chemin);    // Inversion du chemin pour l'avoir dans le bon ordre.
+                    return chemin;                  // On retourne le chemin vers l'adversaire le plus proche.
                 }
             }
-            return new ArrayList<>();
         }
+        Collections.reverse(chemin);
+        return chemin; // Si l'algorithme n'a pas trouvé d'adversaire (car il est inaccessible), il retourne un chemin vide.
     }
-
-    // Nécessite que le plateau contienne au moins un personnage de l'équipe visée en dehors de this
-
-    public ArrayList<Case> pathToPerso(Equipe e) {
-        ArrayList<Case> parcours = new ArrayList<Case>();
-        int depth = 1;
-        while (parcours.isEmpty()) {
-            parcours = pathToPersoAux(e, new ArrayList<Case>(), depth, depth);
-            depth++;
-        }
-        return parcours;
-    }*/
 
     /**
      * Cette section contient tout les getters et setters de Case
@@ -724,12 +659,12 @@ public class Case {
         return contenu;
     }
 
-    public Group getAffichagecontenu() {
-        return affichagecontenu;
+    public Group getAffichageContenu() {
+        return affichageContenu;
     }
 
-    public void setAffichagecontenu(Group affichagecontenu) {
-        this.affichagecontenu = affichagecontenu;
+    public void setAffichageContenu(Group affichageContenu) {
+        this.affichageContenu = affichageContenu;
     }
 
     public Alteration getAlteration() {

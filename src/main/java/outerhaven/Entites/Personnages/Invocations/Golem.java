@@ -5,15 +5,17 @@ import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Mecaniques.Poste.Defenseur;
+import outerhaven.Mecaniques.Poste.Poste;
 
 public class Golem extends Invocation {
 
     public Golem() {
-        super(4000, 1000, 400, 200, 1, 1);
+        super(2500, 1000, 400, 200, 1, 1);
     }
 
     public Golem(Equipe team, Case position) {
-        super(4000, 1000, 400, 200, 1, 1, team, position);
+        super(2500, 1000, 400, 200, 1, 1, team, position);
     }
 
     @Override

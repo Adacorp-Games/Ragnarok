@@ -25,9 +25,9 @@ public class NecromancienPrime extends Necromancien {
         for (Case c : this.getPosition().voisinsLibres(true)) {
             // Remplissage des cases voisines vides par des invocations
             c.getContenu().add(new Liche(this.getTeam(), c));
-            c.setAffichagecontenu(c.getContenu().get(0).affichagePersonnage());
+            c.setAffichageContenu(c.getContenu().get(0).affichagePersonnage());
             c.getContenu().get(0).afficherSanteEtNom();
-            Plateau.group.getChildren().add(c.getAffichagecontenu());
+            Plateau.group.getChildren().add(c.getAffichageContenu());
         }
     }
 

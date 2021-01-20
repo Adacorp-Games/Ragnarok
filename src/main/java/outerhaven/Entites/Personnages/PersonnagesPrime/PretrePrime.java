@@ -22,23 +22,8 @@ public class PretrePrime extends Pretre {
     }
 
     @Override
-    public void action() {
-        // Gagne de la mana chaque tour et se soigne
-        this.gainMana();
+    public void pouvoir() {
         this.soigner(500);
-
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-        if (pathToEnnemy.size() - 1 <= this.getRange()) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.getSpeed()));
-        }
-        // System.out.println("Vie restante de la cible " + getHealth());
 
         // Soigne les cases voisines
         ajouterAlter(new AlterationHeal(75, 1, this.getTeam()), this.getPosition());

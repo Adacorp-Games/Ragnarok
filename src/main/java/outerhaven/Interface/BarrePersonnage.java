@@ -50,6 +50,7 @@ public class BarrePersonnage {
             listeClasse.add(new Archimage());
             listeClasse.add(new Pretre());
             listeClasse.add(new Samourai());
+            listeClasse.add(new Chaman());
 
             // Configuration des listes de personnages pour chaque équipe
             listeEquipe1.addAll(listeClasse);

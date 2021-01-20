@@ -6,13 +6,10 @@ import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationFreeze;
 import outerhaven.Entites.Personnages.Personne;
-import outerhaven.Mecaniques.Alterations.AlterationPoison;
-
-import java.util.ArrayList;
 
 public class Archimage extends PersonneMagique {
+
     public Archimage() {
-        //    vie  armr cst  dg rnge spd)
         super(1200, 60, 800, 450, 8, 1, 100);
     }
 
@@ -21,14 +18,9 @@ public class Archimage extends PersonneMagique {
     }
 
     @Override
-    public void action() {
-        this.gainMana();
-        boolean danger = getDanger();
-
-        ArrayList<Case> pathToEnemy = calculerChemin();
-
+    public void pouvoir() {
         // Téléportation si cible trop proche (danger détecté)
-        if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
+        if (this.getDanger() && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
 
             // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
             gelAOE(this.getPosition());
@@ -44,15 +36,7 @@ public class Archimage extends PersonneMagique {
             }
             this.setMana(this.getMana() - 50);
 
-        } else if (pathToEnemy.size() - 1 <= this.getRange()) {
-            attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
-        } else {
-            deplacer(pathToEnemy.get(this.getSpeed()));
         }
-    }
-
-    public void gel(Case c) {
-        ajouterAlter(new AlterationPoison(50, 10, this.getTeam()), c);
     }
 
     public void gelAOE(Case c) {
@@ -60,20 +44,6 @@ public class Archimage extends PersonneMagique {
         for (Case cv : c.getCaseVoisines()) {
             ajouterAlter(new AlterationFreeze(50, 10, this.getTeam()), cv);
         }
-    }
-
-    public boolean getDanger() {
-        // Vérification si les cases voisines contiennent au moins un ennemi
-        for (Case c : this.getPosition().voisinsLibres(false)) {
-            // Si la case voisine n'est pas vide
-            if (c.getContenu().size() != 0) {
-                // Si le contenu de la case n'est pas un allié
-                if (c.getContenu().get(0).getTeam() != this.getTeam()) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override

@@ -6,8 +6,6 @@ import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
 
-import java.util.ArrayList;
-
 public class Paladin extends PersonneMagique {
 
     public Paladin(double health, double armor, double cost, int damage, int range, int speed, double mana) {
@@ -19,9 +17,7 @@ public class Paladin extends PersonneMagique {
     }
 
     public Paladin() {
-        //   vie    armor cost degat rnge speed  magie)
         super(3000, 250, 300, 300, 1, 1, 100);
-        // super(3000, 1000, 300, 300,    1,   1,   100);
     }
 
     public Paladin(Equipe team, Case position) {
@@ -29,25 +25,14 @@ public class Paladin extends PersonneMagique {
     }
 
     @Override
-    public void action() {
-        this.gainMana();
-
-        // Se soigne si il possède de la mana
+    public void pouvoir() {
         if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
             this.soigner(getMaxHealth()/4);
             this.setMana(this.getMana() - 150);
 
-        } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth()/4) {
+        } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth() - this.getMaxHealth()/4) {
             this.setHealth(getMaxHealth());
             this.setMana(this.getMana() - 150);
-
-        } else {
-            ArrayList<Case> pathToEnemy = calculerChemin();
-            if (pathToEnemy.size() - 1 <= this.getRange()) {
-                attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
-            } else {
-                deplacer(pathToEnemy.get(this.getSpeed()));
-            }
         }
     }
 

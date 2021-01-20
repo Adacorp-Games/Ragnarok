@@ -120,9 +120,11 @@ public abstract class Personne extends Entite {
      */
     public ArrayList<Case> calculerChemin() {
         ArrayList<Case> chemin;
-        if (activerDijkstra && this.position.nbVoisinsLibres() > 0) { // Chemin calculé avec l'algorithme de Dijkstra si option activée.
+        if (activerDijkstra && this.position.nbVoisinsLibres() > 0) {
+            // Chemin calculé avec l'algorithme de Dijkstra si option activée.
             chemin = this.position.pathDijkstra();
-        } else { // Sinon calcul du chemin avec l'utilisation du calcul vectoriel lambda.
+        } else {
+            // Sinon calcul du chemin avec l'utilisation du calcul vectoriel lambda.
             chemin = this.position.pathToPerso(getOtherTeam());
         }
         if (activerDijkstra && chemin.size() <= 0) {
@@ -133,9 +135,11 @@ public abstract class Personne extends Entite {
     }
 
     public void comportementsBasiques() {
-        if (this.pathToEnemy.size() - 1 <= this.getRange()) { // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
+        if (this.pathToEnemy.size() - 1 <= this.getRange()) {
+            // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
             attaquer(this.pathToEnemy.get(this.pathToEnemy.size() - 1).getContenu().get(0));
-        } else { // Sinon il se déplace pour se rapprocher de lui.
+        } else {
+            // Sinon il se déplace pour se rapprocher de lui.
             deplacer(this.pathToEnemy.get(this.getSpeed()));
         }
     }
@@ -144,9 +148,9 @@ public abstract class Personne extends Entite {
      * Méthode qui permet d'attaquer le personnage mit en paramètre s'il est d'une équipe différente.
      */
     public void attaquer(Personne p) {
-        double damageMultiplier = damage / (damage + armor / 5);
-        double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
+            double damageMultiplier = this.damage / (this.damage + this.armor / 5);
+            double totalDamage = this.damage * damageMultiplier;
             p.prendreDégâts(totalDamage);
         }
     }
@@ -193,6 +197,20 @@ public abstract class Personne extends Entite {
             timeline.setCycleCount(15);
             timeline.play();
         }
+    }
+
+    public boolean getDanger() {
+        // Vérification si les cases voisines contiennent au moins un ennemi
+        for (Case c : this.getPosition().voisinsLibres(false)) {
+            // Si la case voisine n'est pas vide
+            if (c.getContenu().size() != 0) {
+                // Si le contenu de la case n'est pas un allié
+                if (c.getContenu().get(0).getTeam() != this.getTeam()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -626,10 +644,6 @@ public abstract class Personne extends Entite {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Case getCasePrecedente() {
-        return casePrecedente;
     }
 
     public void setCasePrecedente(Case casePrecedente) {

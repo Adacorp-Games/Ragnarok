@@ -36,6 +36,7 @@ public abstract class PersonneMagique extends Personne {
     /**
      * Action de toute personneMagique en fonction de la distance avec sa cible la plus proche et de son/ses pouvoir(s).
      */
+    @Override
     public void action() {
         this.gainMana(); // this gagne du mana si this peut effectuer une action.
         this.genererChemin(); // Créer le chemin vers l'objectif de this (attaquer, protéger un bâtiment ...).
@@ -43,7 +44,7 @@ public abstract class PersonneMagique extends Personne {
         this.comportementsBasiques(); // Se déplace ou attaque.
     }
 
-    public void pouvoir() {}
+    public abstract void pouvoir();
 
     /**
      * Fonction permettant à la personne d'altérer de la case c.

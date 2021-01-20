@@ -1,9 +1,10 @@
-package outerhaven.Entites.Personnages;
+package outerhaven.Entites.Personnages.PersonnagesRage;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import outerhaven.Case;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 
 import static outerhaven.Plateau.taille;

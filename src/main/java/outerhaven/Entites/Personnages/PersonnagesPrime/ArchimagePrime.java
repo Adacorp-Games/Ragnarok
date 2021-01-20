@@ -22,40 +22,11 @@ public class ArchimagePrime extends Archimage {
     }
 
     @Override
-    public void action() {
-        this.gainMana();
-        boolean danger = getDanger();
-
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-
-        // Téléportation si cible trop proche (danger détecté)
-        if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
-
-            // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
-            ajouterAlter(new AlterationFreeze(60, 15, this.getTeam()), this.getPosition());
-            ajouterAlterVoisine(new AlterationFreeze(60, 15, this.getTeam()), this.getPosition());
-
-            // Cherche un voisin libre et un voisin libre du voisin libre si possible
-            Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
-            if (voisinLibre.nbVoisinsLibres() > 0) {
-            /*if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
-                déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
-            } else {*/
-                deplacer(voisinLibre);
-                //}
-            }
-            this.setMana(this.getMana() - 50);
-
-        } else if (pathToEnnemy.size() - 1 <= this.getRange()) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.getSpeed()));
+    public void gelAOE(Case c) {
+        ajouterAlter(new AlterationFreeze(75, 15, this.getTeam()), c);
+        for (Case cv : c.getCaseVoisines()) {
+            ajouterAlter(new AlterationFreeze(75, 15, this.getTeam()), cv);
         }
-        // System.out.println("Vie restante de la cible " + getHealth());
     }
 
     @Override

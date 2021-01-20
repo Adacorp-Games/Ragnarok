@@ -1075,11 +1075,12 @@ public class Plateau {
                     personnage.getAlteration();
                     personnage.gainCD();
                     personnage.clearStatus();
-                    if (personnage.getPosition().getAlteration() != null) {
-                        if (personnage.getStatus().equals("freeze") && personnage instanceof Archimage) {
+                    /*if (personnage.getPosition().getAlteration() != null) {
+                        if (personnage.getStatus().equals("freeze") && personnage.getClass().equals(Archimage.class)) {
                             personnage.action();
                         }
-                    } else if (personnage.getStatus().equals("normal")) {
+                    } else*/
+                    if (personnage.getStatus().equals("normal")) {
                         personnage.action();
                     }
                 }
