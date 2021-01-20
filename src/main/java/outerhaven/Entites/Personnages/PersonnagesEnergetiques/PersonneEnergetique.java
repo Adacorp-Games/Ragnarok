@@ -34,6 +34,7 @@ public abstract class PersonneEnergetique extends Personne {
     /**
      * Méthode qui permet d'attaquer le personnage mit en paramètre s'il est d'une équipe différente
      */
+    @Override
     public void attaquer(Personne p) {
         double damageMultiplier = this.getDamage() / (this.getDamage() + this.getArmor() / 5);
         double totalDamage = this.getDamage() * damageMultiplier;
@@ -44,13 +45,10 @@ public abstract class PersonneEnergetique extends Personne {
                 p.prendreDégâts(totalDamage * 3);
                 this.setEnergie(this.getEnergie() - 50);
                 if (this.getCooldown() >= 5) {
-                    p.stun(2);
+                    p.changeStatus("stun", 2);
                 }
             } else {
                 p.prendreDégâts(totalDamage);
-            }
-            if (p.getHealth() <= 0) {
-                System.out.println(p.getName() + " est mort !");
             }
         }
 
@@ -58,34 +56,29 @@ public abstract class PersonneEnergetique extends Personne {
         this.gainEnergie();
     }
 
-    // Affichage santé et nom et mana
+    @Override
+    public Group afficherStats() {
+        Group group = new Group();
+        group.getChildren().addAll(afficherSante(), afficherEnergie());
+        return group;
+    }
 
-    public Group afficherSante() {
-        Rectangle barre = new Rectangle(taille, taille/5.3, Color.BLACK);
-        Rectangle vie = new Rectangle(taille - 4, taille/10 - 4, Color.RED);
+    public Group afficherEnergie() {
+        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
         Rectangle energie = new Rectangle(taille - 4, taille/10 - 4, Color.YELLOW);
 
         barre.setX(getPosition().getPosX());
-        barre.setY(getPosition().getPosY() + taille/2.2);
+        barre.setY(getPosition().getPosY() + taille/10 + taille/2.2);
 
-        vie.setY(barre.getY() + 2);
-        vie.setX(barre.getX() + 2);
-
-        energie.setY(vie.getY() + vie.getHeight() + 2);
+        energie.setY(barre.getY() + 2);
         energie.setX(barre.getX() + 2);
-
-        double percentageV = (this.getHealth() / this.getMaxHealth());
-        double widthV = (percentageV * (taille - 4));
-        vie.widthProperty().setValue(widthV);
 
         double percentageE = (this.getEnergie() / this.getEnergieMax());
         double widthE = (percentageE * (taille - 4));
         energie.widthProperty().setValue(widthE);
 
         Group group = new Group();
-        group.getChildren().add(barre);
-        group.getChildren().add(vie);
-        group.getChildren().add(energie);
+        group.getChildren().addAll(barre, energie);
 
         return group;
     }
@@ -102,10 +95,6 @@ public abstract class PersonneEnergetique extends Personne {
 
     public double getEnergieMax() {
         return energieMax;
-    }
-
-    public void setEnergieMax(double energieMax) {
-        this.energieMax = energieMax;
     }
 
     public void gainEnergie() {

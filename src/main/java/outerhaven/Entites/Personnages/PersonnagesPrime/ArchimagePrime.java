@@ -24,18 +24,7 @@ public class ArchimagePrime extends Archimage {
     @Override
     public void action() {
         this.gainMana();
-        boolean danger = false;
-
-        // Vérification si les cases voisines contiennent au moins un ennemi
-        for (Case c : this.getPosition().voisinsLibres(false)) {
-            // Si la case voisine n'est pas vide
-            if (c.getContenu().size() != 0) {
-                // Si le contenu de la case n'est pas un allié
-                if (c.getContenu().get(0).getTeam() != this.getTeam()) {
-                    danger = true;
-                }
-            }
-        }
+        boolean danger = getDanger();
 
         System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
         ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));

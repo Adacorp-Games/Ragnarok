@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Case;
+import outerhaven.Entites.Entite;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
 import outerhaven.Entites.Personnages.Invocations.Invocation;
@@ -30,7 +31,19 @@ import static outerhaven.Plateau.*;
  * Unité sur le plateau qui appartient à une équipe et se déplace de Case en Case. Elle peut posséder des caractéristiques spéciales.
  */
 
-public abstract class Personne {
+public abstract class Personne extends Entite {
+    /**
+     * Liste de personnes présentes sur le plateau.
+     */
+    public static ArrayList<Personne> personnages = new ArrayList<>();
+    /**
+     * Liste de personnes mortes durant un combat.
+     */
+    public static ArrayList<Personne> morts = new ArrayList<>();
+    /**
+     * Liste d'invocation en attente pour les futurs unités à ajouter pour le prochain tour.
+     */
+    public static ArrayList<Personne> invocationAttente = new ArrayList<>();
     private final String name; // Stocké dans un tableau.
     /**
      * Liste des noms stockés dans un fichier texte modifiable par n'importe qui pour ajouter de la personnalisation.
@@ -48,12 +61,12 @@ public abstract class Personne {
     public static boolean barreVisible = false;
     public Case casePrecedente;
     private ImageView imageperson = new ImageView(this.getImageFace());
+    ArrayList<Case> pathToEnemy;
     private Case position;
     private int cooldown = 0;
     private String status = "normal";
     private int duréeStatus = 0;
     private Poste poste;
-
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
@@ -66,35 +79,65 @@ public abstract class Personne {
         this.damage = damage;
         this.range = range;
         this.speed = speed;
-        this.casePrecedente = position;
         if (!(this instanceof Invocation)) {
             personnages.add(this);
         }
     }
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team) {
-        this.name = getRandomName();
-        this.health = health;
-        this.maxHealth = health;
-        this.armor = armor;
-        this.cost = cost;
-        this.damage = damage;
-        this.range = range;
-        this.speed = speed;
+        this(health, armor, cost, damage, range, speed);
         this.team = team;
-        this.casePrecedente = position;
         if (!(this instanceof Invocation)) {
-            personnages.add(this);
             this.team.getTeam().add(this);
         }
     }
 
-    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team,
-            Case position) {
+    public Personne(double health, double armor, double cost, int damage, int range, int speed, Equipe team, Case position) {
         this(health, armor, cost, damage, range, speed, team);
         this.position = position;
         this.position.setContenu(this);
         this.casePrecedente = position;
+    }
+
+    /**
+     * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer.
+     */
+    public void action() {
+        this.genererChemin(); // Créer le chemin vers l'objectif de this (attaquer, protéger un bâtiment ...)
+        this.comportementsBasiques(); // Se déplace ou attaque.
+    }
+
+    public void genererChemin() {
+        if (this.getPoste() != null) {
+            this.pathToEnemy = this.getPoste().calculerChemin(this); // Calcule le chemin en fonction de plusieurs paramètres et du poste de this.
+        } else {
+            this.pathToEnemy = calculerChemin(); // Calcule le chemin en fonction de plusieurs paramètres.
+        }
+    }
+
+    /**
+     * Fonction qui permet d'obtenir le chemin le plus court vers l'adversaire le plus proche en fonction de divers paramètres sur le Plateau.
+     */
+    public ArrayList<Case> calculerChemin() {
+        ArrayList<Case> chemin;
+        if (activerDijkstra && this.position.nbVoisinsLibres() > 0) { // Chemin calculé avec l'algorithme de Dijkstra si option activée.
+            chemin = this.position.pathDijkstra();
+        } else { // Sinon calcul du chemin avec l'utilisation du calcul vectoriel lambda.
+            chemin = this.position.pathToPerso(getOtherTeam());
+        }
+        if (activerDijkstra && chemin.size() <= 0) {
+            // Si le personnage (this) est bloqué où a son champ de vision bloqué (ligne d'alliés) on utilise le calcul vectoriel.
+            chemin = this.position.pathToPerso(getOtherTeam());
+        }
+        return chemin;
+    }
+
+    public void comportementsBasiques() {
+        if (this.pathToEnemy.size() - 1 <= this.getRange()) { // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
+            attaquer(this.pathToEnemy.get(this.pathToEnemy.size() - 1).getContenu().get(0));
+        } else { // Sinon il se déplace pour se rapprocher de lui.
+            deplacer(this.pathToEnemy.get(this.getSpeed()));
+        }
     }
 
     /**
@@ -105,9 +148,6 @@ public abstract class Personne {
         double totalDamage = damage * damageMultiplier;
         if (this.getTeam() != p.getTeam()) {
             p.prendreDégâts(totalDamage);
-            if (p.getHealth() <= 0) {
-                System.out.println(p.getName() + " est mort !");
-            }
         }
     }
 
@@ -115,7 +155,7 @@ public abstract class Personne {
      * Méthode qui permet de se déplacer dans une case mis en paramètre et vidant la case précédente avec une animation.
      */
     public void deplacer(Case fin) {
-        // Debbug pathfinding
+        // Debug pathfinding
         this.setCasePrecedente(this.getPosition());
         if (!isActiverAnimation()) {
             Case casePrecedente = this.getPosition();
@@ -156,9 +196,9 @@ public abstract class Personne {
     }
 
     /**
-     * Algo gérant l'animation finale des déplacements.
+     * Algorithme gérant l'animation finale des déplacements.
      */
-    public void deplacementFinal(Case depart, Case fin ) {
+    public void deplacementFinal(Case depart, Case fin) {
         fin.seViderPourAnimation();
         fin.rentrePersonnage(this);
         if (Personne.barreVisible) {
@@ -167,62 +207,8 @@ public abstract class Personne {
     }
 
     /**
-     * Ancienne méthode de déplacement (sans animation).
-     */
-    /*public void deplacer(Case c) {
-        Case casePrecedente = this.getPosition();
-        this.setPosition(c);
-        c.rentrePersonnage(this);
-        casePrecedente.seVider();
-        if (Personne.barreVisible) {
-            this.afficherSanteEtNom();
-        }
-    }*/
-
-    /**
-     * Action basique de toute personne en fonction de la distance avec sa cible la plus proche : attaquer ou se déplacer.
-     * Cette méthode va se complexifier au fur et à mesure que les unités auront des comportements complexes.
-     */
-    public void action() {
-        ArrayList<Case> pathToEnemy = calculerChemin(); // Calcule le chemin en fonction de plusieurs paramètres.
-        if (pathToEnemy.size() - 1 <= this.getRange()) { // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
-            attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
-        } else { // Sinon il se déplace pour se rapprocher de lui.
-            deplacer(pathToEnemy.get(this.getSpeed()));
-        }
-    }
-
-    /**
-     * Fonction qui permet d'obtenir le chemin le plus court vers l'adversaire le plus proche en fonction de divers paramètres sur le Plateau.
-     */
-    public ArrayList<Case> calculerChemin() {
-        ArrayList<Case> chemin;
-        if (activerDijkstra && this.position.nbVoisinsLibres() > 0) { // Chemin calculé avec l'algorithme de Dijkstra si option activée.
-            chemin = this.position.pathDijkstra();
-        } else { // Sinon calcul du chemin avec l'utilisation du calcul vectoriel lambda.
-            chemin = this.position.pathToPerso(getOtherTeam());
-        }
-        if (activerDijkstra && chemin.size() <= 0) {
-            // Si le personnage (this) est bloqué où a son champ de vision bloqué (ligne d'alliés) on utilise le calcul vectoriel.
-            chemin = this.position.pathToPerso(getOtherTeam());
-        }
-        return chemin;
-    }
-
-    /**
-     * Méthode pour ralentir une autre méthode
-     * @param nb : int d'attente
-     */
-    public void waitTEST(long nb) {
-        long i = 0;
-        for (long j = 0; j < nb; j++) {
-            i = j - i + 5;
-        }
-    }
-
-    /**
-     * Affiche les personnages dans la barre
-     * @param i : parametre pour la méthode genereBarre() de la classe BarrePersonnage afin de générer chaque personne ne la liste listClasse
+     * Affiche les personnages dans la barre.
+     * @param i : paramètre pour la méthode genereBarre() de la classe BarrePersonnage afin de générer chaque personne ne la liste listClasse
      * @return un groupe contenant les personnages dans la barre avec les effets et leur description
      */
     public Group affichagePersonnageBarre(int i) {
@@ -256,7 +242,7 @@ public abstract class Personne {
     }
 
     /**
-     * Fonction permettant de créer la barre d'informations d'un personnage
+     * Fonction permettant de créer la barre d'informations d'un personnage.
      * @param X : position en X de la description d'une personne
      * @param Y : position en Y de la description d'une personne
      * @return un groupe contenant les informations et la description d'une personne
@@ -285,7 +271,7 @@ public abstract class Personne {
     }
 
     /**
-     * Fonctions abstraites devant être présentes dans toutes les classes filles
+     * Fonctions abstraites devant être présentes dans toutes les classes filles.
      */
     public abstract Personne personneNouvelle(Equipe team, Case position);
     public abstract Text getinfoTitleText();
@@ -293,7 +279,7 @@ public abstract class Personne {
     public abstract Image getImageFace();
 
     /**
-     * Méthode permettant d'afficher l'image de la personne
+     * Méthode permettant d'afficher l'image de la personne.
      * @return un groupe contenant son image
      */
     public Group affichagePersonnage() {
@@ -306,7 +292,7 @@ public abstract class Personne {
     }
 
     /**
-     * Fonction permettant d'afficher le nom de la personne
+     * Fonction permettant d'afficher le nom de la personne.
      * @return un groupe contenant son nom avec la couleur de son équipe
      */
     public Group afficherNom() {
@@ -323,7 +309,7 @@ public abstract class Personne {
     }
 
     /**
-     * Fonction permettant d'afficher l'image d'une personne et ajoute la possibilité de le supprimer en cliquant dessus hors partie lancée (!statusPartie)
+     * Fonction permettant d'afficher l'image d'une personne et ajoute la possibilité de le supprimer en cliquant dessus hors partie lancée (!statusPartie).
      * @return un groupe contenant l'image de la personne
      */
     public Group afficherImageFace() {
@@ -334,7 +320,7 @@ public abstract class Personne {
         person.setY(position.getPosY() - taille/20);
         InnerShadow ombre = new InnerShadow();
         ombre.colorProperty().setValue(getTeam().getCouleur());
-       person.setEffect(ombre);
+        person.setEffect(ombre);
 
         Group group = new Group();
         group.getChildren().add(person);
@@ -364,24 +350,23 @@ public abstract class Personne {
     }
 
     /**
-     * Méthode permettant d'afficher le nom et la santé des personnes sur le plateau si pas affichés
+     * Méthode permettant d'afficher le nom et la santé des personnes sur le plateau si pas affichés.
      */
     public void afficherSanteEtNom() {
         SanteNom.getChildren().clear();
-        SanteNom.getChildren().addAll(afficherSante(), afficherNom());
+        SanteNom.getChildren().addAll(afficherStats(), afficherNom());
         if (barreVisible && !position.verifNoir()) {
             supprimerSanteEtNom();
             group.getChildren().add(SanteNom);
         } else if (!barreVisible && group.getChildren().contains(SanteNom)) {
             supprimerSanteEtNom();
-        }
-        else if (position.verifNoir()) {
+        } else if (position.verifNoir()) {
             supprimerSanteEtNom();
         }
     }
 
     /**
-     * Méthode permettant d'enlever le nom et la santé des personnes de l'affichage du plateau si affichés
+     * Méthode permettant d'enlever le nom et la santé des personnes de l'affichage du plateau si affichés.
      */
     public void supprimerSanteEtNom() {
         if (group.getChildren().contains(SanteNom)) {
@@ -390,7 +375,7 @@ public abstract class Personne {
     }
 
     /**
-     * Méthode permettant à une personne de disparaître complétement (vider sa case, l'enlever des listes le contenant ...)
+     * Méthode permettant à une personne de disparaître complétement (vider sa case, l'enlever des listes le contenant ...).
      */
     public void selfDelete() {
         this.position.seVider();
@@ -400,7 +385,16 @@ public abstract class Personne {
     }
 
     /**
-     * Fonction qui crée la barre de vie de chaque personne en fonction de sa vie restant en pourcentage
+     * Fonction qui crée les barres de statistiques de chaque personne.
+     */
+    public Group afficherStats() {
+        Group group = new Group();
+        group.getChildren().addAll(afficherSante());
+        return group;
+    }
+
+    /**
+     * Fonction qui crée la barre de vie de chaque personne en fonction de sa vie restant en pourcentage.
      * @return un groupe contenant la barre de vie pour une personne
      */
     public Group afficherSante() {
@@ -418,14 +412,13 @@ public abstract class Personne {
         vie.widthProperty().setValue(width);
 
         Group group = new Group();
-        group.getChildren().add(barre);
-        group.getChildren().add(vie);
+        group.getChildren().addAll(barre, vie);
 
         return group;
     }
 
     /**
-     * Fontion qui permet d'obtenin un nom aléatoire parmi ceux dans la liste des noms disponibles
+     * Fonction qui permet d'obtenir un nom aléatoire parmi ceux dans la liste des noms disponibles.
      * @return un nom aléatoire pour la personne
      */
     public static String getRandomName() {
@@ -489,11 +482,11 @@ public abstract class Personne {
     }
 
     /**
-     * Permet d'étourdir une cible
-     * @param durée en nombre de tour du stun
+     * Permet de mettre un status sur this (comme l'étourdir, geler ...).
+     * @param durée en nombre de tour du status
      */
-    public void stun(int durée) {
-        this.setStatus("stun");
+    public void changeStatus(String status, int durée) {
+        this.setStatus(status);
         this.setDuréeStatus(durée);
     }
 
@@ -571,15 +564,19 @@ public abstract class Personne {
         }
     }
 
+    public ArrayList<Case> getPathToEnemy() {
+        return pathToEnemy;
+    }
+
     /**
      * Fonction qui permet d'obtenir l'équipe adverse à this
      * @return l'équipe opposée à l'équipe de this.
      */
     public Equipe getOtherTeam() {
-        if (e1.equals(this.team)) {
-            return e2;
+        if (Equipe.e1.equals(this.team)) {
+            return Equipe.e2;
         } else {
-            return e1;
+            return Equipe.e1;
         }
     }
 
@@ -637,6 +634,14 @@ public abstract class Personne {
 
     public void setCasePrecedente(Case casePrecedente) {
         this.casePrecedente = casePrecedente;
+    }
+
+    public Poste getPoste() {
+        return poste;
+    }
+
+    public void setPoste(Poste poste) {
+        this.poste = poste;
     }
 
     @Override

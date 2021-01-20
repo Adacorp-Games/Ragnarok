@@ -6,6 +6,7 @@ import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationFreeze;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Mecaniques.Alterations.AlterationPoison;
 
 import java.util.ArrayList;
 
@@ -22,49 +23,57 @@ public class Archimage extends PersonneMagique {
     @Override
     public void action() {
         this.gainMana();
-        boolean danger = false;
+        boolean danger = getDanger();
 
+        ArrayList<Case> pathToEnemy = calculerChemin();
+
+        // Téléportation si cible trop proche (danger détecté)
+        if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
+
+            // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
+            gelAOE(this.getPosition());
+
+            // Cherche un voisin libre et un voisin libre du voisin libre si possible
+            Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
+            if (voisinLibre.nbVoisinsLibres() > 0) {
+                if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
+                    deplacer(voisinLibre.getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
+                } else {
+                    deplacer(voisinLibre);
+                }
+            }
+            this.setMana(this.getMana() - 50);
+
+        } else if (pathToEnemy.size() - 1 <= this.getRange()) {
+            attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
+        } else {
+            deplacer(pathToEnemy.get(this.getSpeed()));
+        }
+    }
+
+    public void gel(Case c) {
+        ajouterAlter(new AlterationPoison(50, 10, this.getTeam()), c);
+    }
+
+    public void gelAOE(Case c) {
+        ajouterAlter(new AlterationFreeze(50, 10, this.getTeam()), c);
+        for (Case cv : c.getCaseVoisines()) {
+            ajouterAlter(new AlterationFreeze(50, 10, this.getTeam()), cv);
+        }
+    }
+
+    public boolean getDanger() {
         // Vérification si les cases voisines contiennent au moins un ennemi
         for (Case c : this.getPosition().voisinsLibres(false)) {
             // Si la case voisine n'est pas vide
             if (c.getContenu().size() != 0) {
                 // Si le contenu de la case n'est pas un allié
                 if (c.getContenu().get(0).getTeam() != this.getTeam()) {
-                    danger = true;
+                    return true;
                 }
             }
         }
-
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-
-        // Téléportation si cible trop proche (danger détecté)
-        if (danger && this.getPosition().nbVoisinsLibres() > 0 && this.getMana() >= 50) {
-
-            // Freeze les cases autour de lui et les personnes qui y sont ou y rentrent
-            ajouterAlter(new AlterationFreeze(50, 10, this.getTeam()), this.getPosition());
-            ajouterAlterVoisine(new AlterationFreeze(50, 10, this.getTeam()), this.getPosition());
-
-            // Cherche un voisin libre et un voisin libre du voisin libre si possible
-            Case voisinLibre = this.getPosition().getRandomVoisinLibre().get(0);
-            if (voisinLibre.nbVoisinsLibres() > 0) {
-            /*if (voisinLibre.getRandomVoisinLibre().get(0).nbVoisinsLibres() > 0) {
-                déplacer(this.getPosition().getRandomVoisinLibre().get(0).getRandomVoisinLibre().get(0));
-            } else {*/
-                deplacer(voisinLibre);
-                //}
-            }
-            this.setMana(this.getMana() - 50);
-
-        } else if (pathToEnnemy.size() - 1 <= this.getRange()) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.getSpeed()));
-        }
-        // System.out.println("Vie restante de la cible " + getHealth());
+        return false;
     }
 
     @Override

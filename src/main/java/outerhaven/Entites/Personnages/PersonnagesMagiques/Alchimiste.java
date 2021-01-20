@@ -7,12 +7,9 @@ import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationPoison;
 import outerhaven.Entites.Personnages.Personne;
 
-import java.util.ArrayList;
-
 public class Alchimiste extends PersonneMagique {
 
     public Alchimiste() {
-        //    vie  armr cst  dg rnge spd)
         super(1000, 80, 650, 150, 5, 1, 100);
     }
 
@@ -21,30 +18,17 @@ public class Alchimiste extends PersonneMagique {
     }
 
     @Override
-    public void action() {
-        this.gainMana();
-        ArrayList<Case> pathToEnemy = calculerChemin();
-
-        // Capacités de l'alchimiste
-        if (pathToEnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
-            empoisonnerAOE(pathToEnemy.get(pathToEnemy.size() - 1));
+    public void pouvoir() {
+        if (this.getPathToEnemy().size() - 1 <= this.getRange() && this.getMana() >= 100) {
+            this.empoisonnerAOE(this.getPathToEnemy().get(this.getPathToEnemy().size() - 1), 50, 10);
             this.setMana(this.getMana() - 100);
-
-        } else if (pathToEnemy.size() - 1 <= this.getRange()) { // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
-            attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
-        } else { // Sinon il se déplace pour se rapprocher de lui.
-            deplacer(pathToEnemy.get(this.getSpeed()));
         }
     }
 
-    public void empoisonner(Case c) {
-        ajouterAlter(new AlterationPoison(50, 10, this.getTeam()), c);
-    }
-
-    public void empoisonnerAOE(Case c) {
-        ajouterAlter(new AlterationPoison(50, 10, this.getTeam()), c);
+    public void empoisonnerAOE(Case c, int puissance, int duree) {
+        ajouterAlter(new AlterationPoison(puissance, duree, this.getTeam()), c);
         for (Case cv : c.getCaseVoisines()) {
-            ajouterAlter(new AlterationPoison(50, 10, this.getTeam()), cv);
+            ajouterAlter(new AlterationPoison(puissance, duree, this.getTeam()), cv);
         }
     }
 

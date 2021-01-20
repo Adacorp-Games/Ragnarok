@@ -10,12 +10,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Mecaniques.Sauvegarde;
-import outerhaven.Entites.Personnages.Archer;
-import outerhaven.Entites.Personnages.Guerrier;
-import outerhaven.Entites.Personnages.Mage;
 import outerhaven.Entites.Personnages.PersonnagesEnergetiques.*;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.*;
-import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Entites.Personnages.*;
+import outerhaven.Equipe;
 import outerhaven.Plateau;
 
 import static outerhaven.Plateau.*;
@@ -56,7 +54,7 @@ public class BarrePersonnage {
             // Configuration des listes de personnages pour chaque équipe
             listeEquipe1.addAll(listeClasse);
             listeEquipe2.addAll(listeClasse);
-            personnages.clear();
+            Personne.personnages.clear();
         }
         interfaceBarre();
     }
@@ -128,7 +126,7 @@ public class BarrePersonnage {
         equipe2.setLayoutY(780);
         equipe2.setMinSize(120, 50);
 
-        if (equipeSelectionne == e1) {
+        if (equipeSelectionne == Equipe.e1) {
             equipe1.setEffect(Bouton.effectE1);
         }
 
@@ -263,7 +261,7 @@ public class BarrePersonnage {
     }
 
     public static ArrayList<Personne> listeEquipe() {
-        if (equipeSelectionne == e1) {
+        if (equipeSelectionne == Equipe.e1) {
             return listeEquipe1;
         } else {
             return listeEquipe2;
@@ -291,7 +289,7 @@ public class BarrePersonnage {
     }
 
     public Button getButtonTeamSelect() {
-        if (equipeSelectionne == e1) {
+        if (equipeSelectionne == Equipe.e1) {
             return equipe1;
         } else {
             return equipe2;

@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import outerhaven.Case;
 import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
-import outerhaven.Plateau;
 
 import java.util.ArrayList;
 
@@ -63,10 +62,10 @@ public abstract class Alteration {
      * Méthode réduisant la durée de l'altération à chaque tour.
      */
     public void passeTour() {
-        if (duree > 1) { // Si la durée est supérieure 1 tour on la décrémente
-            duree--;
+        if (this.duree > 1) { // Si la durée est supérieure 1 tour on la décrémente
+            this.duree--;
         } else { // Sinon on la supprime
-            for (Case c : Plateau.listeCaseAlterees) {
+            for (Case c : Case.listeCaseAlterees) {
                 if (c.getAlteration() == this) {
                     c.setAlteration(null);
                     c.getHexagone().setEffect(null);
@@ -80,7 +79,7 @@ public abstract class Alteration {
      * Supprime définitivement une alteration.
      */
     public static void nettoieCaseAlter() {
-        Plateau.listeCaseAlterees.removeAll(AlterSupprimer);
+        Case.listeCaseAlterees.removeAll(AlterSupprimer);
         AlterSupprimer.clear();
     }
 

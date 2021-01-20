@@ -21,6 +21,7 @@ public class AlterationFreeze extends Alteration {
     public void appliquerEffet(Personne p) {
         if (p.getClass() != Archimage.class) {
             p.prendreDégâts(this.getPuissance() * 2);
+            p.changeStatus("freeze", this.getDuree());
         }
     }
 }

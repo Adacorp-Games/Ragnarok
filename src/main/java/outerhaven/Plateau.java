@@ -20,24 +20,23 @@ import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alterations.Alteration;
 import outerhaven.Mecaniques.Alterations.AlterationFreeze;
-import outerhaven.Mecaniques.Alterations.AlterationPoison;
 import outerhaven.Mecaniques.Enchere;
-import outerhaven.Mecaniques.Evenement;
+import outerhaven.Mecaniques.Evenements.Evenement;
 import outerhaven.Mecaniques.Sauvegarde;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Entites.Personnages.PersonnagesPrime.*;
 import outerhaven.Entites.Personnages.Personne;
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * La classe Plateau va principalement générer le plateau et son interface, ainsi que les paramètres nécessaire au fonctionnement du jeu et au interaction
+ * La classe Plateau va principalement générer le plateau et son interface, ainsi que les paramètres nécessaire au fonctionnement du jeu et aux interactions.
  */
 
 public class Plateau {
     /**
-     * Information javaFX utile pour le fonctionnement du jeu
+     * Information javaFX utile pour le fonctionnement du jeu.
      */
     private static Stage primary;
     public static Group group = new Group();
@@ -45,35 +44,12 @@ public class Plateau {
     public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
     public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     /**
-     * Aire du plateau && taille en px d'une case
+     * Aire du plateau et taille en pixels d'une case.
      */
     private int aire;
     public static double taille;
     /**
-     * Liste de personnes présentes sur le plateau
-     */
-    public static ArrayList<Personne> personnages = new ArrayList<>();
-    /**
-     * Liste de personnes mortes durant un combat
-     */
-    public static ArrayList<Personne> morts = new ArrayList<>();
-    /**
-     * Liste d'invocation en attente pour les futurs unités à ajouter pour le prochain tour
-     */
-    public static ArrayList<Personne> invocationAttente = new ArrayList<>();
-    /**
-     * Liste/tableau des cases (altérées ou non) dans le plateau
-     */
-    public static ArrayList<Case> listeCase = new ArrayList<>();
-    public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
-    public static Case[][] tableauCase;
-    /**
-     * Les différentes équipes dans le jeu
-     */
-    public static Equipe e1 = new Equipe(Color.RED);
-    public static Equipe e2 = new Equipe(Color.BLUE);
-    /**
-     * Informations sur une partie en cours
+     * Informations sur une partie en cours.
      */
     public static int argentPartie = 0;
     public static int temps = 500;
@@ -89,15 +65,17 @@ public class Plateau {
     public static boolean enchereTerminee = false;
     public static boolean activerDijkstra = false;
     public static boolean activerCheats = false;
+    public static boolean activerArgent = false;
     public static AtomicInteger idEnchere = new AtomicInteger();
     public static Text prix = new Text();
+    private Text infoArgent;
+    private TextField nbArgent;
     /**
      * Interface utile au plateau à mettre à jour durant une partie.
      */
     public static BarrePersonnage barre = new BarrePersonnage();
     private static Group nbPersonne = new Group();
     private static Group nbTour = new Group();
-    private Evenement event = new Evenement(new AlterationPoison(50, 20));
 
     public Plateau(Stage primary) {
         // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
@@ -112,6 +90,94 @@ public class Plateau {
     }
 
     /**
+     * Interface avant la generation du plateau
+     * on ajoute ici les boutons :
+     * Start (pour lancer la partie)
+     * Quitter (pour arrêter le jeu)
+     * Une entrée pour l'aire du plateau
+     * Une entrée pour l'argent des équipes
+     * (avec tout les texte qui vont avec)
+     */
+    private void interfaceDebut() {
+        Button start = new Button("START");
+        start.setLayoutX((longueurMax - 700)/2);
+        start.setLayoutY((largeurMax - 200)/2);
+        start.setMinSize(700,200);
+        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
+        start.setOnMouseEntered(mouseEvent -> start.setEffect(new Effets().putInnerShadow(Color.ORANGE)));
+        start.setOnMouseExited(mouseEvent -> start.setEffect(null));
+
+        // Ajout de textes
+        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
+        infoNB.setLayoutX((longueurMax - 700)/2);
+        infoNB.setLayoutY((largeurMax - 300)/2 - 20);
+
+        infoArgent = new Text("Entrez la limite d'argent pour chaque équipe : (vide = pas de limite)");
+        infoArgent.setLayoutX((longueurMax - 700)/2);
+        infoArgent.setLayoutY((largeurMax - 450)/2 - 20);
+
+        // Entrée de l'aire du plateau
+        TextField nbCase = new TextField();
+        nbCase.setLayoutX((longueurMax - 700)/2);
+        nbCase.setLayoutY((largeurMax - 280)/2 - 20);
+        nbCase.setMinSize(100,50);
+        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+
+        // Entrée de l'argent
+        nbArgent = new TextField();
+        nbArgent.setLayoutX((longueurMax - 700)/2);
+        nbArgent.setLayoutY((largeurMax - 430)/2 - 20);
+        nbArgent.setMinSize(100,50);
+        nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
+
+        nbCase.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                aire = getIntFromTextField(nbCase);
+                if(nbArgent.getText().length() > 0) {
+                    argentPartie = getIntFromTextField(nbArgent);
+                }
+                if (aire > 0) {
+                    group.getChildren().clear();
+                    sceneSuivante();
+                }
+            }
+        });
+
+        nbArgent.setOnKeyReleased(key -> {
+            if (key.getCode() == KeyCode.ENTER) {
+                aire = getIntFromTextField(nbCase);
+                if(nbArgent.getText().length() > 0) {
+                    argentPartie = getIntFromTextField(nbArgent);
+                }
+                if (aire > 0) {
+                    group.getChildren().clear();
+                    sceneSuivante();
+                }
+            }
+        });
+
+        // Configuration du bouton start
+        start.setOnMouseClicked(mouseEvent -> {
+            aire = getIntFromTextField(nbCase);
+            if(nbArgent.getText().length() > 0) {
+                argentPartie = getIntFromTextField(nbArgent);
+            }
+            if (aire > 0) {
+                group.getChildren().clear();
+                sceneSuivante();
+            }
+        });
+
+        ajouteLesModes();
+        ajouteLesOptions();
+        Button quitter = boutonExit();
+        quitter.setLayoutY(10);
+
+        // Ajout de toute ces interfaces dans le group
+        group.getChildren().addAll(infoNB, nbCase, start, quitter);
+    }
+
+    /**
      * lancerScenePlateau() génère le plateau d'hexagone en fonction de :
      * - l'aire
      * - la taille de l'écran de l'utilisateur
@@ -121,12 +187,13 @@ public class Plateau {
     public void lancerScenePlateau() {
         // Ajuste la taille d'une case et le taille du tableau case
         taille = 1000/Math.sqrt(aire);
-        tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
+        Case.tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Paramétrage des événements aléatoires
-        Evenement.setFréquenceEvenement(10);
-        Evenement.setPourcentageEvenement(20);
-        //generation du plateau
+        Evenement.setFréquenceEvenement(15);
+        Evenement.setPourcentageEvenement(10);
+
+        // Génération du plateau
         genererPlateau();
         // Initialisation des cases voisines
         initVoisins();
@@ -145,7 +212,7 @@ public class Plateau {
         }
         personneSelectionne = null;
         if (enchereTerminee) {
-            equipeSelectionne = e1;
+            equipeSelectionne = Equipe.e1;
             barre.majBarreEnchere();
             brouillard();
         }
@@ -176,8 +243,8 @@ public class Plateau {
                     double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99;
                     Case hexagone = new Case(ligne, j - (ligne/2));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
-                    tableauCase[ligne][j] = hexagone;
-                    listeCase.add(hexagone);
+                    Case.tableauCase[ligne][j] = hexagone;
+                    Case.listeCase.add(hexagone);
                     group.getChildren().add(hexagone.afficherCase(posX, posY, taille));
                     i++;
                 }
@@ -190,8 +257,8 @@ public class Plateau {
                     double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille/2;
                     Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
-                    tableauCase[ligne][j] = hexagone;
-                    listeCase.add(hexagone);
+                    Case.tableauCase[ligne][j] = hexagone;
+                    Case.listeCase.add(hexagone);
                     group.getChildren().add(hexagone.afficherCase(posX, posY, taille));
                     i++;
                 }
@@ -236,7 +303,7 @@ public class Plateau {
         Enchere.ajouterEnchere(new Enchere(new PretrePrime()));
         Enchere.ajouterEnchere(new Enchere(new ArchimagePrime()));
         Collections.shuffle(Enchere.getListeEnchere());
-        personnages.clear();
+        Personne.personnages.clear();
 
         Group infosEnchere = new Group();
         infosEnchere.getChildren().addAll(Enchere.getListeEnchere().get(idEnchere.get()).afficherInformations(), Enchere.getListeEnchere().get(idEnchere.get()).getProduit().getImagePersonPosition(1200, 375));
@@ -297,10 +364,25 @@ public class Plateau {
     }
 
     /**
+     * méthode permettant de poursuivre les enchères après que quelqu'un se couche.
+     */
+    public void sceneSuivante() {
+        if (activerEnchere && !enchereTerminee) {
+            if (argentPartie == 0) {
+                argentPartie = 10000;
+            }
+            lancerSceneEnchere();
+        } else {
+            barre.interfaceBarre();
+            lancerScenePlateau();
+        }
+    }
+
+    /**
      * Méthode permettant à chaque case de connaitre ses cases voisines.
      */
     public void initVoisins() {
-        for (Case c : listeCase) {
+        for (Case c : Case.listeCase) {
             c.trouverVoisin();
         }
     }
@@ -360,109 +442,6 @@ public class Plateau {
     public static void updateNbTour() {
         nbTour.getChildren().clear();
         afficheNbTour();
-    }
-
-    /**
-     * méthode permettant de poursuivre les enchères après que quelqu'un se couche.
-     */
-    public void sceneSuivante() {
-        if (activerEnchere && !enchereTerminee) {
-            if (argentPartie == 0) {
-                argentPartie = 10000;
-            }
-            lancerSceneEnchere();
-        } else {
-            barre.interfaceBarre();
-            lancerScenePlateau();
-        }
-    }
-
-    /**
-     * Interface avant la generation du plateau
-     * on ajoute ici les boutons :
-     * Start (pour lancer la partie)
-     * Quitter (pour arrêter le jeu)
-     * Une entrée pour l'aire du plateau
-     * Une entrée pour l'argent des équipes
-     * (avec tout les texte qui vont avec)
-     */
-    private void interfaceDebut() {
-        Button start = new Button("START");
-        start.setLayoutX((longueurMax -700)/2);
-        start.setLayoutY((largeurMax-200)/2);
-        start.setMinSize(700,200);
-        start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
-        start.setOnMouseEntered(mouseEvent -> start.setEffect(new Effets().putInnerShadow(Color.ORANGE)));
-        start.setOnMouseExited(mouseEvent -> start.setEffect(null));
-
-        // Ajout de textes
-        Text infoNB = new Text("Entrez le nombre de cases du plateau :");
-        infoNB.setLayoutX((longueurMax -700)/2);
-        infoNB.setLayoutY((largeurMax-300)/2-20);
-
-        Text infoArgent = new Text("Entrez la limite d'argent pour chaque équipe : (vide = pas de limite)");
-        infoArgent.setLayoutX((longueurMax -700)/2);
-        infoArgent.setLayoutY((largeurMax-450)/2-20);
-
-        // Entrée de l'aire du plateau
-        TextField nbCase = new TextField();
-        nbCase.setLayoutX((longueurMax -700)/2);
-        nbCase.setLayoutY((largeurMax-280)/2-20);
-        nbCase.setMinSize(100,50);
-        nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-
-        // Entrée de l'argent
-        TextField nbArgent = new TextField();
-        nbArgent.setLayoutX((longueurMax -700)/2);
-        nbArgent.setLayoutY((largeurMax-430)/2-20);
-        nbArgent.setMinSize(100,50);
-        nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
-
-        nbCase.setOnKeyReleased(key -> {
-            if (key.getCode() == KeyCode.ENTER) {
-                aire = getIntFromTextField(nbCase);
-                if(nbArgent.getText().length() > 0) {
-                    argentPartie = getIntFromTextField(nbArgent);
-                }
-                if (aire > 0) {
-                    group.getChildren().clear();
-                    sceneSuivante();
-                }
-            }
-        });
-
-        nbArgent.setOnKeyReleased(key -> {
-            if (key.getCode() == KeyCode.ENTER) {
-                aire = getIntFromTextField(nbCase);
-                if(nbArgent.getText().length() > 0) {
-                    argentPartie = getIntFromTextField(nbArgent);
-                }
-                if (aire > 0) {
-                    group.getChildren().clear();
-                    sceneSuivante();
-                }
-            }
-        });
-
-        // Configuration du bouton start
-        start.setOnMouseClicked(mouseEvent -> {
-            aire = getIntFromTextField(nbCase);
-            if(nbArgent.getText().length() > 0) {
-                argentPartie = getIntFromTextField(nbArgent);
-            }
-            if (aire > 0) {
-                group.getChildren().clear();
-                sceneSuivante();
-            }
-        });
-
-        ajouteLesModes();
-        ajouteLesOptions();
-        Button quitter = boutonExit();
-        quitter.setLayoutY(10);
-
-        // Ajout de toute ces interfaces dans le group
-        group.getChildren().addAll(/*animationBT, enchereBT, */infoNB, nbCase, infoArgent, nbArgent, start, quitter);
     }
 
     /**
@@ -654,6 +633,39 @@ public class Plateau {
     }
 
     /**
+     * Génère bouton de limitation d'argent dans la partie.
+     * @return button affichable
+     */
+    private Button boutonArgent() {
+        Button button = new Bouton().creerBoutonBool("Argent", 140, 250);
+        button.setOnMouseClicked(mouseEvent -> {
+            if (!activerArgent) {
+                activerArgent = true;
+                button.setEffect(new Effets().putInnerShadow(Color.BLACK));
+                button.setText("Argent : OUI");
+                group.getChildren().addAll(infoArgent, nbArgent);
+            } else {
+                activerArgent = false;
+                button.setEffect(null);
+                button.setText("Argent : NON");
+                group.getChildren().removeAll(infoArgent, nbArgent);
+                nbArgent.setText("");
+            }
+        });
+        button.setOnMouseEntered(mouseEvent -> {
+            if (!activerArgent) {
+                button.setEffect(new Effets().putInnerShadow(Color.BLACK));
+            }
+        });
+        button.setOnMouseExited(mouseEvent -> {
+            if (!activerArgent) {
+                button.setEffect(null);
+            }
+        });
+        return button;
+    }
+
+    /**
      * Crée un bouton Exit.
      * @return le bouton Exit
      */
@@ -687,6 +699,8 @@ public class Plateau {
                 activerEnchere = false;
                 enchereTerminee = false;
                 activerDijkstra = false;
+                activerArgent = false;
+                activerCheats = false;
                 equipeSelectionne = null;
                 personneSelectionne = null;
                 barre.equipe1.setEffect(null);
@@ -731,7 +745,7 @@ public class Plateau {
                 barre.equipe1.setEffect(null);
                 barre.equipe2.setEffect(null);
                 if (activerEnchere) {
-                    equipeSelectionne = e1;
+                    equipeSelectionne = Equipe.e1;
                     barre.getButtonTeamSelect().setEffect(new Effets().putInnerShadow(Plateau.equipeSelectionne.getCouleur()));
                 }
                 for (Personne p : barre.getListeClasse()) {
@@ -763,7 +777,7 @@ public class Plateau {
         play.setLayoutX(140);
         play.setLayoutY(10);
         play.setOnMouseClicked(mouseEvent -> {
-            if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty()) {
+            if (!Equipe.e1.getTeam().isEmpty() && !Equipe.e2.getTeam().isEmpty()) {
                 boutonGame.getChildren().remove(labelPause);
                 boutonGame.getChildren().remove(play);
                 boutonGame.getChildren().add(pause);
@@ -774,7 +788,7 @@ public class Plateau {
                     Plateau.scene.setCursor(Cursor.DEFAULT);
 
                     if (activerEnchere) {
-                        for (Case c : listeCase) {
+                        for (Case c : Case.listeCase) {
                             c.getHexagone().setImage(Case.hexagone_img1);
                         }
                         for (Personne p : BarrePersonnage.listeClasse) {
@@ -784,7 +798,7 @@ public class Plateau {
 
                 }
                 tour();
-            } else if (!personnages.isEmpty() && (e1.getTeam().isEmpty() || e2.getTeam().isEmpty())) {
+            } else if (!Personne.personnages.isEmpty() && (Equipe.e1.getTeam().isEmpty() || Equipe.e2.getTeam().isEmpty())) {
                 Text attention = new Text("Il n'y qu'une seule equipe sur le terrain");
                 attention.setY(650);
                 attention.setX(20);
@@ -863,9 +877,9 @@ public class Plateau {
         barVie.setLayoutX(longueurMax - 200);
         barVie.setLayoutY(90);
         barVie.setOnMouseClicked(mouseEvent -> {
-            if (!personnages.isEmpty()) {
+            if (!Personne.personnages.isEmpty()) {
                 Personne.barreVisible = !Personne.barreVisible;
-                for (Personne personnage : personnages) {
+                for (Personne personnage : Personne.personnages) {
                     if (!personnage.getPosition().verifNoir()) {
                         personnage.afficherSanteEtNom();
                     }
@@ -886,17 +900,18 @@ public class Plateau {
         Button animation = boutonAnimation();
         Button enchere = boutonEnchere();
         Button event = boutonEvenement();
+        Button argent = boutonArgent();
 
         modes.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(animation)) {
                 try {
-                    group.getChildren().addAll(animation, enchere, event);
+                    group.getChildren().addAll(animation, enchere, event, argent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    group.getChildren().removeAll(animation, enchere, event);
+                    group.getChildren().removeAll(animation, enchere, event, argent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1012,27 +1027,27 @@ public class Plateau {
      * que l'utilisateur mette pause.
      */
     public void tour() {
-        if (!e1.getTeam().isEmpty() && !e2.getTeam().isEmpty() && statusPartie) {
+        if (!Equipe.e1.getTeam().isEmpty() && !Equipe.e2.getTeam().isEmpty() && statusPartie) {
             tour++;
             System.out.println("Tour : " + tour);
             updateNbTour();
 
-            for (Case c : listeCase) {
+            for (Case c : Case.listeCase) {
                 c.devenirBlanc();
             }
 
             // Gestion des événements aléatoires
             if (Evenement.activerEvenement) {
-                event.generationEvenements();
+                Evenement.generationEvenements();
             }
 
             // Gestion des invocations
-            personnages.addAll(invocationAttente);
-            invocationAttente.clear();
+            Personne.personnages.addAll(Personne.invocationAttente);
+            Personne.invocationAttente.clear();
 
             // Gestion des cases altérées
-            if (!listeCaseAlterees.isEmpty()) {
-                for (Case c : listeCaseAlterees) {
+            if (!Case.listeCaseAlterees.isEmpty()) {
+                for (Case c : Case.listeCaseAlterees) {
                     if (c.getAlteration() != null) {
                         c.getAlteration().passeTour();
                     } else {
@@ -1043,54 +1058,52 @@ public class Plateau {
             }
 
             // Gestion de l'affichage de barres de vie
-            if (Personne.barreVisible && !personnages.isEmpty()) {
-                for (Personne personnage : personnages) {
+            if (Personne.barreVisible && !Personne.personnages.isEmpty()) {
+                for (Personne personnage : Personne.personnages) {
                     personnage.afficherSanteEtNom();
                 }
             }
 
             // Gestion de l'ordre d'action des personnages
-            Collections.shuffle(personnages);
+            Collections.shuffle(Personne.personnages);
             // Fait combattre les personnages non contenu dans mort
-            for (Personne personnage : personnages) {
+            for (Personne personnage : Personne.personnages) {
                 if (personnage.getHealth() <= 0) {
-                    morts.add(personnage);
+                    Personne.morts.add(personnage);
                 }
-                if (!morts.contains(personnage)) {
+                if (!Personne.morts.contains(personnage)) {
                     personnage.getAlteration();
                     personnage.gainCD();
                     personnage.clearStatus();
                     if (personnage.getPosition().getAlteration() != null) {
-                        if (personnage.getPosition().getAlteration() instanceof AlterationFreeze && personnage.getClass() == Archimage.class) {
-                            personnage.action();
-                        } else if (!(personnage.getPosition().getAlteration() instanceof AlterationFreeze) && personnage.getStatus() == "normal") {
+                        if (personnage.getStatus().equals("freeze") && personnage instanceof Archimage) {
                             personnage.action();
                         }
-                    } else if (personnage.getStatus() == "normal") {
+                    } else if (personnage.getStatus().equals("normal")) {
                         personnage.action();
                     }
                 }
             }
 
             // Gestion des morts
-            for (Personne p : morts) {
+            for (Personne p : Personne.morts) {
                 if (argentPartie > 0) {
                     p.getOtherTeam().setArgent(p.getOtherTeam().getArgent() + 50);
                 }
                 p.selfDelete();
                 p.getTeam().setNbPersonne();
             }
-            System.out.println("Nombre de morts durant ce tour : " + morts.size());
-            System.out.println("Equipe 1 : " + e1.getTeam().size() + " | Equipe 2 : " + e2.getTeam().size());
-            System.out.println("Nombre de personnages sur le plateau : " + personnages.size());
-            morts.clear();
+            System.out.println("Nombre de morts durant ce tour : " + Personne.morts.size());
+            System.out.println("Equipe 1 : " + Equipe.e1.getTeam().size() + " | Equipe 2 : " + Equipe.e2.getTeam().size());
+            System.out.println("Nombre de personnages sur le plateau : " + Personne.personnages.size());
+            Personne.morts.clear();
 
             // Relance le prochain tour (dans un certain temps --> vitesse)
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(temps), ev -> tour()));
             timeline.play();
 
             // Change l'interface car nous somme en jeu
-            if (e1.getTeam().isEmpty() || e2.getTeam().isEmpty()) {
+            if (Equipe.e1.getTeam().isEmpty() || Equipe.e2.getTeam().isEmpty()) {
                 setStatusPartie(false);
                 if (activerEnchere) {
                     brouillard();
@@ -1099,8 +1112,8 @@ public class Plateau {
                 group.getChildren().remove(boutonPausePlay());
                 group.getChildren().add(boutonPausePlay());
                 group.getChildren().add(barre.returnBarre());
-                morts.clear();
-                personnages.addAll(invocationAttente);
+                Personne.morts.clear();
+                Personne.personnages.addAll(Personne.invocationAttente);
             }
             if (argentPartie > 0) {
                 getE1().setArgent(getE1().getArgent() + 25);
@@ -1117,10 +1130,10 @@ public class Plateau {
      */
     public void cleanPlateau() {
         tour = 0;
-        personnages.clear();
-        morts.clear();
-        listeCase.clear();
-        invocationAttente.clear();
+        Personne.personnages.clear();
+        Personne.morts.clear();
+        Case.listeCase.clear();
+        Personne.invocationAttente.clear();
         getE1().getTeam().clear();
         getE2().getTeam().clear();
         scene.setFill(Color.WHITE);
@@ -1133,27 +1146,27 @@ public class Plateau {
     public static void brouillard() {
         if (equipeSelectionne == getE1()) {
             // Tests brouillard de guerre
-            for (int i = 0; i < listeCase.size(); i++) {
-                if (i >= listeCase.size() / 2) {
-                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e1) {
-                        listeCase.get(i).devenirNoir();
+            for (int i = 0; i < Case.listeCase.size(); i++) {
+                if (i >= Case.listeCase.size() / 2) {
+                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e1) {
+                        Case.listeCase.get(i).devenirNoir();
                     } else {
-                        listeCase.get(i).devenirBlanc();
+                        Case.listeCase.get(i).devenirBlanc();
                     }
                 } else {
-                    listeCase.get(i).devenirBlanc();
+                    Case.listeCase.get(i).devenirBlanc();
                 }
             }
         } else {
-            for (int i = 0; i < listeCase.size(); i++) {
-                if (i < listeCase.size() / 2) {
-                    if (listeCase.get(i).getContenu().isEmpty() || listeCase.get(i).getContenu().get(0).getTeam() != e2) {
-                        listeCase.get(i).devenirNoir();
+            for (int i = 0; i < Case.listeCase.size(); i++) {
+                if (i < Case.listeCase.size() / 2) {
+                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e2) {
+                        Case.listeCase.get(i).devenirNoir();
                     } else {
-                        listeCase.get(i).devenirBlanc();
+                        Case.listeCase.get(i).devenirBlanc();
                     }
                 } else {
-                    listeCase.get(i).devenirBlanc();
+                    Case.listeCase.get(i).devenirBlanc();
                 }
             }
         }
@@ -1165,7 +1178,7 @@ public class Plateau {
                 if (key.getCode() == KeyCode.M && argentPartie > 0) {
                     equipeSelectionne.setArgent(equipeSelectionne.getArgent() + 100);
                 } else if (key.getCode() == KeyCode.V) {
-                    for (Personne p : personnages) {
+                    for (Personne p : Personne.personnages) {
                         if (p.getTeam() == equipeSelectionne) {
                             p.setHealth(10000);
                             p.setMaxHealth(10000);
@@ -1189,10 +1202,10 @@ public class Plateau {
     }
 
     public static Equipe getE1() {
-        return e1;
+        return Equipe.e1;
     }
 
     public static Equipe getE2() {
-        return e2;
+        return Equipe.e2;
     }
 }

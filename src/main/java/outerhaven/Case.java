@@ -27,6 +27,12 @@ import static outerhaven.Plateau.*;
 
 public class Case {
     /**
+     * Liste/tableau des cases (altérées ou non) dans le plateau
+     */
+    public static ArrayList<Case> listeCase = new ArrayList<>();
+    public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
+    public static Case[][] tableauCase;
+    /**
      * Pos X et Pos Y contiennent les coordonnées de la case en px sur l'écran de l'utilisateur
      * coordonnée contient les coordonnée X -> (0) et Y -> (1) de la case
      */
@@ -113,7 +119,7 @@ public class Case {
     public void seVider() {
         if (contenu.size() > 0) {
             if (!statusPartie) {
-                personnages.remove(contenu.get(0));
+                Personne.personnages.remove(contenu.get(0));
                 contenu.get(0).getTeam().getTeam().remove(contenu.get(0));
             }
             contenu.get(0).supprimerSanteEtNom();
@@ -194,7 +200,7 @@ public class Case {
                     if (personneSelectionne.getClass().getName().contains("Prime")) {
                         try {
                             ArrayList<Personne> listeEquipe;
-                            if (equipeSelectionne == e1) {
+                            if (equipeSelectionne == Equipe.e1) {
                                 listeEquipe = listeEquipe1;
                             } else {
                                 listeEquipe = listeEquipe2;
@@ -407,7 +413,7 @@ public class Case {
         int depth = listeCase.size();
         Personne laPlusProche = null;
         //on regarde avec tout les personnages la norme vectoriel qui les separent d'une case
-        for (Personne personnage : personnages) {
+        for (Personne personnage : Personne.personnages) {
             if (this.contenu.get(0) != personnage) {
                 int x = (personnage.getPosition().getCoordonnee()[0] - getCoordonnee()[0]);
                 int y = (personnage.getPosition().getCoordonnee()[1] - getCoordonnee()[1]);
@@ -598,7 +604,7 @@ public class Case {
         if (this.getAlteration() == null) { // Si la case ne possède pas d'altération.
             this.setAlteration(a); // Ajoute l'altération de case à this.
             this.getHexagone().setEffect(new Effets().putInnerShadow(Color.BLACK));
-            Plateau.listeCaseAlterees.add(this); // Ajoute à la case altérée à la liste des cases altérée pour décrémenter la durée.
+            listeCaseAlterees.add(this); // Ajoute à la case altérée à la liste des cases altérée pour décrémenter la durée.
         } else if (this.getAlteration().getClass().equals(a.getClass())) { // Sinon réinitialise sa durée.
             this.getAlteration().setDuree(a.getDuree());
         }

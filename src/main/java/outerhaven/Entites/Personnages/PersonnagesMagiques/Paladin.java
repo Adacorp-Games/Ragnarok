@@ -31,7 +31,6 @@ public class Paladin extends PersonneMagique {
     @Override
     public void action() {
         this.gainMana();
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
 
         // Se soigne si il possède de la mana
         if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
@@ -43,16 +42,12 @@ public class Paladin extends PersonneMagique {
             this.setMana(this.getMana() - 150);
 
         } else {
-            ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-            System.out.println("Taille du chemin vers l'ennemi le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-            if (pathToEnnemy.size() - 1 <= this.getRange()) {
-                System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-                attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
+            ArrayList<Case> pathToEnemy = calculerChemin();
+            if (pathToEnemy.size() - 1 <= this.getRange()) {
+                attaquer(pathToEnemy.get(pathToEnemy.size() - 1).getContenu().get(0));
             } else {
-                System.out.println(this.getName() + " se déplace");
-                deplacer(pathToEnnemy.get(this.getSpeed()));
+                deplacer(pathToEnemy.get(this.getSpeed()));
             }
-            // System.out.println("Vie restante de la cible " + getHealth());
         }
     }
 

@@ -5,7 +5,7 @@ import outerhaven.Entites.Personnages.Personne;
 
 import java.util.ArrayList;
 
-public class Defenseur extends Poste {
+public class Destructeur extends Poste {
 
     @Override
     public ArrayList<Case> calculerChemin(Personne p) {

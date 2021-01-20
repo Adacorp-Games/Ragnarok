@@ -14,6 +14,11 @@ import static outerhaven.Plateau.*;
 
 public class Equipe {
     /**
+     * Les différentes équipes dans le jeu
+     */
+    public static Equipe e1 = new Equipe(Color.RED);
+    public static Equipe e2 = new Equipe(Color.BLUE);
+    /**
      * Liste des personnage quelle contient.
      */
     private final ArrayList<Personne> team;

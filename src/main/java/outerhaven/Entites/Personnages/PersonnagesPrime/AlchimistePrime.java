@@ -22,29 +22,15 @@ public class AlchimistePrime extends Alchimiste {
     }
 
     @Override
-    public void action() {
-        this.gainMana();
-        System.out.println("Nombre de case vide autour de " + this.getName() + " : " + this.getPosition().nbVoisinsLibres());
-        ArrayList<Case> pathToEnnemy = new ArrayList<>(this.getPosition().pathToPerso(getOtherTeam()));
-        System.out.println("Taille du chemin vers l'ennemis le plus proche pour " + this.getName() + " : " + (pathToEnnemy.size() - 1));
-
-        // Capacités de l'alchimiste
-        if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() >= 100) {
-            ajouterAlter(new AlterationPoison(60, 15, this.getTeam()), pathToEnnemy.get(pathToEnnemy.size() - 1));
-            ajouterAlterVoisine(new AlterationPoison(60, 15, this.getTeam()), pathToEnnemy.get(pathToEnnemy.size() - 1));
-            for (Case c : pathToEnnemy.get(pathToEnnemy.size() - 1).getCaseVoisines()) {
-                ajouterAlterVoisine(new AlterationPoison(60, 15, this.getTeam()), pathToEnnemy.get(pathToEnnemy.size() - 1));
+    public void pouvoir() {
+        if (this.getPathToEnemy().size() - 1 <= this.getRange() && this.getMana() >= 100) {
+            Case c = this.getPathToEnemy().get(this.getPathToEnemy().size() - 1);
+            this.empoisonnerAOE(c, 60, 15);
+            for (Case cv : c.getCaseVoisines()) {
+                this.empoisonnerAOE(cv, 60, 15);
             }
             this.setMana(this.getMana() - 100);
-
-        } else if (pathToEnnemy.size() - 1 <= this.getRange() && this.getMana() < 100) {
-            System.out.println(this.getName() + " (" + this.getHealth() + ") attaque " + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getName() + " (" + pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0).getHealth() + ")");
-            attaquer(pathToEnnemy.get(pathToEnnemy.size() - 1).getContenu().get(0));
-        } else {
-            System.out.println(this.getName() + " se déplace");
-            deplacer(pathToEnnemy.get(this.getSpeed()));
         }
-        // System.out.println("Vie restante de la cible " + getHealth());
     }
 
     @Override
