@@ -135,12 +135,16 @@ public abstract class Personne extends Entite {
     }
 
     public void comportementsBasiques() {
-        if (this.pathToEnemy.size() - 1 <= this.getRange()) {
-            // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
-            attaquer(this.pathToEnemy.get(this.pathToEnemy.size() - 1).getContenu().get(0));
-        } else {
-            // Sinon il se déplace pour se rapprocher de lui.
-            deplacer(this.pathToEnemy.get(this.getSpeed()));
+        try {
+            if (this.pathToEnemy.size() - 1 <= this.getRange()) {
+                // Si l'ennemi le plus proche est dans la portée d'attaque de this alors il l'attaque.
+                attaquer(this.pathToEnemy.get(this.pathToEnemy.size() - 1).getContenu().get(0));
+            } else {
+                // Sinon il se déplace pour se rapprocher de lui.
+                deplacer(this.pathToEnemy.get(this.getSpeed()));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(this.getName() + " : " + e.getMessage());
         }
     }
 
