@@ -3,12 +3,9 @@ package outerhaven.Entites.Personnages.PersonnagesPrime;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
-import outerhaven.Mecaniques.Alterations.AlterationPoison;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Entites.Personnages.Personne;
-
-import java.util.ArrayList;
+import outerhaven.Equipe;
 
 public class AlchimistePrime extends Alchimiste {
 
@@ -35,7 +32,7 @@ public class AlchimistePrime extends Alchimiste {
 
     @Override
     public Personne personneNouvelle(Equipe team, Case position) {
-        return new AlchimistePrime(team,position);
+        return new AlchimistePrime(team, position);
     }
 
     @Override

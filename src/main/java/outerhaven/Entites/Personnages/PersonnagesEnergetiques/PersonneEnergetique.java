@@ -4,8 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 import static outerhaven.Plateau.taille;
 
@@ -64,11 +64,11 @@ public abstract class PersonneEnergetique extends Personne {
     }
 
     public Group afficherEnergie() {
-        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
-        Rectangle energie = new Rectangle(taille - 4, taille/10 - 4, Color.YELLOW);
+        Rectangle barre = new Rectangle(taille, taille / 10, Color.BLACK);
+        Rectangle energie = new Rectangle(taille - 4, taille / 10 - 4, Color.YELLOW);
 
         barre.setX(getPosition().getPosX());
-        barre.setY(getPosition().getPosY() + taille/10 + taille/2.2);
+        barre.setY(getPosition().getPosY() + taille / 10 + taille / 2.2);
 
         energie.setY(barre.getY() + 2);
         energie.setX(barre.getX() + 2);

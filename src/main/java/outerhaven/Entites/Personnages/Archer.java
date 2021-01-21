@@ -39,8 +39,8 @@ public class Archer extends Personne {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Archer(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Archer(team, position);
     }
 
     @Override

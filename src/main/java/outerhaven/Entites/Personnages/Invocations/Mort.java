@@ -3,8 +3,8 @@ package outerhaven.Entites.Personnages.Invocations;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class Mort extends Invocation {
 
@@ -17,8 +17,8 @@ public class Mort extends Invocation {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Mort(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Mort(team, position);
     }
 
     @Override

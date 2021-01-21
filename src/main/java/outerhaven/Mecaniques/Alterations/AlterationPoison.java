@@ -1,9 +1,9 @@
 package outerhaven.Mecaniques.Alterations;
 
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Alchimiste;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class AlterationPoison extends Alteration {
 

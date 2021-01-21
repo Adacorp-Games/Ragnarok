@@ -13,12 +13,12 @@ import java.util.Collections;
  */
 
 public class Evenement {
+    public static final Evenement event = new Evenement(new AlterationPoison(50, 15));
     public static ArrayList<Evenement> listeEvents = new ArrayList<>();
     public static boolean activerEvenement = false;
     public static int pourcentageEvenement;
     public static double fréquenceEvenement;
     private Alteration alteration;
-    public static final Evenement event = new Evenement(new AlterationPoison(50, 15));
 
     public Evenement(Alteration alteration) {
         this.alteration = alteration;

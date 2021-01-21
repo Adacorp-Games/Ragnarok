@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
 import outerhaven.Entites.Personnages.Invocations.Golem;
-import outerhaven.Entites.Personnages.Invocations.Mort;
 import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Poste.Defenseur;
@@ -58,8 +57,8 @@ public class Chaman extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Chaman(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Chaman(team, position);
     }
 
     @Override

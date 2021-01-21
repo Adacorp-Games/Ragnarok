@@ -13,9 +13,9 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 import outerhaven.Case;
 import outerhaven.Entites.Entite;
+import outerhaven.Entites.Personnages.Invocations.Invocation;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
-import outerhaven.Entites.Personnages.Invocations.Invocation;
 import outerhaven.Mecaniques.Poste.Poste;
 import outerhaven.Plateau;
 
@@ -33,6 +33,10 @@ import static outerhaven.Plateau.*;
 
 public abstract class Personne extends Entite {
     /**
+     * Liste des noms stockés dans un fichier texte modifiable par n'importe qui pour ajouter de la personnalisation.
+     */
+    private static final ArrayList<String> listName = new ArrayList<>();
+    /**
      * Liste de personnes présentes sur le plateau.
      */
     public static ArrayList<Personne> personnages = new ArrayList<>();
@@ -44,31 +48,27 @@ public abstract class Personne extends Entite {
      * Liste d'invocation en attente pour les futurs unités à ajouter pour le prochain tour.
      */
     public static ArrayList<Personne> invocationAttente = new ArrayList<>();
+    public static boolean barreVisible = false;
     private final String name; // Stocké dans un tableau.
-    /**
-     * Liste des noms stockés dans un fichier texte modifiable par n'importe qui pour ajouter de la personnalisation.
-     */
-    private static final ArrayList<String> listName = new ArrayList<>();
+    public Case casePrecedente;
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    protected int damage;       // Dégâts de la personne
+    protected int range;        // Portée d'attaque en nombre de case
+    ArrayList<Case> pathToEnemy;
     private Group SanteNom = new Group();
     private double health;      // Vie de la personne
     private double maxHealth;   // Vie maximale de la personne qui est égale à sa vie en début de partie
     private double armor;       // Armure de la personne
     private double cost;        // Coût de la personne
-    protected int damage;       // Dégâts de la personne
-    protected int range;        // Portée d'attaque en nombre de case
     private int speed;          // Nombre de case qu'il parcourt chaque tour
     private Equipe team;        // Equipe de la personne
-    public static boolean barreVisible = false;
-    public Case casePrecedente;
     private ImageView imageperson = new ImageView(this.getImageFace());
-    ArrayList<Case> pathToEnemy;
     private Case position;
     private int cooldown = 0;
     private String status = "normal";
     private int duréeStatus = 0;
     private Poste poste;
-    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
 
     public Personne(double health, double armor, double cost, int damage, int range, int speed) {
         this.name = getRandomName();
@@ -97,6 +97,32 @@ public abstract class Personne extends Entite {
         this.position = position;
         this.position.setContenu(this);
         this.casePrecedente = position;
+    }
+
+    /**
+     * Fonction qui permet d'obtenir un nom aléatoire parmi ceux dans la liste des noms disponibles.
+     *
+     * @return un nom aléatoire pour la personne
+     */
+    public static String getRandomName() {
+        if (listName.isEmpty()) {
+            ajouteNom();
+        }
+        return listName.get(new Random().nextInt(listName.size()));
+    }
+
+    /**
+     * Méthode permettant d'ajouter dans la liste des nom les noms écris dans "noms.txt"
+     */
+    private static void ajouteNom() {
+        Scanner scan = new Scanner(Personne.class.getResourceAsStream("/Texts/noms.txt"));
+        int ligne = 1;
+        while (scan.hasNextLine()) {
+            String nom = scan.nextLine();
+            listName.add(nom);
+            ligne++;
+        }
+        scan.close();
     }
 
     /**
@@ -186,7 +212,7 @@ public abstract class Personne extends Entite {
             double xVec = (casePrecedente.getPosX() - fin.getPosX()) / fps;
             double yVec = (casePrecedente.getPosY() - fin.getPosY()) / fps;
             AtomicInteger count = new AtomicInteger(0);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis((temps-100) / fps), ev -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis((temps - 100) / fps), ev -> {
                 x.set(x.get() - xVec);
                 y.set(y.get() - yVec);
                 affichageCaseprecedente.setLayoutX(x.get());
@@ -230,6 +256,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Affiche les personnages dans la barre.
+     *
      * @param i : paramètre pour la méthode genereBarre() de la classe BarrePersonnage afin de générer chaque personne ne la liste listClasse
      * @return un groupe contenant les personnages dans la barre avec les effets et leur description
      */
@@ -265,13 +292,14 @@ public abstract class Personne extends Entite {
 
     /**
      * Fonction permettant de créer la barre d'informations d'un personnage.
+     *
      * @param X : position en X de la description d'une personne
      * @param Y : position en Y de la description d'une personne
      * @return un groupe contenant les informations et la description d'une personne
      */
     public Group afficherInfo(double X, double Y) {
         Group description = new Group();
-        Rectangle barre = new Rectangle(425 , 205, Color.LIGHTGRAY);
+        Rectangle barre = new Rectangle(425, 205, Color.LIGHTGRAY);
         barre.setX(X);
         barre.setY(Y - 150);
         barre.setStroke(Color.BLACK);
@@ -296,12 +324,16 @@ public abstract class Personne extends Entite {
      * Fonctions abstraites devant être présentes dans toutes les classes filles.
      */
     public abstract Personne personneNouvelle(Equipe team, Case position);
+
     public abstract Text getinfoTitleText();
+
     public abstract Text getinfoDescText();
+
     public abstract Image getImageFace();
 
     /**
      * Méthode permettant d'afficher l'image de la personne.
+     *
      * @return un groupe contenant son image
      */
     public Group affichagePersonnage() {
@@ -315,13 +347,14 @@ public abstract class Personne extends Entite {
 
     /**
      * Fonction permettant d'afficher le nom de la personne.
+     *
      * @return un groupe contenant son nom avec la couleur de son équipe
      */
     public Group afficherNom() {
         Text name = new Text();
         name.setText(this.getName());
         name.setX(getPosition().getPosX() + 10);
-        name.setY(getPosition().getPosY() + taille/2.6);
+        name.setY(getPosition().getPosY() + taille / 2.6);
         name.setStyle("-fx-font-weight: bold");
         name.setEffect(new Effets().putInnerShadow(this.team.getCouleur()));
 
@@ -332,14 +365,15 @@ public abstract class Personne extends Entite {
 
     /**
      * Fonction permettant d'afficher l'image d'une personne et ajoute la possibilité de le supprimer en cliquant dessus hors partie lancée (!statusPartie).
+     *
      * @return un groupe contenant l'image de la personne
      */
     public Group afficherImageFace() {
         ImageView person = new ImageView(this.getImageFace());
-        person.setFitHeight(taille/1.5);
-        person.setFitWidth(taille/2);
-        person.setX(position.getPosX() + taille/3);
-        person.setY(position.getPosY() - taille/20);
+        person.setFitHeight(taille / 1.5);
+        person.setFitWidth(taille / 2);
+        person.setX(position.getPosX() + taille / 3);
+        person.setY(position.getPosY() - taille / 20);
         InnerShadow ombre = new InnerShadow();
         ombre.colorProperty().setValue(getTeam().getCouleur());
         person.setEffect(ombre);
@@ -417,6 +451,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Fonction qui crée la barre de vie de chaque personne en fonction de sa vie restant en pourcentage.
+     *
      * @return un groupe contenant la barre de vie pour une personne
      */
     public Group afficherSante() {
@@ -440,32 +475,8 @@ public abstract class Personne extends Entite {
     }
 
     /**
-     * Fonction qui permet d'obtenir un nom aléatoire parmi ceux dans la liste des noms disponibles.
-     * @return un nom aléatoire pour la personne
-     */
-    public static String getRandomName() {
-        if (listName.isEmpty()) {
-            ajouteNom();
-        }
-        return listName.get(new Random().nextInt(listName.size()));
-    }
-
-    /**
-     * Méthode permettant d'ajouter dans la liste des nom les noms écris dans "noms.txt"
-     */
-    private static void ajouteNom() {
-        Scanner scan = new Scanner(Personne.class.getResourceAsStream("/Texts/noms.txt"));
-        int ligne = 1;
-        while (scan.hasNextLine()) {
-            String nom = scan.nextLine();
-            listName.add(nom);
-            ligne++;
-        }
-        scan.close();
-    }
-
-    /**
      * Méthode permettant de prendre des dégâts
+     *
      * @param dégâts que l'on va enlever à la cible
      */
     public void prendreDégâts(double dégâts) {
@@ -474,6 +485,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Méthode qui permet à une personne d'avoir sa vie soignée
+     *
      * @param vie que l'on veut soigner
      */
     public void soigner(double vie) {
@@ -486,6 +498,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Méthode qui permet à une personne de devenir plus résistante sur le plateau
+     *
      * @param armure qu'on veut augmenter
      */
     public void seRenforce(double armure) {
@@ -505,6 +518,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Permet de mettre un status sur this (comme l'étourdir, geler ...).
+     *
      * @param durée en nombre de tour du status
      */
     public void changeStatus(String status, int durée) {
@@ -532,8 +546,16 @@ public abstract class Personne extends Entite {
         return health;
     }
 
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
     public double getArmor() {
         return armor;
+    }
+
+    public void setArmor(double armor) {
+        this.armor = armor;
     }
 
     public double getCost() {
@@ -542,14 +564,6 @@ public abstract class Personne extends Entite {
 
     public int getDamage() {
         return damage;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
-    }
-
-    public void setMaxHealth(double maxHealth) {
-        this.maxHealth = maxHealth;
     }
 
     public Case getPosition() {
@@ -580,6 +594,10 @@ public abstract class Personne extends Entite {
         return maxHealth;
     }
 
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
     public void getAlteration() {
         if (this.position.getAlteration() != null) {
             this.position.getAlteration().appliquerEffet(this);
@@ -592,6 +610,7 @@ public abstract class Personne extends Entite {
 
     /**
      * Fonction qui permet d'obtenir l'équipe adverse à this
+     *
      * @return l'équipe opposée à l'équipe de this.
      */
     public Equipe getOtherTeam() {
@@ -622,12 +641,12 @@ public abstract class Personne extends Entite {
         this.duréeStatus = duréeStatus;
     }
 
-    public void setArmor(double armor) {
-        this.armor = armor;
-    }
-
     public ImageView getImagePerson() {
         return imageperson;
+    }
+
+    public void setImagePerson(ImageView imagePerson) {
+        this.imageperson = imagePerson;
     }
 
     public ImageView getImagePersonPosition(int x, int y) {
@@ -636,10 +655,6 @@ public abstract class Personne extends Entite {
         imagePosition.setX(x);
         imagePosition.setY(y);
         return imagePosition;
-    }
-
-    public void setImagePerson(ImageView imagePerson) {
-        this.imageperson = imagePerson;
     }
 
     public String getStatus() {

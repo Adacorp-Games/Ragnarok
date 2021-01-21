@@ -1,9 +1,9 @@
 package outerhaven.Mecaniques;
 
 import javafx.scene.Group;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Interface.BarrePersonnage;
-import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Plateau;
 
 import java.util.ArrayList;
@@ -23,6 +23,14 @@ public class Enchere {
         this.produit = produit;
         this.prixMinimal = 0;
         this.status = true;
+    }
+
+    public static ArrayList<Enchere> getListeEnchere() {
+        return listeEnchere;
+    }
+
+    public static void ajouterEnchere(Enchere e) {
+        Enchere.listeEnchere.add(e);
     }
 
     /**
@@ -45,14 +53,6 @@ public class Enchere {
         return this.getProduit().afficherInfo(700, 500);
     }
 
-    public static ArrayList<Enchere> getListeEnchere() {
-        return listeEnchere;
-    }
-
-    public static void ajouterEnchere(Enchere e) {
-        Enchere.listeEnchere.add(e);
-    }
-
     public Personne getProduit() {
         return produit;
     }
@@ -65,16 +65,16 @@ public class Enchere {
         return prixMinimal;
     }
 
+    public void setPrixMinimal(double prixMinimal) {
+        this.prixMinimal = prixMinimal;
+    }
+
     public Equipe getEquipeGagnante() {
         return equipeGagnante;
     }
 
     public void setEquipeGagnante(Equipe equipeGagnante) {
         this.equipeGagnante = equipeGagnante;
-    }
-
-    public void setPrixMinimal(double prixMinimal) {
-        this.prixMinimal = prixMinimal;
     }
 
     public boolean isStatus() {

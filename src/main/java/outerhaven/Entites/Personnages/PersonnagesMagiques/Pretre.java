@@ -3,11 +3,9 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationHeal;
-import outerhaven.Entites.Personnages.Personne;
-
-import java.util.ArrayList;
 
 public class Pretre extends PersonneMagique {
 
@@ -51,8 +49,8 @@ public class Pretre extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Pretre(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Pretre(team, position);
     }
 
     @Override

@@ -3,9 +3,9 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationFreeze;
-import outerhaven.Entites.Personnages.Personne;
 
 public class Archimage extends PersonneMagique {
 
@@ -47,8 +47,8 @@ public class Archimage extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Archimage(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Archimage(team, position);
     }
 
     @Override

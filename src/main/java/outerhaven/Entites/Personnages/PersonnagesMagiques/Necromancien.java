@@ -3,12 +3,10 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Invocations.Mort;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 import outerhaven.Plateau;
-
-import java.util.ArrayList;
 
 public class Necromancien extends PersonneMagique {
 
@@ -97,8 +95,8 @@ public class Necromancien extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Necromancien(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Necromancien(team, position);
     }
 
     @Override

@@ -3,8 +3,8 @@ package outerhaven.Entites.Personnages.Invocations;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public abstract class Invocation extends Personne {
     public Invocation(double health, double armor, double cost, int damage, int range, int speed) {

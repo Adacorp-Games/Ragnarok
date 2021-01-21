@@ -33,11 +33,11 @@ public abstract class PersonneRage extends Personne {
     }
 
     public Group afficherRage() {
-        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
-        Rectangle rage = new Rectangle(taille - 4, taille/10 - 4, Color.DARKRED);
+        Rectangle barre = new Rectangle(taille, taille / 10, Color.BLACK);
+        Rectangle rage = new Rectangle(taille - 4, taille / 10 - 4, Color.DARKRED);
 
         barre.setX(getPosition().getPosX());
-        barre.setY(getPosition().getPosY() + taille/10 + taille/2.2);
+        barre.setY(getPosition().getPosY() + taille / 10 + taille / 2.2);
 
         rage.setY(barre.getY() + 2);
         rage.setX(barre.getX() + 2);

@@ -1,20 +1,19 @@
 package outerhaven;
 
-import javafx.scene.Group;
-
-import java.util.*;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import outerhaven.Entites.Entite;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alterations.Alteration;
-import outerhaven.Entites.Personnages.Personne;
+
+import java.util.*;
 
 import static outerhaven.Interface.BarrePersonnage.listeEquipe1;
 import static outerhaven.Interface.BarrePersonnage.listeEquipe2;
@@ -27,27 +26,35 @@ import static outerhaven.Plateau.*;
  */
 
 public class Case {
+    public static final Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
+    public static final Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
+    public static final Image hexagone_imgBlock = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonBlock.png"));
+    public static final Image hexagone_imgPoison = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonToxic.png"));
+    public static final Image hexagone_imgHeal = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
+    public static final Image hexagone_imgManaVore = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonManaVore.png"));
+    public static final Image hexagone_imgFreeze = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
     /**
      * Liste/tableau des cases (altérées ou non) dans le plateau.
      */
     public static ArrayList<Case> listeCase = new ArrayList<>();
     public static ArrayList<Case> listeCaseAlterees = new ArrayList<>();
     public static Case[][] tableauCase;
+    private static boolean bloqué;
+    private final int[] coordonnee = new int[2];
+    /**
+     * C'est ce que contient la case, nous avons choisi d'utiliser une liste pour éviter certaine erreur.
+     */
+    private final ArrayList<Personne> contenu = new ArrayList<>();
     /**
      * Pos X et Pos Y contiennent les coordonnées de la case en px sur l'écran de l'utilisateur.
      * coordonnée contient les coordonnée X -> (0) et Y -> (1) de la case.
      */
     private double posX;
     private double posY;
-    private final int[] coordonnee = new int[2];
     /**
      * caseVoisines contient les cases cases partageant des cotés avec la this (6 max).
      */
     private ArrayList<Case> caseVoisines = new ArrayList<>();
-    /**
-     * C'est ce que contient la case, nous avons choisi d'utiliser une liste pour éviter certaine erreur.
-     */
-    private final ArrayList<Personne> contenu = new ArrayList<>();
     /**
      * Groupe contenant l'affichage de la case.
      */
@@ -60,14 +67,6 @@ public class Case {
      * Contient l'image d'une case -> forme hexagonale.
      */
     private ImageView hexagone;
-    public static final Image hexagone_img1 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon.png"));
-    public static final Image hexagone_img2 = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagon2.png"));
-    public static final Image hexagone_imgBlock = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonBlock.png"));
-    public static final Image hexagone_imgPoison = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonToxic.png"));
-    public static final Image hexagone_imgHeal = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonHeal.png"));
-    public static final Image hexagone_imgManaVore = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonManaVore.png"));
-    public static final Image hexagone_imgFreeze = new Image(Case.class.getResourceAsStream("/Images/Cases/hexagonFreeze.png"));
-    private static boolean bloqué;
 
     public Case(int x, int y) {
         coordonnee[0] = x;
@@ -76,8 +75,9 @@ public class Case {
 
     /**
      * Génère l'affichage d'une case ainsi que ses interactions.
-     * @param X : position en X de l'image
-     * @param Y : position en Y de l'image
+     *
+     * @param X      : position en X de l'image
+     * @param Y      : position en Y de l'image
      * @param taille : taille de l'image pixels
      */
     public ImageView afficherCase(double X, double Y, double taille) {
@@ -106,7 +106,7 @@ public class Case {
                 }
             });
             // Lorsque l'on clique sur la souris
-            hexagone.setOnMousePressed((mouseEvent)-> interactionHex());
+            hexagone.setOnMousePressed((mouseEvent) -> interactionHex());
             arriveCase(hexagone);
             return hexagone;
         } else {
@@ -146,7 +146,8 @@ public class Case {
             hexagone.setImage(hexagone_img1);
         } else {
             hexagone.setImage(alteration.getImage());
-        } if (!group.getChildren().contains(affichageContenu) && !contenu.isEmpty()) {
+        }
+        if (!group.getChildren().contains(affichageContenu) && !contenu.isEmpty()) {
             rentrePersonnage(contenu.get(0));
         }
     }
@@ -161,6 +162,7 @@ public class Case {
             contenu.get(0).afficherSanteEtNom();
         }
     }
+
     /**
      * Cette methode est appelée par le brouillard() et permet verifier si une case est cachée.
      */
@@ -177,7 +179,7 @@ public class Case {
             contenu.add(personne);
             affichageContenu = contenu.get(0).affichagePersonnage();
             contenu.get(0).afficherSanteEtNom();
-            group.getChildren().add( listeCase.size() + 5 , affichageContenu);
+            group.getChildren().add(listeCase.size() + 5, affichageContenu);
         }
     }
 
@@ -191,7 +193,7 @@ public class Case {
                 // Vérifie si l'utilisateur à assez d'argent
                 if ((equipeSelectionne.getArgent() >= personneSelectionne.getCost() && argentPartie > 0) || argentPartie == 0) {
                     // Met à jour l'affichage, la liste des personnages sur le plateau et dans les équipes
-                    contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne,this));
+                    contenu.add(personneSelectionne.personneNouvelle(equipeSelectionne, this));
                     affichageContenu = contenu.get(0).affichagePersonnage();
                     contenu.get(0).afficherSanteEtNom();
                     group.getChildren().add(listeCase.size() + 5, affichageContenu);
@@ -213,7 +215,8 @@ public class Case {
                                     barre.majBarreEnchere();
                                 }
                             }
-                        } catch (Exception ignored) {}
+                        } catch (Exception ignored) {
+                        }
                     }
                     equipeSelectionne.setNbPersonne();
                 }
@@ -269,6 +272,7 @@ public class Case {
 
     /**
      * Vérifie si une case est vide ou pleine
+     *
      * @return false si vide et true si occupée
      */
     public boolean estOccupe() {
@@ -316,8 +320,9 @@ public class Case {
 
     /**
      * Permet d'afficher visuellement les case voisines
+     *
      * @param longueur : portée d'affichage en case voisine
-     * @param status : afficher ou non
+     * @param status   : afficher ou non
      */
     public void afficherCaseVoisines(int longueur, boolean status) {
         Image voisin;
@@ -355,6 +360,7 @@ public class Case {
 
     /**
      * Cherches toutes les cases voisines libres/pleines
+     *
      * @param lib : on cherche une case libre ou pleine
      * @return une liste de cases libres/pleines autour de this
      */
@@ -407,6 +413,7 @@ public class Case {
 
     /**
      * Trouves le personnage ennemie le plus proche d'une case grâce à un calcul de norme vectoriel
+     *
      * @return une liste de cases étant le chemin vers la cible la plus proche
      */
     public ArrayList<Case> pathToPerso(Equipe e) {
@@ -440,8 +447,8 @@ public class Case {
         int y = (personne.getPosition().donneYpourTab() - this.donneYpourTab());
         // Calcule du déplacement unitaire pour AvancementX/avancementY.
         final double sqrt = Math.sqrt(x * x + y * y);
-        double avancementX =  x / sqrt;
-        double avancementY =  y / sqrt;
+        double avancementX = x / sqrt;
+        double avancementY = y / sqrt;
         // xIncr et yIncr seront des variables qui seront incrémentées.
         // Elles représenteront étape par étape les déplacements en case pour le chemin final.
         double xIncr = 0;
@@ -459,9 +466,10 @@ public class Case {
 
     /**
      * Va chercher dans tableauCase et la tester pour savoir si elle peut être ajouté à un trajet
-     * @param chemin une liste de case qui servira de chemin final
-     * @param xIncr la difference de case en X entre this et la case étudiée
-     * @param yIncr la difference de case en Y entre this et la case étudiée
+     *
+     * @param chemin   une liste de case qui servira de chemin final
+     * @param xIncr    la difference de case en X entre this et la case étudiée
+     * @param yIncr    la difference de case en Y entre this et la case étudiée
      * @param personne ennemie à trouver
      */
     public void testCase(ArrayList<Case> chemin, int xIncr, int yIncr, Personne personne) {
@@ -512,16 +520,17 @@ public class Case {
      * en coordonnée valable pour le tableau (allant de 0 à tableauCase.length)
      * - coordonnee[0] = X
      * - coordonnee[1] = Y
+     *
      * @return un entier qui correspond à la coordonnée de Y.
      */
     private int donneYpourTab() {
         // Le codage se diffère entre deux lignes.
-        if (coordonnee[0]%2 == 0) {
+        if (coordonnee[0] % 2 == 0) {
             //quand c'est une ligne paire
-            return coordonnee[1] + (coordonnee[0]/2);
+            return coordonnee[1] + (coordonnee[0] / 2);
         } else {
             //quand c'est une ligne impaire
-            return (coordonnee[1] + (coordonnee[0])/2 + 1);
+            return (coordonnee[1] + (coordonnee[0]) / 2 + 1);
         }
     }
 
@@ -533,7 +542,7 @@ public class Case {
             if (nombre < 0) {
                 return (int) nombre - 1;
             } else {
-                return (int) nombre + 1 ;
+                return (int) nombre + 1;
             }
         } else {
             return (int) nombre;
@@ -555,6 +564,7 @@ public class Case {
 
     /**
      * Fonction de pathfinding utilisant une version de l'algorithme de Dijkstra très basique.
+     *
      * @return une ArrayList contenant les cases qui compose le chemin le plus court vers l'adversaire le plus proche s'il existe.
      */
     public ArrayList<Case> pathDijkstra() {
@@ -587,6 +597,7 @@ public class Case {
 
     /**
      * Fonction de pathfinding utilisant une version de l'algorithme de Dijkstra très basique.
+     *
      * @return une ArrayList contenant les cases qui compose le chemin le plus court vers l'entité "e" en paramètre.
      */
     public ArrayList<Case> pathDijkstra(Entite e) {
@@ -648,15 +659,15 @@ public class Case {
         this.caseVoisines = voisines;
     }
 
+    public ArrayList<Personne> getContenu() {
+        return contenu;
+    }
+
     public void setContenu(Personne p) {
         if (estOccupe()) {
             System.out.println("la case contient deja un obstacle/unite");
             contenu.add(p);
         }
-    }
-
-    public ArrayList<Personne> getContenu() {
-        return contenu;
     }
 
     public Group getAffichageContenu() {
@@ -671,12 +682,9 @@ public class Case {
         return alteration;
     }
 
-    public Equipe getEquipeContenu() {
-        return this.getContenu().get(0).getTeam();
-    }
-
     /**
      * Méthode permettant de modifier l'altération de this.
+     *
      * @param alteration à mettre sur this
      */
     public void setAlteration(Alteration alteration) {
@@ -688,6 +696,10 @@ public class Case {
             this.alteration = null;
             hexagone.setImage(hexagone_img1);
         }
+    }
+
+    public Equipe getEquipeContenu() {
+        return this.getContenu().get(0).getTeam();
     }
 
 }

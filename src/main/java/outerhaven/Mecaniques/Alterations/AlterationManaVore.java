@@ -1,7 +1,7 @@
 package outerhaven.Mecaniques.Alterations;
 
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class AlterationManaVore extends Alteration {
 

@@ -15,17 +15,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import outerhaven.Entites.Personnages.PersonnagesPrime.*;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Interface.BarrePersonnage;
 import outerhaven.Interface.Bouton;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Alterations.Alteration;
-import outerhaven.Mecaniques.Alterations.AlterationFreeze;
 import outerhaven.Mecaniques.Enchere;
 import outerhaven.Mecaniques.Evenements.Evenement;
 import outerhaven.Mecaniques.Sauvegarde;
-import outerhaven.Entites.Personnages.PersonnagesMagiques.Archimage;
-import outerhaven.Entites.Personnages.PersonnagesPrime.*;
-import outerhaven.Entites.Personnages.Personne;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,18 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 public class Plateau {
-    /**
-     * Information javaFX utile pour le fonctionnement du jeu.
-     */
-    private static Stage primary;
     public static Group group = new Group();
     public static Scene scene = new Scene(group);
-    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
-    /**
-     * Aire du plateau et taille en pixels d'une case.
-     */
-    private int aire;
     public static double taille;
     /**
      * Informations sur une partie en cours.
@@ -68,18 +56,155 @@ public class Plateau {
     public static boolean activerArgent = false;
     public static AtomicInteger idEnchere = new AtomicInteger();
     public static Text prix = new Text();
-    private Text infoArgent;
-    private TextField nbArgent;
     /**
      * Interface utile au plateau à mettre à jour durant une partie.
      */
     public static BarrePersonnage barre = new BarrePersonnage();
+    /**
+     * Information javaFX utile pour le fonctionnement du jeu.
+     */
+    private static Stage primary;
     private static Group nbPersonne = new Group();
     private static Group nbTour = new Group();
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
+    /**
+     * Aire du plateau et taille en pixels d'une case.
+     */
+    private int aire;
+    private Text infoArgent;
+    private TextField nbArgent;
 
     public Plateau(Stage primary) {
         // Le constructeur n'as besoin que de la fenêtre du main pour se lancer
         Plateau.primary = primary;
+    }
+
+    /**
+     * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe.
+     */
+    public static void afficherNbPersonne() {
+        Rectangle barre = new Rectangle(250, 70, Color.LIGHTGRAY);
+        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
+        barre.setY(10);
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
+
+        Text title = new Text("Nombre de personnes par équipe");
+        title.setX(barre.getX() + 10);
+        title.setY(barre.getY() + 20);
+
+        Text equipes = new Text("Equipe 1 : " + getE1().getNbPersonne() + "\n" + "Equipe 2 : " + getE2().getNbPersonne());
+        equipes.setX(title.getX());
+        equipes.setY(title.getY() + 20);
+
+        nbPersonne.getChildren().add(barre);
+        nbPersonne.getChildren().add(title);
+        nbPersonne.getChildren().add(equipes);
+    }
+
+    /**
+     * Méthode pour update les compteurs de afficherNbPersonne().
+     */
+    public static void updateNbPersonne() {
+        nbPersonne.getChildren().clear();
+        afficherNbPersonne();
+    }
+
+    /**
+     * Affiche le tour actuel.
+     */
+    private static void afficheNbTour() {
+        Rectangle barre = new Rectangle(50, 50, Color.LIGHTGRAY);
+        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
+        barre.setY(90);
+        barre.setStroke(Color.BLACK);
+        barre.setStrokeWidth(2);
+
+        Text nb = new Text("Tour\n" + tour);
+        nb.setX(barre.getX() + 10);
+        nb.setY(barre.getY() + 20);
+
+        nbTour.getChildren().add(barre);
+        nbTour.getChildren().add(nb);
+    }
+
+    /**
+     * Méthode pour update les compteurs de afficheNbTour().
+     */
+    public static void updateNbTour() {
+        nbTour.getChildren().clear();
+        afficheNbTour();
+    }
+
+    /**
+     * Fonction transformant un String en entier.
+     *
+     * @param textField est le texte qu'on cherche à transformer en entier
+     * @return le texte en int s'il contient que des entiers
+     */
+    public static int getIntFromTextField(TextField textField) {
+        String text = textField.getText();
+        return Integer.parseInt(text);
+    }
+
+    /**
+     * equipeSelectionne devient l'équipe en paramètre.
+     */
+    public static void incorporeEquipe(Equipe equipe) {
+        equipeSelectionne = equipe;
+    }
+
+    /**
+     * Affiche ou supprime le brouillard de guerre quand cette méthode est appelée.
+     */
+    public static void brouillard() {
+        if (equipeSelectionne == getE1()) {
+            // Tests brouillard de guerre
+            for (int i = 0; i < Case.listeCase.size(); i++) {
+                if (i >= Case.listeCase.size() / 2) {
+                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e1) {
+                        Case.listeCase.get(i).devenirNoir();
+                    } else {
+                        Case.listeCase.get(i).devenirBlanc();
+                    }
+                } else {
+                    Case.listeCase.get(i).devenirBlanc();
+                }
+            }
+        } else {
+            for (int i = 0; i < Case.listeCase.size(); i++) {
+                if (i < Case.listeCase.size() / 2) {
+                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e2) {
+                        Case.listeCase.get(i).devenirNoir();
+                    } else {
+                        Case.listeCase.get(i).devenirBlanc();
+                    }
+                } else {
+                    Case.listeCase.get(i).devenirBlanc();
+                }
+            }
+        }
+    }
+
+    /**
+     * Cette section contient tout les getters et setters de Plateau
+     */
+
+    public static boolean isActiverAnimation() {
+        return activerAnimation;
+    }
+
+    public static void setStatusPartie(boolean statusPartie) {
+        Plateau.statusPartie = statusPartie;
+    }
+
+    public static Equipe getE1() {
+        return Equipe.e1;
+    }
+
+    public static Equipe getE2() {
+        return Equipe.e2;
     }
 
     public void lancerPartie() {
@@ -100,40 +225,40 @@ public class Plateau {
      */
     private void interfaceDebut() {
         Button start = new Button("START");
-        start.setLayoutX((longueurMax - 700)/2);
-        start.setLayoutY((largeurMax - 200)/2);
-        start.setMinSize(700,200);
+        start.setLayoutX((longueurMax - 700) / 2);
+        start.setLayoutY((largeurMax - 200) / 2);
+        start.setMinSize(700, 200);
         start.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black;-fx-font-weight: bold;-fx-font-size: 60");
         start.setOnMouseEntered(mouseEvent -> start.setEffect(new Effets().putInnerShadow(Color.ORANGE)));
         start.setOnMouseExited(mouseEvent -> start.setEffect(null));
 
         // Ajout de textes
         Text infoNB = new Text("Entrez le nombre de cases du plateau :");
-        infoNB.setLayoutX((longueurMax - 700)/2);
-        infoNB.setLayoutY((largeurMax - 300)/2 - 20);
+        infoNB.setLayoutX((longueurMax - 700) / 2);
+        infoNB.setLayoutY((largeurMax - 300) / 2 - 20);
 
         infoArgent = new Text("Entrez la limite d'argent pour chaque équipe : (vide = pas de limite)");
-        infoArgent.setLayoutX((longueurMax - 700)/2);
-        infoArgent.setLayoutY((largeurMax - 450)/2 - 20);
+        infoArgent.setLayoutX((longueurMax - 700) / 2);
+        infoArgent.setLayoutY((largeurMax - 450) / 2 - 20);
 
         // Entrée de l'aire du plateau
         TextField nbCase = new TextField();
-        nbCase.setLayoutX((longueurMax - 700)/2);
-        nbCase.setLayoutY((largeurMax - 280)/2 - 20);
-        nbCase.setMinSize(100,50);
+        nbCase.setLayoutX((longueurMax - 700) / 2);
+        nbCase.setLayoutY((largeurMax - 280) / 2 - 20);
+        nbCase.setMinSize(100, 50);
         nbCase.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
         // Entrée de l'argent
         nbArgent = new TextField();
-        nbArgent.setLayoutX((longueurMax - 700)/2);
-        nbArgent.setLayoutY((largeurMax - 430)/2 - 20);
-        nbArgent.setMinSize(100,50);
+        nbArgent.setLayoutX((longueurMax - 700) / 2);
+        nbArgent.setLayoutY((largeurMax - 430) / 2 - 20);
+        nbArgent.setMinSize(100, 50);
         nbArgent.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
 
         nbCase.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 aire = getIntFromTextField(nbCase);
-                if(nbArgent.getText().length() > 0) {
+                if (nbArgent.getText().length() > 0) {
                     argentPartie = getIntFromTextField(nbArgent);
                 }
                 if (aire > 0) {
@@ -146,7 +271,7 @@ public class Plateau {
         nbArgent.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 aire = getIntFromTextField(nbCase);
-                if(nbArgent.getText().length() > 0) {
+                if (nbArgent.getText().length() > 0) {
                     argentPartie = getIntFromTextField(nbArgent);
                 }
                 if (aire > 0) {
@@ -159,7 +284,7 @@ public class Plateau {
         // Configuration du bouton start
         start.setOnMouseClicked(mouseEvent -> {
             aire = getIntFromTextField(nbCase);
-            if(nbArgent.getText().length() > 0) {
+            if (nbArgent.getText().length() > 0) {
                 argentPartie = getIntFromTextField(nbArgent);
             }
             if (aire > 0) {
@@ -186,7 +311,7 @@ public class Plateau {
      */
     public void lancerScenePlateau() {
         // Ajuste la taille d'une case et le taille du tableau case
-        taille = 1000/Math.sqrt(aire);
+        taille = 1000 / Math.sqrt(aire);
         Case.tableauCase = new Case[(int) Math.sqrt(aire) + 1][(int) Math.sqrt(aire) + 2];
 
         // Paramétrage des événements aléatoires
@@ -237,11 +362,11 @@ public class Plateau {
         while (i < aire) {
             // On entre dans une ligne
             if (!decalage) {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4 ;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire) / 2) + ligne * taille - taille * 1.05 * ligne / 4;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99;
-                    Case hexagone = new Case(ligne, j - (ligne/2));
+                    double posX = longueurMax / 2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99;
+                    Case hexagone = new Case(ligne, j - (ligne / 2));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     Case.tableauCase[ligne][j] = hexagone;
                     Case.listeCase.add(hexagone);
@@ -251,11 +376,11 @@ public class Plateau {
                 decalage = true;
                 ligne++;
             } else {
-                double posY = largeurMax/2 - (taille * Math.sqrt(aire)/2) + ligne * taille - taille * 1.05 * ligne/4;
+                double posY = largeurMax / 2 - (taille * Math.sqrt(aire) / 2) + ligne * taille - taille * 1.05 * ligne / 4;
                 for (int j = 0; j < Math.sqrt(aire); j++) {
                     // On définie les cases d'une ligne
-                    double posX = longueurMax /2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille/2;
-                    Case hexagone = new Case(ligne, j - ((ligne)/2 + 1));
+                    double posX = longueurMax / 2 - (taille * (Math.sqrt(aire)) / 2) + j * taille * 0.99 - taille / 2;
+                    Case hexagone = new Case(ligne, j - ((ligne) / 2 + 1));
                     // Ajout de la case dans une liste, tableau et groupe (pour qu'elle s'affiche)
                     Case.tableauCase[ligne][j] = hexagone;
                     Case.listeCase.add(hexagone);
@@ -316,7 +441,7 @@ public class Plateau {
         TextField encherirField = new TextField();
         encherirField.setLayoutX(699);
         encherirField.setLayoutY(567);
-        encherirField.setMinSize(100,50);
+        encherirField.setMinSize(100, 50);
         encherirField.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
         encherirField.setOnKeyReleased(key -> {
             if (key.getCode() == KeyCode.ENTER) {
@@ -388,87 +513,13 @@ public class Plateau {
     }
 
     /**
-     * Méthode permettant d'afficher le nombre de personnes contenus dans chaque équipe.
+     * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard.
      */
-    public static void afficherNbPersonne() {
-        Rectangle barre = new Rectangle(250 , 70, Color.LIGHTGRAY);
-        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
-        barre.setY(10);
-        barre.setStroke(Color.BLACK);
-        barre.setStrokeWidth(2);
-
-        Text title = new Text("Nombre de personnes par équipe");
-        title.setX(barre.getX() + 10);
-        title.setY(barre.getY() + 20);
-
-        Text equipes = new Text( "Equipe 1 : " + getE1().getNbPersonne() + "\n" + "Equipe 2 : " + getE2().getNbPersonne());
-        equipes.setX(title.getX());
-        equipes.setY(title.getY() + 20);
-
-        nbPersonne.getChildren().add(barre);
-        nbPersonne.getChildren().add(title);
-        nbPersonne.getChildren().add(equipes);
-    }
-
-    /**
-     * Méthode pour update les compteurs de afficherNbPersonne().
-     */
-    public static void updateNbPersonne() {
-        nbPersonne.getChildren().clear();
-        afficherNbPersonne();
-    }
-
-    /**
-     * Affiche le tour actuel.
-     */
-    private static void afficheNbTour() {
-        Rectangle barre = new Rectangle(50 , 50, Color.LIGHTGRAY);
-        barre.setX(Screen.getPrimary().getVisualBounds().getWidth() - 260);
-        barre.setY(90);
-        barre.setStroke(Color.BLACK);
-        barre.setStrokeWidth(2);
-
-        Text nb = new Text("Tour\n" + tour);
-        nb.setX(barre.getX() + 10);
-        nb.setY(barre.getY() + 20);
-
-        nbTour.getChildren().add(barre);
-        nbTour.getChildren().add(nb);
-    }
-
-    /**
-     * Méthode pour update les compteurs de afficheNbTour().
-     */
-    public static void updateNbTour() {
-        nbTour.getChildren().clear();
-        afficheNbTour();
-    }
-
-    /**
-     * Fonction transformant un String en entier.
-     * @param textField est le texte qu'on cherche à transformer en entier
-     * @return le texte en int s'il contient que des entiers
-     */
-    public static int getIntFromTextField(TextField textField) {
-        String text = textField.getText();
-        return Integer.parseInt(text);
-    }
-
-    /**
-     * equipeSelectionne devient l'équipe en paramètre.
-     */
-    public static void incorporeEquipe(Equipe equipe) {
-        equipeSelectionne = equipe;
-    }
-
-    /**
-    * Cette section contiendras les boutons du Plateau, on retrouveras le système de tour plus tard.
-    */
 
     private Button boutonAnimation() {
         // Demande l'utilisation des animations
         Button animationBT = new Button("Animations : NON");
-        animationBT.setMinSize(120,50);
+        animationBT.setMinSize(120, 50);
         animationBT.setLayoutX(140);
         animationBT.setLayoutY(70);
         animationBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -498,13 +549,14 @@ public class Plateau {
 
     /**
      * Génère le bouton pour activer les enchères.
+     *
      * @return button affichable
      */
 
     private Button boutonEnchere() {
         // Demande l'utilisation des enchères
         Button enchereBT = new Button("Enchères : NON");
-        enchereBT.setMinSize(120,50);
+        enchereBT.setMinSize(120, 50);
         enchereBT.setLayoutX(140);
         enchereBT.setLayoutY(130);
         enchereBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -534,12 +586,13 @@ public class Plateau {
 
     /**
      * Génère le bouton pour afficher les évènements.
+     *
      * @return button affichable
      */
     private Button boutonEvenement() {
         // Demande l'utilisation des évènements aléatoires
         Button eventBT = new Button("Évènements : NON");
-        eventBT.setMinSize(120,50);
+        eventBT.setMinSize(120, 50);
         eventBT.setLayoutX(140);
         eventBT.setLayoutY(190);
         eventBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -569,12 +622,13 @@ public class Plateau {
 
     /**
      * Génère bouton pour utiliser l'algorithme de Dijkstra.
+     *
      * @return button affichage
      */
     private Button boutonDijkstra() {
         // Demande l'utilisation des évènements aléatoires
         Button dijkstraBT = new Button("Dijkstra : NON");
-        dijkstraBT.setMinSize(120,50);
+        dijkstraBT.setMinSize(120, 50);
         dijkstraBT.setLayoutX(270);
         dijkstraBT.setLayoutY(70);
         dijkstraBT.setStyle("-fx-background-color: lightgrey;-fx-border-style: solid;-fx-border-width: 2px;-fx-border-color: black");
@@ -604,6 +658,7 @@ public class Plateau {
 
     /**
      * Génère bouton de développement pour debug.
+     *
      * @return button affichable
      */
     private Button boutonCheats() {
@@ -634,6 +689,7 @@ public class Plateau {
 
     /**
      * Génère bouton de limitation d'argent dans la partie.
+     *
      * @return button affichable
      */
     private Button boutonArgent() {
@@ -667,6 +723,7 @@ public class Plateau {
 
     /**
      * Crée un bouton Exit.
+     *
      * @return le bouton Exit
      */
     private Button boutonExit() {
@@ -680,6 +737,7 @@ public class Plateau {
     /**
      * Crée un bouton Reset.
      * Relance le jeu une nouvelle aire
+     *
      * @return le bouton Reset
      */
     private Button boutonReset() {
@@ -719,6 +777,7 @@ public class Plateau {
     /**
      * Crée un bouton ReStart.
      * Relance le meme plateau
+     *
      * @return le bouton ReStart
      */
     private Button boutonReStart() {
@@ -763,6 +822,7 @@ public class Plateau {
     /**
      * Crée un bouton PausePlay.
      * gere l'état et l'avancement du jeu
+     *
      * @return un groupe contenant les boutons Play et Pause
      */
     private Group boutonPausePlay() {
@@ -826,7 +886,7 @@ public class Plateau {
             boutonGame.getChildren().remove(pause);
             boutonGame.getChildren().add(play);
             setStatusPartie(false);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), ev ->{
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(400), ev -> {
                 if (activerEnchere) {
                     brouillard();
                 }
@@ -844,6 +904,7 @@ public class Plateau {
 
     /**
      * Crée des boutons modifiants la vitesse d'exécution d'un tour en millisecondes.
+     *
      * @return les boutons de vitesse
      */
     private Button vitesseX1() {
@@ -981,25 +1042,25 @@ public class Plateau {
         Button x1 = vitesseX1();
         Button x2 = vitesseX2();
         Button x3 = vitesseX3();
-        x1.setOnMouseClicked(mouseEvent-> {
+        x1.setOnMouseClicked(mouseEvent -> {
             temps = 500;
             x1.setEffect(new Effets().putInnerShadow(Color.BLACK));
             x2.setEffect(null);
             x3.setEffect(null);
         });
-        x2.setOnMouseClicked(mouseEvent-> {
+        x2.setOnMouseClicked(mouseEvent -> {
             temps = 250;
             x2.setEffect(new Effets().putInnerShadow(Color.BLACK));
             x1.setEffect(null);
             x3.setEffect(null);
         });
-        x3.setOnMouseClicked(mouseEvent-> {
+        x3.setOnMouseClicked(mouseEvent -> {
             temps = 166;
             x3.setEffect(new Effets().putInnerShadow(Color.BLACK));
             x1.setEffect(null);
             x2.setEffect(null);
         });
-        vitesse.setOnMouseClicked(mouseEvent-> {
+        vitesse.setOnMouseClicked(mouseEvent -> {
             if (!group.getChildren().contains(x1)) {
                 try {
                     group.getChildren().addAll(x1, x2, x3);
@@ -1141,38 +1202,6 @@ public class Plateau {
         prix.setText("");
     }
 
-    /**
-     * Affiche ou supprime le brouillard de guerre quand cette méthode est appelée.
-     */
-    public static void brouillard() {
-        if (equipeSelectionne == getE1()) {
-            // Tests brouillard de guerre
-            for (int i = 0; i < Case.listeCase.size(); i++) {
-                if (i >= Case.listeCase.size() / 2) {
-                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e1) {
-                        Case.listeCase.get(i).devenirNoir();
-                    } else {
-                        Case.listeCase.get(i).devenirBlanc();
-                    }
-                } else {
-                    Case.listeCase.get(i).devenirBlanc();
-                }
-            }
-        } else {
-            for (int i = 0; i < Case.listeCase.size(); i++) {
-                if (i < Case.listeCase.size() / 2) {
-                    if (Case.listeCase.get(i).getContenu().isEmpty() || Case.listeCase.get(i).getContenu().get(0).getTeam() != Equipe.e2) {
-                        Case.listeCase.get(i).devenirNoir();
-                    } else {
-                        Case.listeCase.get(i).devenirBlanc();
-                    }
-                } else {
-                    Case.listeCase.get(i).devenirBlanc();
-                }
-            }
-        }
-    }
-
     private void cheats() {
         scene.setOnKeyPressed(key -> {
             if (equipeSelectionne != null && !statusPartie) {
@@ -1188,25 +1217,5 @@ public class Plateau {
                 }
             }
         });
-    }
-
-    /**
-     * Cette section contient tout les getters et setters de Plateau
-     */
-
-    public static boolean isActiverAnimation() {
-        return activerAnimation;
-    }
-
-    public static void setStatusPartie(boolean statusPartie) {
-        Plateau.statusPartie = statusPartie;
-    }
-
-    public static Equipe getE1() {
-        return Equipe.e1;
-    }
-
-    public static Equipe getE2() {
-        return Equipe.e2;
     }
 }

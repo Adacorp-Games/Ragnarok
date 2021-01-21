@@ -3,12 +3,10 @@ package outerhaven.Entites.Personnages.PersonnagesPrime;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
-import outerhaven.Mecaniques.Alterations.AlterationFreeze;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Entites.Personnages.Personne;
-
-import java.util.ArrayList;
+import outerhaven.Equipe;
+import outerhaven.Mecaniques.Alterations.AlterationFreeze;
 
 public class ArchimagePrime extends Archimage {
 
@@ -31,7 +29,7 @@ public class ArchimagePrime extends Archimage {
 
     @Override
     public Personne personneNouvelle(Equipe team, Case position) {
-        return new ArchimagePrime(team,position);
+        return new ArchimagePrime(team, position);
     }
 
     @Override

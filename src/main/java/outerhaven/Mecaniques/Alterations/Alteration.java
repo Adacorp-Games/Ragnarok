@@ -2,8 +2,8 @@ package outerhaven.Mecaniques.Alterations;
 
 import javafx.scene.image.Image;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,10 @@ import java.util.ArrayList;
  * les statistiques des unités qu'elles contiennent.
  */
 public abstract class Alteration {
+    /**
+     * Liste d'altérations à supprimer au cours du temps.
+     */
+    public static ArrayList<Case> AlterSupprimer = new ArrayList<>();
     /**
      * L'image qui changera une case qui sera altérée.
      */
@@ -28,10 +32,6 @@ public abstract class Alteration {
      * Équipe a qui appartient l'altération (pas obligatoire).
      */
     private Equipe equipe;
-    /**
-     * Liste d'altérations à supprimer au cours du temps.
-     */
-    public static ArrayList<Case> AlterSupprimer = new ArrayList<>();
 
     public Alteration(int duree) {
         this.duree = duree;
@@ -53,7 +53,16 @@ public abstract class Alteration {
     }
 
     /**
+     * Supprime définitivement une alteration.
+     */
+    public static void nettoieCaseAlter() {
+        Case.listeCaseAlterees.removeAll(AlterSupprimer);
+        AlterSupprimer.clear();
+    }
+
+    /**
      * Applique les effets d'une altération sur un personnage (par tour).
+     *
      * @param p esr la Personne a qui on va appliquer l'effet positif ou négatif en fonction de l'altération.
      */
     public abstract void appliquerEffet(Personne p);
@@ -73,14 +82,6 @@ public abstract class Alteration {
                 }
             }
         }
-    }
-
-    /**
-     * Supprime définitivement une alteration.
-     */
-    public static void nettoieCaseAlter() {
-        Case.listeCaseAlterees.removeAll(AlterSupprimer);
-        AlterSupprimer.clear();
     }
 
     /**

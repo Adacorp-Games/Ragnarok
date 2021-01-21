@@ -3,9 +3,9 @@ package outerhaven.Entites.Personnages.PersonnagesPrime;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Paladin;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class PaladinPrime extends Paladin {
 
@@ -19,8 +19,8 @@ public class PaladinPrime extends Paladin {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new PaladinPrime(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new PaladinPrime(team, position);
     }
 
     @Override

@@ -3,9 +3,9 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Mecaniques.Alterations.AlterationPoison;
-import outerhaven.Entites.Personnages.Personne;
 
 public class Alchimiste extends PersonneMagique {
 
@@ -33,7 +33,7 @@ public class Alchimiste extends PersonneMagique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
+    public Personne personneNouvelle(Equipe team, Case position) {
         return new Alchimiste(team, position);
     }
 

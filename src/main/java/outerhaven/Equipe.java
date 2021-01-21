@@ -1,9 +1,10 @@
 package outerhaven;
 
 import javafx.scene.paint.Color;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Interface.Effets;
 import outerhaven.Mecaniques.Enchere;
-import outerhaven.Entites.Personnages.Personne;
+
 import java.util.ArrayList;
 
 import static outerhaven.Plateau.*;
@@ -37,10 +38,19 @@ public class Equipe {
         this.argent = 0;
     }
 
+    public static Equipe getOtherTeam() {
+        if (equipeSelectionne == getE1()) {
+            return getE2();
+        } else {
+            return getE1();
+        }
+    }
+
     /**
      * Cette methode permet de gérer les l'augmentation d'enchère au tour par tour, en remboursant et alternant les équipes.
+     *
      * @param prix le prix de l'enchère.
-     * @param e équipe qui enchéri.
+     * @param e    équipe qui enchéri.
      */
     public void augmenterEnchere(double prix, Enchere e) {
         if (prix > e.getPrixMinimal()) {
@@ -79,7 +89,7 @@ public class Equipe {
         return team;
     }
 
-    public int getNbPersonne(){
+    public int getNbPersonne() {
         return this.team.size();
     }
 
@@ -87,20 +97,12 @@ public class Equipe {
         Plateau.updateNbPersonne();
     }
 
-    public void setArgent(double argent) {
-        this.argent = argent;
-        barre.updateArgentEquipes();
-    }
-
     public double getArgent() {
         return argent;
     }
 
-    public static Equipe getOtherTeam() {
-        if (equipeSelectionne == getE1()) {
-            return getE2();
-        } else {
-            return getE1();
-        }
+    public void setArgent(double argent) {
+        this.argent = argent;
+        barre.updateArgentEquipes();
     }
 }

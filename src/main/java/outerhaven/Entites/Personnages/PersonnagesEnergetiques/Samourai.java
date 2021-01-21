@@ -3,8 +3,8 @@ package outerhaven.Entites.Personnages.PersonnagesEnergetiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class Samourai extends PersonneEnergetique {
 
@@ -17,8 +17,8 @@ public class Samourai extends PersonneEnergetique {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Samourai(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Samourai(team, position);
     }
 
     @Override

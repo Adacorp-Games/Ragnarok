@@ -9,16 +9,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
-import outerhaven.Mecaniques.Sauvegarde;
-import outerhaven.Entites.Personnages.PersonnagesEnergetiques.*;
+import outerhaven.Entites.Personnages.Archer;
+import outerhaven.Entites.Personnages.Guerrier;
+import outerhaven.Entites.Personnages.Mage;
+import outerhaven.Entites.Personnages.PersonnagesEnergetiques.Samourai;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.*;
-import outerhaven.Entites.Personnages.*;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
+import outerhaven.Mecaniques.Sauvegarde;
 import outerhaven.Plateau;
 
-import static outerhaven.Plateau.*;
-
 import java.util.ArrayList;
+
+import static outerhaven.Plateau.*;
 
 /**
  * Classe dans laquelle la majorité de l'interface est crée. La barre personnage en elle même est la partie
@@ -28,15 +31,15 @@ import java.util.ArrayList;
 public class BarrePersonnage {
 
     private static final Group groupBarre = new Group();
-    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
-    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public static ArrayList<Personne> listeClasse = new ArrayList<>();
     public static ArrayList<Personne> listeEquipe1 = new ArrayList<>();
     public static ArrayList<Personne> listeEquipe2 = new ArrayList<>();
+    private static Sauvegarde save;
     private final Group argentGroup = new Group();
+    public double largeurMax = Screen.getPrimary().getVisualBounds().getHeight();
+    public double longueurMax = Screen.getPrimary().getVisualBounds().getWidth();
     public Button equipe1 = new Button("Equipe 1");
     public Button equipe2 = new Button("Equipe 2");
-    private static Sauvegarde save;
 
     public BarrePersonnage() {
         // Ajoutez les nouvelles Classe personnages ici <-------------------------------------------
@@ -60,7 +63,23 @@ public class BarrePersonnage {
         interfaceBarre();
     }
 
-    public void reset(){
+    public static ArrayList<Personne> listeEquipe() {
+        if (equipeSelectionne == Equipe.e1) {
+            return listeEquipe1;
+        } else {
+            return listeEquipe2;
+        }
+    }
+
+    public static Sauvegarde getSave() {
+        return save;
+    }
+
+    public static void setSave(Sauvegarde save) {
+        BarrePersonnage.save = save;
+    }
+
+    public void reset() {
         groupBarre.getChildren().clear();
         listeEquipe1.clear();
         listeEquipe1.addAll(listeClasse);
@@ -102,7 +121,7 @@ public class BarrePersonnage {
     }
 
     public void ajouterClass(Personne personne) {
-        if (personne.getTeam() == Plateau.getE1()){
+        if (personne.getTeam() == Plateau.getE1()) {
             listeEquipe1.add(personne);
         } else {
             listeEquipe2.add(personne);
@@ -261,14 +280,6 @@ public class BarrePersonnage {
         }
     }
 
-    public static ArrayList<Personne> listeEquipe() {
-        if (equipeSelectionne == Equipe.e1) {
-            return listeEquipe1;
-        } else {
-            return listeEquipe2;
-        }
-    }
-
     public Group returnBarre() {
         return groupBarre;
     }
@@ -279,14 +290,6 @@ public class BarrePersonnage {
 
     public ArrayList<Personne> getListeClasse() {
         return listeClasse;
-    }
-
-    public static Sauvegarde getSave() {
-        return save;
-    }
-
-    public static void setSave(Sauvegarde save) {
-        BarrePersonnage.save = save;
     }
 
     public Button getButtonTeamSelect() {

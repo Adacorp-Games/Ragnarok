@@ -18,8 +18,8 @@ public class Mage extends Personne {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Mage(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Mage(team, position);
     }
 
     @Override

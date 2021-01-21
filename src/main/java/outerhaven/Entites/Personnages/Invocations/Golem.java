@@ -3,10 +3,8 @@ package outerhaven.Entites.Personnages.Invocations;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
-import outerhaven.Mecaniques.Poste.Defenseur;
-import outerhaven.Mecaniques.Poste.Poste;
+import outerhaven.Equipe;
 
 public class Golem extends Invocation {
 
@@ -20,7 +18,7 @@ public class Golem extends Invocation {
 
     @Override
     public Personne personneNouvelle(Equipe team, Case position) {
-        return new Golem(team,position);
+        return new Golem(team, position);
     }
 
     @Override

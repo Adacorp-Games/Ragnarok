@@ -1,9 +1,9 @@
 package outerhaven.Mecaniques.Alterations;
 
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Archimage;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class AlterationFreeze extends Alteration {
 

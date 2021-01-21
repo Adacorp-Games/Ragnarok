@@ -3,8 +3,8 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
 import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Equipe;
 
 public class Paladin extends PersonneMagique {
 
@@ -26,19 +26,19 @@ public class Paladin extends PersonneMagique {
 
     @Override
     public void pouvoir() {
-        if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth()/4) {
-            this.soigner(getMaxHealth()/4);
+        if (this.getMana() > 150 && this.getHealth() <= this.getMaxHealth() / 4) {
+            this.soigner(getMaxHealth() / 4);
             this.setMana(this.getMana() - 150);
 
-        } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth() - this.getMaxHealth()/4) {
+        } else if (this.getMana() > 150 && this.getHealth() > this.getMaxHealth() - this.getMaxHealth() / 4) {
             this.setHealth(getMaxHealth());
             this.setMana(this.getMana() - 150);
         }
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Paladin(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Paladin(team, position);
     }
 
     @Override

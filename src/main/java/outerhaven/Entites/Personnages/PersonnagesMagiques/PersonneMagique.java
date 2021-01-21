@@ -3,17 +3,17 @@ package outerhaven.Entites.Personnages.PersonnagesMagiques;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import outerhaven.Mecaniques.Alterations.Alteration;
 import outerhaven.Case;
+import outerhaven.Entites.Personnages.Personne;
 import outerhaven.Equipe;
 import outerhaven.Interface.Effets;
-import outerhaven.Entites.Personnages.Personne;
+import outerhaven.Mecaniques.Alterations.Alteration;
 
 import static outerhaven.Plateau.taille;
 
 public abstract class PersonneMagique extends Personne {
-    private double mana;
     private final double manaMax;
+    private double mana;
 
     public PersonneMagique(double health, double armor, double cost, int damage, int range, int speed, double mana) {
         super(health, armor, cost, damage, range, speed);
@@ -76,11 +76,11 @@ public abstract class PersonneMagique extends Personne {
     }
 
     public Group afficherMana() {
-        Rectangle barre = new Rectangle(taille, taille/10, Color.BLACK);
-        Rectangle mana = new Rectangle(taille - 4, taille/10 - 4, Color.BLUE);
+        Rectangle barre = new Rectangle(taille, taille / 10, Color.BLACK);
+        Rectangle mana = new Rectangle(taille - 4, taille / 10 - 4, Color.BLUE);
 
         barre.setX(getPosition().getPosX());
-        barre.setY(getPosition().getPosY() + taille/10 + taille/2.2);
+        barre.setY(getPosition().getPosY() + taille / 10 + taille / 2.2);
 
         mana.setY(barre.getY() + 2);
         mana.setX(barre.getX() + 2);

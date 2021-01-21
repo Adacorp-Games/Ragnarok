@@ -3,12 +3,10 @@ package outerhaven.Entites.Personnages.PersonnagesPrime;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import outerhaven.Case;
-import outerhaven.Equipe;
-import outerhaven.Mecaniques.Alterations.AlterationHeal;
 import outerhaven.Entites.Personnages.PersonnagesMagiques.Pretre;
 import outerhaven.Entites.Personnages.Personne;
-
-import java.util.ArrayList;
+import outerhaven.Equipe;
+import outerhaven.Mecaniques.Alterations.AlterationHeal;
 
 public class PretrePrime extends Pretre {
 
@@ -47,7 +45,7 @@ public class PretrePrime extends Pretre {
 
     @Override
     public Personne personneNouvelle(Equipe team, Case position) {
-        return new PretrePrime(team,position);
+        return new PretrePrime(team, position);
     }
 
     @Override

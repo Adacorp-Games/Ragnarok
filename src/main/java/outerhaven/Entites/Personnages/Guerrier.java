@@ -18,8 +18,8 @@ public class Guerrier extends Personne {
     }
 
     @Override
-    public Personne personneNouvelle(Equipe team,Case position) {
-        return new Guerrier(team,position);
+    public Personne personneNouvelle(Equipe team, Case position) {
+        return new Guerrier(team, position);
     }
 
     @Override
